@@ -1113,8 +1113,11 @@ function showMain(){
   document.getElementById('pg-setup').classList.remove('on');
   document.getElementById('pg-main').classList.add('on');
   applyLang();
-  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
-  startPTLoop();
+  // Defer renders to next tick — ensures DOM is painted before data fills in
+  setTimeout(()=>{
+    rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
+    startPTLoop();
+  }, 0);
   setInterval(save, 30000);
 }
 function showTab(tab){

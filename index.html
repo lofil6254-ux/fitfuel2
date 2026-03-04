@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a14">
+<title>FitFuel 🏋️</title>
+<style>
+:root{--bg:#0a0a14;--s1:#11111f;--s2:#17172a;--s3:#1e1e36;--ac:#c8f53a;--acd:rgba(200,245,58,.12);--bl:#3ab4f5;--bld:rgba(58,180,245,.12);--pk:#f53a8a;--pkd:rgba(245,58,138,.12);--or:#f5933a;--ord:rgba(245,147,58,.12);--gd:#ffd700;--gdd:rgba(255,215,0,.13);--tx:#eeeef8;--mt:#5a5a7a;--br:#1e1e38;--r:13px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+input,select,button{font-family:inherit;font-size:inherit}
+.page{position:fixed;inset:0;overflow-y:auto;display:none;flex-direction:column;padding-bottom:72px}
+.page.on{display:flex}
+.wrap{width:100%;max-width:500px;margin:0 auto;padding:0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:50px;border:none;cursor:pointer;font-size:14px;font-weight:700;transition:transform .15s}
+.btn:active{transform:scale(.96)}
+.bp{background:linear-gradient(135deg,var(--ac),#8ed010);color:#0a0a14}
+.bo{background:transparent;border:1.5px solid var(--br);color:var(--mt)}
+.bo:hover,.bo:focus{border-color:var(--ac);color:var(--ac)}
+.bw{width:100%}
+.bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.bg{background:var(--acd);color:var(--ac)}.bb{background:var(--bld);color:var(--bl)}
+.bpk{background:var(--pkd);color:var(--pk)}.bor{background:var(--ord);color:var(--or)}.bgd{background:var(--gdd);color:var(--gd)}
+.card{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.tag{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mt)}
+.mt{color:var(--mt)}
+.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:var(--s2);border:1.5px solid var(--ac);color:var(--ac);padding:8px 16px;border-radius:50px;font-size:13px;font-weight:700;z-index:9999;transition:transform .3s;white-space:nowrap;pointer-events:none;max-width:92vw;text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.savfl{position:fixed;bottom:78px;right:14px;background:var(--acd);border:1px solid var(--ac);color:var(--ac);padding:4px 10px;border-radius:50px;font-size:10px;font-weight:700;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none}
+[dir=ltr] .savfl{right:auto;left:14px}
+.savfl.on{opacity:1}
+.rtbar{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);background:var(--s3);border:2px solid var(--bl);border-radius:50px;padding:7px 16px;font-size:13px;font-weight:800;color:var(--bl);z-index:400;display:none;align-items:center;gap:7px;cursor:pointer}
+.rtbar.on{display:flex}
+.rtn{font-size:20px;font-weight:900;min-width:24px;text-align:center}
+
+/* SPLASH */
+#pg-splash{align-items:center;justify-content:center;text-align:center;padding:40px 20px}
+.logo{font-size:68px;font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,var(--ac),var(--bl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.lrow{display:flex;gap:8px;justify-content:center;margin-bottom:22px}
+.lbtn{padding:9px 22px;border-radius:50px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.lbtn.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
+
+/* SETUP */
+#pg-setup{padding:24px 0 90px}
+.prog{display:flex;gap:5px;justify-content:center;margin-bottom:22px}
+.prg{height:4px;width:44px;border-radius:3px;background:var(--br);transition:all .3s}
+.prg.d{background:var(--ac)}.prg.c{background:var(--ac);box-shadow:0 0 8px var(--ac)}
+.step{display:none}.step.on{display:block}
+.fl{margin-bottom:11px}
+.lb{font-size:11px;color:var(--mt);font-weight:700;margin-bottom:4px;display:block}
+.fi{width:100%;background:var(--s2);border:1.5px solid var(--br);color:var(--tx);border-radius:10px;padding:11px 12px;font-size:14px;outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--ac)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g1{display:flex;flex-direction:column;gap:7px}
+.oc{padding:11px 10px;border-radius:10px;border:1.5px solid var(--br);background:var(--s2);cursor:pointer;text-align:center;transition:all .18s}
+.oc.on{border-color:var(--ac);background:var(--acd)}
+.oc-h{display:flex;align-items:center;gap:10px;text-align:start}
+.oi{font-size:22px;flex-shrink:0}
+.ol{font-size:13px;font-weight:700}.os{font-size:10px;color:var(--mt);margin-top:1px}
+.nb{display:flex;gap:8px;margin-top:18px}
+.ig2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* NAV */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:var(--s1);border-top:1px solid var(--br);display:flex;z-index:300;padding:6px 0}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px;border:none;background:transparent;color:var(--mt);transition:color .18s}
+.ni.on{color:var(--ac)}
+.ni-ic{font-size:21px}.ni-lb{font-size:10px;font-weight:700}
+
+/* HOME */
+.hero{background:linear-gradient(135deg,var(--s3),var(--s2));border:1px solid var(--br);border-radius:16px;padding:16px;margin-bottom:12px}
+.ringwrap{display:flex;align-items:center;gap:14px;margin-top:8px}
+.rsvg{width:78px;height:78px;flex-shrink:0}
+.rbg2{fill:none;stroke:var(--br);stroke-width:8}
+.rfl{fill:none;stroke:var(--ac);stroke-width:8;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:220;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1.2s ease}
+.mbars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+.mb{background:var(--s1);border-radius:8px;padding:7px;text-align:center}
+.mb-l{font-size:9px;color:var(--mt);font-weight:700;margin-bottom:2px}
+.mb-v{font-size:12px;font-weight:900}
+.mbar{height:3px;background:var(--br);border-radius:2px;margin-top:3px;overflow:hidden}
+.mbf{height:100%;border-radius:2px;transition:width 1s}
+.logrow{display:flex;gap:6px}
+.litems{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:160px;overflow-y:auto}
+.li{display:flex;justify-content:space-between;align-items:center;background:var(--s2);border-radius:8px;padding:7px 10px}
+.li-del{background:none;border:none;color:var(--mt);cursor:pointer;font-size:14px;padding:0 3px}
+
+/* PRAYER CARD */
+.ptcard{background:linear-gradient(135deg,#130f20,#1a1030);border:1px solid rgba(255,215,0,.2);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.ptrow{display:flex;gap:5px;margin-top:8px}
+.ptime{flex:1;background:rgba(0,0,0,.35);border-radius:8px;padding:6px 3px;text-align:center;border:1px solid transparent}
+.ptime-v{font-size:14px;font-weight:900;color:var(--gd);font-variant-numeric:tabular-nums}
+.ptime-l{font-size:9px;color:var(--mt);font-weight:700;margin-top:1px}
+.ptime.nx{border-color:var(--gd);background:var(--gdd)}
+.ptime.nx .ptime-l{color:var(--gd)}
+.ptcnt{font-size:12px;color:var(--gd);font-weight:700;text-align:center;margin-top:7px}
+.ptsrc{font-size:9px;color:var(--mt);text-align:center;margin-top:2px}
+.rbanner{background:linear-gradient(135deg,#14101e,#1c1232);border:1px solid rgba(255,215,0,.22);border-radius:14px;padding:11px 13px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.rtoggle{border:1.5px solid var(--gd);color:var(--gd);background:var(--gdd);border-radius:50px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.rtoggle.off{border-color:var(--br);color:var(--mt);background:transparent}
+.twc{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:13px;cursor:pointer}
+
+/* WORKOUT */
+.dayplan{display:flex;overflow-x:auto;gap:6px;padding:2px 0 8px;scrollbar-width:none}
+.dayplan::-webkit-scrollbar{display:none}
+.dpc{padding:7px 10px;border-radius:9px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s;text-align:center;min-width:58px}
+.dpc.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
+.dpc.done{border-color:var(--pk);color:var(--pk)}.dpc.rest{border-color:var(--bl);color:var(--bl)}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.pgst{text-align:center;background:var(--s1);border-radius:8px;padding:8px}
+.pgst-v{font-size:16px;font-weight:900;color:var(--ac)}
+.pgst-l{font-size:9px;color:var(--mt);font-weight:700;margin-top:1px}
+.wsec-t{display:flex;align-items:center;gap:8px;margin:14px 0 8px}
+.wsec-l{flex:1;height:1px;background:var(--br)}
+.excard{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);overflow:hidden;margin-bottom:8px}
+.excard.exp{border-color:var(--bl)}
+.exhdr{display:flex;gap:10px;align-items:center;padding:11px;cursor:pointer}
+.exgif{width:60px;height:60px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:22px}
+.exgif img{width:100%;height:100%;object-fit:cover}
+.exnm{font-size:13px;font-weight:800;margin-bottom:3px}
+.mtag{padding:2px 6px;border-radius:20px;font-size:9px;font-weight:700;background:var(--pkd);color:var(--pk)}
+.exchv{font-size:11px;color:var(--mt);margin-inline-start:auto;transition:transform .25s;flex-shrink:0}
+.excard.exp .exchv{transform:rotate(180deg)}
+.exbody{display:none;padding:11px;border-top:1px solid var(--br)}
+.excard.exp .exbody{display:block}
+.exdg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:9px}
+.exd{background:var(--s3);border-radius:7px;padding:8px;text-align:center}
+.exd-v{font-size:14px;font-weight:900;color:var(--bl)}
+.exd-l{font-size:9px;color:var(--mt);font-weight:700;margin-top:1px}
+.tips{background:var(--s3);border-radius:8px;padding:9px;margin-top:8px}
+.tips-t{font-size:10px;color:var(--ac);font-weight:700;margin-bottom:5px}
+.tips ul{padding-inline-start:13px}
+.tips li{font-size:11px;color:var(--mt);margin-bottom:3px;line-height:1.5}
+.done-btn{width:100%;margin-top:12px;padding:13px;font-size:14px}
+.done-btn.cmp{background:var(--acd)!important;color:var(--ac)!important;border:1.5px solid var(--ac)!important;cursor:default!important}
+.lvlrow{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* MEALS */
+.daysel{display:flex;overflow-x:auto;gap:6px;padding:2px 0 8px;scrollbar-width:none}
+.daysel::-webkit-scrollbar{display:none}
+.dpill{padding:7px 13px;border-radius:50px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s}
+.dpill.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
+.mode-sw{display:flex;gap:6px;margin-bottom:10px}
+.msw{flex:1;padding:8px;border-radius:50px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+.msw.rm{border-color:var(--gd);color:var(--gd);background:var(--gdd)}
+.msw.nm{border-color:var(--ac);color:var(--ac);background:var(--acd)}
+.dtbar{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:11px 13px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.mcard{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
+.mc-hdr{padding:11px 12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:8px}
+.mc-nm{font-size:13px;font-weight:800;margin-top:3px;line-height:1.3}
+.mc-body{display:none;padding:11px 12px;border-top:1px solid var(--br)}
+.mcard.exp .mc-body{display:block}
+.mmac{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.mpill{padding:2px 8px;border-radius:20px;font-size:9px;font-weight:700}
+.ing-i{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--br);font-size:12px;line-height:1.4}
+.ing-i:last-child{border:none}
+.ing-i::before{content:'•';color:var(--ac);font-size:14px;flex-shrink:0;line-height:1.3}
+.minstr{background:var(--s3);border-radius:8px;padding:9px;margin-top:8px;font-size:12px;color:var(--mt);line-height:1.6}
+.mactions{display:flex;gap:6px;margin-top:9px}
+.mactions .btn{flex:1;padding:9px;font-size:11px}
+
+/* PROFILE */
+.profav{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--bl));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#0a0a14;margin:0 auto 10px}
+.pstats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.pst{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:11px;text-align:center}
+.pst-v{font-size:17px;font-weight:900;color:var(--ac)}
+.pst-l{font-size:10px;color:var(--mt);font-weight:700;margin-top:2px}
+.hist-i{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--s2);border-radius:8px;margin-bottom:5px}
+.alarm-i{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;background:var(--s2);border-radius:8px;margin-bottom:5px;border:1px solid var(--br)}
+.altime{font-size:17px;font-weight:900;color:var(--gd);font-variant-numeric:tabular-nums}
+.tsw{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0}
+.tsw input{opacity:0;width:0;height:0}
+.tsl{position:absolute;inset:0;background:var(--br);border-radius:34px;transition:.3s;cursor:pointer}
+.tsl:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:var(--mt);border-radius:50%;transition:.3s}
+input:checked+.tsl{background:var(--ac)}
+input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
+.lang-sw{display:flex;gap:6px}
+.lsw{flex:1;padding:9px;border-radius:50px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.lsw.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(5px)}
+.mov.on{display:flex}
+.modal{background:var(--s1);border:1px solid var(--br);border-radius:18px 18px 0 0;width:100%;max-width:500px;padding:20px 16px;max-height:85vh;overflow-y:auto}
+.mcls{float:inline-end;background:none;border:none;color:var(--mt);font-size:19px;cursor:pointer}
+.rstbtn{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:12px;font-weight:700;cursor:pointer;margin-top:6px}
+.rstbtn:hover{border-color:var(--pk);color:var(--pk)}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="savfl" id="savfl">💾</div>
+<div class="rtbar" id="rtbar" onclick="stopRT()">⏱ <span class="rtn" id="rtn">60</span>s</div>
+
+<!-- SPLASH -->
+<div class="page on" id="pg-splash">
+  <div style="font-size:56px;margin-bottom:12px">🏋️</div>
+  <div class="logo">FITFUEL</div>
+  <div style="font-size:11px;color:var(--mt);letter-spacing:2px;margin:6px 0 24px">KETTLEBELL · NUTRITION · RAMADAN</div>
+  <div class="lrow">
+    <button class="lbtn on" onclick="setL('ar',this)">العربية</button>
+    <button class="lbtn" onclick="setL('en',this)">English</button>
+  </div>
+  <button class="btn bp" style="padding:15px 52px;font-size:15px" onclick="startApp()" id="sp-btn">ابدأ 🚀</button>
+</div>
+
+<!-- SETUP -->
+<div class="page" id="pg-setup">
+<div class="wrap" style="padding-top:28px">
+  <div class="prog" id="prog"></div>
+  <div class="step" id="s1">
+    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s1t">—</div>
+    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s1s">—</div>
+    <div class="fl"><label class="lb" id="l-nm">—</label><input class="fi" id="i-nm" type="text"></div>
+    <div class="ig2">
+      <div class="fl"><label class="lb" id="l-ag">—</label><input class="fi" id="i-ag" type="number" min="10" max="80" placeholder="25"></div>
+      <div class="fl"><label class="lb" id="l-gn">—</label>
+        <select class="fi" id="i-gn"><option value="male" id="op-m">—</option><option value="female" id="op-f">—</option></select>
+      </div>
+    </div>
+    <div class="ig2">
+      <div class="fl"><label class="lb" id="l-wt">—</label><input class="fi" id="i-wt" type="number" placeholder="70"></div>
+      <div class="fl"><label class="lb" id="l-ht">—</label><input class="fi" id="i-ht" type="number" placeholder="170"></div>
+    </div>
+    <div class="nb"><button class="btn bp bw" id="nx1" onclick="nx(1)">—</button></div>
+  </div>
+  <div class="step" id="s2">
+    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s2t">—</div>
+    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s2s">—</div>
+    <div class="g2">
+      <div class="oc" onclick="pick(this,'goal','lose')"><div class="oi">🔥</div><div class="ol" id="g-lose">—</div></div>
+      <div class="oc" onclick="pick(this,'goal','gain')"><div class="oi">💪</div><div class="ol" id="g-gain">—</div></div>
+      <div class="oc" onclick="pick(this,'goal','maintain')"><div class="oi">⚖️</div><div class="ol" id="g-main">—</div></div>
+      <div class="oc" onclick="pick(this,'goal','fit')"><div class="oi">🏃</div><div class="ol" id="g-fit">—</div></div>
+    </div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx2" onclick="nx(2)">—</button></div>
+  </div>
+  <div class="step" id="s3">
+    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s3t">—</div>
+    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s3s">—</div>
+    <div class="g1">
+      <div class="oc oc-h" onclick="pick(this,'level','beginner')"><div class="oi">🌱</div><div><div class="ol" id="lv-b">—</div><div class="os" id="lv-bs">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'level','intermediate')"><div class="oi">⚡</div><div><div class="ol" id="lv-i">—</div><div class="os" id="lv-is">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'level','advanced')"><div class="oi">🔥</div><div><div class="ol" id="lv-a">—</div><div class="os" id="lv-as">—</div></div></div>
+    </div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx3" onclick="nx(3)">—</button></div>
+  </div>
+  <div class="step" id="s4">
+    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s4t">—</div>
+    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s4s">—</div>
+    <div class="g1">
+      <div class="oc oc-h" onclick="pick(this,'act','1.2')"><div class="oi">🪑</div><div><div class="ol" id="ac-1">—</div><div class="os" id="ac-1s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.375')"><div class="oi">🚶</div><div><div class="ol" id="ac-2">—</div><div class="os" id="ac-2s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.55')"><div class="oi">🏃</div><div><div class="ol" id="ac-3">—</div><div class="os" id="ac-3s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.725')"><div class="oi">⚡</div><div><div class="ol" id="ac-4">—</div></div></div>
+    </div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx4" onclick="finSetup()">🚀 <span id="nx4t">—</span></button></div>
+  </div>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="page" id="pg-main">
+
+<!-- HOME TAB -->
+<div id="t-home" style="display:block">
+<div class="wrap" style="padding-top:16px">
+  <div class="rbanner" id="rbanner">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="font-size:24px" id="rb-ic">🌙</div>
+      <div><div style="font-size:13px;font-weight:800;color:var(--gd)" id="rb-t">—</div><div style="font-size:10px;color:var(--mt)" id="rb-s">—</div></div>
+    </div>
+    <button class="rtoggle" id="rtogbtn" onclick="toggleRamadan()">—</button>
+  </div>
+  <div class="ptcard" id="ptcard">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><div class="tag" id="pt-tag">—</div><div style="font-size:12px;font-weight:700;margin-top:2px" id="pt-date"></div></div>
+      <div class="bdg bgd" id="pt-badge">—</div>
+    </div>
+    <div class="ptrow" id="ptrow"></div>
+    <div class="ptcnt" id="ptcnt"></div>
+    <div class="ptsrc" id="ptsrc"></div>
+  </div>
+  <div class="hero">
+    <div style="font-size:11px;color:var(--mt)" id="hm-gr">—</div>
+    <div style="font-size:19px;font-weight:900;margin-bottom:8px" id="hm-nm">—</div>
+    <div class="ringwrap">
+      <div style="position:relative">
+        <svg class="rsvg" viewBox="0 0 90 90">
+          <circle class="rbg2" cx="45" cy="45" r="35"/>
+          <circle class="rfl" id="rfl" cx="45" cy="45" r="35"/>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:15px;font-weight:900;color:var(--ac)" id="r-num">0</div>
+          <div style="font-size:9px;color:var(--mt);font-weight:700" id="r-lbl">/2000</div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:11px;color:var(--mt)" id="cs1">—</span><span style="font-size:11px;font-weight:800;color:var(--ac)" id="cv1">—</span></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:11px;color:var(--mt)" id="cs2">—</span><span style="font-size:11px;font-weight:800" id="cv2">0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:11px;color:var(--mt)" id="cs3">—</span><span style="font-size:11px;font-weight:800" id="cv3">—</span></div>
+      </div>
+    </div>
+    <div class="mbars">
+      <div class="mb"><div class="mb-l" id="lb-pro">—</div><div class="mb-v" id="mb1v" style="color:var(--bl)">0g</div><div class="mbar"><div class="mbf" id="mb1f" style="background:var(--bl);width:0%"></div></div></div>
+      <div class="mb"><div class="mb-l" id="lb-car">—</div><div class="mb-v" id="mb2v" style="color:var(--or)">0g</div><div class="mbar"><div class="mbf" id="mb2f" style="background:var(--or);width:0%"></div></div></div>
+      <div class="mb"><div class="mb-l" id="lb-fat">—</div><div class="mb-v" id="mb3v" style="color:var(--pk)">0g</div><div class="mbar"><div class="mbf" id="mb3f" style="background:var(--pk);width:0%"></div></div></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <h3 style="font-size:13px" id="lbl-qlog">—</h3>
+  </div>
+  <div class="logrow" style="gap:6px">
+    <input class="fi" id="log-nm" type="text" style="border-radius:10px;padding:9px 11px">
+    <input class="fi" id="log-cl" type="number" placeholder="kcal" style="width:72px;flex:none;border-radius:10px;padding:9px">
+    <button class="btn bp" onclick="logFood()" style="border-radius:10px;padding:9px 13px">+</button>
+  </div>
+  <div class="litems" id="litems"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px">
+    <h3 style="font-size:13px" id="lbl-tw">—</h3>
+    <button class="btn bo" style="padding:5px 10px;font-size:10px" id="sa-btn" onclick="showTab('workout')">—</button>
+  </div>
+  <div class="twc" onclick="showTab('workout')">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><div class="bdg bb" id="tw-lv">—</div><div style="font-size:14px;font-weight:900;margin-top:4px" id="tw-nm">—</div></div>
+      <div style="font-size:28px">🏋️</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--mt)">⏱ <span id="tw-d">—</span></span>
+      <span style="font-size:11px;color:var(--mt)">🏋️ <span id="tw-e">—</span></span>
+      <span style="font-size:11px;color:var(--mt)">🔥 <span id="tw-c">—</span></span>
+    </div>
+  </div>
+</div></div>
+
+<!-- WORKOUT TAB -->
+<div id="t-workout" style="display:none">
+<div class="wrap" style="padding-top:16px">
+  <div style="text-align:center;margin-bottom:14px">
+    <div class="tag" id="wk-tag">—</div>
+    <h1 style="font-size:19px;margin-top:4px" id="wk-ti">—</h1>
+  </div>
+  <div class="dayplan" id="dayplan"></div>
+  <div class="lvlrow" id="lvlrow"></div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h3 style="font-size:13px" id="pg-t">—</h3>
+      <div class="bdg bg" id="pg-bdg">0</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgst"><div class="pgst-v" id="pg1">0</div><div class="pgst-l" id="pg1l">—</div></div>
+      <div class="pgst"><div class="pgst-v" id="pg2">0</div><div class="pgst-l" id="pg2l">—</div></div>
+      <div class="pgst"><div class="pgst-v" id="pg3">1</div><div class="pgst-l" id="pg3l">—</div></div>
+    </div>
+  </div>
+  <div id="wkcnt"></div>
+  <div style="text-align:center;margin-top:6px">
+    <button class="btn bo" onclick="genWK(true)" style="padding:9px 18px">🔄 <span id="regen-t">—</span></button>
+  </div>
+</div></div>
+
+<!-- MEALS TAB -->
+<div id="t-meals" style="display:none">
+<div class="wrap" style="padding-top:16px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <h2 style="font-size:16px" id="ml-ti">—</h2>
+    <button class="btn bo" style="padding:6px 11px;font-size:11px" onclick="genAllMeals(true)">🔄 <span id="all-t">—</span></button>
+  </div>
+  <div class="mode-sw">
+    <button class="msw" id="msw-rm" onclick="setMode('ramadan')">🌙 <span id="msw-rm-t">—</span></button>
+    <button class="msw" id="msw-nm" onclick="setMode('normal')">☀️ <span id="msw-nm-t">—</span></button>
+  </div>
+  <div class="daysel" id="daysel"></div>
+  <div class="dtbar">
+    <div><div class="tag" id="dt-lb">—</div><div style="font-size:17px;font-weight:900" id="dt-cl">—</div></div>
+    <div style="text-align:end"><div style="font-size:10px;color:var(--mt)" id="dt-lbt">—</div><div style="font-size:13px;font-weight:800" id="dt-tv">—</div></div>
+  </div>
+  <div id="mlcnt"></div>
+</div></div>
+
+<!-- PROFILE TAB -->
+<div id="t-profile" style="display:none">
+<div class="wrap" style="padding-top:16px">
+  <div style="text-align:center;margin-bottom:16px">
+    <div class="profav" id="profav">?</div>
+    <h2 style="font-size:17px" id="prof-nm">—</h2>
+    <div style="font-size:11px;color:var(--mt);margin-top:2px" id="prof-gl">—</div>
+    <button class="btn bo" style="margin-top:8px;font-size:11px;padding:6px 14px" onclick="openEdit()" id="edit-btn">✏️ —</button>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h3 style="font-size:13px;margin-bottom:10px" id="lbl-lang">—</h3>
+    <div class="lang-sw">
+      <button class="lsw" id="lsw-ar" onclick="switchLang('ar')">🇲🇦 العربية</button>
+      <button class="lsw" id="lsw-en" onclick="switchLang('en')">🇬🇧 English</button>
+    </div>
+  </div>
+  <div class="pstats" id="pstats"></div>
+  <!-- CITY SELECTOR -->
+  <div class="card" style="margin-bottom:10px" id="city-card">
+    <h3 style="font-size:13px;margin-bottom:10px" id="city-lbl">📍 —</h3>
+    <select class="fi" id="city-sel" onchange="onCityChange(this.value)" style="font-size:13px;padding:10px 12px">
+    </select>
+    <div style="font-size:10px;color:var(--mt);margin-top:6px;text-align:center" id="city-note"></div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h3 style="font-size:13px;margin-bottom:10px" id="al-t">—</h3>
+    <div id="alarms-list"></div>
+    <div style="font-size:10px;color:var(--mt);margin-top:6px;text-align:center" id="al-note"></div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h3 style="font-size:13px;margin-bottom:10px" id="hs-t">—</h3>
+    <div id="wkhist"></div>
+  </div>
+  <button class="rstbtn" onclick="doReset()" id="rst-btn">—</button>
+</div></div>
+
+<nav class="bnav">
+  <button class="ni on" onclick="showTab('home')" id="nav-home"><span class="ni-ic">🏠</span><span class="ni-lb" id="nl-home">—</span></button>
+  <button class="ni" onclick="showTab('workout')" id="nav-workout"><span class="ni-ic">🏋️</span><span class="ni-lb" id="nl-workout">—</span></button>
+  <button class="ni" onclick="showTab('meals')" id="nav-meals"><span class="ni-ic">🥗</span><span class="ni-lb" id="nl-meals">—</span></button>
+  <button class="ni" onclick="showTab('profile')" id="nav-profile"><span class="ni-ic">👤</span><span class="ni-lb" id="nl-profile">—</span></button>
+</nav>
+</div>
+
+<div class="mov" id="editMov">
+<div class="modal">
+  <button class="mcls" onclick="closeMov('editMov')">✕</button>
+  <h3 style="margin-bottom:13px;font-size:15px" id="edit-ti">—</h3>
+  <div class="fl"><label class="lb" id="ed-lnm">—</label><input class="fi" id="ed-nm" type="text"></div>
+  <div class="ig2">
+    <div class="fl"><label class="lb" id="ed-lwt">—</label><input class="fi" id="ed-wt" type="number"></div>
+    <div class="fl"><label class="lb" id="ed-lht">—</label><input class="fi" id="ed-ht" type="number"></div>
+  </div>
+  <div class="fl"><label class="lb" id="ed-lag">—</label><input class="fi" id="ed-ag" type="number"></div>
+  <button class="btn bp bw" onclick="saveEdit()" style="margin-top:6px" id="ed-sv">—</button>
+</div>
+</div>
+
+<!-- NOTIFICATION PERMISSION POPUP -->
+<div class="mov" id="notifMov">
+<div class="modal" style="text-align:center;padding:28px 20px">
+  <div style="font-size:52px;margin-bottom:10px">🔔</div>
+  <h3 style="font-size:17px;font-weight:900;margin-bottom:7px" id="np-title">فعّل الإشعارات</h3>
+  <p style="font-size:13px;color:var(--mt);margin-bottom:20px;line-height:1.6" id="np-body">فعّل الإشعارات حتى يذكّرك التطبيق بوقت السحور، الإفطار، والتمرين 🏋️</p>
+  <button class="btn bp bw" onclick="doAllowNotif()" style="margin-bottom:10px;font-size:15px;padding:14px" id="np-allow">✅ السماح بالإشعارات</button>
+  <br>
+  <button class="btn bo" onclick="closeMov('notifMov')" style="font-size:13px;padding:9px 20px" id="np-skip">تخطي</button>
+</div>
+</div>
+<script>
+// ============================================================
+// TRANSLATIONS — Complete bilingual system
+// ============================================================
+const T = {
+  ar: {
+    // Splash/Setup
+    'sp-btn':'ابدأ 🚀',
+    's1t':'معلوماتك الشخصية','s1s':'لحساب سعراتك الدقيقة',
+    'l-nm':'الاسم','l-ag':'العمر','l-gn':'الجنس','l-wt':'الوزن (كغ)','l-ht':'الطول (سم)',
+    'op-m':'ذكر','op-f':'أنثى',
+    'nx1':'التالي →',
+    's2t':'هدفك؟','s2s':'يحدد سعراتك اليومية',
+    'g-lose':'حرق دهون','g-gain':'بناء عضل','g-main':'المحافظة','g-fit':'اللياقة',
+    'nx2':'التالي →',
+    's3t':'مستواك','s3s':'التطبيق يرفع الحدة تلقائياً',
+    'lv-b':'مبتدئ','lv-bs':'أقل من 3 أشهر',
+    'lv-i':'متوسط','lv-is':'3 أشهر - سنة',
+    'lv-a':'متقدم','lv-as':'أكثر من سنة',
+    'nx3':'التالي →',
+    's4t':'نشاطك اليومي','s4s':'خارج التمرين',
+    'ac-1':'مستقر','ac-1s':'مكتب / بيت',
+    'ac-2':'خفيف','ac-2s':'تمشية خفيفة',
+    'ac-3':'معتدل','ac-3s':'وقوف وتنقل',
+    'ac-4':'نشيط جداً',
+    'nx4t':'ابدأ رحلتك',
+    // Nav
+    'nl-home':'الرئيسية','nl-workout':'التمارين','nl-meals':'الوجبات','nl-profile':'الملف',
+    // Home
+    'hm-gr':'مرحباً،',
+    'cs1':'الهدف','cs2':'مستهلك','cs3':'متبقي',
+    'lb-pro':'بروتين','lb-car':'كربو','lb-fat':'دهون',
+    'lbl-qlog':'تسجيل سريع','log-nm-ph':'اسم الوجبة...',
+    'lbl-tw':'تمرين اليوم','sa-btn':'عرض الكل',
+    // Prayer
+    'pt-tag':'🇲🇦 أوقات الصلاة — الدار البيضاء',
+    'pt-suhoor':'السحور','pt-fajr':'الفجر','pt-maghrib':'الإفطار','pt-isha':'العشاء',
+    'rb-t':'رمضان مبارك 🌟','rb-s':'وضع رمضان مفعّل',
+    'rtoggle-on':'إيقاف','rtoggle-off':'تفعيل رمضان',
+    // Workout
+    'wk-tag':'برنامج الكيتل بيل','wk-ti':'جلسة اليوم',
+    'pg-t':'📈 تقدمك','pg1l':'جلسات','pg2l':'أيام متتالية','pg3l':'الحدة / 5',
+    'regen-t':'جلسة جديدة',
+    'wtype-upper':'الجزء العلوي 💪','wtype-lower':'الجزء السفلي 🦵',
+    'wtype-full':'كامل الجسم ⚡','wtype-cardio':'كارديو 🏃','wtype-rest':'يوم راحة 😴',
+    'wu-label':'الإحماء 🔥','main-label':'التمرين الرئيسي','cd-label':'التهدئة 🌬️',
+    'sets-l':'مجموعات','reps-l':'تكرارات','rest-l':'راحة',
+    'tips-t':'✅ نصائح الأداء',
+    'rt-btn':'⏱ ابدأ مؤقت الراحة',
+    'done-btn':'🎯 إنهاء الجلسة','done-cmp':'✅ الجلسة مكتملة',
+    'rest-day-msg':'يوم الراحة','rest-day-sub':'جسمك يتعافى ويكبر في أوقات الراحة 💪',
+    'lv-beginner':'مبتدئ 🌱','lv-intermediate':'متوسط ⚡','lv-advanced':'متقدم 🔥',
+    'done-today':'✅ أنهيت اليوم',
+    // Meals
+    'ml-ti':'خطة الوجبات','all-t':'كل الأيام',
+    'msw-rm-t':'رمضان','msw-nm-t':'عادي',
+    'dt-lb':'إجمالي اليوم','dt-lbt':'الهدف',
+    'mtype-iftar':'إفطار 🌙','mtype-isha':'عشاء 🌙','mtype-suhoor':'سحور 🌅',
+    'mtype-breakfast':'فطور 🌅','mtype-lunch':'غداء ☀️','mtype-snack':'سناك 🍎','mtype-dinner':'عشاء 🌙',
+    'ing-label':'المكونات (الوزن نيئاً)','prep-label':'التحضير:',
+    'log-meal-btn':'+ سجل الوجبة','change-btn':'🔄 غيّر',
+    'days':['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
+    // Profile
+    'edit-btn':'✏️ تعديل','lbl-lang':'🌐 اللغة',
+    'edit-ti':'تعديل الملف الشخصي',
+    'ed-lnm':'الاسم','ed-lwt':'الوزن (كغ)','ed-lht':'الطول (سم)','ed-lag':'العمر',
+    'ed-sv':'حفظ',
+    'al-t':'⏰ التنبيهات','hs-t':'📅 سجل التمارين',
+    'rst-btn':'🗑 إعادة ضبط كل شيء',
+    // Alarms
+    'al-iftar':'تنبيه الإفطار','al-suhoor':'تنبيه السحور','al-workout':'تنبيه التمرين',
+    'al-breakfast':'تنبيه الفطور','al-lunch':'تنبيه الغداء','al-snack':'تنبيه السناك','al-dinner':'تنبيه العشاء',
+    'al-granted':'✅ التنبيهات مفعّلة','al-denied':'❌ محظورة — افتح إعدادات المتصفح','al-default':'⚠️ اضغط أي تنبيه لتفعيل الإذن',
+    // Goals display
+    'goal-lose':'حرق الدهون 🔥','goal-gain':'بناء العضل 💪','goal-maintain':'المحافظة ⚖️','goal-fit':'اللياقة 🏃',
+    // Toasts
+    'toast-fill':'يرجى ملء جميع الحقول','toast-goal':'اختر هدفك','toast-level':'اختر مستواك','toast-act':'اختر مستوى النشاط',
+    'toast-saved':'✅ تم الحفظ','toast-newses':'🔄 جلسة جديدة!','toast-done':'✅ أحسنت! جلسة مكتملة 🏆',
+    'toast-meals':'🔄 تم تجديد الوجبات!','toast-meal1':'🔄 تم تغيير الوجبة!',
+    'toast-logged':'✅ تم التسجيل','toast-logfill':'أدخل الاسم والسعرات',
+    'toast-notif':'✅ التنبيهات مفعّلة!','toast-reset':'سيتم إعادة الضبط',
+    'toast-lvlup':'🎉 الحدة زادت!','toast-interm':'🚀 ترقيت إلى متوسط!','toast-adv':'🔥 مستوى متقدم!',
+    'toast-ram-on':'🌙 وضع رمضان مفعّل','toast-ram-off':'☀️ وضع عادي مفعّل',
+    'toast-lang':'✅ تم تغيير اللغة',
+    'confirm-reset':'هل أنت متأكد؟ ستُحذف جميع بياناتك!',
+    // Notifications body
+    'notif-iftar':'أفطر على التمر والماء الآن','notif-suhoor':'استيقظ للسحور قبل الفجر',
+    'notif-workout':'حان وقت الكيتل بيل!',
+    'notif-breakfast':'لا تتخطى الفطور','notif-lunch':'حان وقت الغداء',
+    'notif-snack':'وجبة خفيفة قبل التمرين','notif-dinner':'حان وقت العشاء',
+    'notif-rest-done':'انتهت الراحة! الجولة التالية!',
+    // misc
+    'no-sessions':'لا توجد جلسات بعد!',
+    'exs-label':'تمارين',
+    'ptsrc-live':'🟢 مباشر من الإنترنت','ptsrc-cache':'🟡 من الذاكرة','ptsrc-fallback':'⚪ تقريبي','ptsrc-calc':'🟢 محسوب فلكياً','ptsrc-gps':'🟢 GPS دقيق 📍','ptsrc-city':'🟢 محسوب لمدينتك 🏙️','ptsrc-default':'🟡 الدار البيضاء (افتراضي)','ptsrc-gps-fb':'🟡 GPS + حساب','ptsrc-calc-fb':'🟡 حساب محلي',
+    'countdown-to':'يتبقى لـ','h-label':'س ','m-label':' دقيقة',
+    'day-done':'اليوم مكتمل',
+  },
+  en: {
+    'sp-btn':'Start 🚀',
+    's1t':'Your Info','s1s':'To calculate your exact calories',
+    'l-nm':'Name','l-ag':'Age','l-gn':'Gender','l-wt':'Weight (kg)','l-ht':'Height (cm)',
+    'op-m':'Male','op-f':'Female',
+    'nx1':'Next →',
+    's2t':'Your Goal?','s2s':'Determines your daily calories',
+    'g-lose':'Fat Loss','g-gain':'Muscle Gain','g-main':'Maintain','g-fit':'Fitness',
+    'nx2':'Next →',
+    's3t':'Your Level','s3s':'App auto-increases intensity',
+    'lv-b':'Beginner','lv-bs':'Less than 3 months',
+    'lv-i':'Intermediate','lv-is':'3 months – 1 year',
+    'lv-a':'Advanced','lv-as':'More than 1 year',
+    'nx3':'Next →',
+    's4t':'Daily Activity','s4s':'Outside of workouts',
+    'ac-1':'Sedentary','ac-1s':'Office / Home',
+    'ac-2':'Lightly Active','ac-2s':'Light walking',
+    'ac-3':'Moderate','ac-3s':'Standing & moving',
+    'ac-4':'Very Active',
+    'nx4t':'Start Your Journey',
+    'nl-home':'Home','nl-workout':'Workout','nl-meals':'Meals','nl-profile':'Profile',
+    'hm-gr':'Hello,',
+    'cs1':'Target','cs2':'Consumed','cs3':'Remaining',
+    'lb-pro':'Protein','lb-car':'Carbs','lb-fat':'Fats',
+    'lbl-qlog':'Quick Log','log-nm-ph':'Meal name...',
+    'lbl-tw':"Today's Workout",'sa-btn':'View All',
+    'pt-tag':'🇲🇦 Prayer Times — Casablanca',
+    'pt-suhoor':'Suhoor','pt-fajr':'Fajr','pt-maghrib':'Iftar','pt-isha':'Isha',
+    'rb-t':'Ramadan Mubarak 🌟','rb-s':'Ramadan mode ON',
+    'rtoggle-on':'Disable','rtoggle-off':'Enable Ramadan',
+    'wk-tag':'Kettlebell Program','wk-ti':"Today's Session",
+    'pg-t':'📈 Progress','pg1l':'Sessions','pg2l':'Day Streak','pg3l':'Intensity / 5',
+    'regen-t':'New Session',
+    'wtype-upper':'Upper Body 💪','wtype-lower':'Lower Body 🦵',
+    'wtype-full':'Full Body ⚡','wtype-cardio':'Cardio 🏃','wtype-rest':'Rest Day 😴',
+    'wu-label':'Warm-Up 🔥','main-label':'Main Workout','cd-label':'Cool-Down 🌬️',
+    'sets-l':'Sets','reps-l':'Reps','rest-l':'Rest',
+    'tips-t':'✅ Form Tips',
+    'rt-btn':'⏱ Start Rest Timer',
+    'done-btn':'🎯 Finish Session','done-cmp':'✅ Session Complete',
+    'rest-day-msg':'Rest Day','rest-day-sub':'Your body recovers and grows on rest days 💪',
+    'lv-beginner':'Beginner 🌱','lv-intermediate':'Intermediate ⚡','lv-advanced':'Advanced 🔥',
+    'done-today':'✅ Done Today',
+    'ml-ti':'Meal Plan','all-t':'All Days',
+    'msw-rm-t':'Ramadan','msw-nm-t':'Normal',
+    'dt-lb':'Daily Total','dt-lbt':'Target',
+    'mtype-iftar':'Iftar 🌙','mtype-isha':'Dinner 🌙','mtype-suhoor':'Suhoor 🌅',
+    'mtype-breakfast':'Breakfast 🌅','mtype-lunch':'Lunch ☀️','mtype-snack':'Snack 🍎','mtype-dinner':'Dinner 🌙',
+    'ing-label':'Ingredients (raw weight)','prep-label':'Instructions:',
+    'log-meal-btn':'+ Log Meal','change-btn':'🔄 Change',
+    'days':['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    'edit-btn':'✏️ Edit','lbl-lang':'🌐 Language',
+    'edit-ti':'Edit Profile',
+    'ed-lnm':'Name','ed-lwt':'Weight (kg)','ed-lht':'Height (cm)','ed-lag':'Age',
+    'ed-sv':'Save',
+    'al-t':'⏰ Alarms','hs-t':'📅 Workout History',
+    'rst-btn':'🗑 Reset Everything',
+    'al-iftar':'Iftar Alarm','al-suhoor':'Suhoor Alarm','al-workout':'Workout Alarm',
+    'al-breakfast':'Breakfast Alarm','al-lunch':'Lunch Alarm','al-snack':'Snack Alarm','al-dinner':'Dinner Alarm',
+    'al-granted':'✅ Notifications enabled','al-denied':'❌ Blocked — open browser settings','al-default':'⚠️ Tap any alarm to enable',
+    'goal-lose':'Fat Loss 🔥','goal-gain':'Muscle Gain 💪','goal-maintain':'Maintenance ⚖️','goal-fit':'Fitness 🏃',
+    'toast-fill':'Please fill all fields','toast-goal':'Choose your goal','toast-level':'Choose your level','toast-act':'Choose activity level',
+    'toast-saved':'✅ Saved','toast-newses':'🔄 New session!','toast-done':'✅ Session complete! Great work 🏆',
+    'toast-meals':'🔄 Meals refreshed!','toast-meal1':'🔄 Meal changed!',
+    'toast-logged':'✅ Logged','toast-logfill':'Enter name and calories',
+    'toast-notif':'✅ Notifications enabled!','toast-reset':'Resetting...',
+    'toast-lvlup':'🎉 Intensity increased!','toast-interm':'🚀 Promoted to Intermediate!','toast-adv':'🔥 Reached Advanced level!',
+    'toast-ram-on':'🌙 Ramadan mode ON','toast-ram-off':'☀️ Normal mode ON',
+    'toast-lang':'✅ Language changed',
+    'confirm-reset':'Are you sure? All your data will be deleted!',
+    'notif-iftar':'Break fast with dates and water','notif-suhoor':'Wake for Suhoor before Fajr',
+    'notif-workout':'Kettlebell time!',
+    'notif-breakfast':"Don't skip breakfast",'notif-lunch':'Lunch time',
+    'notif-snack':'Light snack before workout','notif-dinner':'Dinner time',
+    'notif-rest-done':'Rest done! Next round!',
+    'no-sessions':'No sessions yet!',
+    'exs-label':'exercises',
+    'ptsrc-live':'🟢 Live from internet','ptsrc-cache':'🟡 Cached','ptsrc-fallback':'⚪ Approximate','ptsrc-calc':'🟢 Calculated','ptsrc-gps':'🟢 GPS accurate 📍','ptsrc-city':'🟢 Calculated for your city 🏙️','ptsrc-default':'🟡 Casablanca (default)','ptsrc-gps-fb':'🟡 GPS + local calc','ptsrc-calc-fb':'🟡 Local calc',
+    'countdown-to':'Time to ','h-label':'h ','m-label':'m',
+    'day-done':'Done today',
+  }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let L='ar', P={}, SEL={}, DLOG={}, WH=[], MP={},
+    CD=new Date().getDay(), CS=1,
+    isRamadan=true, mealMode='ramadan', _WP=null,
+    _AT=[], _CTD=null, _cachedPT=null;
+
+function t(key){ return (T[L]&&T[L][key]) || (T['ar']&&T['ar'][key]) || key; }
+
+// ============================================================
+// APPLY ALL TRANSLATIONS to DOM
+// ============================================================
+function applyLang(){
+  const ar = L==='ar';
+  document.documentElement.lang = L;
+  document.documentElement.dir = ar ? 'rtl' : 'ltr';
+  // Update every element that has a translation key
+  const ids = [
+    'sp-btn','s1t','s1s','l-nm','l-ag','l-gn','l-wt','l-ht','op-m','op-f','nx1',
+    's2t','s2s','g-lose','g-gain','g-main','g-fit','nx2',
+    's3t','s3s','lv-b','lv-bs','lv-i','lv-is','lv-a','lv-as','nx3',
+    's4t','s4s','ac-1','ac-1s','ac-2','ac-2s','ac-3','ac-3s','ac-4','nx4t',
+    'nl-home','nl-workout','nl-meals','nl-profile',
+    'hm-gr','cs1','cs2','cs3','lb-pro','lb-car','lb-fat','lbl-qlog','lbl-tw','sa-btn',
+    'pt-tag','wk-tag','wk-ti','pg-t','pg1l','pg2l','pg3l','regen-t',
+    'ml-ti','all-t','msw-rm-t','msw-nm-t','dt-lb','dt-lbt',
+    'edit-btn','lbl-lang','edit-ti','ed-lnm','ed-lwt','ed-lht','ed-lag','ed-sv',
+    'al-t','hs-t','rst-btn','pg-t'
+  ];
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && t(id)!==id) el.textContent=t(id);
+  });
+  // Placeholder
+  const logNm=document.getElementById('log-nm');
+  if(logNm) logNm.placeholder=t('log-nm-ph');
+  // Lang switcher active state
+  const lsar=document.getElementById('lsw-ar');
+  const lsen=document.getElementById('lsw-en');
+  if(lsar) lsar.classList.toggle('on', L==='ar');
+  if(lsen) lsen.classList.toggle('on', L==='en');
+  // Splash buttons
+  document.querySelectorAll('.lbtn').forEach(b=>{
+    b.classList.toggle('on', b.textContent.includes(ar?'العربية':'English') || (ar && b.textContent.includes('العربية')) || (!ar && b.textContent.includes('English')));
+  });
+}
+
+function setL(l, btn){
+  L=l;
+  document.querySelectorAll('.lbtn').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  applyLang();
+}
+
+function switchLang(l){
+  L=l;
+  save();
+  applyLang();
+  // Re-render all visible content
+  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
+  toast(t('toast-lang'));
+}
+
+// ============================================================
+// SAVE / LOAD
+// ============================================================
+function save(){
+  try{
+    localStorage.setItem('ff7',JSON.stringify({
+      L,P,SEL,DLOG,WH,MP,CD,isRamadan,mealMode,
+      WP:_WP, AS:window._AS||defaultAS(), PT:_cachedPT
+    }));
+    const el=document.getElementById('savfl');
+    el.textContent='💾 '+t('toast-saved');
+    el.classList.add('on');setTimeout(()=>el.classList.remove('on'),2000);
+  }catch(e){}
+}
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ff7')||'null');
+    if(!d)return false;
+    L=d.L||'ar'; P=d.P||{}; SEL=d.SEL||{}; DLOG=d.DLOG||{};
+    WH=d.WH||[]; MP=d.MP||{}; CD=d.CD||0;
+    isRamadan=d.isRamadan!==undefined?d.isRamadan:true;
+    mealMode=d.mealMode||'ramadan';
+    _WP=d.WP||null;
+    _cachedPT=d.PT||null;
+    window._AS=d.AS||defaultAS();
+    return !!P.name;
+  }catch(e){return false;}
+}
+function defaultAS(){ return{iftar:true,suhoor:true,workout:true,breakfast:true,lunch:true,snack:true,dinner:true}; }
+function toast(msg,ms=3000){
+  const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),ms);
+}
+
+// ============================================================
+// CALORIE CALCULATION (fixed — no scientific notation)
+// ============================================================
+function calcCal(){
+  const w=Number(P.weight)||70, h=Number(P.height)||170,
+        a=Number(P.age)||25, act=Number(P.activity)||1.2;
+  // Mifflin-St Jeor
+  let bmr = P.gender==='female'
+    ? (10*w)+(6.25*h)-(5*a)-161
+    : (10*w)+(6.25*h)-(5*a)+5;
+  let tdee = bmr * act;
+  let target = tdee;
+  if(P.goal==='lose') target = tdee - 400;
+  else if(P.goal==='gain') target = tdee + 250;
+  else if(P.goal==='fit') target = tdee - 150;
+  // Round all to integers
+  P.targetCal = Math.round(target);
+  P.tdee      = Math.round(tdee);
+  P.bmr       = Math.round(bmr);
+  P.protG     = Math.round(w * 1.8);
+  P.carbG     = Math.round(P.targetCal * 0.42 / 4);
+  P.fatG      = Math.round(P.targetCal * 0.28 / 9);
+}
+
+// ============================================================
+// PRAYER TIMES — Uses adhan.js (same engine as Salaat First / Muslim Pro)
+// 100% offline calculation. Loaded once from CDN, cached by browser.
+// ============================================================
+function addM(tstr, m){
+  if(!tstr) return '--:--';
+  const[h,mn]=tstr.split(':').map(Number);
+  let tm=h*60+mn+m; if(tm<0)tm+=1440; if(tm>=1440)tm-=1440;
+  return String(Math.floor(tm/60)).padStart(2,'0')+':'+String(tm%60).padStart(2,'0');
+}
+function t2m(tstr){ if(!tstr||tstr==='--:--')return-1; const[h,m]=tstr.split(':').map(Number); return h*60+m; }
+function cleanT(raw){ return (raw||'--:--').replace(/\s.*/,'').substring(0,5); }
+
+function to12h(t24){
+  if(!t24||t24==='--:--') return '--:--';
+  let [h,m]=t24.split(':').map(Number);
+  const ampm=h>=12?(L==='ar'?'م':'PM'):(L==='ar'?'ص':'AM');
+  h=h%12||12;
+  return `${h}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+function fmt(date){
+  // format a Date object to HH:MM local time string
+  const h=date.getHours(), m=date.getMinutes();
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+}
+
+let _adhanReady=false;
+function loadAdhan(){
+  return new Promise(resolve=>{
+    if(window.adhan){resolve(true);return;}
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/adhan@4.4.3/lib/adhan.min.js';
+    s.onload=()=>{_adhanReady=true;resolve(true);};
+    s.onerror=()=>resolve(false);
+    document.head.appendChild(s);
+  });
+}
+
+function calcWithAdhan(lat,lng){
+  try{
+    const coords=new adhan.Coordinates(lat,lng);
+    const date=new Date();
+    // MuslimWorldLeague method — used by most apps for Morocco
+    const params=adhan.CalculationMethod.MuslimWorldLeague();
+    params.madhab=adhan.Madhab.Shafi; // standard asr timing
+    const pt=new adhan.PrayerTimes(coords,date,params);
+    return{
+      fajr:fmt(pt.fajr),
+      sunrise:fmt(pt.sunrise),
+      dhuhr:fmt(pt.dhuhr),
+      asr:fmt(pt.asr),
+      maghrib:fmt(pt.maghrib),
+      isha:fmt(pt.isha),
+    };
+  }catch(e){return null;}
+}
+
+// Fallback: pure-JS astronomical calculation (no library needed)
+function calcFallback(lat, lng) {
+  const DEG = Math.PI / 180;
+  const date = new Date();
+  const tzOff = -date.getTimezoneOffset() / 60;
+
+  // Julian Day Number
+  let y = date.getFullYear(), mo = date.getMonth() + 1, d = date.getDate();
+  if (mo <= 2) { y--; mo += 12; }
+  const A = Math.floor(y / 100), B = 2 - A + Math.floor(A / 4);
+  const jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (mo + 1)) + d + B - 1524.5;
+
+  const D = jd - 2451545.0;
+
+  // Sun's mean anomaly & mean longitude (degrees)
+  const g = (357.529 + 0.98560028 * D) % 360;
+  const q = (280.459 + 0.98564736 * D) % 360;
+
+  // Ecliptic longitude (degrees)
+  const L2 = (q + 1.915 * Math.sin(g * DEG) + 0.02 * Math.sin(2 * g * DEG)) % 360;
+
+  // Obliquity of ecliptic
+  const e = (23.439 - 0.00000036 * D) * DEG;
+
+  // Declination
+  const dec = Math.asin(Math.sin(e) * Math.sin(L2 * DEG));
+
+  // Right Ascension (hours)
+  let RA = Math.atan2(Math.cos(e) * Math.sin(L2 * DEG), Math.cos(L2 * DEG)) / DEG / 15;
+  if (RA < 0) RA += 24;
+
+  // Equation of time (hours)
+  const eqt = q / 15 - RA;
+
+  // Solar noon in local time
+  const transit = 12 - lng / 15 + tzOff - eqt;
+
+  // Hour angle for a given altitude angle (degrees)
+  function ha(angle) {
+    const cosH = (-Math.sin(angle * DEG) - Math.sin(dec) * Math.sin(lat * DEG))
+                 / (Math.cos(dec) * Math.cos(lat * DEG));
+    if (cosH < -1 || cosH > 1) return null;
+    return Math.acos(cosH) / DEG / 15; // hours
+  }
+
+  function toHM(hours) {
+    if (hours === null) return '--:--';
+    hours = ((hours % 24) + 24) % 24;
+    const hh = Math.floor(hours);
+    const mm = Math.round((hours - hh) * 60);
+    if (mm === 60) return String(hh + 1).padStart(2, '0') + ':00';
+    return String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+  }
+
+  // Angles: Fajr 18° (Muslim World League), Maghrib at 0.833° (refraction+disc), Isha 17°
+  const fHA = ha(18);
+  const mHA = ha(0.833);
+  const iHA = ha(17);
+
+  return {
+    fajr:    toHM(fHA !== null ? transit - fHA : null),
+    maghrib: toHM(mHA !== null ? transit + mHA : null),
+    isha:    toHM(iHA !== null ? transit + iHA : null),
+  };
+}
+
+// ============================================================
+// CITIES DATABASE — accurate coords for Morocco + Arab world
+// ============================================================
+const CITIES=[
+  // Morocco
+  {n:'الدار البيضاء',e:'Casablanca',lat:33.5731,lng:-7.5898,tz:1},
+  {n:'الرباط',e:'Rabat',lat:33.9716,lng:-6.8498,tz:1},
+  {n:'فاس',e:'Fes',lat:34.0331,lng:-5.0003,tz:1},
+  {n:'مراكش',e:'Marrakech',lat:31.6295,lng:-7.9811,tz:1},
+  {n:'طنجة',e:'Tangier',lat:35.7595,lng:-5.8340,tz:1},
+  {n:'أكادير',e:'Agadir',lat:30.4278,lng:-9.5981,tz:1},
+  {n:'مكناس',e:'Meknes',lat:33.8935,lng:-5.5473,tz:1},
+  {n:'وجدة',e:'Oujda',lat:34.6814,lng:-1.9086,tz:1},
+  {n:'القنيطرة',e:'Kenitra',lat:34.2610,lng:-6.5802,tz:1},
+  {n:'تطوان',e:'Tetouan',lat:35.5785,lng:-5.3684,tz:1},
+  {n:'سلا',e:'Sale',lat:34.0531,lng:-6.7985,tz:1},
+  {n:'الجديدة',e:'El Jadida',lat:33.2316,lng:-8.5007,tz:1},
+  {n:'بني ملال',e:'Beni Mellal',lat:32.3373,lng:-6.3498,tz:1},
+  {n:'نادور',e:'Nador',lat:35.1740,lng:-2.9287,tz:1},
+  {n:'العيون',e:'Laayoune',lat:27.1536,lng:-13.2033,tz:1},
+  // Algeria
+  {n:'الجزائر',e:'Algiers',lat:36.7372,lng:3.0865,tz:1},
+  {n:'وهران',e:'Oran',lat:35.6969,lng:-0.6331,tz:1},
+  // Tunisia
+  {n:'تونس',e:'Tunis',lat:36.8065,lng:10.1815,tz:1},
+  // Egypt
+  {n:'القاهرة',e:'Cairo',lat:30.0444,lng:31.2357,tz:2},
+  // Saudi Arabia
+  {n:'مكة المكرمة',e:'Mecca',lat:21.3891,lng:39.8579,tz:3},
+  {n:'المدينة المنورة',e:'Medina',lat:24.5247,lng:39.5692,tz:3},
+  {n:'الرياض',e:'Riyadh',lat:24.7136,lng:46.6753,tz:3},
+  // UAE
+  {n:'دبي',e:'Dubai',lat:25.2048,lng:55.2708,tz:4},
+  // Jordan
+  {n:'عمّان',e:'Amman',lat:31.9454,lng:35.9284,tz:3},
+  // France (for Moroccan diaspora)
+  {n:'باريس',e:'Paris',lat:48.8566,lng:2.3522,tz:1},
+  {n:'مرسيليا',e:'Marseille',lat:43.2965,lng:5.3698,tz:1},
+];
+
+let _userCity=null; // {lat,lng,tz,name}
+
+function getCityCoords(){
+  const saved=localStorage.getItem('ff7_city');
+  if(saved){try{return JSON.parse(saved);}catch(e){}}
+  return null;
+}
+function saveCityCoords(city){
+  localStorage.setItem('ff7_city',JSON.stringify(city));
+  _userCity=city;
+}
+
+function onCityChange(idx){
+  if(idx===''||idx==='gps') {
+    localStorage.removeItem('ff7_city');
+    _userCity=null;
+    _cachedPT=null;
+    fetchPT().then(()=>{rPrayerCard();rAlarms();});
+    return;
+  }
+  const city=CITIES[+idx];
+  if(!city) return;
+  saveCityCoords(city);
+  _cachedPT=null;
+  fetchPT().then(()=>{rPrayerCard();rAlarms();});
+  toast((L==='ar'?'📍 تم اختيار ':'📍 City set: ')+(L==='ar'?city.n:city.e));
+}
+
+function renderCityCard(){
+  const ar=L==='ar';
+  document.getElementById('city-lbl').textContent='📍 '+(ar?'مدينتك للصلاة':'Your Prayer City');
+  const saved=getCityCoords();
+  const sel=document.getElementById('city-sel');
+  sel.innerHTML=`<option value="gps">${ar?'📡 تلقائي (GPS)':'📡 Auto (GPS)'}</option>`
+    +CITIES.map((c,i)=>`<option value="${i}">${ar?c.n:c.e}</option>`).join('');
+  // restore selected
+  if(saved){
+    const idx=CITIES.findIndex(c=>c.n===saved.n);
+    if(idx>=0) sel.value=String(idx);
+  } else {
+    sel.value='gps';
+  }
+  const note=document.getElementById('city-note');
+  if(!saved){
+    note.textContent=ar?'⚠️ GPS يحتاج HTTPS — اختر مدينتك إذا كنت على Chrome مباشرة':'⚠️ GPS needs HTTPS — pick city if using Chrome directly';
+    note.style.color='var(--or)';
+  } else {
+    note.textContent=ar?'✅ الأوقات محسوبة لمدينتك':'✅ Times calculated for your city';
+    note.style.color='var(--ac)';
+  }
+}
+
+async function getCoords(){
+  // If user manually picked a city, use it
+  const city=getCityCoords();
+  if(city) return {lat:city.lat, lng:city.lng, fromCity:true};
+  // Otherwise try browser GPS
+  return new Promise((resolve)=>{
+    if(!navigator.geolocation){resolve(null);return;}
+    navigator.geolocation.getCurrentPosition(
+      pos=>resolve({lat:pos.coords.latitude,lng:pos.coords.longitude}),
+      ()=>resolve(null),
+      {timeout:5000,maximumAge:3600000}
+    );
+  });
+}
+
+async function fetchPT(){
+  const today=new Date();
+  const todayStr=today.toDateString();
+  if(_cachedPT&&_cachedPT.date===todayStr) return _cachedPT;
+
+  const coords=await Promise.race([
+    getCoords(),
+    new Promise(r=>setTimeout(()=>r(null),4000))
+  ]);
+
+  const lat=coords?coords.lat:33.5731;
+  const lng=coords?coords.lng:-7.5898;
+  const fromCity=coords&&coords.fromCity;
+
+  // Try adhan.js (most accurate, same engine as Salaat First)
+  let times=null;
+  const adhanLoaded=await loadAdhan();
+  if(adhanLoaded) times=calcWithAdhan(lat,lng);
+  if(!times) times=calcFallback(lat,lng);
+
+  const fajr=times.fajr||'--:--';
+  const magh=times.maghrib||'--:--';
+  const isha=times.isha||'--:--';
+
+  let src;
+  if(fromCity) src='city';
+  else if(coords) src='gps';
+  else src='default';
+
+  _cachedPT={fajr,maghrib:magh,isha,suhoor:addM(fajr,-35),workout:addM(magh,90),date:todayStr,src};
+  try{localStorage.setItem('ff7_pt',JSON.stringify(_cachedPT));}catch(e){}
+  return _cachedPT;
+}
+
+function getPT(){
+  if(_cachedPT&&_cachedPT.fajr) return _cachedPT;
+  const t=calcFallback(33.5731,-7.5898);
+  return{fajr:t.fajr||'--:--',maghrib:t.maghrib||'--:--',isha:t.isha||'--:--',
+         suhoor:addM(t.fajr,-35),workout:addM(t.maghrib,90),src:'calc'};
+}
+
+function rPrayerCard(){
+  if(!isRamadan){document.getElementById('ptcard').style.display='none';return;}
+  document.getElementById('ptcard').style.display='block';
+  const pt=getPT();
+  const now=new Date();
+  const months_ar=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  const months_en=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const days_ar=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const days_en=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const ds=L==='ar'?days_ar:days_en, ms=L==='ar'?months_ar:months_en;
+  document.getElementById('pt-date').textContent=`${ds[now.getDay()]} ${now.getDate()} ${ms[now.getMonth()]} ${now.getFullYear()}`;
+  document.getElementById('pt-tag').textContent=t('pt-tag');
+  const items=[
+    {k:'maghrib',lbl:t('pt-maghrib'),tm:pt.maghrib,ic:'🌅'},
+    {k:'isha',lbl:t('pt-isha'),tm:pt.isha,ic:'🌙'},
+    {k:'suhoor',lbl:t('pt-suhoor'),tm:pt.suhoor,ic:'⭐'}
+  ];
+  const nowMin=now.getHours()*60+now.getMinutes();
+  let nextIdx=-1;
+  items.forEach((x,i)=>{ if(nextIdx===-1&&t2m(x.tm)>nowMin) nextIdx=i; });
+  document.getElementById('ptrow').innerHTML=items.map((x,i)=>`
+    <div class="ptime${i===nextIdx?' nx':''}">
+      <div style="font-size:12px">${x.ic}</div>
+      <div class="ptime-v">${to12h(x.tm)}</div>
+      <div class="ptime-l">${x.lbl}</div>
+    </div>`).join('');
+  if(nextIdx>=0){
+    const nx=items[nextIdx];
+    const [th,tm2]=nx.tm.split(':').map(Number);
+    const tgtSec = th*3600 + tm2*60;
+    const nowSec = now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds();
+    let diffSec = tgtSec - nowSec;
+    if(diffSec < 0) diffSec += 86400; // handle midnight rollover
+    const dh=Math.floor(diffSec/3600);
+    const dm=Math.floor((diffSec%3600)/60);
+    const ds=diffSec%60;
+    const badge = dh>0 ? `${dh}h ${dm}m` : dm>0 ? `${dm}m ${ds}s` : `${ds}s`;
+    document.getElementById('pt-badge').textContent=badge;
+    const full = dh>0
+      ? `${dh}${t('h-label')} ${dm}${t('m-label')} ${ds}s`
+      : `${dm}${t('m-label')} ${ds}s`;
+    document.getElementById('ptcnt').textContent=t('countdown-to')+nx.lbl+': '+full;
+  } else {
+    document.getElementById('pt-badge').textContent=t('day-done');
+    document.getElementById('ptcnt').textContent='';
+  }
+  const srcMap={live:t('ptsrc-live'),cache:t('ptsrc-cache'),fallback:t('ptsrc-fallback'),calc:t('ptsrc-calc'),gps:t('ptsrc-gps'),city:t('ptsrc-city'),default:t('ptsrc-default'),'gps-fb':t('ptsrc-gps-fb'),'calc-fb':t('ptsrc-calc-fb')};
+  document.getElementById('ptsrc').textContent=srcMap[pt.src||'default']||'';
+}
+
+function startPTLoop(){
+  if(_CTD)clearInterval(_CTD);
+  if(window._CTD2)clearInterval(window._CTD2);
+  // Fetch fresh prayer times immediately
+  fetchPT().then(()=>rPrayerCard());
+  // Re-fetch once per hour (cache handles same-day deduplication)
+  _CTD=setInterval(()=>{ _cachedPT=null; fetchPT().then(()=>rPrayerCard()); },3600000);
+  // Tick every second so the countdown is live
+  window._CTD2=setInterval(()=>{ rPrayerCard(); },1000);
+}
+
+// ============================================================
+// RAMADAN
+// ============================================================
+function rRamadanUI(){
+  const on=isRamadan;
+  document.getElementById('rb-ic').textContent=on?'🌙':'☀️';
+  document.getElementById('rb-t').textContent=on?t('rb-t'):(L==='ar'?'وضع التمرين العادي':'Normal Training Mode');
+  document.getElementById('rb-s').textContent=on?t('rb-s'):(L==='ar'?'وضع عادي مفعّل':'Normal mode ON');
+  const btn=document.getElementById('rtogbtn');
+  btn.textContent=on?t('rtoggle-on'):t('rtoggle-off');
+  btn.classList.toggle('off',!on);
+  rPrayerCard();
+}
+function toggleRamadan(){
+  isRamadan=!isRamadan; mealMode=isRamadan?'ramadan':'normal';
+  calcCal(); genAllMeals(false); save(); rRamadanUI(); rHome(); rMeals(); rAlarms();
+  toast(isRamadan?t('toast-ram-on'):t('toast-ram-off'));
+}
+function setMode(m){ mealMode=m; genAllMeals(false); save(); rMeals(); }
+
+// ============================================================
+// SCREENS
+// ============================================================
+function showMain(){
+  document.getElementById('pg-splash').classList.remove('on');
+  document.getElementById('pg-setup').classList.remove('on');
+  document.getElementById('pg-main').classList.add('on');
+  applyLang();
+  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
+  reqNotif(); startPTLoop();
+  setInterval(save, 30000);
+}
+function showTab(tab){
+  ['home','workout','meals','profile'].forEach(tb=>{
+    document.getElementById('t-'+tb).style.display='none';
+    document.getElementById('nav-'+tb).classList.remove('on');
+  });
+  document.getElementById('t-'+tab).style.display='block';
+  document.getElementById('nav-'+tab).classList.add('on');
+  if(tab==='home') rHome();
+  if(tab==='workout') rWorkout();
+  if(tab==='meals') rMeals();
+  if(tab==='profile') rProfile();
+}
+
+// ============================================================
+// SETUP
+// ============================================================
+function rProg(){
+  document.getElementById('prog').innerHTML=
+    [1,2,3,4].map(i=>`<div class="prg ${i<CS?'d':i===CS?'c':''}"></div>`).join('');
+}
+function showStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on'); rProg(); applyLang();
+}
+function pick(el,k,v){
+  el.closest('.g2,.g1').querySelectorAll('.oc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on'); SEL[k]=v;
+}
+function nx(from){
+  if(from===1){
+    const n=document.getElementById('i-nm').value.trim();
+    const a=+document.getElementById('i-ag').value;
+    const w=+document.getElementById('i-wt').value;
+    const h=+document.getElementById('i-ht').value;
+    if(!n){toast(L==='ar'?'أدخل اسمك':'Enter your name');return;}
+    if(!a||a<10||a>100){toast(L==='ar'?'العمر يجب أن يكون بين 10 و100 سنة':'Age must be between 10 and 100');return;}
+    if(!w||w<20||w>300){toast(L==='ar'?'الوزن يجب أن يكون بين 20 و300 كغ':'Weight must be between 20 and 300 kg');return;}
+    if(!h||h<100||h>250){toast(L==='ar'?'الطول يجب أن يكون بين 100 و250 سم':'Height must be between 100 and 250 cm');return;}
+    P.name=n; P.age=a; P.weight=w; P.height=h;
+    P.gender=document.getElementById('i-gn').value;
+  }
+  if(from===2&&!SEL.goal){toast(t('toast-goal'));return;}
+  if(from===3&&!SEL.level){toast(t('toast-level'));return;}
+  CS++; showStep(CS);
+}
+function pv(){ CS--; showStep(CS); }
+function finSetup(){
+  if(!SEL.act){toast(t('toast-act'));return;}
+  P.goal=SEL.goal; P.level=SEL.level; P.activity=parseFloat(SEL.act);
+  P.sessions=0; P.streak=0; P.intensity=1; P.lastWD=null; P.doneToday=false;
+  window._AS=defaultAS();
+  calcCal(); genWK(false); genAllMeals(false); save(); showMain();
+}
+
+// ============================================================
+// HOME
+// ============================================================
+function rHome(){
+  if(!P.name) return;
+  applyLang();
+  document.getElementById('hm-gr').textContent=t('hm-gr');
+  document.getElementById('hm-nm').textContent=P.name+' 👋';
+  const key=new Date().toDateString();
+  if(!DLOG[key]) DLOG[key]={foods:[],tCal:0,tP:0,tC:0,tF:0};
+  const log=DLOG[key];
+  const target=P.targetCal||2000, consumed=log.tCal||0;
+  const pct=Math.min(consumed/target,1);
+  document.getElementById('rfl').style.strokeDashoffset=220-(pct*220);
+  document.getElementById('r-num').textContent=consumed;
+  document.getElementById('r-lbl').textContent='/'+target;
+  document.getElementById('cv1').textContent=target+' kcal';
+  document.getElementById('cv2').textContent=consumed+' kcal';
+  document.getElementById('cv3').textContent=Math.max(0,target-consumed)+' kcal';
+  document.getElementById('mb1v').textContent=(log.tP||0)+'g';
+  document.getElementById('mb1f').style.width=Math.min((log.tP||0)/(P.protG||1)*100,100)+'%';
+  document.getElementById('mb2v').textContent=(log.tC||0)+'g';
+  document.getElementById('mb2f').style.width=Math.min((log.tC||0)/(P.carbG||1)*100,100)+'%';
+  document.getElementById('mb3v').textContent=(log.tF||0)+'g';
+  document.getElementById('mb3f').style.width=Math.min((log.tF||0)/(P.fatG||1)*100,100)+'%';
+  rLogItems(); rTWCard();
+}
+function rLogItems(){
+  const key=new Date().toDateString(), log=DLOG[key];
+  const el=document.getElementById('litems');
+  if(!log||!log.foods.length){el.innerHTML='';return;}
+  el.innerHTML=log.foods.map((f,i)=>`
+    <div class="li">
+      <span style="font-size:12px;font-weight:600">${f.name}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:11px;font-weight:800;color:var(--ac)">${f.cal} kcal</span>
+        <button class="li-del" onclick="delLog(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+function logFood(){
+  const nm=document.getElementById('log-nm').value.trim();
+  const cl=Math.round(+document.getElementById('log-cl').value);
+  if(!nm||!cl||cl<=0){toast(t('toast-logfill'));return;}
+  const key=new Date().toDateString();
+  if(!DLOG[key]) DLOG[key]={foods:[],tCal:0,tP:0,tC:0,tF:0};
+  const p=Math.round(cl*0.25/4), c2=Math.round(cl*0.45/4), f=Math.round(cl*0.30/9);
+  DLOG[key].foods.push({name:nm,cal:cl,p,c:c2,f});
+  DLOG[key].tCal=(DLOG[key].tCal||0)+cl;
+  DLOG[key].tP=(DLOG[key].tP||0)+p;
+  DLOG[key].tC=(DLOG[key].tC||0)+c2;
+  DLOG[key].tF=(DLOG[key].tF||0)+f;
+  document.getElementById('log-nm').value='';
+  document.getElementById('log-cl').value='';
+  save(); rHome();
+}
+function delLog(i){
+  const key=new Date().toDateString(), f=DLOG[key].foods[i];
+  DLOG[key].tCal-=f.cal; DLOG[key].tP-=f.p; DLOG[key].tC-=f.c; DLOG[key].tF-=f.f;
+  DLOG[key].foods.splice(i,1); save(); rHome();
+}
+function logMeal(cal,nm){
+  const key=new Date().toDateString();
+  if(!DLOG[key]) DLOG[key]={foods:[],tCal:0,tP:0,tC:0,tF:0};
+  cal=Math.round(+cal);
+  const p=Math.round(cal*0.28/4), c2=Math.round(cal*0.42/4), f=Math.round(cal*0.30/9);
+  DLOG[key].foods.push({name:nm,cal,p,c:c2,f});
+  DLOG[key].tCal=(DLOG[key].tCal||0)+cal;
+  DLOG[key].tP=(DLOG[key].tP||0)+p;
+  DLOG[key].tC=(DLOG[key].tC||0)+c2;
+  DLOG[key].tF=(DLOG[key].tF||0)+f;
+  save(); rHome(); toast('✅ '+nm+' — '+cal+' kcal');
+}
+
+// ============================================================
+// MEALS DB — Simple, fast (<10min), no onion/garlic
+// ============================================================
+const ML={
+  ramadan:{
+    iftar:[
+      {ar:'بيض مسلوق + خبز + زيتون + تمر',en:'Boiled Eggs + Bread + Olives + Dates',
+       cal:360,p:20,c:38,f:14,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+       i_ar:['3 بيضات','شريحة خبز (50غ)','8 زيتون','3 تمرات','كوب ماء'],
+       i_en:['3 eggs','1 bread slice (50g)','8 olives','3 dates','glass water'],
+       p_ar:'اسلق البيض 8 دق. قدم مع الخبز والزيتون والتمر. ابدأ بالتمر والماء.',
+       p_en:'Boil eggs 8 min. Serve with bread, olives and dates. Start with dates and water.'},
+      {ar:'تونة + خبز + طماطم + تمر',en:'Tuna + Bread + Tomato + Dates',
+       cal:330,p:26,c:30,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+       i_ar:['علبة تونة (80غ)','شريحة خبز (50غ)','طماطمة','3 تمرات','زيت زيتون'],
+       i_en:['1 tuna can (80g)','1 bread slice (50g)','1 tomato','3 dates','olive oil'],
+       p_ar:'افتح التونة. قطع الطماطم. قدم مع الخبز. 0 دقائق طهي.',
+       p_en:'Open tuna. Slice tomato. Serve with bread. 0 min cooking.'},
+      {ar:'سردين + خبز + طماطم + تمر',en:'Sardines + Bread + Tomato + Dates',
+       cal:320,p:24,c:28,f:12,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+       i_ar:['علبة سردين (90غ)','شريحة خبز (50غ)','طماطمة','3 تمرات'],
+       i_en:['1 sardine can (90g)','1 bread slice (50g)','1 tomato','3 dates'],
+       p_ar:'افتح السردين مباشرة. قدم مع الخبز والطماطم.',
+       p_en:'Open sardines directly. Serve with bread and tomato.'},
+      {ar:'لبن + تمر + خبز',en:'Yogurt + Dates + Bread',
+       cal:280,p:12,c:44,f:6,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+       i_ar:['250مل لبن رايب','4 تمرات','شريحة خبز'],
+       i_en:['250ml yogurt/lben','4 dates','1 bread slice'],
+       p_ar:'قدم اللبن مع التمر والخبز. الأسرع وجبة إفطار.',
+       p_en:'Serve yogurt with dates and bread. Fastest iftar.'}
+    ],
+    isha:[
+      {ar:'دجاج مسلوق + أرز',en:'Boiled Chicken + Rice',
+       cal:520,p:46,c:54,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
+       i_ar:['200غ صدر دجاج نيء','100غ أرز نيء','ملح + كمون + كزبرة'],
+       i_en:['200g raw chicken breast','100g raw rice','salt + cumin + cilantro'],
+       p_ar:'اسلق الدجاج 20 دق. اطبخ الأرز. قدم مع عصير ليمون.',
+       p_en:'Boil chicken 20 min. Cook rice. Serve with lemon juice.'},
+      {ar:'تونة + أرز + طماطم',en:'Tuna + Rice + Tomato',
+       cal:480,p:36,c:58,f:8,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
+       i_ar:['2 علبة تونة (160غ)','100غ أرز نيء','2 طماطمة','زيت + ليمون'],
+       i_en:['2 tuna cans (160g)','100g raw rice','2 tomatoes','oil + lemon'],
+       p_ar:'اطبخ الأرز. صفِّ التونة. قدم مع الطماطم والزيت.',
+       p_en:'Cook rice. Drain tuna. Serve with tomato and oil.'},
+      {ar:'بيض مقلي + بطاطا مسلوقة',en:'Fried Eggs + Boiled Potatoes',
+       cal:460,p:22,c:52,f:18,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
+       i_ar:['3 بيضات','2 بطاطا (300غ نيئة)','ملعقة زيت','ملح + كمون'],
+       i_en:['3 eggs','2 potatoes (300g raw)','1 tbsp oil','salt + cumin'],
+       p_ar:'اسلق البطاطا 15 دق. اقلي البيض في الزيت 3 دق.',
+       p_en:'Boil potatoes 15 min. Fry eggs in oil 3 min.'},
+      {ar:'معكرونة + تونة + طماطم',en:'Pasta + Tuna + Tomato',
+       cal:500,p:32,c:66,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
+       i_ar:['100غ معكرونة نيئة','2 علبة تونة','3 طماطمات','زيت + ملح + فلفل'],
+       i_en:['100g raw pasta','2 tuna cans','3 tomatoes','oil + salt + pepper'],
+       p_ar:'اسلق المعكرونة 8 دق. اطبخ الطماطم 5 دق. اخلط مع التونة.',
+       p_en:'Boil pasta 8 min. Cook tomatoes 5 min. Mix with tuna.'},
+      {ar:'عدس مطبوخ + خبز',en:'Cooked Lentils + Bread',
+       cal:400,p:20,c:58,f:6,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
+       i_ar:['150غ عدس نيء','2 طماطمة','ملح + كمون + زيت + كزبرة','شريحة خبز'],
+       i_en:['150g raw lentils','2 tomatoes','salt + cumin + oil + cilantro','bread slice'],
+       p_ar:'اسلق العدس 20 دق. أضف الطماطم والتوابل والزيت.',
+       p_en:'Boil lentils 20 min. Add tomatoes, spices and oil.'},
+      {ar:'سردين + بطاطا مسلوقة',en:'Sardines + Boiled Potatoes',
+       cal:440,p:30,c:38,f:16,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
+       i_ar:['2 علبة سردين (180غ)','2 بطاطا (300غ نيئة)','ليمون + ملح'],
+       i_en:['2 sardine cans (180g)','2 potatoes (300g raw)','lemon + salt'],
+       p_ar:'اسلق البطاطا 15 دق. قدم مع السردين وعصير الليمون.',
+       p_en:'Boil potatoes 15 min. Serve with sardines and lemon juice.'}
+    ],
+    suhoor:[
+      {ar:'شوفان + حليب + تمر',en:'Oats + Milk + Dates',
+       cal:460,p:16,c:72,f:12,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
+       i_ar:['100غ شوفان','300مل حليب','4 تمرات','ملعقة زيت (اختياري)'],
+       i_en:['100g oats','300ml milk','4 dates','1 tbsp oil (optional)'],
+       p_ar:'اطبخ الشوفان بالحليب 5 دق. أضف التمر. الزيت يمد الطاقة.',
+       p_en:'Cook oats in milk 5 min. Add dates. Oil sustains energy.'},
+      {ar:'بيض مسلوق + خبز + زيتون',en:'Boiled Eggs + Bread + Olives',
+       cal:380,p:20,c:36,f:16,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
+       i_ar:['3 بيضات','2 شريحة خبز (70غ)','8 زيتون','كوب حليب'],
+       i_en:['3 eggs','2 bread slices (70g)','8 olives','glass milk'],
+       p_ar:'اسلق البيض 8 دق. قدم مع الخبز والزيتون والحليب.',
+       p_en:'Boil eggs 8 min. Serve with bread, olives and milk.'},
+      {ar:'موز + حليب + تمر',en:'Banana + Milk + Dates',
+       cal:360,p:10,c:64,f:8,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
+       i_ar:['2 موزة','300مل حليب','3 تمرات'],
+       i_en:['2 bananas','300ml milk','3 dates'],
+       p_ar:'لا طهي. أسرع سحور ممكن.',
+       p_en:'No cooking. Fastest possible suhoor.'},
+      {ar:'شوفان + حليب + موز',en:'Oats + Milk + Banana',
+       cal:420,p:14,c:70,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
+       i_ar:['100غ شوفان','250مل حليب','موزة','ملعقة عسل'],
+       i_en:['100g oats','250ml milk','1 banana','1 tsp honey'],
+       p_ar:'اطبخ الشوفان 5 دق. قطع الموز فوقه.',
+       p_en:'Cook oats 5 min. Slice banana on top.'}
+    ]
+  },
+  normal:{
+    breakfast:[
+      {ar:'بيض مقلي + خبز',en:'Fried Eggs + Bread',cal:350,p:18,c:34,f:16,time_ar:'09:00 🌅',time_en:'09:00 🌅',
+       i_ar:['3 بيضات','شريحة خبز (50غ)','ملعقة زيت','ملح + فلفل'],
+       i_en:['3 eggs','1 bread slice (50g)','1 tbsp oil','salt + pepper'],
+       p_ar:'اقلي البيض في الزيت 3 دق. قدم مع الخبز.',p_en:'Fry eggs in oil 3 min. Serve with bread.'},
+      {ar:'شوفان + حليب + موز',en:'Oats + Milk + Banana',cal:390,p:12,c:66,f:10,time_ar:'09:00 🌅',time_en:'09:00 🌅',
+       i_ar:['100غ شوفان','250مل حليب','موزة','عسل'],
+       i_en:['100g oats','250ml milk','1 banana','honey'],
+       p_ar:'اطبخ الشوفان 5 دق. قطع الموز فوقه.',p_en:'Cook oats 5 min. Slice banana on top.'},
+      {ar:'تونة + خبز + طماطم',en:'Tuna + Bread + Tomato',cal:320,p:26,c:30,f:8,time_ar:'09:00 🌅',time_en:'09:00 🌅',
+       i_ar:['علبة تونة (80غ)','شريحة خبز','طماطمة','زيت زيتون'],
+       i_en:['1 tuna can (80g)','1 bread slice','1 tomato','olive oil'],
+       p_ar:'افتح التونة. لا طهي. 0 دقائق.',p_en:'Open tuna. No cooking. 0 min.'},
+      {ar:'موز + حليب',en:'Banana + Milk',cal:280,p:8,c:52,f:6,time_ar:'09:00 🌅',time_en:'09:00 🌅',
+       i_ar:['2 موزة (240غ)','300مل حليب'],i_en:['2 bananas (240g)','300ml milk'],
+       p_ar:'لا طهي. الأسرع.',p_en:'No cooking. Fastest.'},
+      {ar:'سردين + خبز',en:'Sardines + Bread',cal:300,p:22,c:28,f:12,time_ar:'09:00 🌅',time_en:'09:00 🌅',
+       i_ar:['علبة سردين (90غ)','شريحة خبز','طماطمة'],i_en:['1 sardine can (90g)','1 bread slice','tomato'],
+       p_ar:'افتح السردين مع الخبز.',p_en:'Open sardines with bread.'}
+    ],
+    lunch:[
+      {ar:'دجاج مسلوق + أرز',en:'Boiled Chicken + Rice',cal:520,p:46,c:54,f:10,time_ar:'14:00 ☀️',time_en:'14:00 ☀️',
+       i_ar:['200غ صدر دجاج نيء','100غ أرز نيء','ملح + كمون'],
+       i_en:['200g raw chicken breast','100g raw rice','salt + cumin'],
+       p_ar:'اسلق الدجاج 20 دق. اطبخ الأرز. قدم معاً.',p_en:'Boil chicken 20 min. Cook rice. Serve together.'},
+      {ar:'تونة + أرز + طماطم',en:'Tuna + Rice + Tomato',cal:480,p:36,c:58,f:8,time_ar:'14:00 ☀️',time_en:'14:00 ☀️',
+       i_ar:['2 علبة تونة','100غ أرز نيء','2 طماطمة','زيت + ليمون'],
+       i_en:['2 tuna cans','100g raw rice','2 tomatoes','oil + lemon'],
+       p_ar:'اطبخ الأرز. رتب مع التونة والطماطم.',p_en:'Cook rice. Arrange with tuna and tomatoes.'},
+      {ar:'عدس مطبوخ + خبز',en:'Cooked Lentils + Bread',cal:420,p:22,c:62,f:6,time_ar:'14:00 ☀️',time_en:'14:00 ☀️',
+       i_ar:['150غ عدس نيء','2 طماطمة','ملح + كمون + زيت + كزبرة','شريحة خبز'],
+       i_en:['150g raw lentils','2 tomatoes','salt + cumin + oil + cilantro','bread'],
+       p_ar:'اسلق العدس 20 دق. أضف الطماطم والتوابل.',p_en:'Boil lentils 20 min. Add tomatoes and spices.'},
+      {ar:'معكرونة + تونة + طماطم',en:'Pasta + Tuna + Tomato',cal:500,p:32,c:66,f:10,time_ar:'14:00 ☀️',time_en:'14:00 ☀️',
+       i_ar:['100غ معكرونة نيئة','2 علبة تونة','3 طماطمات','زيت + ملح'],
+       i_en:['100g raw pasta','2 tuna cans','3 tomatoes','oil + salt'],
+       p_ar:'اسلق المعكرونة 8 دق. اخلط مع الطماطم المطبوخة والتونة.',p_en:'Boil pasta 8 min. Mix with cooked tomatoes and tuna.'},
+      {ar:'بيض + بطاطا مسلوقة',en:'Eggs + Boiled Potatoes',cal:440,p:20,c:50,f:18,time_ar:'14:00 ☀️',time_en:'14:00 ☀️',
+       i_ar:['3 بيضات','3 بطاطا (400غ نيئة)','زيت + ملح + كمون'],
+       i_en:['3 eggs','3 potatoes (400g raw)','oil + salt + cumin'],
+       p_ar:'اسلق البطاطا 15 دق. اقلي البيض. قدم معاً.',p_en:'Boil potatoes 15 min. Fry eggs. Serve together.'},
+      {ar:'سردين + أرز + طماطم',en:'Sardines + Rice + Tomato',cal:460,p:30,c:56,f:12,time_ar:'14:00 ☀️',time_en:'14:00 ☀️',
+       i_ar:['2 علبة سردين','100غ أرز نيء','2 طماطمة','ليمون + زيت'],
+       i_en:['2 sardine cans','100g raw rice','2 tomatoes','lemon + oil'],
+       p_ar:'اطبخ الأرز. قدم مع السردين والطماطم.',p_en:'Cook rice. Serve with sardines and tomatoes.'}
+    ],
+    snack:[
+      {ar:'موز + حليب',en:'Banana + Milk',cal:220,p:6,c:42,f:4,time_ar:'16:30 🍎',time_en:'16:30 🍎',
+       i_ar:['موزة','250مل حليب'],i_en:['1 banana','250ml milk'],
+       p_ar:'طاقة سريعة قبل التمرين.',p_en:'Quick energy before workout.'},
+      {ar:'تمر + حليب',en:'Dates + Milk',cal:200,p:6,c:36,f:4,time_ar:'16:30 🍎',time_en:'16:30 🍎',
+       i_ar:['4 تمرات','250مل حليب'],i_en:['4 dates','250ml milk'],
+       p_ar:'أفضل سناك قبل التمرين.',p_en:'Best pre-workout snack.'},
+      {ar:'بيضتان مسلوقتان',en:'2 Boiled Eggs',cal:160,p:12,c:2,f:10,time_ar:'16:30 🍎',time_en:'16:30 🍎',
+       i_ar:['2 بيضة'],i_en:['2 eggs'],
+       p_ar:'اسلق مسبقاً وضع في الثلاجة.',p_en:'Boil in advance and refrigerate.'},
+      {ar:'خبز + تونة',en:'Bread + Tuna',cal:230,p:18,c:26,f:6,time_ar:'16:30 🍎',time_en:'16:30 🍎',
+       i_ar:['شريحة خبز','علبة تونة (80غ)'],i_en:['1 bread slice','1 tuna can (80g)'],
+       p_ar:'افتح التونة مع الخبز. 0 دقائق.',p_en:'Open tuna with bread. 0 min.'},
+      {ar:'موزتان',en:'2 Bananas',cal:180,p:2,c:44,f:0,time_ar:'16:30 🍎',time_en:'16:30 🍎',
+       i_ar:['2 موزة'],i_en:['2 bananas'],
+       p_ar:'الأسهل والأسرع.',p_en:'Easiest and fastest.'}
+    ],
+    dinner:[
+      {ar:'بيض مقلي + خبز + طماطم',en:'Fried Eggs + Bread + Tomato',cal:330,p:18,c:30,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',
+       i_ar:['3 بيضات','شريحة خبز','طماطمة','ملعقة زيت'],i_en:['3 eggs','1 bread slice','1 tomato','1 tbsp oil'],
+       p_ar:'اقلي البيض 3 دق. قدم مع الخبز والطماطم.',p_en:'Fry eggs 3 min. Serve with bread and tomato.'},
+      {ar:'تونة + خبز + زيتون',en:'Tuna + Bread + Olives',cal:300,p:24,c:28,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',
+       i_ar:['علبة تونة','شريحة خبز','6 زيتون'],i_en:['1 tuna can','1 bread slice','6 olives'],
+       p_ar:'افتح التونة مباشرة. لا طهي.',p_en:'Open tuna directly. No cooking.'},
+      {ar:'شوفان + حليب + تمر',en:'Oats + Milk + Dates',cal:360,p:12,c:60,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',
+       i_ar:['80غ شوفان','250مل حليب','3 تمرات'],i_en:['80g oats','250ml milk','3 dates'],
+       p_ar:'اطبخ الشوفان 5 دق.',p_en:'Cook oats 5 min.'},
+      {ar:'عدس + خبز',en:'Lentils + Bread',cal:380,p:20,c:56,f:6,time_ar:'20:00 🌙',time_en:'20:00 🌙',
+       i_ar:['120غ عدس نيء','طماطمة','ملح + كمون + زيت','شريحة خبز'],i_en:['120g raw lentils','tomato','salt + cumin + oil','bread'],
+       p_ar:'اسلق العدس 20 دق. قدم مع الخبز.',p_en:'Boil lentils 20 min. Serve with bread.'},
+      {ar:'سردين + خبز + طماطم',en:'Sardines + Bread + Tomato',cal:310,p:22,c:28,f:12,time_ar:'20:00 🌙',time_en:'20:00 🌙',
+       i_ar:['علبة سردين','شريحة خبز','طماطمة'],i_en:['1 sardine can','1 bread slice','1 tomato'],
+       p_ar:'افتح السردين. لا طهي.',p_en:'Open sardines. No cooking.'}
+    ]
+  }
+};
+
+// ============================================================
+// EXERCISES
+// ============================================================
+const WEEK=['upper','lower','rest','full','cardio','rest','upper'];
+const EX={
+  warmup:[
+    {id:'w1',ic:'🏃',ar:'ركض في المكان',en:'High Knees',yt:'https://www.youtube.com/watch?v=8opcQdC-V-U',dur:'45s',mAr:['الساقين','القلب'],mEn:['Legs','Cardio'],tAr:['ارفع الركبة لمستوى الخصر','تنفس بانتظام'],tEn:['Lift knees to hip level','Breathe steadily'],wc:1},
+    {id:'w2',ic:'🔄',ar:'دوران الكتفين',en:'Shoulder Circles',yt:'https://www.youtube.com/watch?v=2MEjPdyVBGE',dur:'30s',mAr:['الكتفين'],mEn:['Shoulders'],tAr:['دور في الاتجاهين'],tEn:['Both directions'],wc:1},
+    {id:'w3',ic:'🦵',ar:'قرفصاء هوائية',en:'Air Squats',yt:'https://www.youtube.com/watch?v=aclHkVaku9U',dur:'10 reps',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['عمق كامل'],tEn:['Full depth'],wc:1}
+  ],
+  upper:{
+    beginner:[
+      {id:'ub1',ic:'🏋️',ar:'تأرجح بيدين',en:'Two-Hand KB Swing',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'5×15'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الظهر'],mEn:['Glutes','Back'],tAr:['الحركة من الورك','ظهر مستقيم'],tEn:['Hinge from hips','Neutral spine'],cal:8},
+      {id:'ub2',ic:'⭕',ar:'هالو حول الرأس',en:'KB Halo',yt:'https://www.youtube.com/watch?v=0pBcWUzrkEY',s:{'1':'2×8','2':'3×8','3':'3×10','4':'3×12','5':'4×12'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'45s'},mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['حركة بطيئة'],tEn:['Slow motion'],cal:5},
+      {id:'ub3',ic:'💪',ar:'ضغط أرضي',en:'KB Floor Press',yt:'https://www.youtube.com/watch?v=uB4yalHhEqQ',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الصدر','الكتفين'],mEn:['Chest','Shoulders'],tAr:['المرفق بزاوية 45°'],tEn:['Elbow 45°'],cal:6},
+      {id:'ub4',ic:'🚣',ar:'تجديف للخلف',en:'Bent-Over Row',yt:'https://www.youtube.com/watch?v=FWJR5Ve8bnQ',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الظهر','البايسبس'],mEn:['Back','Biceps'],tAr:['انحنِ من الورك','الكوع للأعلى'],tEn:['Hinge hips','Elbow up'],cal:7}
+    ],
+    intermediate:[
+      {id:'ui1',ic:'⚡',ar:'كلين بيد واحدة',en:'Single Arm Clean',yt:'https://www.youtube.com/watch?v=re6DHeEOrzg',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['الأرداف','الكتفين'],mEn:['Glutes','Shoulders'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:12},
+      {id:'ui2',ic:'🎯',ar:'ضغط عسكري',en:'KB Military Press',yt:'https://www.youtube.com/watch?v=jhyXcaTb2kM',s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'5×10'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['الكتفين','الترايسبس'],mEn:['Shoulders','Triceps'],tAr:['اضغط مستقيم للأعلى'],tEn:['Press straight up'],cal:9}
+    ],
+    advanced:[
+      {id:'ua1',ic:'🔥',ar:'السناتش',en:'KB Snatch',yt:'https://www.youtube.com/watch?v=Gjjv6wVOp5c',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:18}
+    ]
+  },
+  lower:{
+    beginner:[
+      {id:'lb1',ic:'🦵',ar:'جلسة الكأس',en:'Goblet Squat',yt:'https://www.youtube.com/watch?v=MxsFDhcyFyE',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×20'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['اجلس للخلف والأسفل'],tEn:['Sit back and down'],cal:8},
+      {id:'lb2',ic:'🏋️',ar:'رفع ميت روماني',en:'Romanian Deadlift',yt:'https://www.youtube.com/watch?v=-4qRntuXBSc',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'60s'},mAr:['الهامسترينج','الأرداف'],mEn:['Hamstrings','Glutes'],tAr:['انحنِ من الورك'],tEn:['Hinge from hips'],cal:9},
+      {id:'lb3',ic:'🚶',ar:'طعنة للخلف',en:'Reverse Lunge',yt:'https://www.youtube.com/watch?v=xrjRi-KVvzk',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الجذع مستقيم'],tEn:['Torso upright'],cal:7}
+    ],
+    intermediate:[
+      {id:'li1',ic:'🍑',ar:'تأرجح لتقوية الأرداف',en:'Glute-Focus Swing',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'4×12','2':'4×15','3':'5×15','4':'5×20','5':'6×20'},r:{'1':'60s','2':'45s','3':'45s','4':'30s','5':'30s'},mAr:['الأرداف','الهامسترينج'],mEn:['Glutes','Hamstrings'],tAr:['اضغط الأرداف في الأعلى'],tEn:['Squeeze glutes at top'],cal:10}
+    ],
+    advanced:[
+      {id:'la1',ic:'🦅',ar:'جلسة ساق واحدة',en:'Pistol Squat',yt:'https://www.youtube.com/watch?v=vq5-vdgJc0I',s:{'1':'3×3','2':'3×4','3':'4×4','4':'4×5','5':'4×6'},r:{'1':'120s','2':'90s','3':'90s','4':'75s','5':'60s'},mAr:['الفخذ','التوازن'],mEn:['Quads','Balance'],tAr:['امسك للتوازن'],tEn:['Hold for balance'],cal:15}
+    ]
+  },
+  full:{
+    beginner:[
+      {id:'fb1',ic:'⚡',ar:'تأرجح + جلسة',en:'Swing to Squat',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['حركة متدفقة'],tEn:['Fluid motion'],cal:10},
+      {id:'fb2',ic:'🔄',ar:'دوران حول الجسم',en:'Around the Body Pass',yt:'https://www.youtube.com/watch?v=0pBcWUzrkEY',s:{'1':'3×10','2':'3×12','3':'3×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الكتفين'],mEn:['Core','Shoulders'],tAr:['بدّل الاتجاه كل مجموعة'],tEn:['Alternate direction each set'],cal:6}
+    ],
+    intermediate:[
+      {id:'fi1',ic:'🎯',ar:'كلين + ضغط',en:'Clean & Press',yt:'https://www.youtube.com/watch?v=jhyXcaTb2kM',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['الكلين أولاً ثم الضغط'],tEn:['Clean then press'],cal:13}
+    ],
+    advanced:[
+      {id:'fa1',ic:'🏆',ar:'التركي الكامل',en:'Turkish Get-Up',yt:'https://www.youtube.com/watch?v=0bWRPC49-KI',s:{'1':'3×2','2':'3×3','3':'4×3','4':'4×4','5':'4×5'},r:{'1':'120s','2':'120s','3':'90s','4':'90s','5':'75s'},mAr:['كل الجسم','القلب'],mEn:['Full Body','Core'],tAr:['كل مرحلة متحكم فيها'],tEn:['Every phase controlled'],cal:16}
+    ]
+  },
+  cardio:{
+    beginner:[
+      {id:'cb1',ic:'💥',ar:'تأرجح متقطع',en:'Swing Intervals',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'5×20s','2':'6×20s','3':'6×30s','4':'8×30s','5':'10×30s'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الأرداف'],mEn:['Cardio','Glutes'],tAr:['20 ث تأرجح ثم راحة'],tEn:['20s swing then rest'],cal:12,isC:1},
+      {id:'cb2',ic:'🧳',ar:'مشي بالكيتل بيل',en:'Farmer Walk',yt:'https://www.youtube.com/watch?v=rt17lmnaLSM',s:{'1':'4×30m','2':'4×40m','3':'5×40m','4':'5×50m','5':'6×50m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['القلب','القبضة'],mEn:['Cardio','Grip'],tAr:['الكتفان للخلف'],tEn:['Shoulders back'],cal:9,isC:1}
+    ],
+    intermediate:[
+      {id:'ci1',ic:'🔥',ar:'مجموعة التحمل',en:'KB Complex',yt:'https://www.youtube.com/watch?v=re6DHeEOrzg',s:{'1':'3×5','2':'4×5','3':'4×6','4':'5×6','5':'5×8'},r:{'1':'120s','2':'90s','3':'90s','4':'75s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['لا تضع الكيتل بيل'],tEn:["Don't put bell down"],cal:16,isC:1}
+    ],
+    advanced:[
+      {id:'ai1',ic:'⚡',ar:'AMRAP',en:'AMRAP Circuit',yt:'https://www.youtube.com/watch?v=Gjjv6wVOp5c',s:{'1':'3×2min','2':'3×3min','3':'4×3min','4':'4×4min','5':'5×4min'},r:{'1':'2min','2':'90s','3':'75s','4':'75s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['أكبر عدد تكرارات'],tEn:['Maximum reps'],cal:20,isC:1}
+    ]
+  },
+  cooldown:[
+    {id:'c1',ic:'🧘',ar:'تمديد الفخذ الأمامي',en:'Quad Stretch',yt:'https://www.youtube.com/watch?v=OdcHcRd3UHE',dur:'30s/leg',mAr:['الفخذ'],mEn:['Quads'],tAr:['اسحب القدم للأرداف'],tEn:['Pull foot to glutes'],wc:1},
+    {id:'c2',ic:'🧘',ar:'تمديد الظهر',en:'Child Pose Stretch',yt:'https://www.youtube.com/watch?v=2MJGg-dUKh0',dur:'60s',mAr:['الظهر'],mEn:['Back'],tAr:['تنفس بعمق'],tEn:['Breathe deeply'],wc:1}
+  ]
+};
+
+// ============================================================
+// WORKOUT
+// ============================================================
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function getPool(type){
+  if(type==='rest') return [];
+  const lv=P.level||'beginner';
+  const src=(EX[type]&&(EX[type][lv]||EX[type].beginner))||[];
+  return shuf([...src]).slice(0,3);
+}
+function genWK(regen){
+  const type=WEEK[new Date().getDay()], il=Math.min(P.intensity||1,5);
+  _WP = type==='rest' ? {type:'rest'} :
+    {type, main:getPool(type), warmup:shuf([...EX.warmup]).slice(0,2), cooldown:[...EX.cooldown], intensity:il};
+  if(regen){save(); toast(t('toast-newses'));}
+  rWorkout(); rTWCard();
+}
+function rTWCard(){
+  if(!_WP) return;
+  const lv=P.level||'beginner', il=P.intensity||1;
+  const lvMap={beginner:t('lv-beginner'),intermediate:t('lv-intermediate'),advanced:t('lv-advanced')};
+  document.getElementById('tw-lv').textContent=lvMap[lv]||lv;
+  document.getElementById('tw-nm').textContent=t('wtype-'+_WP.type)||_WP.type;
+  if(_WP.type==='rest'){
+    document.getElementById('tw-d').textContent=L==='ar'?'راحة':'Rest';
+    document.getElementById('tw-e').textContent='—';
+    document.getElementById('tw-c').textContent='—'; return;
+  }
+  const sk=String(Math.min(il,5));
+  const burn=(_WP.main||[]).reduce((s,e)=>{
+    const pts=(e.s&&e.s[sk])||'3×10'; return s+(e.cal||8)*parseInt(pts);},0);
+  document.getElementById('tw-d').textContent=(25+il*5)+(L==='ar'?' دقيقة':' min');
+  document.getElementById('tw-e').textContent=(_WP.main||[]).length+' '+(L==='ar'?'تمارين':'exercises');
+  document.getElementById('tw-c').textContent='~'+burn+' kcal';
+}
+function rWorkout(){
+  if(!P.name) return;
+  const lv=P.level||'beginner', il=P.intensity||1;
+  document.getElementById('wk-tag').textContent=t('wk-tag');
+  document.getElementById('wk-ti').textContent=t('wk-ti');
+  document.getElementById('pg-t').textContent=t('pg-t');
+  document.getElementById('pg1l').textContent=t('pg1l');
+  document.getElementById('pg2l').textContent=t('pg2l');
+  document.getElementById('pg3l').textContent=t('pg3l');
+  document.getElementById('regen-t').textContent=t('regen-t');
+  document.getElementById('pg-bdg').textContent=(P.sessions||0)+' '+(L==='ar'?'جلسات':'sessions');
+  document.getElementById('pg1').textContent=P.sessions||0;
+  document.getElementById('pg2').textContent=P.streak||0;
+  document.getElementById('pg3').textContent=il;
+  const today=new Date().getDay();
+  const dayN_ar=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+  const dayN_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dayN=L==='ar'?dayN_ar:dayN_en;
+  const ticons={upper:'💪',lower:'🦵',full:'⚡',cardio:'🏃',rest:'😴'};
+  document.getElementById('dayplan').innerHTML=WEEK.map((type,i)=>{
+    const isDone=WH.some(h=>{const d=new Date(h.date);return d.getDay()===i&&(Date.now()-d)<7*86400000;});
+    const cls=type==='rest'?' rest':isDone?' done':i===today?' on':'';
+    return`<div class="dpc${cls}"><div style="font-size:18px">${ticons[type]||'🏋️'}</div><div>${dayN[i]}</div></div>`;
+  }).join('');
+  const lvMap={beginner:t('lv-beginner'),intermediate:t('lv-intermediate'),advanced:t('lv-advanced')};
+  document.getElementById('lvlrow').innerHTML=`
+    <div class="bdg ${lv==='beginner'?'bg':lv==='intermediate'?'bb':'bpk'}">${lvMap[lv]||lv}</div>
+    <div class="bdg bor">⚡ ${il}/5</div>
+    ${P.doneToday?`<div class="bdg bg">${t('done-today')}</div>`:''}`;
+  if(!_WP){genWK(false);return;}
+  if(_WP.type==='rest'){
+    document.getElementById('wkcnt').innerHTML=`<div style="text-align:center;padding:32px 14px">
+      <div style="font-size:52px">😴</div>
+      <h2 style="margin-top:8px">${t('rest-day-msg')}</h2>
+      <p class="mt" style="font-size:12px;margin-top:6px">${t('rest-day-sub')}</p></div>`;
+    return;
+  }
+  const sk=String(Math.min(il,5));
+  let h='';
+  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--or)">${t('wu-label')}</div><div class="wsec-l"></div></div>`;
+  (_WP.warmup||[]).forEach(e=>h+=exCard(e,null,sk));
+  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--ac)">${t('wtype-'+_WP.type)}</div><div class="wsec-l"></div></div>`;
+  (_WP.main||[]).forEach(e=>h+=exCard(e,e.s?e.s[sk]:null,sk));
+  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--bl)">${t('cd-label')}</div><div class="wsec-l"></div></div>`;
+  (_WP.cooldown||[]).forEach(e=>h+=exCard(e,null,sk));
+  h+=P.doneToday
+    ?`<button class="btn done-btn cmp" disabled>${t('done-cmp')}</button>`
+    :`<button class="btn bp done-btn" onclick="cmpSession()">${t('done-btn')}</button>`;
+  document.getElementById('wkcnt').innerHTML=h;
+}
+function getExSVG(id){
+  // Inline SVG stick-figure animations — no internet needed
+  const anims={
+    // Kettlebell Swing
+    'ub1':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes sw{0%{transform:rotate(-30deg) translateY(4px)}50%{transform:rotate(10deg) translateY(-4px)}100%{transform:rotate(-30deg) translateY(4px)}}.sa{animation:sw 1s ease-in-out infinite;transform-origin:30px 28px}</style><g class="sa"><circle cx="30" cy="10" r="5" fill="none" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="15" x2="30" y2="30" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="20" x2="20" y2="28" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="20" x2="40" y2="28" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="30" x2="22" y2="44" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="30" x2="38" y2="44" stroke="var(--bl)" stroke-width="2"/><ellipse cx="30" cy="50" rx="6" ry="4" fill="var(--ac)" opacity="0.8"/></g></svg>`,
+    // Squat / Goblet
+    'w3':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes sq{0%,100%{transform:scaleY(1) translateY(0)}50%{transform:scaleY(0.72) translateY(8px)}}.sq{animation:sq 1.2s ease-in-out infinite;transform-origin:30px 30px}</style><g class="sq"><circle cx="30" cy="9" r="5" fill="none" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="14" x2="30" y2="30" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="20" x2="18" y2="26" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="20" x2="42" y2="26" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="30" x2="20" y2="48" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="30" x2="40" y2="48" stroke="var(--ac)" stroke-width="2"/></g></svg>`,
+    // High Knees
+    'w1':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes kl{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes kr{0%,100%{transform:translateY(-8px)}50%{transform:translateY(0)}}.kl{animation:kl 0.6s ease-in-out infinite}.kr{animation:kr 0.6s ease-in-out infinite}</style><circle cx="30" cy="9" r="5" fill="none" stroke="var(--pk)" stroke-width="2"/><line x1="30" y1="14" x2="30" y2="30" stroke="var(--pk)" stroke-width="2"/><line x1="30" y1="20" x2="18" y2="26" stroke="var(--pk)" stroke-width="2"/><line x1="30" y1="20" x2="42" y2="26" stroke="var(--pk)" stroke-width="2"/><g class="kl"><line x1="30" y1="30" x2="20" y2="42" stroke="var(--pk)" stroke-width="2"/><line x1="20" y1="42" x2="18" y2="52" stroke="var(--pk)" stroke-width="2"/></g><g class="kr"><line x1="30" y1="30" x2="40" y2="42" stroke="var(--pk)" stroke-width="2"/><line x1="40" y1="42" x2="42" y2="52" stroke="var(--pk)" stroke-width="2"/></g></svg>`,
+    // Press / Military
+    'ui2':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes pr{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}.pr{animation:pr 1.2s ease-in-out infinite}</style><circle cx="30" cy="14" r="5" fill="none" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="19" x2="30" y2="35" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="35" x2="20" y2="50" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="35" x2="40" y2="50" stroke="var(--ac)" stroke-width="2"/><g class="pr"><line x1="30" y1="25" x2="14" y2="30" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="25" x2="46" y2="30" stroke="var(--ac)" stroke-width="2"/><rect x="8" y="27" width="8" height="6" rx="2" fill="var(--gd)" opacity="0.9"/><rect x="44" y="27" width="8" height="6" rx="2" fill="var(--gd)" opacity="0.9"/></g></svg>`,
+    // Row / Back
+    'ub4':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes rw{0%,100%{transform:translateX(0)}50%{transform:translateX(-6px)}}.rw{animation:rw 1s ease-in-out infinite}</style><g transform="rotate(-30,30,30)"><circle cx="30" cy="10" r="5" fill="none" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="15" x2="30" y2="32" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="32" x2="18" y2="46" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="32" x2="42" y2="46" stroke="var(--bl)" stroke-width="2"/></g><g class="rw"><line x1="30" y1="22" x2="46" y2="26" stroke="var(--bl)" stroke-width="2"/><ellipse cx="50" cy="26" rx="5" ry="4" fill="var(--gd)" opacity="0.9"/></g></svg>`,
+    // Turkish Get-up / full body
+    'fa1':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes tg{0%{transform:rotate(0deg)}25%{transform:rotate(-20deg)}75%{transform:rotate(20deg)}100%{transform:rotate(0deg)}}.tg{animation:tg 2s ease-in-out infinite;transform-origin:30px 35px}</style><g class="tg"><circle cx="30" cy="10" r="5" fill="none" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="15" x2="30" y2="35" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="22" x2="18" y2="30" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="22" x2="48" y2="15" stroke="var(--ac)" stroke-width="2"/><circle cx="48" cy="13" r="4" fill="none" stroke="var(--gd)" stroke-width="2"/><line x1="30" y1="35" x2="20" y2="50" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="35" x2="40" y2="50" stroke="var(--ac)" stroke-width="2"/></g></svg>`,
+    // Deadlift / RDL
+    'lb2':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes dl{0%,100%{transform:rotate(-25deg) translateY(2px)}50%{transform:rotate(0deg) translateY(-4px)}}.dl{animation:dl 1.4s ease-in-out infinite;transform-origin:30px 32px}</style><g class="dl"><circle cx="30" cy="10" r="5" fill="none" stroke="var(--or)" stroke-width="2"/><line x1="30" y1="15" x2="30" y2="32" stroke="var(--or)" stroke-width="2"/><line x1="30" y1="22" x2="18" y2="28" stroke="var(--or)" stroke-width="2"/><line x1="30" y1="22" x2="42" y2="28" stroke="var(--or)" stroke-width="2"/><line x1="30" y1="32" x2="20" y2="48" stroke="var(--or)" stroke-width="2"/><line x1="30" y1="32" x2="40" y2="48" stroke="var(--or)" stroke-width="2"/><line x1="14" y1="30" x2="46" y2="30" stroke="var(--gd)" stroke-width="3"/><rect x="8" y="26" width="8" height="8" rx="2" fill="var(--gd)" opacity="0.9"/><rect x="44" y="26" width="8" height="8" rx="2" fill="var(--gd)" opacity="0.9"/></g></svg>`,
+    // Lunge
+    'lb3':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes ln{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}.ln{animation:ln 1.2s ease-in-out infinite}</style><g class="ln"><circle cx="28" cy="8" r="5" fill="none" stroke="var(--pk)" stroke-width="2"/><line x1="28" y1="13" x2="28" y2="28" stroke="var(--pk)" stroke-width="2"/><line x1="28" y1="20" x2="16" y2="26" stroke="var(--pk)" stroke-width="2"/><line x1="28" y1="20" x2="40" y2="26" stroke="var(--pk)" stroke-width="2"/><line x1="28" y1="28" x2="16" y2="44" stroke="var(--pk)" stroke-width="2"/><line x1="16" y1="44" x2="14" y2="54" stroke="var(--pk)" stroke-width="2"/><line x1="28" y1="28" x2="42" y2="36" stroke="var(--pk)" stroke-width="2"/><line x1="42" y1="36" x2="46" y2="48" stroke="var(--pk)" stroke-width="2"/></g></svg>`,
+    // Halo
+    'ub2':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes hl{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.hl{animation:hl 2s linear infinite;transform-origin:30px 16px}</style><circle cx="30" cy="32" r="5" fill="none" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="37" x2="30" y2="48" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="40" x2="20" y2="44" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="40" x2="40" y2="44" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="48" x2="22" y2="56" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="48" x2="38" y2="56" stroke="var(--ac)" stroke-width="2"/><g class="hl"><ellipse cx="30" cy="16" rx="10" ry="5" fill="none" stroke="var(--gd)" stroke-width="3"/></g></svg>`,
+    // Shoulder circles
+    'w2':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes sc1{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes sc2{0%{transform:rotate(0deg)}100%{transform:rotate(-360deg)}}.sc1{animation:sc1 1.5s linear infinite;transform-origin:20px 24px}.sc2{animation:sc2 1.5s linear infinite;transform-origin:40px 24px}</style><circle cx="30" cy="9" r="5" fill="none" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="14" x2="30" y2="32" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="32" x2="20" y2="48" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="32" x2="40" y2="48" stroke="var(--bl)" stroke-width="2"/><g class="sc1"><line x1="30" y1="20" x2="8" y2="24" stroke="var(--bl)" stroke-width="2"/><circle cx="8" cy="24" r="3" fill="var(--ac)"/></g><g class="sc2"><line x1="30" y1="20" x2="52" y2="24" stroke="var(--bl)" stroke-width="2"/><circle cx="52" cy="24" r="3" fill="var(--ac)"/></g></svg>`,
+    // Farmer walk
+    'cb2':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes fw{0%,100%{transform:translateX(-6px)}50%{transform:translateX(6px)}}.fw{animation:fw 0.8s ease-in-out infinite}</style><g class="fw"><circle cx="30" cy="8" r="5" fill="none" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="13" x2="30" y2="30" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="20" x2="14" y2="26" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="20" x2="46" y2="26" stroke="var(--ac)" stroke-width="2"/><rect x="8" y="24" width="8" height="8" rx="2" fill="var(--gd)" opacity="0.9"/><rect x="44" y="24" width="8" height="8" rx="2" fill="var(--gd)" opacity="0.9"/><line x1="30" y1="30" x2="20" y2="46" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="30" x2="40" y2="46" stroke="var(--ac)" stroke-width="2"/></g></svg>`,
+    // Quad stretch / cooldown
+    'c1':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes qs{0%,100%{transform:rotate(0deg)}50%{transform:rotate(15deg)}}.qs{animation:qs 2s ease-in-out infinite;transform-origin:30px 20px}</style><g class="qs"><circle cx="30" cy="8" r="5" fill="none" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="13" x2="30" y2="30" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="20" x2="18" y2="26" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="30" x2="20" y2="46" stroke="var(--bl)" stroke-width="2"/><line x1="20" y1="46" x2="28" y2="56" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="30" x2="42" y2="42" stroke="var(--bl)" stroke-width="2"/><line x1="42" y1="42" x2="38" y2="54" stroke="var(--gd)" stroke-width="2"/></g></svg>`,
+    // Back stretch child pose
+    'c2':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes bs{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.1)}}.bs{animation:bs 3s ease-in-out infinite;transform-origin:30px 40px}</style><g class="bs"><ellipse cx="30" cy="38" rx="22" ry="8" fill="none" stroke="var(--bl)" stroke-width="2"/><circle cx="10" cy="36" r="5" fill="none" stroke="var(--bl)" stroke-width="2"/><line x1="15" y1="36" x2="30" y2="34" stroke="var(--bl)" stroke-width="2"/><line x1="30" y1="34" x2="50" y2="40" stroke="var(--bl)" stroke-width="2"/></g></svg>`,
+    // Clean
+    'ui1':()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes cl{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(-10deg)}}.cl{animation:cl 1s ease-in-out infinite;transform-origin:30px 30px}</style><g class="cl"><circle cx="30" cy="8" r="5" fill="none" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="13" x2="30" y2="30" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="20" x2="16" y2="28" stroke="var(--ac)" stroke-width="2"/><line x1="16" y1="28" x2="12" y2="20" stroke="var(--ac)" stroke-width="2"/><circle cx="10" cy="18" r="4" fill="none" stroke="var(--gd)" stroke-width="2"/><line x1="30" y1="20" x2="44" y2="28" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="30" x2="20" y2="46" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="30" x2="40" y2="46" stroke="var(--ac)" stroke-width="2"/></g></svg>`,
+  };
+  // default animation for unknown exercises
+  const def=()=>`<svg viewBox="0 0 60 60" style="width:100%;height:100%"><style>@keyframes df{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}.df{animation:df 1s ease-in-out infinite}</style><g class="df"><circle cx="30" cy="9" r="5" fill="none" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="14" x2="30" y2="32" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="22" x2="18" y2="28" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="22" x2="42" y2="28" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="32" x2="20" y2="48" stroke="var(--ac)" stroke-width="2"/><line x1="30" y1="32" x2="40" y2="48" stroke="var(--ac)" stroke-width="2"/></g></svg>`;
+  return (anims[id]||def)();
+}
+
+function exCard(e,si,sk){
+  const nm=L==='ar'?e.ar:e.en;
+  const ms=L==='ar'?e.mAr:e.mEn;
+  const tips=L==='ar'?e.tAr:e.tEn;
+  const isWC=!!e.wc;
+  let sn=0,rn='';
+  if(si){const p=si.split('×');sn=parseInt(p[0]);rn=p[1]||'';}
+  const rv=e.r?e.r[sk]:null;
+  // Use YouTube SEARCH — always works, never breaks
+  const ytQuery=encodeURIComponent((e.en||nm)+' kettlebell tutorial how to');
+  const ytUrl=`https://www.youtube.com/results?search_query=${ytQuery}`;
+  const ytLabel=L==='ar'?'📺 شرح على يوتيوب':'📺 Watch on YouTube';
+  return`<div class="excard" id="ec-${e.id}">
+    <div class="exhdr" onclick="togEx('${e.id}')">
+      <div class="exgif" style="background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:30px;border-radius:10px;flex-shrink:0">${e.ic||'🏋️'}</div>
+      <div style="flex:1">
+        <div class="exnm">${nm}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:3px">${(ms||[]).slice(0,2).map(m=>`<span class="mtag">${m}</span>`).join('')}</div>
+        <div>${isWC?`<span style="font-size:10px;color:var(--mt)">⏱ ${e.dur||''}</span>`
+          :`<span style="font-size:10px;color:var(--mt)">📦 ${sn} ${t('sets-l')}</span>
+            <span style="font-size:10px;color:var(--mt);margin-inline-start:6px">🔁 ${rn}</span>
+            ${rv?`<span style="font-size:10px;color:var(--mt);margin-inline-start:6px">⏸ ${rv}</span>`:''}`}</div>
+      </div>
+      <div class="exchv">▼</div>
+    </div>
+    <div class="exbody">
+      ${!isWC?`<div class="exdg">
+        <div class="exd"><div class="exd-v">${sn}</div><div class="exd-l">${t('sets-l')}</div></div>
+        <div class="exd"><div class="exd-v">${rn}</div><div class="exd-l">${t('reps-l')}</div></div>
+        ${rv?`<div class="exd"><div class="exd-v" style="color:var(--or)">${rv}</div><div class="exd-l">${t('rest-l')}</div></div>`:''}
+      </div>`:''}
+      <div class="tips"><div class="tips-t">${t('tips-t')}</div><ul>${(tips||[]).map(tp=>`<li>${tp}</li>`).join('')}</ul></div>
+      <a href="${ytUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;padding:10px;border-radius:10px;background:#ff000018;border:1.5px solid #ff0000cc;color:#ff4444;font-size:12px;font-weight:800;text-decoration:none" onclick="event.stopPropagation()">${ytLabel}</a>
+      ${!isWC&&rv?`<button class="btn bo" style="margin-top:7px;width:100%;font-size:11px" onclick="startRT(event,'${rv}')">${t('rt-btn')}</button>`:''}
+    </div>
+  </div>`;
+}
+function togEx(id){document.getElementById('ec-'+id).classList.toggle('exp');}
+let RTI=null;
+function startRT(evt,rv){
+  evt.stopPropagation(); let s=parseInt(rv)||60; clearInterval(RTI);
+  const el=document.getElementById('rtbar');
+  let rem=s; document.getElementById('rtn').textContent=rem; el.classList.add('on');
+  RTI=setInterval(()=>{rem--;document.getElementById('rtn').textContent=rem;
+    if(rem<=0){clearInterval(RTI);el.classList.remove('on');
+      toast(L==='ar'?'🎯 انتهت الراحة!':'🎯 Rest done!');
+      if(Notification.permission==='granted')try{new Notification('🏋️ FitFuel',{body:t('notif-rest-done'),tag:'rest'});}catch(e){}
+    }},1000);
+}
+function stopRT(){clearInterval(RTI);document.getElementById('rtbar').classList.remove('on');}
+function cmpSession(){
+  P.sessions=(P.sessions||0)+1;
+  const today=new Date().toDateString();
+  const lastD=P.lastWD?Math.floor((new Date()-new Date(P.lastWD))/86400000):99;
+  P.streak=lastD<=1?(P.streak||0)+1:1;
+  P.lastWD=today; P.doneToday=true;
+  WH.unshift({date:today,level:P.level,type:_WP&&_WP.type,intensity:P.intensity||1,exs:(_WP&&_WP.main||[]).length});
+  if(WH.length>20)WH.pop();
+  if(P.sessions%5===0&&(P.intensity||1)<5){P.intensity=(P.intensity||1)+1;setTimeout(()=>toast(t('toast-lvlup')),600);}
+  if(P.sessions===15&&P.level==='beginner'){P.level='intermediate';P.intensity=1;setTimeout(()=>toast(t('toast-interm')),1200);}
+  if(P.sessions===30&&P.level==='intermediate'){P.level='advanced';P.intensity=1;setTimeout(()=>toast(t('toast-adv')),1200);}
+  save(); toast(t('toast-done')); rWorkout(); rProfile(); rTWCard();
+}
+
+// ============================================================
+// MEALS
+// ============================================================
+function rand(arr){return arr[0|Math.random()*arr.length];}
+function scaleMeal(m,targetCal,frac){
+  const cal=Math.round(m.cal||400);
+  const r=Math.max(0.7,Math.min(1.5,(targetCal*frac)/cal));
+  return{...m,cal:Math.round(cal*r),p:Math.round((m.p||0)*r),c:Math.round((m.c||0)*r),f:Math.round((m.f||0)*r)};
+}
+function buildDay(mode,targetCal){
+  const tc=Math.round(targetCal)||2000;
+  if(mode==='ramadan') return{mode,iftar:scaleMeal(rand(ML.ramadan.iftar),tc,.22),isha:scaleMeal(rand(ML.ramadan.isha),tc,.50),suhoor:scaleMeal(rand(ML.ramadan.suhoor),tc,.28)};
+  return{mode,breakfast:scaleMeal(rand(ML.normal.breakfast),tc,.25),lunch:scaleMeal(rand(ML.normal.lunch),tc,.35),snack:scaleMeal(rand(ML.normal.snack),tc,.12),dinner:scaleMeal(rand(ML.normal.dinner),tc,.28)};
+}
+function genAllMeals(showToast){
+  const tc=Math.round(P.targetCal)||2000;
+  for(let d=0;d<7;d++) MP[d]=buildDay(mealMode,tc);
+  if(showToast) toast(t('toast-meals'));
+  save(); rMeals();
+}
+function refreshMeal(mKey){
+  if(!MP[CD]) return;
+  const tc=Math.round(P.targetCal)||2000;
+  const fracs={iftar:.22,isha:.50,suhoor:.28,breakfast:.25,lunch:.35,snack:.12,dinner:.28};
+  const pool=mealMode==='ramadan'?ML.ramadan[mKey]:ML.normal[mKey];
+  if(!pool) return;
+  const cur=MP[CD][mKey]; let nxt,tries=0;
+  do{nxt=rand(pool);tries++;}while(tries<10&&cur&&nxt.ar===cur.ar);
+  MP[CD][mKey]=scaleMeal(nxt,tc,fracs[mKey]||.25);
+  save(); rDayMeals(); toast(t('toast-meal1'));
+}
+function rMeals(){
+  if(!P.name) return;
+  document.getElementById('ml-ti').textContent=t('ml-ti');
+  document.getElementById('all-t').textContent=t('all-t');
+  document.getElementById('msw-rm-t').textContent=t('msw-rm-t');
+  document.getElementById('msw-nm-t').textContent=t('msw-nm-t');
+  document.getElementById('dt-lb').textContent=t('dt-lb');
+  document.getElementById('dt-lbt').textContent=t('dt-lbt');
+  document.getElementById('dt-tv').textContent=Math.round(P.targetCal||2000)+' kcal';
+  const rmb=document.getElementById('msw-rm'), nmb=document.getElementById('msw-nm');
+  rmb.className='msw'+(mealMode==='ramadan'?' rm':'');
+  nmb.className='msw'+(mealMode==='normal'?' nm':'');
+  const days=t('days');
+  document.getElementById('daysel').innerHTML=days.map((d,i)=>
+    `<div class="dpill${i===CD?' on':''}" onclick="selDay(${i})">${d}</div>`).join('');
+  rDayMeals();
+}
+function selDay(d){CD=d; save(); rMeals();}
+function rDayMeals(){
+  let plan=MP[CD];
+  if(!plan||plan.mode!==mealMode){MP[CD]=buildDay(mealMode,Math.round(P.targetCal)||2000);plan=MP[CD];}
+  const types=mealMode==='ramadan'?[
+    {k:'iftar',bc:'var(--gd)',bd:'var(--gdd)'},
+    {k:'isha',bc:'var(--pk)',bd:'var(--pkd)'},
+    {k:'suhoor',bc:'var(--bl)',bd:'var(--bld)'}
+  ]:[
+    {k:'breakfast',bc:'var(--or)',bd:'var(--ord)'},
+    {k:'lunch',bc:'var(--ac)',bd:'var(--acd)'},
+    {k:'snack',bc:'var(--bl)',bd:'var(--bld)'},
+    {k:'dinner',bc:'var(--pk)',bd:'var(--pkd)'}
+  ];
+  let total=0, h='';
+  types.forEach(tp=>{
+    const m=plan[tp.k]; if(!m)return;
+    total+=m.cal||0;
+    const nm=L==='ar'?m.ar:m.en;
+    const ings=L==='ar'?m.i_ar:m.i_en;
+    const prep=L==='ar'?m.p_ar:m.p_en;
+    const timeLabel=L==='ar'?(m.time_ar||''):(m.time_en||'');
+    const typeLbl=t('mtype-'+tp.k);
+    const safeName=nm.replace(/'/g,"\\'");
+    h+=`<div class="mcard" id="mc-${tp.k}">
+      <div class="mc-hdr" onclick="togMeal('${tp.k}')">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+            <span style="background:${tp.bd};border:1px solid ${tp.bc};border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;color:${tp.bc}">${typeLbl}</span>
+            <span style="font-size:11px;font-weight:900;color:var(--ac)">${m.cal||0} kcal</span>
+            ${timeLabel?`<span style="font-size:10px;color:var(--mt)">⏰ ${timeLabel}</span>`:''}
+          </div>
+          <div class="mc-nm">${nm}</div>
+        </div>
+        <div style="font-size:11px;color:var(--mt);flex-shrink:0">▼</div>
+      </div>
+      <div class="mc-body">
+        <div class="mmac">
+          <span class="mpill" style="background:var(--bld);color:var(--bl)">💪 ${m.p||0}g</span>
+          <span class="mpill" style="background:var(--ord);color:var(--or)">⚡ ${m.c||0}g</span>
+          <span class="mpill" style="background:var(--pkd);color:var(--pk)">🫙 ${m.f||0}g</span>
+        </div>
+        <div class="tag" style="margin:7px 0 4px">${t('ing-label')}</div>
+        ${(ings||[]).map(i=>`<div class="ing-i">${i}</div>`).join('')}
+        <div class="minstr"><span style="color:var(--ac);font-weight:700;font-size:11px">${t('prep-label')}</span> ${prep||''}</div>
+        <div class="mactions">
+          <button class="btn bp" onclick="logMeal(${m.cal||0},'${safeName}')">${t('log-meal-btn')}</button>
+          <button class="btn bo" onclick="refreshMeal('${tp.k}')">${t('change-btn')}</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  const target=Math.round(P.targetCal||2000);
+  const diff=Math.abs(total-target)/target;
+  document.getElementById('dt-cl').style.color=diff<.1?'var(--ac)':diff<.2?'var(--or)':'var(--pk)';
+  document.getElementById('dt-cl').textContent=total+' kcal';
+  document.getElementById('mlcnt').innerHTML=h;
+}
+function togMeal(k){document.getElementById('mc-'+k).classList.toggle('exp');}
+
+// ============================================================
+// PROFILE + ALARMS
+// ============================================================
+function rProfile(){
+  if(!P.name) return;
+  document.getElementById('profav').textContent=P.name.charAt(0).toUpperCase();
+  document.getElementById('prof-nm').textContent=P.name;
+  const gls={lose:t('goal-lose'),gain:t('goal-gain'),maintain:t('goal-maintain'),fit:t('goal-fit')};
+  document.getElementById('prof-gl').textContent=gls[P.goal]||'';
+  document.getElementById('edit-btn').textContent=t('edit-btn');
+  document.getElementById('lbl-lang').textContent=t('lbl-lang');
+  document.getElementById('al-t').textContent=t('al-t');
+  document.getElementById('hs-t').textContent=t('hs-t');
+  document.getElementById('rst-btn').textContent=t('rst-btn');
+  // Lang buttons
+  document.getElementById('lsw-ar').classList.toggle('on',L==='ar');
+  document.getElementById('lsw-en').classList.toggle('on',L==='en');
+  const bmi=(P.weight/((P.height/100)**2)).toFixed(1);
+  const stats=[
+    {v:P.weight+'kg',l:t('l-wt')},{v:P.height+'cm',l:t('l-ht')},
+    {v:P.age+(L==='ar'?' سنة':' yr'),l:t('l-ag')},{v:bmi,l:'BMI'},
+    {v:Math.round(P.targetCal||0)+(L==='ar'?' kcal':' kcal'),l:t('dt-lbt')},{v:Math.round(P.tdee||0),l:'TDEE'}
+  ];
+  document.getElementById('pstats').innerHTML=stats.map(s=>`<div class="pst"><div class="pst-v">${s.v}</div><div class="pst-l">${s.l}</div></div>`).join('');
+  rAlarms();
+  renderCityCard();
+  const hist=document.getElementById('wkhist');
+  if(!WH.length){hist.innerHTML=`<div class="mt" style="text-align:center;padding:10px;font-size:12px">${t('no-sessions')}</div>`;return;}
+  const ticons={upper:'💪',lower:'🦵',full:'⚡',cardio:'🏃',rest:'😴'};
+  hist.innerHTML=WH.slice(0,8).map(h=>`
+    <div class="hist-i">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:16px">${ticons[h.type]||'🏋️'}</span>
+        <div><div style="font-size:11px;font-weight:700">${h.date}</div>
+          <div class="mt" style="font-size:10px">${h.exs} ${t('exs-label')}</div></div>
+      </div>
+      <div class="bdg bor">⚡ ${h.intensity}/5</div>
+    </div>`).join('');
+}
+function rAlarms(){
+  const AS=window._AS||defaultAS(), pt=getPT();
+  const perm='Notification' in window?Notification.permission:'unsupported';
+  const noteMap={'granted':t('al-granted'),'denied':t('al-denied'),'default':t('al-default')};
+  document.getElementById('al-note').textContent=noteMap[perm]||t('al-default');
+  const alDefs=isRamadan?[
+    {k:'iftar',ic:'🌅',time:pt.maghrib},{k:'workout',ic:'🏋️',time:pt.workout}
+  ]:[
+    {k:'breakfast',ic:'🍳',time:'09:00'},{k:'lunch',ic:'🥗',time:'14:00'},
+    {k:'snack',ic:'🍎',time:'16:30'},{k:'workout',ic:'🏋️',time:'17:00'},{k:'dinner',ic:'🌙',time:'20:00'}
+  ];
+  document.getElementById('alarms-list').innerHTML=alDefs.map(a=>`
+    <div class="alarm-i">
+      <div style="display:flex;align-items:center;gap:9px">
+        <span style="font-size:19px">${a.ic}</span>
+        <div><div style="font-size:12px;font-weight:700">${t('al-'+a.k)}</div><div class="altime">${to12h(a.time)||'--:--'}</div></div>
+      </div>
+      <label class="tsw">
+        <input type="checkbox" ${AS[a.k]!==false?'checked':''} onchange="toggleAlarm('${a.k}',this.checked)">
+        <span class="tsl"></span>
+      </label>
+    </div>`).join('');
+
+  // Salaat First app link
+  const sfLabel=L==='ar'?'🕌 فتح تطبيق Salaat First':'🕌 Open Salaat First App';
+  const sfNote=L==='ar'?'للتأكد من دقة أوقات الصلاة':'For accurate prayer times';
+  const sfAndroid='https://play.google.com/store/apps/details?id=com.batoulapps.adhan';
+  const sfIos='https://apps.apple.com/app/salaat-first/id960395272';
+  // detect iOS vs Android
+  const isIos=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const sfUrl=isIos?sfIos:sfAndroid;
+  document.getElementById('alarms-list').innerHTML+=`
+    <a href="${sfUrl}" target="_blank" rel="noopener"
+       style="display:flex;align-items:center;gap:10px;margin-top:10px;padding:11px 13px;
+              border-radius:11px;background:linear-gradient(135deg,#1a1030,#130f20);
+              border:1.5px solid rgba(255,215,0,0.5);text-decoration:none">
+      <span style="font-size:24px">🕌</span>
+      <div>
+        <div style="font-size:12px;font-weight:800;color:var(--gd)">${sfLabel}</div>
+        <div style="font-size:10px;color:var(--mt);margin-top:2px">${sfNote}</div>
+      </div>
+      <span style="margin-inline-start:auto;color:var(--gd);font-size:16px">↗</span>
+    </a>`;
+}
+function toggleAlarm(k,v){
+  if(!window._AS) window._AS=defaultAS();
+  window._AS[k]=v;
+  if(v) reqNotif(); else schedAlarms();
+  save();
+}
+async function reqNotif(){
+  if(!('Notification' in window)) return;
+  if(Notification.permission==='granted'){schedAlarms();return;}
+  if(Notification.permission==='default'){
+    // Show our custom popup instead of browser prompt directly
+    showNotifPopup();
+  }
+}
+function showNotifPopup(){
+  const ar=L==='ar';
+  document.getElementById('np-title').textContent=ar?'فعّل الإشعارات':'Enable Notifications';
+  document.getElementById('np-body').textContent=ar
+    ?'فعّل الإشعارات حتى يذكّرك التطبيق بوقت السحور، الإفطار، والتمرين 🏋️'
+    :'Enable notifications to get reminded for Suhoor, Iftar, and Workout times 🏋️';
+  document.getElementById('np-allow').textContent=ar?'✅ السماح بالإشعارات':'✅ Allow Notifications';
+  document.getElementById('np-skip').textContent=ar?'تخطي':'Skip';
+  document.getElementById('notifMov').classList.add('on');
+}
+async function doAllowNotif(){
+  closeMov('notifMov');
+  if(!('Notification' in window)) return;
+  const p=await Notification.requestPermission();
+  if(p==='granted'){schedAlarms();toast(t('toast-notif'));}
+  rAlarms();
+}
+function schedAlarms(){
+  _AT.forEach(id=>clearTimeout(id)); _AT=[];
+  if(Notification.permission!=='granted') return;
+  const AS=window._AS||defaultAS(), pt=getPT(), now=new Date();
+  function sched(timeStr,title,body,key){
+    if(!AS[key]||!timeStr||timeStr==='--:--') return;
+    const[hh,mm]=timeStr.split(':').map(Number);
+    const tgt=new Date(); tgt.setHours(hh,mm,0,0);
+    let ms=tgt-now; if(ms<-60000) ms+=86400000;
+    if(ms>0&&ms<86400000){
+      const id=setTimeout(()=>{
+        try{new Notification('🏋️ FitFuel',{body,tag:key,renotify:true});}catch(e){}
+        toast('🔔 '+title);
+      },ms);
+      _AT.push(id);
+    }
+  }
+  if(isRamadan){
+    sched(pt.suhoor,L==='ar'?'وقت السحور! 🌙':'Suhoor Time! 🌙',t('notif-suhoor'),'suhoor');
+    sched(pt.maghrib,L==='ar'?'حان الإفطار! 🌅':'Iftar Time! 🌅',t('notif-iftar'),'iftar');
+    sched(pt.workout,L==='ar'?'وقت التمرين! 🏋️':'Workout Time! 🏋️',t('notif-workout'),'workout');
+  } else {
+    sched('09:00',L==='ar'?'وقت الفطور! 🍳':'Breakfast Time! 🍳',t('notif-breakfast'),'breakfast');
+    sched('14:00',L==='ar'?'وقت الغداء! 🥗':'Lunch Time! 🥗',t('notif-lunch'),'lunch');
+    sched('16:30',L==='ar'?'وقت السناك! 🍎':'Snack Time! 🍎',t('notif-snack'),'snack');
+    sched('17:00',L==='ar'?'وقت التمرين! 🏋️':'Workout Time! 🏋️',t('notif-workout'),'workout');
+    sched('20:00',L==='ar'?'وقت العشاء! 🌙':'Dinner Time! 🌙',t('notif-dinner'),'dinner');
+  }
+}
+function openEdit(){
+  document.getElementById('ed-nm').value=P.name||'';
+  document.getElementById('ed-wt').value=P.weight||'';
+  document.getElementById('ed-ht').value=P.height||'';
+  document.getElementById('ed-ag').value=P.age||'';
+  document.getElementById('edit-ti').textContent=t('edit-ti');
+  document.getElementById('ed-lnm').textContent=t('ed-lnm');
+  document.getElementById('ed-lwt').textContent=t('ed-lwt');
+  document.getElementById('ed-lht').textContent=t('ed-lht');
+  document.getElementById('ed-lag').textContent=t('ed-lag');
+  document.getElementById('ed-sv').textContent=t('ed-sv');
+  document.getElementById('editMov').classList.add('on');
+}
+function closeMov(id){document.getElementById(id).classList.remove('on');}
+function saveEdit(){
+  const n=document.getElementById('ed-nm').value.trim();
+  const w=+document.getElementById('ed-wt').value;
+  const h=+document.getElementById('ed-ht').value;
+  const a=+document.getElementById('ed-ag').value;
+  if(!n){toast(L==='ar'?'أدخل الاسم':'Enter name');return;}
+  if(!a||a<10||a>100){toast(L==='ar'?'العمر بين 10 و100':'Age: 10–100');return;}
+  if(!w||w<20||w>300){toast(L==='ar'?'الوزن بين 20 و300 كغ':'Weight: 20–300 kg');return;}
+  if(!h||h<100||h>250){toast(L==='ar'?'الطول بين 100 و250 سم':'Height: 100–250 cm');return;}
+  P.name=n; P.weight=w; P.height=h; P.age=a;
+  calcCal(); save(); closeMov('editMov'); rProfile(); rHome();
+  toast(t('toast-saved'));
+}
+function doReset(){
+  if(confirm(t('confirm-reset'))){localStorage.removeItem('ff7');localStorage.removeItem('ff7_pt');location.reload();}}
+
+// ============================================================
+// INIT
+// ============================================================
+function startApp(){
+  const has=load(); applyLang();
+  document.getElementById('pg-splash').classList.remove('on');
+  if(has){
+    if(P.lastWD!==new Date().toDateString()) P.doneToday=false;
+    if(!_WP) genWK(false);
+    showMain();
+  } else {
+    document.getElementById('pg-setup').classList.add('on');
+    CS=1; showStep(1);
+  }
+}
+// Register Service Worker for PWA auto-updates
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg=>{ reg.update(); })
+      .catch(err=>console.warn('SW failed:',err));
+  });
+}
+
+  const saved=localStorage.getItem('ff7');
+  if(saved){try{const d=JSON.parse(saved);L=d.L||'ar';}catch(e){}}
+  applyLang();
+  document.getElementById('pg-splash').classList.add('on');
+  setInterval(()=>{if(document.getElementById('pg-main').classList.contains('on'))save();},30000);
+};
+</script>
+</html>

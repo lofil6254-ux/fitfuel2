@@ -418,12 +418,6 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
     </div>
   </div>
   <div class="pstats" id="pstats"></div>
-  <div class="card" style="margin-bottom:10px">
-    <h3 style="font-size:16px;margin-bottom:4px" id="hs-t">—</h3>
-    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="hs-sub">—</div>
-    <canvas id="wkChart" height="160" style="width:100%;display:block"></canvas>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:14px" id="wkStats"></div>
-  </div>
   <button class="rstbtn" onclick="doReset()" id="rst-btn">—</button>
 </div></div>
 
@@ -1124,7 +1118,7 @@ function showTab(tab){
   if(tab==='home') rHome();
   if(tab==='workout') rWorkout();
   if(tab==='meals') rMeals();
-  if(tab==='profile'){rProfile(); setTimeout(renderWkChart,80);}
+  if(tab==='profile') rProfile();
 }
 
 // ============================================================
@@ -1651,40 +1645,45 @@ function exCard(e,si,sk){
 }
 function togEx(id){document.getElementById('ec-'+id).classList.toggle('exp');}
 let RTI=null;
+let _AC=null;
+function getAC(){
+  if(!_AC||_AC.state==='closed')
+    _AC=new(window.AudioContext||window.webkitAudioContext)();
+  if(_AC.state==='suspended') _AC.resume();
+  return _AC;
+}
 function beep(freq,dur,vol){
   try{
-    const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    const o=ctx.createOscillator();
-    const g=ctx.createGain();
+    const ctx=getAC();
+    const o=ctx.createOscillator(), g=ctx.createGain();
     o.connect(g); g.connect(ctx.destination);
-    o.frequency.value=freq;
-    o.type='sine';
+    o.frequency.value=freq; o.type='sine';
     g.gain.setValueAtTime(vol||0.4,ctx.currentTime);
     g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
-    o.start(ctx.currentTime);
-    o.stop(ctx.currentTime+dur);
+    o.start(ctx.currentTime); o.stop(ctx.currentTime+dur);
   }catch(e){}
 }
 function finishBeep(){
-  // F1 race-start style: 4 rising beeps then one long high GO beep
   try{
-    const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    function tone(freq,startT,dur,vol){
-      const o=ctx.createOscillator();
-      const g=ctx.createGain();
+    const ctx=getAC();
+    const now=ctx.currentTime;
+    function tone(freq,t,dur,vol){
+      const o=ctx.createOscillator(), g=ctx.createGain();
       o.connect(g); g.connect(ctx.destination);
       o.frequency.value=freq; o.type='sine';
-      g.gain.setValueAtTime(vol,startT);
-      g.gain.exponentialRampToValueAtTime(0.001,startT+dur);
-      o.start(startT); o.stop(startT+dur);
+      g.gain.setValueAtTime(0.001,now+t);
+      g.gain.linearRampToValueAtTime(vol,now+t+0.02);
+      g.gain.setValueAtTime(vol,now+t+dur-0.05);
+      g.gain.linearRampToValueAtTime(0.001,now+t+dur);
+      o.start(now+t); o.stop(now+t+dur+0.05);
     }
-    // 4 short rising countdown beeps
-    tone(660,  ctx.currentTime+0.0,  0.12, 0.4);
-    tone(770,  ctx.currentTime+0.22, 0.12, 0.45);
-    tone(880,  ctx.currentTime+0.44, 0.12, 0.5);
-    tone(990,  ctx.currentTime+0.66, 0.12, 0.55);
-    // Long loud GO beep — 1.2 seconds
-    tone(1320, ctx.currentTime+0.95, 1.2,  0.8);
+    // 4 short rising beeps
+    tone(660,  0.00, 0.13, 0.5);
+    tone(770,  0.22, 0.13, 0.55);
+    tone(880,  0.44, 0.13, 0.6);
+    tone(990,  0.66, 0.13, 0.65);
+    // Long loud GO — 1.5 seconds with fade out at end
+    tone(1320, 0.95, 1.5,  0.85);
   }catch(e){}
 }
 function startRT(evt,rv){
@@ -1849,119 +1848,6 @@ function rProfile(){
   ];
   document.getElementById('pstats').innerHTML=stats.map(s=>`<div class="pst"><div class="pst-v">${s.v}</div><div class="pst-l">${s.l}</div></div>`).join('');
   renderCityCard();
-  renderWkChart();
-}
-function renderWkChart(){
-  const ar=L==='ar';
-  document.getElementById('hs-t').textContent=ar?'📊 إنجازاتي':'📊 My Achievements';
-  const canvas=document.getElementById('wkChart');
-  const statsEl=document.getElementById('wkStats');
-
-  // Summary stat pills
-  const totalSessions=P.sessions||0;
-  const streak=P.streak||0;
-  const avgEx=WH.length?Math.round(WH.reduce((s,h)=>s+(h.exs||0),0)/WH.length):0;
-  const maxIntensity=WH.length?Math.max(...WH.map(h=>h.intensity||1)):0;
-  const pillData=[
-    {ic:'🏋️', v:totalSessions, l:ar?'جلسة':'Sessions'},
-    {ic:'🔥', v:streak,        l:ar?'يوم متتالي':'Streak'},
-    {ic:'💪', v:avgEx,         l:ar?'تمرين/جلسة':'Avg Exs'},
-    {ic:'⚡', v:maxIntensity+'/5', l:ar?'أعلى شدة':'Peak'},
-  ];
-  statsEl.innerHTML=pillData.map(p=>`
-    <div style="flex:1;min-width:70px;background:var(--s3);border:1px solid var(--br2);border-radius:12px;padding:10px 8px;text-align:center">
-      <div style="font-size:18px">${p.ic}</div>
-      <div style="font-size:18px;font-weight:900;color:var(--ac);margin:2px 0">${p.v}</div>
-      <div style="font-size:11px;color:var(--mt);font-weight:700">${p.l}</div>
-    </div>`).join('');
-
-  if(!WH.length){
-    document.getElementById('hs-sub').textContent=ar?'ابدأ تمرينك الأول!':'Complete your first workout!';
-    const ctx2=canvas.getContext('2d');
-    canvas.width=canvas.offsetWidth||300; canvas.height=160;
-    ctx2.clearRect(0,0,canvas.width,canvas.height);
-    ctx2.fillStyle='#525270';
-    ctx2.font='14px system-ui';
-    ctx2.textAlign='center';
-    ctx2.fillText(ar?'لا توجد بيانات بعد':'No data yet',canvas.width/2,85);
-    return;
-  }
-
-  // Build last 8 sessions (reversed = oldest first for chart)
-  const pts=WH.slice(0,8).reverse();
-  document.getElementById('hs-sub').textContent=
-    ar?`آخر ${pts.length} جلسات`:`Last ${pts.length} sessions`;
-
-  const dpr=window.devicePixelRatio||1;
-  const W=canvas.offsetWidth||300, H=160;
-  canvas.width=W*dpr; canvas.height=H*dpr;
-  canvas.style.width=W+'px'; canvas.style.height=H+'px';
-  const ctx2=canvas.getContext('2d');
-  ctx2.scale(dpr,dpr);
-
-  const pad={t:16,r:12,b:36,l:28};
-  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
-  const n=pts.length;
-  const vals=pts.map(h=>h.intensity||1);
-  const maxV=5, minV=0;
-  const toY=v=>pad.t+ch-(((v-minV)/(maxV-minV))*ch);
-  const toX=i=>pad.l+(i/(n-1||1))*cw;
-
-  // Grid lines
-  ctx2.strokeStyle='#252540'; ctx2.lineWidth=1;
-  [1,2,3,4,5].forEach(v=>{
-    const y=toY(v);
-    ctx2.beginPath(); ctx2.moveTo(pad.l,y); ctx2.lineTo(pad.l+cw,y); ctx2.stroke();
-    ctx2.fillStyle='#525270'; ctx2.font='bold 10px system-ui';
-    ctx2.textAlign='right'; ctx2.fillText(v,pad.l-4,y+4);
-  });
-
-  // Filled area under curve
-  const grad=ctx2.createLinearGradient(0,pad.t,0,pad.t+ch);
-  grad.addColorStop(0,'rgba(200,245,58,0.25)');
-  grad.addColorStop(1,'rgba(200,245,58,0.0)');
-  ctx2.beginPath();
-  ctx2.moveTo(toX(0),toY(vals[0]));
-  if(n>1){
-    for(let i=1;i<n;i++){
-      const x0=toX(i-1),y0=toY(vals[i-1]),x1=toX(i),y1=toY(vals[i]);
-      const cpx=(x0+x1)/2;
-      ctx2.bezierCurveTo(cpx,y0,cpx,y1,x1,y1);
-    }
-  }
-  ctx2.lineTo(toX(n-1),pad.t+ch);
-  ctx2.lineTo(toX(0),pad.t+ch);
-  ctx2.closePath();
-  ctx2.fillStyle=grad; ctx2.fill();
-
-  // Line
-  ctx2.beginPath();
-  ctx2.moveTo(toX(0),toY(vals[0]));
-  if(n>1){
-    for(let i=1;i<n;i++){
-      const x0=toX(i-1),y0=toY(vals[i-1]),x1=toX(i),y1=toY(vals[i]);
-      const cpx=(x0+x1)/2;
-      ctx2.bezierCurveTo(cpx,y0,cpx,y1,x1,y1);
-    }
-  }
-  ctx2.strokeStyle='#c8f53a'; ctx2.lineWidth=2.5;
-  ctx2.lineJoin='round'; ctx2.stroke();
-
-  // Dots + day labels
-  const typeIcons={upper:'💪',lower:'🦵',full:'⚡',cardio:'🏃',rest:'😴'};
-  pts.forEach((h,i)=>{
-    const x=toX(i), y=toY(vals[i]);
-    // Glow
-    ctx2.beginPath(); ctx2.arc(x,y,6,0,Math.PI*2);
-    ctx2.fillStyle='rgba(200,245,58,0.2)'; ctx2.fill();
-    // Dot
-    ctx2.beginPath(); ctx2.arc(x,y,4,0,Math.PI*2);
-    ctx2.fillStyle='#c8f53a'; ctx2.fill();
-    ctx2.strokeStyle='#0d0d18'; ctx2.lineWidth=1.5; ctx2.stroke();
-    // Icon label below
-    ctx2.font='12px system-ui'; ctx2.textAlign='center';
-    ctx2.fillText(typeIcons[h.type]||'🏋️',x,H-pad.b+16);
-  });
 }
 function openEdit(){
   document.getElementById('ed-nm').value=P.name||'';

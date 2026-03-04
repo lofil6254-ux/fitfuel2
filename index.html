@@ -1113,12 +1113,10 @@ function showMain(){
   document.getElementById('pg-setup').classList.remove('on');
   document.getElementById('pg-main').classList.add('on');
   applyLang();
-  // Defer renders to next tick — ensures DOM is painted before data fills in
   setTimeout(()=>{
     rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
     startPTLoop();
   }, 0);
-  setInterval(save, 30000);
 }
 function showTab(tab){
   ['home','workout','meals','profile'].forEach(tb=>{
@@ -2045,9 +2043,16 @@ if('serviceWorker' in navigator){
 
 window.onload=()=>{
   const saved=localStorage.getItem('ff7');
-  if(saved){try{const d=JSON.parse(saved);L=d.L||'ar';}catch(e){}}
-  applyLang();
-  document.getElementById('pg-splash').classList.add('on');
+  if(saved){
+    try{const d=JSON.parse(saved);L=d.L||'ar';}catch(e){}
+    // Data exists — skip splash, load everything immediately
+    applyLang();
+    startApp();
+  } else {
+    // No data yet — show splash for language/start button
+    applyLang();
+    document.getElementById('pg-splash').classList.add('on');
+  }
   setInterval(()=>{if(document.getElementById('pg-main').classList.contains('on'))save();},30000);
 };
 </script>

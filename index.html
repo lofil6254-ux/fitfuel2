@@ -225,7 +225,7 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 <div class="rtbar" id="rtbar" onclick="stopRT()">⏱ <span class="rtn" id="rtn">60</span>s</div>
 
 <!-- SPLASH -->
-<div class="page on" id="pg-splash">
+<div class="page" id="pg-splash">
   <div style="font-size:56px;margin-bottom:12px">🏋️</div>
   <div class="logo">FITFUEL</div>
   <div style="font-size:14px;color:var(--mt);letter-spacing:2px;margin:6px 0 24px">KETTLEBELL · NUTRITION · RAMADAN</div>
@@ -2023,15 +2023,24 @@ function doReset(){
 // INIT
 // ============================================================
 function startApp(){
+  // Called by splash "ابدأ" button — go to setup for new users
+  document.getElementById('pg-splash').classList.remove('on');
+  document.getElementById('pg-setup').classList.add('on');
+  CS=1; showStep(1);
+}
+
+function initApp(){
+  // Called once on page load
   const has=load();
   applyLang();
   if(has){
+    // Returning user — go straight to main with data
     if(P.lastWD!==new Date().toDateString()) P.doneToday=false;
     if(!_WP) genWK(false);
     showMain();
   } else {
+    // New user — show splash
     document.getElementById('pg-splash').classList.add('on');
-    CS=1; showStep(1);
   }
 }
 // Register Service Worker for PWA auto-updates
@@ -2044,7 +2053,7 @@ if('serviceWorker' in navigator){
 }
 
 window.onload=()=>{
-  startApp();
+  initApp();
   setInterval(()=>{if(document.getElementById('pg-main').classList.contains('on'))save();},30000);
 };
 </script>

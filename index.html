@@ -1113,9 +1113,12 @@ function showMain(){
   document.getElementById('pg-setup').classList.remove('on');
   document.getElementById('pg-main').classList.add('on');
   applyLang();
+  rRamadanUI();
+  rHome();
+  rWorkout();
+  rMeals();
+  rProfile();
   startPTLoop();
-  // Use showTab so home initializes identically to tapping the nav button
-  setTimeout(()=>showTab('home'), 50);
 }
 function showTab(tab){
   ['home','workout','meals','profile'].forEach(tb=>{
@@ -2020,14 +2023,14 @@ function doReset(){
 // INIT
 // ============================================================
 function startApp(){
-  const has=load(); applyLang();
-  document.getElementById('pg-splash').classList.remove('on');
+  const has=load();
+  applyLang();
   if(has){
     if(P.lastWD!==new Date().toDateString()) P.doneToday=false;
     if(!_WP) genWK(false);
     showMain();
   } else {
-    document.getElementById('pg-setup').classList.add('on');
+    document.getElementById('pg-splash').classList.add('on');
     CS=1; showStep(1);
   }
 }
@@ -2041,17 +2044,7 @@ if('serviceWorker' in navigator){
 }
 
 window.onload=()=>{
-  const saved=localStorage.getItem('ff7');
-  if(saved){
-    try{const d=JSON.parse(saved);L=d.L||'ar';}catch(e){}
-    // Data exists — skip splash, load everything immediately
-    applyLang();
-    startApp();
-  } else {
-    // No data yet — show splash for language/start button
-    applyLang();
-    document.getElementById('pg-splash').classList.add('on');
-  }
+  startApp();
   setInterval(()=>{if(document.getElementById('pg-main').classList.contains('on'))save();},30000);
 };
 </script>

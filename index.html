@@ -1980,6 +1980,7 @@ if('serviceWorker' in navigator){
   });
 }
 
+window.onload=()=>{
   const saved=localStorage.getItem('ff7');
   if(saved){try{const d=JSON.parse(saved);L=d.L||'ar';}catch(e){}}
   applyLang();

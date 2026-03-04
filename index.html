@@ -15,24 +15,24 @@
 :root{--bg:#0a0a14;--s1:#11111f;--s2:#17172a;--s3:#1e1e36;--ac:#c8f53a;--acd:rgba(200,245,58,.12);--bl:#3ab4f5;--bld:rgba(58,180,245,.12);--pk:#f53a8a;--pkd:rgba(245,58,138,.12);--or:#f5933a;--ord:rgba(245,147,58,.12);--gd:#ffd700;--gdd:rgba(255,215,0,.13);--tx:#eeeef8;--mt:#5a5a7a;--br:#1e1e38;--r:13px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:17px}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:19px}
 input,select,button{font-family:inherit;font-size:inherit}
 .page{position:fixed;inset:0;overflow-y:auto;display:none;flex-direction:column;padding-bottom:72px}
 .page.on{display:flex}
 .wrap{width:100%;max-width:500px;margin:0 auto;padding:0 14px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:50px;border:none;cursor:pointer;font-size:14px;font-weight:700;transition:transform .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:50px;border:none;cursor:pointer;font-size:16px;font-weight:700;transition:transform .15s}
 .btn:active{transform:scale(.96)}
 .bp{background:linear-gradient(135deg,var(--ac),#8ed010);color:#0a0a14}
 .bo{background:transparent;border:1.5px solid var(--br);color:var(--mt)}
 .bo:hover,.bo:focus{border-color:var(--ac);color:var(--ac)}
 .bw{width:100%}
-.bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:13px;font-weight:700}
 .bg{background:var(--acd);color:var(--ac)}.bb{background:var(--bld);color:var(--bl)}
 .bpk{background:var(--pkd);color:var(--pk)}.bor{background:var(--ord);color:var(--or)}.bgd{background:var(--gdd);color:var(--gd)}
 .card{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:14px;margin-bottom:10px}
-.tag{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mt)}
+.tag{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mt)}
 .mt{color:var(--mt)}
-.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:var(--s2);border:1.5px solid var(--ac);color:var(--ac);padding:8px 16px;border-radius:50px;font-size:13px;font-weight:700;z-index:9999;transition:transform .3s;white-space:nowrap;pointer-events:none;max-width:92vw;text-align:center}
+.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-70px);background:var(--s2);border:1.5px solid var(--ac);color:var(--ac);padding:8px 16px;border-radius:50px;font-size:15px;font-weight:700;z-index:9999;transition:transform .3s;white-space:nowrap;pointer-events:none;max-width:92vw;text-align:center}
 .toast.on{transform:translateX(-50%) translateY(0)}
 .savfl{position:fixed;bottom:78px;right:14px;background:var(--acd);border:1px solid var(--ac);color:var(--ac);padding:4px 10px;border-radius:50px;font-size:10px;font-weight:700;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none}
 [dir=ltr] .savfl{right:auto;left:14px}
@@ -45,7 +45,7 @@ input,select,button{font-family:inherit;font-size:inherit}
 #pg-splash{align-items:center;justify-content:center;text-align:center;padding:40px 20px}
 .logo{font-size:68px;font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,var(--ac),var(--bl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .lrow{display:flex;gap:8px;justify-content:center;margin-bottom:22px}
-.lbtn{padding:9px 22px;border-radius:50px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.lbtn{padding:9px 22px;border-radius:50px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
 .lbtn.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
 
 /* SETUP */
@@ -55,8 +55,8 @@ input,select,button{font-family:inherit;font-size:inherit}
 .prg.d{background:var(--ac)}.prg.c{background:var(--ac);box-shadow:0 0 8px var(--ac)}
 .step{display:none}.step.on{display:block}
 .fl{margin-bottom:11px}
-.lb{font-size:11px;color:var(--mt);font-weight:700;margin-bottom:4px;display:block}
-.fi{width:100%;background:var(--s2);border:1.5px solid var(--br);color:var(--tx);border-radius:10px;padding:11px 12px;font-size:14px;outline:none;transition:border-color .2s}
+.lb{font-size:14px;color:var(--mt);font-weight:700;margin-bottom:4px;display:block}
+.fi{width:100%;background:var(--s2);border:1.5px solid var(--br);color:var(--tx);border-radius:10px;padding:11px 12px;font-size:16px;outline:none;transition:border-color .2s}
 .fi:focus{border-color:var(--ac)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .g1{display:flex;flex-direction:column;gap:7px}
@@ -64,7 +64,7 @@ input,select,button{font-family:inherit;font-size:inherit}
 .oc.on{border-color:var(--ac);background:var(--acd)}
 .oc-h{display:flex;align-items:center;gap:10px;text-align:start}
 .oi{font-size:22px;flex-shrink:0}
-.ol{font-size:13px;font-weight:700}.os{font-size:10px;color:var(--mt);margin-top:1px}
+.ol{font-size:15px;font-weight:700}.os{font-size:12px;color:var(--mt);margin-top:1px}
 .nb{display:flex;gap:8px;margin-top:18px}
 .ig2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
@@ -72,7 +72,7 @@ input,select,button{font-family:inherit;font-size:inherit}
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:var(--s1);border-top:1px solid var(--br);display:flex;z-index:300;padding:6px 0}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px;border:none;background:transparent;color:var(--mt);transition:color .18s}
 .ni.on{color:var(--ac)}
-.ni-ic{font-size:21px}.ni-lb{font-size:10px;font-weight:700}
+.ni-ic{font-size:24px}.ni-lb{font-size:12px;font-weight:700}
 
 /* HOME */
 .hero{background:linear-gradient(135deg,var(--s3),var(--s2));border:1px solid var(--br);border-radius:16px;padding:16px;margin-bottom:12px}
@@ -82,8 +82,8 @@ input,select,button{font-family:inherit;font-size:inherit}
 .rfl{fill:none;stroke:var(--ac);stroke-width:8;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:220;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1.2s ease}
 .mbars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
 .mb{background:var(--s1);border-radius:8px;padding:7px;text-align:center}
-.mb-l{font-size:9px;color:var(--mt);font-weight:700;margin-bottom:2px}
-.mb-v{font-size:12px;font-weight:900}
+.mb-l{font-size:12px;color:var(--mt);font-weight:700;margin-bottom:2px}
+.mb-v{font-size:15px;font-weight:900}
 .mbar{height:3px;background:var(--br);border-radius:2px;margin-top:3px;overflow:hidden}
 .mbf{height:100%;border-radius:2px;transition:width 1s}
 .logrow{display:flex;gap:6px}
@@ -102,75 +102,75 @@ input,select,button{font-family:inherit;font-size:inherit}
 .ptcnt{font-size:12px;color:var(--gd);font-weight:700;text-align:center;margin-top:7px}
 .ptsrc{font-size:9px;color:var(--mt);text-align:center;margin-top:2px}
 .rbanner{background:linear-gradient(135deg,#14101e,#1c1232);border:1px solid rgba(255,215,0,.22);border-radius:14px;padding:11px 13px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.rtoggle{border:1.5px solid var(--gd);color:var(--gd);background:var(--gdd);border-radius:50px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.rtoggle{border:1.5px solid var(--gd);color:var(--gd);background:var(--gdd);border-radius:50px;padding:5px 12px;font-size:13px;font-weight:700;cursor:pointer}
 .rtoggle.off{border-color:var(--br);color:var(--mt);background:transparent}
 .twc{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:13px;cursor:pointer}
 
 /* WORKOUT */
 .dayplan{display:flex;overflow-x:auto;gap:6px;padding:2px 0 8px;scrollbar-width:none}
 .dayplan::-webkit-scrollbar{display:none}
-.dpc{padding:7px 10px;border-radius:9px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s;text-align:center;min-width:58px}
+.dpc{padding:7px 10px;border-radius:9px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s;text-align:center;min-width:64px}
 .dpc.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
 .dpc.done{border-color:var(--pk);color:var(--pk)}.dpc.rest{border-color:var(--bl);color:var(--bl)}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
 .pgst{text-align:center;background:var(--s1);border-radius:8px;padding:8px}
-.pgst-v{font-size:16px;font-weight:900;color:var(--ac)}
-.pgst-l{font-size:9px;color:var(--mt);font-weight:700;margin-top:1px}
+.pgst-v{font-size:20px;font-weight:900;color:var(--ac)}
+.pgst-l{font-size:12px;color:var(--mt);font-weight:700;margin-top:1px}
 .wsec-t{display:flex;align-items:center;gap:8px;margin:14px 0 8px}
 .wsec-l{flex:1;height:1px;background:var(--br)}
 .excard{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);overflow:hidden;margin-bottom:8px}
 .excard.exp{border-color:var(--bl)}
 .exhdr{display:flex;gap:10px;align-items:center;padding:11px;cursor:pointer}
-.exgif{width:60px;height:60px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:22px}
+.exgif{width:60px;height:60px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:26px}
 .exgif img{width:100%;height:100%;object-fit:cover}
-.exnm{font-size:13px;font-weight:800;margin-bottom:3px}
-.mtag{padding:2px 6px;border-radius:20px;font-size:9px;font-weight:700;background:var(--pkd);color:var(--pk)}
-.exchv{font-size:11px;color:var(--mt);margin-inline-start:auto;transition:transform .25s;flex-shrink:0}
+.exnm{font-size:15px;font-weight:800;margin-bottom:3px}
+.mtag{padding:2px 6px;border-radius:20px;font-size:11px;font-weight:700;background:var(--pkd);color:var(--pk)}
+.exchv{font-size:13px;color:var(--mt);margin-inline-start:auto;transition:transform .25s;flex-shrink:0}
 .excard.exp .exchv{transform:rotate(180deg)}
 .exbody{display:none;padding:11px;border-top:1px solid var(--br)}
 .excard.exp .exbody{display:block}
 .exdg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:9px}
 .exd{background:var(--s3);border-radius:7px;padding:8px;text-align:center}
-.exd-v{font-size:14px;font-weight:900;color:var(--bl)}
-.exd-l{font-size:9px;color:var(--mt);font-weight:700;margin-top:1px}
+.exd-v{font-size:16px;font-weight:900;color:var(--bl)}
+.exd-l{font-size:12px;color:var(--mt);font-weight:700;margin-top:1px}
 .tips{background:var(--s3);border-radius:8px;padding:9px;margin-top:8px}
-.tips-t{font-size:10px;color:var(--ac);font-weight:700;margin-bottom:5px}
+.tips-t{font-size:13px;color:var(--ac);font-weight:700;margin-bottom:5px}
 .tips ul{padding-inline-start:13px}
-.tips li{font-size:11px;color:var(--mt);margin-bottom:3px;line-height:1.5}
-.done-btn{width:100%;margin-top:12px;padding:13px;font-size:14px}
+.tips li{font-size:13px;color:var(--mt);margin-bottom:3px;line-height:1.5}
+.done-btn{width:100%;margin-top:12px;padding:13px;font-size:16px}
 .done-btn.cmp{background:var(--acd)!important;color:var(--ac)!important;border:1.5px solid var(--ac)!important;cursor:default!important}
 .lvlrow{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 
 /* MEALS */
 .daysel{display:flex;overflow-x:auto;gap:6px;padding:2px 0 8px;scrollbar-width:none}
 .daysel::-webkit-scrollbar{display:none}
-.dpill{padding:7px 13px;border-radius:50px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s}
+.dpill{padding:7px 13px;border-radius:50px;border:1.5px solid var(--br);background:var(--s2);color:var(--mt);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s}
 .dpill.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
 .mode-sw{display:flex;gap:6px;margin-bottom:10px}
-.msw{flex:1;padding:8px;border-radius:50px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+.msw{flex:1;padding:8px;border-radius:50px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
 .msw.rm{border-color:var(--gd);color:var(--gd);background:var(--gdd)}
 .msw.nm{border-color:var(--ac);color:var(--ac);background:var(--acd)}
 .dtbar{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:11px 13px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
 .mcard{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
 .mc-hdr{padding:11px 12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:8px}
-.mc-nm{font-size:13px;font-weight:800;margin-top:3px;line-height:1.3}
+.mc-nm{font-size:15px;font-weight:800;margin-top:3px;line-height:1.3}
 .mc-body{display:none;padding:11px 12px;border-top:1px solid var(--br)}
 .mcard.exp .mc-body{display:block}
 .mmac{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
-.mpill{padding:2px 8px;border-radius:20px;font-size:9px;font-weight:700}
-.ing-i{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--br);font-size:12px;line-height:1.4}
+.mpill{padding:2px 8px;border-radius:20px;font-size:12px;font-weight:700}
+.ing-i{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--br);font-size:14px;line-height:1.4}
 .ing-i:last-child{border:none}
 .ing-i::before{content:'•';color:var(--ac);font-size:14px;flex-shrink:0;line-height:1.3}
-.minstr{background:var(--s3);border-radius:8px;padding:9px;margin-top:8px;font-size:12px;color:var(--mt);line-height:1.6}
+.minstr{background:var(--s3);border-radius:8px;padding:9px;margin-top:8px;font-size:14px;color:var(--mt);line-height:1.6}
 .mactions{display:flex;gap:6px;margin-top:9px}
-.mactions .btn{flex:1;padding:9px;font-size:11px}
+.mactions .btn{flex:1;padding:9px;font-size:13px}
 
 /* PROFILE */
-.profav{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--bl));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#0a0a14;margin:0 auto 10px}
+.profav{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--bl));display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:#0a0a14;margin:0 auto 10px}
 .pstats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
 .pst{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:11px;text-align:center}
 .pst-v{font-size:17px;font-weight:900;color:var(--ac)}
-.pst-l{font-size:10px;color:var(--mt);font-weight:700;margin-top:2px}
+.pst-l{font-size:13px;color:var(--mt);font-weight:700;margin-top:2px}
 .hist-i{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--s2);border-radius:8px;margin-bottom:5px}
 .alarm-i{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;background:var(--s2);border-radius:8px;margin-bottom:5px;border:1px solid var(--br)}
 .altime{font-size:17px;font-weight:900;color:var(--gd);font-variant-numeric:tabular-nums}
@@ -181,13 +181,13 @@ input,select,button{font-family:inherit;font-size:inherit}
 input:checked+.tsl{background:var(--ac)}
 input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 .lang-sw{display:flex;gap:6px}
-.lsw{flex:1;padding:9px;border-radius:50px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.lsw{flex:1;padding:9px;border-radius:50px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
 .lsw.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
 .mov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(5px)}
 .mov.on{display:flex}
 .modal{background:var(--s1);border:1px solid var(--br);border-radius:18px 18px 0 0;width:100%;max-width:500px;padding:20px 16px;max-height:85vh;overflow-y:auto}
 .mcls{float:inline-end;background:none;border:none;color:var(--mt);font-size:19px;cursor:pointer}
-.rstbtn{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:12px;font-weight:700;cursor:pointer;margin-top:6px}
+.rstbtn{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--br);background:transparent;color:var(--mt);font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
 .rstbtn:hover{border-color:var(--pk);color:var(--pk)}
 </style>
 </head>
@@ -200,12 +200,12 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 <div class="page on" id="pg-splash">
   <div style="font-size:56px;margin-bottom:12px">🏋️</div>
   <div class="logo">FITFUEL</div>
-  <div style="font-size:11px;color:var(--mt);letter-spacing:2px;margin:6px 0 24px">KETTLEBELL · NUTRITION · RAMADAN</div>
+  <div style="font-size:14px;color:var(--mt);letter-spacing:2px;margin:6px 0 24px">KETTLEBELL · NUTRITION · RAMADAN</div>
   <div class="lrow">
     <button class="lbtn on" onclick="setL('ar',this)">العربية</button>
     <button class="lbtn" onclick="setL('en',this)">English</button>
   </div>
-  <button class="btn bp" style="padding:15px 52px;font-size:15px" onclick="startApp()" id="sp-btn">ابدأ 🚀</button>
+  <button class="btn bp" style="padding:15px 52px;font-size:17px" onclick="startApp()" id="sp-btn">ابدأ 🚀</button>
 </div>
 
 <!-- SETUP -->
@@ -213,8 +213,8 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 <div class="wrap" style="padding-top:28px">
   <div class="prog" id="prog"></div>
   <div class="step" id="s1">
-    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s1t">—</div>
-    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s1s">—</div>
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s1t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s1s">—</div>
     <div class="fl"><label class="lb" id="l-nm">—</label><input class="fi" id="i-nm" type="text"></div>
     <div class="ig2">
       <div class="fl"><label class="lb" id="l-ag">—</label><input class="fi" id="i-ag" type="number" min="10" max="80" placeholder="25"></div>
@@ -229,8 +229,8 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
     <div class="nb"><button class="btn bp bw" id="nx1" onclick="nx(1)">—</button></div>
   </div>
   <div class="step" id="s2">
-    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s2t">—</div>
-    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s2s">—</div>
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s2t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s2s">—</div>
     <div class="g2">
       <div class="oc" onclick="pick(this,'goal','lose')"><div class="oi">🔥</div><div class="ol" id="g-lose">—</div></div>
       <div class="oc" onclick="pick(this,'goal','gain')"><div class="oi">💪</div><div class="ol" id="g-gain">—</div></div>
@@ -240,8 +240,8 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
     <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx2" onclick="nx(2)">—</button></div>
   </div>
   <div class="step" id="s3">
-    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s3t">—</div>
-    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s3s">—</div>
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s3t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s3s">—</div>
     <div class="g1">
       <div class="oc oc-h" onclick="pick(this,'level','beginner')"><div class="oi">🌱</div><div><div class="ol" id="lv-b">—</div><div class="os" id="lv-bs">—</div></div></div>
       <div class="oc oc-h" onclick="pick(this,'level','intermediate')"><div class="oi">⚡</div><div><div class="ol" id="lv-i">—</div><div class="os" id="lv-is">—</div></div></div>
@@ -250,8 +250,8 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
     <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx3" onclick="nx(3)">—</button></div>
   </div>
   <div class="step" id="s4">
-    <div style="font-size:18px;font-weight:900;margin-bottom:3px" id="s4t">—</div>
-    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="s4s">—</div>
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s4t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s4s">—</div>
     <div class="g1">
       <div class="oc oc-h" onclick="pick(this,'act','1.2')"><div class="oi">🪑</div><div><div class="ol" id="ac-1">—</div><div class="os" id="ac-1s">—</div></div></div>
       <div class="oc oc-h" onclick="pick(this,'act','1.375')"><div class="oi">🚶</div><div><div class="ol" id="ac-2">—</div><div class="os" id="ac-2s">—</div></div></div>
@@ -272,13 +272,13 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
   <div class="rbanner" id="rbanner">
     <div style="display:flex;align-items:center;gap:9px">
       <div style="font-size:24px" id="rb-ic">🌙</div>
-      <div><div style="font-size:13px;font-weight:800;color:var(--gd)" id="rb-t">—</div><div style="font-size:10px;color:var(--mt)" id="rb-s">—</div></div>
+      <div><div style="font-size:16px;font-weight:800;color:var(--gd)" id="rb-t">—</div><div style="font-size:13px;color:var(--mt)" id="rb-s">—</div></div>
     </div>
     <button class="rtoggle" id="rtogbtn" onclick="toggleRamadan()">—</button>
   </div>
   <div class="hero">
-    <div style="font-size:11px;color:var(--mt)" id="hm-gr">—</div>
-    <div style="font-size:19px;font-weight:900;margin-bottom:8px" id="hm-nm">—</div>
+    <div style="font-size:14px;color:var(--mt)" id="hm-gr">—</div>
+    <div style="font-size:21px;font-weight:900;margin-bottom:8px" id="hm-nm">—</div>
     <div class="ringwrap">
       <div style="position:relative">
         <svg class="rsvg" viewBox="0 0 90 90">
@@ -286,14 +286,14 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
           <circle class="rfl" id="rfl" cx="45" cy="45" r="35"/>
         </svg>
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-          <div style="font-size:15px;font-weight:900;color:var(--ac)" id="r-num">0</div>
-          <div style="font-size:9px;color:var(--mt);font-weight:700" id="r-lbl">/2000</div>
+          <div style="font-size:17px;font-weight:900;color:var(--ac)" id="r-num">0</div>
+          <div style="font-size:12px;color:var(--mt);font-weight:700" id="r-lbl">/2000</div>
         </div>
       </div>
       <div style="flex:1">
-        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:11px;color:var(--mt)" id="cs1">—</span><span style="font-size:11px;font-weight:800;color:var(--ac)" id="cv1">—</span></div>
-        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:11px;color:var(--mt)" id="cs2">—</span><span style="font-size:11px;font-weight:800" id="cv2">0</span></div>
-        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:11px;color:var(--mt)" id="cs3">—</span><span style="font-size:11px;font-weight:800" id="cv3">—</span></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:14px;color:var(--mt)" id="cs1">—</span><span style="font-size:14px;font-weight:800;color:var(--ac)" id="cv1">—</span></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:14px;color:var(--mt)" id="cs2">—</span><span style="font-size:14px;font-weight:800" id="cv2">0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:14px;color:var(--mt)" id="cs3">—</span><span style="font-size:14px;font-weight:800" id="cv3">—</span></div>
       </div>
     </div>
     <div class="mbars">
@@ -303,7 +303,7 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
     </div>
   </div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <h3 style="font-size:13px" id="lbl-qlog">—</h3>
+    <h3 style="font-size:16px" id="lbl-qlog">—</h3>
   </div>
   <div class="logrow" style="gap:6px">
     <input class="fi" id="log-nm" type="text" style="border-radius:10px;padding:9px 11px">
@@ -312,18 +312,18 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
   </div>
   <div class="litems" id="litems"></div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px">
-    <h3 style="font-size:13px" id="lbl-tw">—</h3>
-    <button class="btn bo" style="padding:5px 10px;font-size:10px" id="sa-btn" onclick="showTab('workout')">—</button>
+    <h3 style="font-size:16px" id="lbl-tw">—</h3>
+    <button class="btn bo" style="padding:5px 10px;font-size:13px" id="sa-btn" onclick="showTab('workout')">—</button>
   </div>
   <div class="twc" onclick="showTab('workout')">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div><div class="bdg bb" id="tw-lv">—</div><div style="font-size:14px;font-weight:900;margin-top:4px" id="tw-nm">—</div></div>
+      <div><div class="bdg bb" id="tw-lv">—</div><div style="font-size:17px;font-weight:900;margin-top:4px" id="tw-nm">—</div></div>
       <div style="font-size:28px">🏋️</div>
     </div>
     <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
-      <span style="font-size:11px;color:var(--mt)">⏱ <span id="tw-d">—</span></span>
-      <span style="font-size:11px;color:var(--mt)">🏋️ <span id="tw-e">—</span></span>
-      <span style="font-size:11px;color:var(--mt)">🔥 <span id="tw-c">—</span></span>
+      <span style="font-size:14px;color:var(--mt)">⏱ <span id="tw-d">—</span></span>
+      <span style="font-size:14px;color:var(--mt)">🏋️ <span id="tw-e">—</span></span>
+      <span style="font-size:14px;color:var(--mt)">🔥 <span id="tw-c">—</span></span>
     </div>
   </div>
 </div></div>
@@ -333,13 +333,13 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 <div class="wrap" style="padding-top:16px">
   <div style="text-align:center;margin-bottom:14px">
     <div class="tag" id="wk-tag">—</div>
-    <h1 style="font-size:19px;margin-top:4px" id="wk-ti">—</h1>
+    <h1 style="font-size:21px;margin-top:4px" id="wk-ti">—</h1>
   </div>
   <div class="dayplan" id="dayplan"></div>
   <div class="lvlrow" id="lvlrow"></div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <h3 style="font-size:13px" id="pg-t">—</h3>
+      <h3 style="font-size:16px" id="pg-t">—</h3>
       <div class="bdg bg" id="pg-bdg">0</div>
     </div>
     <div class="pgrid">
@@ -358,8 +358,8 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 <div id="t-meals" style="display:none">
 <div class="wrap" style="padding-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-    <h2 style="font-size:16px" id="ml-ti">—</h2>
-    <button class="btn bo" style="padding:6px 11px;font-size:11px" onclick="genAllMeals(true)">🔄 <span id="all-t">—</span></button>
+    <h2 style="font-size:18px" id="ml-ti">—</h2>
+    <button class="btn bo" style="padding:6px 11px;font-size:14px" onclick="genAllMeals(true)">🔄 <span id="all-t">—</span></button>
   </div>
   <div class="mode-sw">
     <button class="msw" id="msw-rm" onclick="setMode('ramadan')">🌙 <span id="msw-rm-t">—</span></button>
@@ -367,8 +367,8 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
   </div>
   <div class="daysel" id="daysel"></div>
   <div class="dtbar">
-    <div><div class="tag" id="dt-lb">—</div><div style="font-size:17px;font-weight:900" id="dt-cl">—</div></div>
-    <div style="text-align:end"><div style="font-size:10px;color:var(--mt)" id="dt-lbt">—</div><div style="font-size:13px;font-weight:800" id="dt-tv">—</div></div>
+    <div><div class="tag" id="dt-lb">—</div><div style="font-size:19px;font-weight:900" id="dt-cl">—</div></div>
+    <div style="text-align:end"><div style="font-size:13px;color:var(--mt)" id="dt-lbt">—</div><div style="font-size:16px;font-weight:800" id="dt-tv">—</div></div>
   </div>
   <div id="mlcnt"></div>
 </div></div>
@@ -378,27 +378,20 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 <div class="wrap" style="padding-top:16px">
   <div style="text-align:center;margin-bottom:16px">
     <div class="profav" id="profav">?</div>
-    <h2 style="font-size:17px" id="prof-nm">—</h2>
-    <div style="font-size:11px;color:var(--mt);margin-top:2px" id="prof-gl">—</div>
-    <button class="btn bo" style="margin-top:8px;font-size:11px;padding:6px 14px" onclick="openEdit()" id="edit-btn">✏️ —</button>
+    <h2 style="font-size:19px" id="prof-nm">—</h2>
+    <div style="font-size:14px;color:var(--mt);margin-top:2px" id="prof-gl">—</div>
+    <button class="btn bo" style="margin-top:8px;font-size:14px;padding:6px 14px" onclick="openEdit()" id="edit-btn">✏️ —</button>
   </div>
   <div class="card" style="margin-bottom:10px">
-    <h3 style="font-size:13px;margin-bottom:10px" id="lbl-lang">—</h3>
+    <h3 style="font-size:16px;margin-bottom:10px" id="lbl-lang">—</h3>
     <div class="lang-sw">
       <button class="lsw" id="lsw-ar" onclick="switchLang('ar')">🇲🇦 العربية</button>
       <button class="lsw" id="lsw-en" onclick="switchLang('en')">🇬🇧 English</button>
     </div>
   </div>
   <div class="pstats" id="pstats"></div>
-  <!-- CITY SELECTOR -->
-  <div class="card" style="margin-bottom:10px" id="city-card">
-    <h3 style="font-size:13px;margin-bottom:10px" id="city-lbl">📍 —</h3>
-    <select class="fi" id="city-sel" onchange="onCityChange(this.value)" style="font-size:13px;padding:10px 12px">
-    </select>
-    <div style="font-size:10px;color:var(--mt);margin-top:6px;text-align:center" id="city-note"></div>
-  </div>
   <div class="card" style="margin-bottom:10px">
-    <h3 style="font-size:13px;margin-bottom:10px" id="hs-t">—</h3>
+    <h3 style="font-size:16px;margin-bottom:10px" id="hs-t">—</h3>
     <div id="wkhist"></div>
   </div>
   <button class="rstbtn" onclick="doReset()" id="rst-btn">—</button>
@@ -415,7 +408,7 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 <div class="mov" id="editMov">
 <div class="modal">
   <button class="mcls" onclick="closeMov('editMov')">✕</button>
-  <h3 style="margin-bottom:13px;font-size:15px" id="edit-ti">—</h3>
+  <h3 style="margin-bottom:13px;font-size:17px" id="edit-ti">—</h3>
   <div class="fl"><label class="lb" id="ed-lnm">—</label><input class="fi" id="ed-nm" type="text"></div>
   <div class="ig2">
     <div class="fl"><label class="lb" id="ed-lwt">—</label><input class="fi" id="ed-wt" type="number"></div>
@@ -1023,7 +1016,7 @@ function rPrayerCard(){
   items.forEach((x,i)=>{ if(nextIdx===-1&&t2m(x.tm)>nowMin) nextIdx=i; });
   document.getElementById('ptrow').innerHTML=items.map((x,i)=>`
     <div class="ptime${i===nextIdx?' nx':''}">
-      <div style="font-size:12px">${x.ic}</div>
+      <div style="font-size:15px">${x.ic}</div>
       <div class="ptime-v">${to12h(x.tm)}</div>
       <div class="ptime-l">${x.lbl}</div>
     </div>`).join('');
@@ -1181,9 +1174,9 @@ function rLogItems(){
   if(!log||!log.foods.length){el.innerHTML='';return;}
   el.innerHTML=log.foods.map((f,i)=>`
     <div class="li">
-      <span style="font-size:12px;font-weight:600">${f.name}</span>
+      <span style="font-size:15px;font-weight:600">${f.name}</span>
       <div style="display:flex;align-items:center;gap:8px">
-        <span style="font-size:11px;font-weight:800;color:var(--ac)">${f.cal} kcal</span>
+        <span style="font-size:14px;font-weight:800;color:var(--ac)">${f.cal} kcal</span>
         <button class="li-del" onclick="delLog(${i})">✕</button>
       </div>
     </div>`).join('');
@@ -1527,7 +1520,7 @@ function rWorkout(){
   document.getElementById('dayplan').innerHTML=WEEK.map((type,i)=>{
     const isDone=WH.some(h=>{const d=new Date(h.date);return d.getDay()===i&&(Date.now()-d)<7*86400000;});
     const cls=type==='rest'?' rest':isDone?' done':i===today?' on':'';
-    return`<div class="dpc${cls}"><div style="font-size:18px">${ticons[type]||'🏋️'}</div><div>${dayN[i]}</div></div>`;
+    return`<div class="dpc${cls}"><div style="font-size:20px">${ticons[type]||'🏋️'}</div><div>${dayN[i]}</div></div>`;
   }).join('');
   const lvMap={beginner:t('lv-beginner'),intermediate:t('lv-intermediate'),advanced:t('lv-advanced')};
   document.getElementById('lvlrow').innerHTML=`
@@ -1539,7 +1532,7 @@ function rWorkout(){
     document.getElementById('wkcnt').innerHTML=`<div style="text-align:center;padding:32px 14px">
       <div style="font-size:52px">😴</div>
       <h2 style="margin-top:8px">${t('rest-day-msg')}</h2>
-      <p class="mt" style="font-size:12px;margin-top:6px">${t('rest-day-sub')}</p></div>`;
+      <p class="mt" style="font-size:15px;margin-top:6px">${t('rest-day-sub')}</p></div>`;
     return;
   }
   const sk=String(Math.min(il,5));
@@ -1610,10 +1603,10 @@ function exCard(e,si,sk){
       <div style="flex:1">
         <div class="exnm">${nm}</div>
         <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:3px">${(ms||[]).slice(0,2).map(m=>`<span class="mtag">${m}</span>`).join('')}</div>
-        <div>${isWC?`<span style="font-size:10px;color:var(--mt)">⏱ ${e.dur||''}</span>`
-          :`<span style="font-size:10px;color:var(--mt)">📦 ${sn} ${t('sets-l')}</span>
-            <span style="font-size:10px;color:var(--mt);margin-inline-start:6px">🔁 ${rn}</span>
-            ${rv?`<span style="font-size:10px;color:var(--mt);margin-inline-start:6px">⏸ ${rv}</span>`:''}`}</div>
+        <div>${isWC?`<span style="font-size:13px;color:var(--mt)">⏱ ${e.dur||''}</span>`
+          :`<span style="font-size:13px;color:var(--mt)">📦 ${sn} ${t('sets-l')}</span>
+            <span style="font-size:13px;color:var(--mt);margin-inline-start:6px">🔁 ${rn}</span>
+            ${rv?`<span style="font-size:13px;color:var(--mt);margin-inline-start:6px">⏸ ${rv}</span>`:''}`}</div>
       </div>
       <div class="exchv">▼</div>
     </div>
@@ -1624,8 +1617,8 @@ function exCard(e,si,sk){
         ${rv?`<div class="exd"><div class="exd-v" style="color:var(--or)">${rv}</div><div class="exd-l">${t('rest-l')}</div></div>`:''}
       </div>`:''}
       <div class="tips"><div class="tips-t">${t('tips-t')}</div><ul>${(tips||[]).map(tp=>`<li>${tp}</li>`).join('')}</ul></div>
-      <a href="${ytUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;padding:10px;border-radius:10px;background:#ff000018;border:1.5px solid #ff0000cc;color:#ff4444;font-size:12px;font-weight:800;text-decoration:none" onclick="event.stopPropagation()">${ytLabel}</a>
-      ${!isWC&&rv?`<button class="btn bo" style="margin-top:7px;width:100%;font-size:11px" onclick="startRT(event,'${rv}')">${t('rt-btn')}</button>`:''}
+      <a href="${ytUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;padding:10px;border-radius:10px;background:#ff000018;border:1.5px solid #ff0000cc;color:#ff4444;font-size:15px;font-weight:800;text-decoration:none" onclick="event.stopPropagation()">${ytLabel}</a>
+      ${!isWC&&rv?`<button class="btn bo" style="margin-top:7px;width:100%;font-size:14px" onclick="startRT(event,'${rv}')">${t('rt-btn')}</button>`:''}
     </div>
   </div>`;
 }
@@ -1732,13 +1725,13 @@ function rDayMeals(){
       <div class="mc-hdr" onclick="togMeal('${tp.k}')">
         <div style="flex:1">
           <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
-            <span style="background:${tp.bd};border:1px solid ${tp.bc};border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;color:${tp.bc}">${typeLbl}</span>
-            <span style="font-size:11px;font-weight:900;color:var(--ac)">${m.cal||0} kcal</span>
-            ${timeLabel?`<span style="font-size:10px;color:var(--mt)">⏰ ${timeLabel}</span>`:''}
+            <span style="background:${tp.bd};border:1px solid ${tp.bc};border-radius:20px;padding:2px 8px;font-size:14px;font-weight:700;color:${tp.bc}">${typeLbl}</span>
+            <span style="font-size:14px;font-weight:900;color:var(--ac)">${m.cal||0} kcal</span>
+            ${timeLabel?`<span style="font-size:13px;color:var(--mt)">⏰ ${timeLabel}</span>`:''}
           </div>
           <div class="mc-nm">${nm}</div>
         </div>
-        <div style="font-size:11px;color:var(--mt);flex-shrink:0">▼</div>
+        <div style="font-size:14px;color:var(--mt);flex-shrink:0">▼</div>
       </div>
       <div class="mc-body">
         <div class="mmac">
@@ -1748,7 +1741,7 @@ function rDayMeals(){
         </div>
         <div class="tag" style="margin:7px 0 4px">${t('ing-label')}</div>
         ${(ings||[]).map(i=>`<div class="ing-i">${i}</div>`).join('')}
-        <div class="minstr"><span style="color:var(--ac);font-weight:700;font-size:11px">${t('prep-label')}</span> ${prep||''}</div>
+        <div class="minstr"><span style="color:var(--ac);font-weight:700;font-size:14px">${t('prep-label')}</span> ${prep||''}</div>
         <div class="mactions">
           <button class="btn bp" onclick="logMeal(${m.cal||0},'${safeName}')">${t('log-meal-btn')}</button>
           <button class="btn bo" onclick="refreshMeal('${tp.k}')">${t('change-btn')}</button>
@@ -1790,14 +1783,14 @@ function rProfile(){
   document.getElementById('pstats').innerHTML=stats.map(s=>`<div class="pst"><div class="pst-v">${s.v}</div><div class="pst-l">${s.l}</div></div>`).join('');
   renderCityCard();
   const hist=document.getElementById('wkhist');
-  if(!WH.length){hist.innerHTML=`<div class="mt" style="text-align:center;padding:10px;font-size:12px">${t('no-sessions')}</div>`;return;}
+  if(!WH.length){hist.innerHTML=`<div class="mt" style="text-align:center;padding:10px;font-size:15px">${t('no-sessions')}</div>`;return;}
   const ticons={upper:'💪',lower:'🦵',full:'⚡',cardio:'🏃',rest:'😴'};
   hist.innerHTML=WH.slice(0,8).map(h=>`
     <div class="hist-i">
       <div style="display:flex;align-items:center;gap:8px">
-        <span style="font-size:16px">${ticons[h.type]||'🏋️'}</span>
-        <div><div style="font-size:11px;font-weight:700">${h.date}</div>
-          <div class="mt" style="font-size:10px">${h.exs} ${t('exs-label')}</div></div>
+        <span style="font-size:18px">${ticons[h.type]||'🏋️'}</span>
+        <div><div style="font-size:14px;font-weight:700">${h.date}</div>
+          <div class="mt" style="font-size:13px">${h.exs} ${t('exs-label')}</div></div>
       </div>
       <div class="bdg bor">⚡ ${h.intensity}/5</div>
     </div>`).join('');

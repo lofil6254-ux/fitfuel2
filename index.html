@@ -387,7 +387,7 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 <div class="wrap" style="padding-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
     <h2 style="font-size:18px" id="ml-ti">—</h2>
-    <button class="btn bo" style="padding:6px 11px;font-size:14px" onclick="genAllMeals(true)">🔄 <span id="all-t">—</span></button>
+    <button class="btn bo" style="padding:6px 11px;font-size:14px" onclick="forceGenAllMeals()">🔄 <span id="all-t">—</span></button>
   </div>
   <div class="mode-sw">
     <button class="msw" id="msw-rm" onclick="setMode('ramadan')">🌙 <span id="msw-rm-t">—</span></button>
@@ -418,6 +418,15 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
     </div>
   </div>
   <div class="pstats" id="pstats"></div>
+  <div class="card" style="margin-bottom:10px">
+    <h3 style="font-size:16px;margin-bottom:4px" id="dc-t">—</h3>
+    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="dc-sub">—</div>
+    <canvas id="dcChart" height="140" style="width:100%;display:block"></canvas>
+    <div style="display:flex;justify-content:center;gap:18px;margin-top:12px;font-size:12px;color:var(--mt)">
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--ac);margin-inline-end:5px;vertical-align:middle"></span><span id="dc-leg1">—</span></span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--br);margin-inline-end:5px;vertical-align:middle"></span><span id="dc-leg2">—</span></span>
+    </div>
+  </div>
   <button class="rstbtn" onclick="doReset()" id="rst-btn">—</button>
 </div></div>
 
@@ -1118,7 +1127,7 @@ function showTab(tab){
   if(tab==='home') rHome();
   if(tab==='workout') rWorkout();
   if(tab==='meals') rMeals();
-  if(tab==='profile') rProfile();
+  if(tab==='profile'){rProfile(); setTimeout(renderDailyChart,80);}
 }
 
 // ============================================================
@@ -1265,7 +1274,19 @@ const ML={
        i_ar:['250مل لبن رايب','4 تمرات','شريحة خبز'],
        i_en:['250ml yogurt/lben','4 dates','1 bread slice'],
        p_ar:'قدم اللبن مع التمر والخبز. الأسرع وجبة إفطار.',
-       p_en:'Serve yogurt with dates and bread. Fastest iftar.'}
+       p_en:'Serve yogurt with dates and bread. Fastest iftar.'},
+      {ar:'حريرة + تمر + خبز',en:'Harira Soup + Dates + Bread',
+       cal:340,p:14,c:50,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+       i_ar:['وعاء حريرة (400مل)','3 تمرات','شريحة خبز','ليمون'],
+       i_en:['1 bowl harira (400ml)','3 dates','1 bread slice','lemon'],
+       p_ar:'سخن الحريرة. قدم مع التمر والخبز والليمون.',
+       p_en:'Heat harira. Serve with dates, bread and lemon.'},
+      {ar:'شوربة عدس + خبز + تمر',en:'Lentil Soup + Bread + Dates',
+       cal:310,p:15,c:48,f:5,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+       i_ar:['وعاء شوربة عدس','شريحة خبز','3 تمرات'],
+       i_en:['1 bowl lentil soup','1 bread slice','3 dates'],
+       p_ar:'سخن الشوربة. قدم مع الخبز والتمر.',
+       p_en:'Heat soup. Serve with bread and dates.'}
     ],
     isha:[
       {ar:'دجاج مسلوق + أرز',en:'Boiled Chicken + Rice',
@@ -1329,7 +1350,19 @@ const ML={
        i_ar:['100غ شوفان','250مل حليب','موزة','ملعقة عسل'],
        i_en:['100g oats','250ml milk','1 banana','1 tsp honey'],
        p_ar:'اطبخ الشوفان 5 دق. قطع الموز فوقه.',
-       p_en:'Cook oats 5 min. Slice banana on top.'}
+       p_en:'Cook oats 5 min. Slice banana on top.'},
+      {ar:'جبن + بيض + خبز',en:'Cheese + Eggs + Bread',
+       cal:410,p:24,c:32,f:18,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
+       i_ar:['شريحتان جبن (60غ)','بيضتان','2 شريحة خبز'],
+       i_en:['2 cheese slices (60g)','2 eggs','2 bread slices'],
+       p_ar:'اقلي البيض 3 دق. قدم مع الجبن والخبز.',
+       p_en:'Fry eggs 3 min. Serve with cheese and bread.'},
+      {ar:'فول + خبز + زيت زيتون',en:'Foul + Bread + Olive Oil',
+       cal:390,p:18,c:54,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
+       i_ar:['200غ فول مطبوخ','شريحتان خبز','ملعقة زيت زيتون','كمون + ملح'],
+       i_en:['200g cooked foul','2 bread slices','1 tbsp olive oil','cumin + salt'],
+       p_ar:'سخن الفول. أضف الزيت والكمون. قدم مع الخبز.',
+       p_en:'Heat foul. Add oil and cumin. Serve with bread.'}
     ]
   },
   normal:{
@@ -1422,16 +1455,26 @@ const ML={
 const WEEK=['upper','lower','rest','full','cardio','rest','upper'];
 const EX={
   warmup:[
-    {id:'w1',ic:'🏃',ar:'ركض في المكان',en:'High Knees',yt:'https://www.youtube.com/watch?v=8opcQdC-V-U',dur:'45s',mAr:['الساقين','القلب'],mEn:['Legs','Cardio'],tAr:['ارفع الركبة لمستوى الخصر','تنفس بانتظام'],tEn:['Lift knees to hip level','Breathe steadily'],wc:1},
-    {id:'w2',ic:'🔄',ar:'دوران الكتفين',en:'Shoulder Circles',yt:'https://www.youtube.com/watch?v=2MEjPdyVBGE',dur:'30s',mAr:['الكتفين'],mEn:['Shoulders'],tAr:['دور في الاتجاهين'],tEn:['Both directions'],wc:1},
-    {id:'w3',ic:'🦵',ar:'قرفصاء هوائية',en:'Air Squats',yt:'https://www.youtube.com/watch?v=aclHkVaku9U',dur:'10 reps',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['عمق كامل'],tEn:['Full depth'],wc:1}
+    {id:'w1',ic:'🏃',ar:'ركض في المكان',en:'High Knees',yt:'high knees warmup no equipment',dur:'45s',mAr:['الساقين','القلب'],mEn:['Legs','Cardio'],tAr:['ارفع الركبة لمستوى الخصر','تنفس بانتظام'],tEn:['Lift knees to hip level','Breathe steadily'],wc:1},
+    {id:'w2',ic:'🔄',ar:'دوران الكتفين',en:'Shoulder Circles',yt:'shoulder circles warmup no equipment',dur:'30s',mAr:['الكتفين'],mEn:['Shoulders'],tAr:['دور في الاتجاهين'],tEn:['Both directions'],wc:1},
+    {id:'w3',ic:'🦵',ar:'قرفصاء هوائية',en:'Air Squats',yt:'air squats bodyweight warmup',dur:'15 reps',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['عمق كامل','الظهر مستقيم'],tEn:['Full depth','Back straight'],wc:1},
+    {id:'w4',ic:'🤸',ar:'قفز النجمة',en:'Jumping Jacks',yt:'jumping jacks warmup no equipment',dur:'30s',mAr:['كل الجسم','القلب'],mEn:['Full Body','Cardio'],tAr:['ذراعان ممدودان بالكامل'],tEn:['Arms fully extended'],wc:1},
+    {id:'w5',ic:'🦶',ar:'دوائر بالورك',en:'Hip Circles',yt:'hip circles mobility warmup',dur:'30s',mAr:['الورك'],mEn:['Hips'],tAr:['دوائر واسعة في الاتجاهين'],tEn:['Wide circles both directions'],wc:1},
+    {id:'w6',ic:'🏊',ar:'سباحة أرضية',en:'Superman Hold',yt:'superman hold back warmup bodyweight',dur:'10 reps',mAr:['الظهر','الأرداف'],mEn:['Back','Glutes'],tAr:['ارفع الذراعين والرجلين معاً'],tEn:['Lift arms and legs together'],wc:1},
+    {id:'w7',ic:'🦵',ar:'تأرجح الرجل',en:'Leg Swings',yt:'leg swings warmup mobility',dur:'15 reps/leg',mAr:['الورك','الفخذ'],mEn:['Hips','Hamstrings'],tAr:['تأرجح للأمام والخلف'],tEn:['Swing front and back'],wc:1},
+    {id:'w8',ic:'🙆',ar:'تمديد الصدر',en:'Chest Opener',yt:'chest opener stretch warmup',dur:'30s',mAr:['الصدر','الكتفين'],mEn:['Chest','Shoulders'],tAr:['افتح الذراعين للخلف'],tEn:['Open arms backwards'],wc:1},
+    {id:'w9',ic:'🔃',ar:'لفة الجذع',en:'Torso Twist',yt:'standing torso twist warmup',dur:'30s',mAr:['القلب','الظهر'],mEn:['Core','Back'],tAr:['يداك على الخصر'],tEn:['Hands on hips'],wc:1},
+    {id:'w10',ic:'🏃',ar:'طعنة متحركة',en:'Walking Lunge',yt:'walking lunge warmup no weight',dur:'10 reps',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الركبة لا تتجاوز القدم'],tEn:['Knee behind toe'],wc:1}
   ],
   upper:{
     beginner:[
-      {id:'ub1',ic:'🏋️',ar:'تأرجح بيدين',en:'Two-Hand KB Swing',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'5×15'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الظهر'],mEn:['Glutes','Back'],tAr:['الحركة من الورك','ظهر مستقيم'],tEn:['Hinge from hips','Neutral spine'],cal:8},
-      {id:'ub2',ic:'⭕',ar:'هالو حول الرأس',en:'KB Halo',yt:'https://www.youtube.com/watch?v=0pBcWUzrkEY',s:{'1':'2×8','2':'3×8','3':'3×10','4':'3×12','5':'4×12'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'45s'},mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['حركة بطيئة'],tEn:['Slow motion'],cal:5},
-      {id:'ub3',ic:'💪',ar:'ضغط أرضي',en:'KB Floor Press',yt:'https://www.youtube.com/watch?v=uB4yalHhEqQ',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الصدر','الكتفين'],mEn:['Chest','Shoulders'],tAr:['المرفق بزاوية 45°'],tEn:['Elbow 45°'],cal:6},
-      {id:'ub4',ic:'🚣',ar:'تجديف للخلف',en:'Bent-Over Row',yt:'https://www.youtube.com/watch?v=FWJR5Ve8bnQ',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الظهر','البايسبس'],mEn:['Back','Biceps'],tAr:['انحنِ من الورك','الكوع للأعلى'],tEn:['Hinge hips','Elbow up'],cal:7}
+      {id:'ub1',ic:'🏋️',ar:'تأرجح بيدين',en:'Two-Hand KB Swing',yt:'two hand kettlebell swing tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'5×15'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الظهر'],mEn:['Glutes','Back'],tAr:['الحركة من الورك','ظهر مستقيم'],tEn:['Hinge from hips','Neutral spine'],cal:8},
+      {id:'ub2',ic:'⭕',ar:'هالو حول الرأس',en:'KB Halo',yt:'kettlebell halo exercise tutorial',s:{'1':'2×8','2':'3×8','3':'3×10','4':'3×12','5':'4×12'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'45s'},mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['حركة بطيئة'],tEn:['Slow motion'],cal:5},
+      {id:'ub3',ic:'💪',ar:'ضغط أرضي',en:'KB Floor Press',yt:'kettlebell floor press tutorial',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الصدر','الكتفين'],mEn:['Chest','Shoulders'],tAr:['المرفق بزاوية 45°'],tEn:['Elbow 45°'],cal:6},
+      {id:'ub4',ic:'🚣',ar:'تجديف للخلف',en:'Bent-Over Row',yt:'kettlebell bent over row tutorial',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الظهر','البايسبس'],mEn:['Back','Biceps'],tAr:['انحنِ من الورك','الكوع للأعلى'],tEn:['Hinge hips','Elbow up'],cal:7},
+      {id:'ub5',ic:'🎯',ar:'تمديد فوق الرأس',en:'KB Overhead Carry',yt:'kettlebell overhead carry tutorial',s:{'1':'3×20m','2':'3×25m','3':'4×25m','4':'4×30m','5':'4×40m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['اضغط الكتف للأعلى'],tEn:['Pack the shoulder'],cal:6},
+      {id:'ub6',ic:'💥',ar:'ضغط أرضي بيد واحدة',en:'Single Arm Floor Press',yt:'single arm kettlebell floor press',s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الصدر','القلب'],mEn:['Chest','Core'],tAr:['حافظ على توازن الجسم'],tEn:['Keep body stable'],cal:6},
+      {id:'ub7',ic:'🔁',ar:'تمرير بين الرجلين',en:'Figure 8',yt:'kettlebell figure 8 tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'5×15'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الكتفين'],mEn:['Core','Shoulders'],tAr:['ظهر مستوي'],tEn:['Keep back flat'],cal:5}
     ],
     intermediate:[
       {id:'ui1',ic:'⚡',ar:'كلين بيد واحدة',en:'Single Arm Clean',yt:'https://www.youtube.com/watch?v=re6DHeEOrzg',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['الأرداف','الكتفين'],mEn:['Glutes','Shoulders'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:12},
@@ -1443,9 +1486,12 @@ const EX={
   },
   lower:{
     beginner:[
-      {id:'lb1',ic:'🦵',ar:'جلسة الكأس',en:'Goblet Squat',yt:'https://www.youtube.com/watch?v=MxsFDhcyFyE',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×20'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['اجلس للخلف والأسفل'],tEn:['Sit back and down'],cal:8},
-      {id:'lb2',ic:'🏋️',ar:'رفع ميت روماني',en:'Romanian Deadlift',yt:'https://www.youtube.com/watch?v=-4qRntuXBSc',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'60s'},mAr:['الهامسترينج','الأرداف'],mEn:['Hamstrings','Glutes'],tAr:['انحنِ من الورك'],tEn:['Hinge from hips'],cal:9},
-      {id:'lb3',ic:'🚶',ar:'طعنة للخلف',en:'Reverse Lunge',yt:'https://www.youtube.com/watch?v=xrjRi-KVvzk',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الجذع مستقيم'],tEn:['Torso upright'],cal:7}
+      {id:'lb1',ic:'🦵',ar:'جلسة الكأس',en:'Goblet Squat',yt:'goblet squat kettlebell tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×20'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['اجلس للخلف والأسفل'],tEn:['Sit back and down'],cal:8},
+      {id:'lb2',ic:'🏋️',ar:'رفع ميت روماني',en:'Romanian Deadlift',yt:'kettlebell romanian deadlift tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'60s'},mAr:['الهامسترينج','الأرداف'],mEn:['Hamstrings','Glutes'],tAr:['انحنِ من الورك'],tEn:['Hinge from hips'],cal:9},
+      {id:'lb3',ic:'🚶',ar:'طعنة للخلف',en:'Reverse Lunge',yt:'kettlebell reverse lunge tutorial',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الجذع مستقيم'],tEn:['Torso upright'],cal:7},
+      {id:'lb4',ic:'🍑',ar:'جسر الأرداف',en:'Glute Bridge',yt:'glute bridge kettlebell tutorial',s:{'1':'3×12','2':'3×15','3':'4×15','4':'4×20','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الهامسترينج'],mEn:['Glutes','Hamstrings'],tAr:['اضغط الأرداف في الأعلى'],tEn:['Squeeze at top'],cal:6},
+      {id:'lb5',ic:'🦵',ar:'خطوة جانبية',en:'Lateral Lunge',yt:'lateral lunge kettlebell tutorial',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ الداخلي','الأرداف'],mEn:['Adductors','Glutes'],tAr:['أبعد الركبة عن القدم'],tEn:['Push knee out'],cal:7},
+      {id:'lb6',ic:'🔺',ar:'تأرجح ساق واحدة',en:'Single Leg Deadlift',yt:'single leg kettlebell deadlift tutorial',s:{'1':'3×6','2':'3×8','3':'3×10','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'60s'},mAr:['الهامسترينج','التوازن'],mEn:['Hamstrings','Balance'],tAr:['نظر إلى الأمام'],tEn:['Eyes forward'],cal:8}
     ],
     intermediate:[
       {id:'li1',ic:'🍑',ar:'تأرجح لتقوية الأرداف',en:'Glute-Focus Swing',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'4×12','2':'4×15','3':'5×15','4':'5×20','5':'6×20'},r:{'1':'60s','2':'45s','3':'45s','4':'30s','5':'30s'},mAr:['الأرداف','الهامسترينج'],mEn:['Glutes','Hamstrings'],tAr:['اضغط الأرداف في الأعلى'],tEn:['Squeeze glutes at top'],cal:10}
@@ -1456,8 +1502,10 @@ const EX={
   },
   full:{
     beginner:[
-      {id:'fb1',ic:'⚡',ar:'تأرجح + جلسة',en:'Swing to Squat',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['حركة متدفقة'],tEn:['Fluid motion'],cal:10},
-      {id:'fb2',ic:'🔄',ar:'دوران حول الجسم',en:'Around the Body Pass',yt:'https://www.youtube.com/watch?v=0pBcWUzrkEY',s:{'1':'3×10','2':'3×12','3':'3×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الكتفين'],mEn:['Core','Shoulders'],tAr:['بدّل الاتجاه كل مجموعة'],tEn:['Alternate direction each set'],cal:6}
+      {id:'fb1',ic:'⚡',ar:'تأرجح + جلسة',en:'Swing to Squat',yt:'kettlebell swing to squat combo tutorial',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['حركة متدفقة'],tEn:['Fluid motion'],cal:10},
+      {id:'fb2',ic:'🔄',ar:'دوران حول الجسم',en:'Around the Body Pass',yt:'kettlebell around the body pass tutorial',s:{'1':'3×10','2':'3×12','3':'3×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الكتفين'],mEn:['Core','Shoulders'],tAr:['بدّل الاتجاه كل مجموعة'],tEn:['Alternate direction each set'],cal:6},
+      {id:'fb3',ic:'🌊',ar:'تأرجح + طعنة',en:'Swing + Lunge',yt:'kettlebell swing lunge combo tutorial',s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['تأرجح ثم طعنة'],tEn:['Swing then lunge'],cal:11},
+      {id:'fb4',ic:'🎪',ar:'تمرين الدب',en:'Bear Crawl',yt:'bear crawl exercise tutorial bodyweight',s:{'1':'3×20m','2':'3×25m','3':'4×25m','4':'4×30m','5':'5×30m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['القلب','الكتفين','الساقين'],mEn:['Core','Shoulders','Legs'],tAr:['ظهر موازٍ للأرض'],tEn:['Back parallel to floor'],cal:9}
     ],
     intermediate:[
       {id:'fi1',ic:'🎯',ar:'كلين + ضغط',en:'Clean & Press',yt:'https://www.youtube.com/watch?v=jhyXcaTb2kM',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['الكلين أولاً ثم الضغط'],tEn:['Clean then press'],cal:13}
@@ -1468,8 +1516,10 @@ const EX={
   },
   cardio:{
     beginner:[
-      {id:'cb1',ic:'💥',ar:'تأرجح متقطع',en:'Swing Intervals',yt:'https://www.youtube.com/watch?v=Buz6gaVzVZs',s:{'1':'5×20s','2':'6×20s','3':'6×30s','4':'8×30s','5':'10×30s'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الأرداف'],mEn:['Cardio','Glutes'],tAr:['20 ث تأرجح ثم راحة'],tEn:['20s swing then rest'],cal:12,isC:1},
-      {id:'cb2',ic:'🧳',ar:'مشي بالكيتل بيل',en:'Farmer Walk',yt:'https://www.youtube.com/watch?v=rt17lmnaLSM',s:{'1':'4×30m','2':'4×40m','3':'5×40m','4':'5×50m','5':'6×50m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['القلب','القبضة'],mEn:['Cardio','Grip'],tAr:['الكتفان للخلف'],tEn:['Shoulders back'],cal:9,isC:1}
+      {id:'cb1',ic:'💥',ar:'تأرجح متقطع',en:'Swing Intervals',yt:'kettlebell swing intervals HIIT',s:{'1':'5×20s','2':'6×20s','3':'6×30s','4':'8×30s','5':'10×30s'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الأرداف'],mEn:['Cardio','Glutes'],tAr:['20 ث تأرجح ثم راحة'],tEn:['20s swing then rest'],cal:12,isC:1},
+      {id:'cb2',ic:'🧳',ar:'مشي بالكيتل بيل',en:'Farmer Walk',yt:'farmer carry kettlebell tutorial',s:{'1':'4×30m','2':'4×40m','3':'5×40m','4':'5×50m','5':'6×50m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['القلب','القبضة'],mEn:['Cardio','Grip'],tAr:['الكتفان للخلف'],tEn:['Shoulders back'],cal:9,isC:1},
+      {id:'cb3',ic:'⏱️',ar:'تابور القرفصاء',en:'Squat Thrusters',yt:'kettlebell squat thruster tutorial',s:{'1':'4×10','2':'4×12','3':'5×12','4':'5×15','5':'6×15'},r:{'1':'75s','2':'60s','3':'60s','4':'45s','5':'45s'},mAr:['القلب','كل الجسم'],mEn:['Cardio','Full Body'],tAr:['قوة انفجارية من الأسفل'],tEn:['Explosive power upward'],cal:14,isC:1},
+      {id:'cb4',ic:'🌀',ar:'بيربي مع تأرجح',en:'Burpee + Swing',yt:'burpee kettlebell swing combo',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم','القلب'],mEn:['Full Body','Cardio'],tAr:['تأرجح مباشرة بعد البيربي'],tEn:['Swing immediately after burpee'],cal:16,isC:1}
     ],
     intermediate:[
       {id:'ci1',ic:'🔥',ar:'مجموعة التحمل',en:'KB Complex',yt:'https://www.youtube.com/watch?v=re6DHeEOrzg',s:{'1':'3×5','2':'4×5','3':'4×6','4':'5×6','5':'5×8'},r:{'1':'120s','2':'90s','3':'90s','4':'75s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['لا تضع الكيتل بيل'],tEn:["Don't put bell down"],cal:16,isC:1}
@@ -1492,7 +1542,7 @@ function getPool(type){
   if(type==='rest') return [];
   const lv=P.level||'beginner';
   const src=(EX[type]&&(EX[type][lv]||EX[type].beginner))||[];
-  return shuf([...src]).slice(0,3);
+  return shuf([...src]).slice(0,4);
 }
 function genWK(regen){
   const type=WEEK[new Date().getDay()], il=Math.min(P.intensity||1,5);
@@ -1614,9 +1664,9 @@ function exCard(e,si,sk){
   let sn=0,rn='';
   if(si){const p=si.split('×');sn=parseInt(p[0]);rn=p[1]||'';}
   const rv=e.r?e.r[sk]:null;
-  // Use YouTube SEARCH — always works, never breaks
-  const ytQuery=encodeURIComponent((e.en||nm)+' kettlebell tutorial how to');
-  const ytUrl=`https://www.youtube.com/results?search_query=${ytQuery}`;
+  // Use yt field as search query if it's a plain string, else fall back to name search
+  const ytQ=e.yt&&!e.yt.startsWith('http')?e.yt:((e.en||nm)+' kettlebell tutorial how to');
+  const ytUrl=`https://www.youtube.com/results?search_query=${encodeURIComponent(ytQ)}`;
   const ytLabel=L==='ar'?'📺 شرح على يوتيوب':'📺 Watch on YouTube';
   return`<div class="excard" id="ec-${e.id}">
     <div class="exhdr" onclick="togEx('${e.id}')">
@@ -1733,9 +1783,14 @@ function buildDay(mode,targetCal){
 }
 function genAllMeals(showToast){
   const tc=Math.round(P.targetCal)||2000;
-  for(let d=0;d<7;d++) MP[d]=buildDay(mealMode,tc);
+  for(let d=0;d<7;d++) if(!MP[d]||MP[d].mode!==mealMode) MP[d]=buildDay(mealMode,tc);
   if(showToast) toast(t('toast-meals'));
   save(); rMeals();
+}
+function forceGenAllMeals(){
+  const tc=Math.round(P.targetCal)||2000;
+  for(let d=0;d<7;d++) MP[d]=buildDay(mealMode,tc);
+  toast(t('toast-meals')); save(); rMeals();
 }
 function refreshMeal(mKey){
   if(!MP[CD]) return;
@@ -1848,6 +1903,88 @@ function rProfile(){
   ];
   document.getElementById('pstats').innerHTML=stats.map(s=>`<div class="pst"><div class="pst-v">${s.v}</div><div class="pst-l">${s.l}</div></div>`).join('');
   renderCityCard();
+  setTimeout(renderDailyChart, 60);
+}
+function renderDailyChart(){
+  const ar=L==='ar';
+  const canvas=document.getElementById('dcChart');
+  if(!canvas) return;
+  document.getElementById('dc-t').textContent=ar?'📅 روتيني اليومي':'📅 Daily Routine';
+  document.getElementById('dc-leg1').textContent=ar?'تمرين ✅':'Workout ✅';
+  document.getElementById('dc-leg2').textContent=ar?'يوم راحة':'Rest day';
+
+  // Build last 14 days
+  const days=14;
+  const today=new Date(); today.setHours(0,0,0,0);
+  const bars=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today); d.setDate(today.getDate()-i);
+    const key=d.toDateString();
+    const done=WH.some(h=>h.date===key);
+    const dayName=ar
+      ?['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'][d.getDay()]
+      :['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+    bars.push({key,done,label:i===0?(ar?'اليوم':'Today'):dayName,isToday:i===0});
+  }
+
+  const doneCount=bars.filter(b=>b.done).length;
+  document.getElementById('dc-sub').textContent=ar
+    ?`${doneCount} تمرين من أصل ${days} يوم`
+    :`${doneCount} workouts out of ${days} days`;
+
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.offsetWidth||300, H=140;
+  canvas.width=W*dpr; canvas.height=H*dpr;
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+
+  const padL=4,padR=4,padT=10,padB=28;
+  const barW=Math.floor((W-padL-padR)/days);
+  const gap=Math.max(2, Math.floor(barW*0.18));
+  const bw=barW-gap;
+  const maxH=H-padT-padB;
+
+  bars.forEach((b,i)=>{
+    const x=padL+i*barW;
+    const barH=b.done?maxH:Math.round(maxH*0.22);
+    const y=padT+(maxH-barH);
+
+    // Bar
+    ctx.beginPath();
+    const r=Math.min(5,bw/2);
+    ctx.moveTo(x+r,y);
+    ctx.lineTo(x+bw-r,y);
+    ctx.quadraticCurveTo(x+bw,y,x+bw,y+r);
+    ctx.lineTo(x+bw,y+barH);
+    ctx.lineTo(x,y+barH);
+    ctx.lineTo(x,y+r);
+    ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+
+    if(b.done){
+      const g=ctx.createLinearGradient(0,y,0,y+barH);
+      g.addColorStop(0,'#c8f53a');
+      g.addColorStop(1,'rgba(200,245,58,0.5)');
+      ctx.fillStyle=g;
+    } else {
+      ctx.fillStyle=b.isToday?'rgba(77,184,255,0.25)':'#252540';
+    }
+    ctx.fill();
+
+    // Today border
+    if(b.isToday){
+      ctx.strokeStyle=b.done?'#c8f53a':'#4db8ff';
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+    }
+
+    // Label below
+    ctx.fillStyle=b.isToday?'#4db8ff':(b.done?'#c8f53a':'#525270');
+    ctx.font=`bold ${b.isToday?10:9}px system-ui`;
+    ctx.textAlign='center';
+    ctx.fillText(b.label, x+bw/2, H-padB+14);
+  });
 }
 function openEdit(){
   document.getElementById('ed-nm').value=P.name||'';

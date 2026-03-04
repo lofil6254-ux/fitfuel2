@@ -4,12 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#0a0a14">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FitFuel">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.jpg">
 <title>FitFuel 🏋️</title>
 <style>
 :root{--bg:#0a0a14;--s1:#11111f;--s2:#17172a;--s3:#1e1e36;--ac:#c8f53a;--acd:rgba(200,245,58,.12);--bl:#3ab4f5;--bld:rgba(58,180,245,.12);--pk:#f53a8a;--pkd:rgba(245,58,138,.12);--or:#f5933a;--ord:rgba(245,147,58,.12);--gd:#ffd700;--gdd:rgba(255,215,0,.13);--tx:#eeeef8;--mt:#5a5a7a;--br:#1e1e38;--r:13px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:17px}
 input,select,button{font-family:inherit;font-size:inherit}
 .page{position:fixed;inset:0;overflow-y:auto;display:none;flex-direction:column;padding-bottom:72px}
 .page.on{display:flex}
@@ -270,15 +276,6 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
     </div>
     <button class="rtoggle" id="rtogbtn" onclick="toggleRamadan()">—</button>
   </div>
-  <div class="ptcard" id="ptcard">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div><div class="tag" id="pt-tag">—</div><div style="font-size:12px;font-weight:700;margin-top:2px" id="pt-date"></div></div>
-      <div class="bdg bgd" id="pt-badge">—</div>
-    </div>
-    <div class="ptrow" id="ptrow"></div>
-    <div class="ptcnt" id="ptcnt"></div>
-    <div class="ptsrc" id="ptsrc"></div>
-  </div>
   <div class="hero">
     <div style="font-size:11px;color:var(--mt)" id="hm-gr">—</div>
     <div style="font-size:19px;font-weight:900;margin-bottom:8px" id="hm-nm">—</div>
@@ -401,11 +398,6 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
     <div style="font-size:10px;color:var(--mt);margin-top:6px;text-align:center" id="city-note"></div>
   </div>
   <div class="card" style="margin-bottom:10px">
-    <h3 style="font-size:13px;margin-bottom:10px" id="al-t">—</h3>
-    <div id="alarms-list"></div>
-    <div style="font-size:10px;color:var(--mt);margin-top:6px;text-align:center" id="al-note"></div>
-  </div>
-  <div class="card" style="margin-bottom:10px">
     <h3 style="font-size:13px;margin-bottom:10px" id="hs-t">—</h3>
     <div id="wkhist"></div>
   </div>
@@ -434,17 +426,6 @@ input:checked+.tsl:before{transform:translateX(18px);background:#0a0a14}
 </div>
 </div>
 
-<!-- NOTIFICATION PERMISSION POPUP -->
-<div class="mov" id="notifMov">
-<div class="modal" style="text-align:center;padding:28px 20px">
-  <div style="font-size:52px;margin-bottom:10px">🔔</div>
-  <h3 style="font-size:17px;font-weight:900;margin-bottom:7px" id="np-title">فعّل الإشعارات</h3>
-  <p style="font-size:13px;color:var(--mt);margin-bottom:20px;line-height:1.6" id="np-body">فعّل الإشعارات حتى يذكّرك التطبيق بوقت السحور، الإفطار، والتمرين 🏋️</p>
-  <button class="btn bp bw" onclick="doAllowNotif()" style="margin-bottom:10px;font-size:15px;padding:14px" id="np-allow">✅ السماح بالإشعارات</button>
-  <br>
-  <button class="btn bo" onclick="closeMov('notifMov')" style="font-size:13px;padding:9px 20px" id="np-skip">تخطي</button>
-</div>
-</div>
 <script>
 // ============================================================
 // TRANSLATIONS — Complete bilingual system
@@ -1096,7 +1077,7 @@ function rRamadanUI(){
 }
 function toggleRamadan(){
   isRamadan=!isRamadan; mealMode=isRamadan?'ramadan':'normal';
-  calcCal(); genAllMeals(false); save(); rRamadanUI(); rHome(); rMeals(); rAlarms();
+  calcCal(); genAllMeals(false); save(); rRamadanUI(); rHome(); rMeals();
   toast(isRamadan?t('toast-ram-on'):t('toast-ram-off'));
 }
 function setMode(m){ mealMode=m; genAllMeals(false); save(); rMeals(); }
@@ -1110,7 +1091,7 @@ function showMain(){
   document.getElementById('pg-main').classList.add('on');
   applyLang();
   rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
-  reqNotif(); startPTLoop();
+  startPTLoop();
   setInterval(save, 30000);
 }
 function showTab(tab){
@@ -1807,7 +1788,6 @@ function rProfile(){
     {v:Math.round(P.targetCal||0)+(L==='ar'?' kcal':' kcal'),l:t('dt-lbt')},{v:Math.round(P.tdee||0),l:'TDEE'}
   ];
   document.getElementById('pstats').innerHTML=stats.map(s=>`<div class="pst"><div class="pst-v">${s.v}</div><div class="pst-l">${s.l}</div></div>`).join('');
-  rAlarms();
   renderCityCard();
   const hist=document.getElementById('wkhist');
   if(!WH.length){hist.innerHTML=`<div class="mt" style="text-align:center;padding:10px;font-size:12px">${t('no-sessions')}</div>`;return;}
@@ -1821,110 +1801,6 @@ function rProfile(){
       </div>
       <div class="bdg bor">⚡ ${h.intensity}/5</div>
     </div>`).join('');
-}
-function rAlarms(){
-  const AS=window._AS||defaultAS(), pt=getPT();
-  const perm='Notification' in window?Notification.permission:'unsupported';
-  const noteMap={'granted':t('al-granted'),'denied':t('al-denied'),'default':t('al-default')};
-  document.getElementById('al-note').textContent=noteMap[perm]||t('al-default');
-  const alDefs=isRamadan?[
-    {k:'iftar',ic:'🌅',time:pt.maghrib},{k:'workout',ic:'🏋️',time:pt.workout}
-  ]:[
-    {k:'breakfast',ic:'🍳',time:'09:00'},{k:'lunch',ic:'🥗',time:'14:00'},
-    {k:'snack',ic:'🍎',time:'16:30'},{k:'workout',ic:'🏋️',time:'17:00'},{k:'dinner',ic:'🌙',time:'20:00'}
-  ];
-  document.getElementById('alarms-list').innerHTML=alDefs.map(a=>`
-    <div class="alarm-i">
-      <div style="display:flex;align-items:center;gap:9px">
-        <span style="font-size:19px">${a.ic}</span>
-        <div><div style="font-size:12px;font-weight:700">${t('al-'+a.k)}</div><div class="altime">${to12h(a.time)||'--:--'}</div></div>
-      </div>
-      <label class="tsw">
-        <input type="checkbox" ${AS[a.k]!==false?'checked':''} onchange="toggleAlarm('${a.k}',this.checked)">
-        <span class="tsl"></span>
-      </label>
-    </div>`).join('');
-
-  // Salaat First app link
-  const sfLabel=L==='ar'?'🕌 فتح تطبيق Salaat First':'🕌 Open Salaat First App';
-  const sfNote=L==='ar'?'للتأكد من دقة أوقات الصلاة':'For accurate prayer times';
-  const sfAndroid='https://play.google.com/store/apps/details?id=com.batoulapps.adhan';
-  const sfIos='https://apps.apple.com/app/salaat-first/id960395272';
-  // detect iOS vs Android
-  const isIos=/iphone|ipad|ipod/i.test(navigator.userAgent);
-  const sfUrl=isIos?sfIos:sfAndroid;
-  document.getElementById('alarms-list').innerHTML+=`
-    <a href="${sfUrl}" target="_blank" rel="noopener"
-       style="display:flex;align-items:center;gap:10px;margin-top:10px;padding:11px 13px;
-              border-radius:11px;background:linear-gradient(135deg,#1a1030,#130f20);
-              border:1.5px solid rgba(255,215,0,0.5);text-decoration:none">
-      <span style="font-size:24px">🕌</span>
-      <div>
-        <div style="font-size:12px;font-weight:800;color:var(--gd)">${sfLabel}</div>
-        <div style="font-size:10px;color:var(--mt);margin-top:2px">${sfNote}</div>
-      </div>
-      <span style="margin-inline-start:auto;color:var(--gd);font-size:16px">↗</span>
-    </a>`;
-}
-function toggleAlarm(k,v){
-  if(!window._AS) window._AS=defaultAS();
-  window._AS[k]=v;
-  if(v) reqNotif(); else schedAlarms();
-  save();
-}
-async function reqNotif(){
-  if(!('Notification' in window)) return;
-  if(Notification.permission==='granted'){schedAlarms();return;}
-  if(Notification.permission==='default'){
-    // Show our custom popup instead of browser prompt directly
-    showNotifPopup();
-  }
-}
-function showNotifPopup(){
-  const ar=L==='ar';
-  document.getElementById('np-title').textContent=ar?'فعّل الإشعارات':'Enable Notifications';
-  document.getElementById('np-body').textContent=ar
-    ?'فعّل الإشعارات حتى يذكّرك التطبيق بوقت السحور، الإفطار، والتمرين 🏋️'
-    :'Enable notifications to get reminded for Suhoor, Iftar, and Workout times 🏋️';
-  document.getElementById('np-allow').textContent=ar?'✅ السماح بالإشعارات':'✅ Allow Notifications';
-  document.getElementById('np-skip').textContent=ar?'تخطي':'Skip';
-  document.getElementById('notifMov').classList.add('on');
-}
-async function doAllowNotif(){
-  closeMov('notifMov');
-  if(!('Notification' in window)) return;
-  const p=await Notification.requestPermission();
-  if(p==='granted'){schedAlarms();toast(t('toast-notif'));}
-  rAlarms();
-}
-function schedAlarms(){
-  _AT.forEach(id=>clearTimeout(id)); _AT=[];
-  if(Notification.permission!=='granted') return;
-  const AS=window._AS||defaultAS(), pt=getPT(), now=new Date();
-  function sched(timeStr,title,body,key){
-    if(!AS[key]||!timeStr||timeStr==='--:--') return;
-    const[hh,mm]=timeStr.split(':').map(Number);
-    const tgt=new Date(); tgt.setHours(hh,mm,0,0);
-    let ms=tgt-now; if(ms<-60000) ms+=86400000;
-    if(ms>0&&ms<86400000){
-      const id=setTimeout(()=>{
-        try{new Notification('🏋️ FitFuel',{body,tag:key,renotify:true});}catch(e){}
-        toast('🔔 '+title);
-      },ms);
-      _AT.push(id);
-    }
-  }
-  if(isRamadan){
-    sched(pt.suhoor,L==='ar'?'وقت السحور! 🌙':'Suhoor Time! 🌙',t('notif-suhoor'),'suhoor');
-    sched(pt.maghrib,L==='ar'?'حان الإفطار! 🌅':'Iftar Time! 🌅',t('notif-iftar'),'iftar');
-    sched(pt.workout,L==='ar'?'وقت التمرين! 🏋️':'Workout Time! 🏋️',t('notif-workout'),'workout');
-  } else {
-    sched('09:00',L==='ar'?'وقت الفطور! 🍳':'Breakfast Time! 🍳',t('notif-breakfast'),'breakfast');
-    sched('14:00',L==='ar'?'وقت الغداء! 🥗':'Lunch Time! 🥗',t('notif-lunch'),'lunch');
-    sched('16:30',L==='ar'?'وقت السناك! 🍎':'Snack Time! 🍎',t('notif-snack'),'snack');
-    sched('17:00',L==='ar'?'وقت التمرين! 🏋️':'Workout Time! 🏋️',t('notif-workout'),'workout');
-    sched('20:00',L==='ar'?'وقت العشاء! 🌙':'Dinner Time! 🌙',t('notif-dinner'),'dinner');
-  }
 }
 function openEdit(){
   document.getElementById('ed-nm').value=P.name||'';

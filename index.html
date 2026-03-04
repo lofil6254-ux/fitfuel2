@@ -1113,10 +1113,9 @@ function showMain(){
   document.getElementById('pg-setup').classList.remove('on');
   document.getElementById('pg-main').classList.add('on');
   applyLang();
-  setTimeout(()=>{
-    rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
-    startPTLoop();
-  }, 0);
+  startPTLoop();
+  // Use showTab so home initializes identically to tapping the nav button
+  setTimeout(()=>showTab('home'), 50);
 }
 function showTab(tab){
   ['home','workout','meals','profile'].forEach(tb=>{
@@ -1125,7 +1124,7 @@ function showTab(tab){
   });
   document.getElementById('t-'+tab).style.display='block';
   document.getElementById('nav-'+tab).classList.add('on');
-  if(tab==='home') rHome();
+  if(tab==='home'){ rRamadanUI(); rHome(); }
   if(tab==='workout') rWorkout();
   if(tab==='meals') rMeals();
   if(tab==='profile'){rProfile(); setTimeout(renderDailyChart,80);}

@@ -2,7 +2,7 @@
 // ⚠️ IMPORTANT: Bump CACHE_VERSION every time you push an update to GitHub.
 // Change 'fitfuel-v1' → 'fitfuel-v2' → 'fitfuel-v3' etc.
 // This forces your phone to delete the old cache and fetch fresh files.
-const CACHE_VERSION = 'fitfuel-v1';
+const CACHE_VERSION = 'fitfuel-v2';
 
 const ASSETS = [
   './',

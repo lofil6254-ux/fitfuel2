@@ -129,14 +129,17 @@ input,select,button{font-family:inherit;font-size:inherit}
 .lvlrow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .daysel{display:flex;overflow-x:auto;gap:8px;padding:4px 0 10px;scrollbar-width:none}
 .daysel::-webkit-scrollbar{display:none}
-.dpill{padding:10px 18px;border-radius:50px;border:2px solid var(--br);background:var(--s2);color:var(--tx2);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s}
-.dpill.on{border-color:var(--ac);color:var(--ac);background:var(--acd)}
+.dpill{padding:10px 18px;border-radius:50px;border:2px solid var(--br);background:var(--s2);color:var(--mt);font-size:14px;font-weight:700;white-space:nowrap;flex-shrink:0;transition:all .18s;opacity:.35;cursor:not-allowed;pointer-events:none}
+.dpill.today{border-color:var(--ac);color:var(--ac);background:var(--acd);opacity:1;box-shadow:0 0 0 3px rgba(200,245,58,.2);cursor:default;pointer-events:none}
+.mcard.locked{border-color:rgba(200,245,58,.4)!important;background:linear-gradient(145deg,rgba(200,245,58,.05),var(--s2))!important}
+.mcard.locked .mc-hdr{opacity:.8}
+.meal-done-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:50px;background:var(--acd);color:var(--ac);font-size:12px;font-weight:800;border:1px solid rgba(200,245,58,.3);margin-top:5px}
 .mode-sw{display:flex;gap:8px;margin-bottom:12px}
 .msw{flex:1;padding:13px;border-radius:50px;border:2px solid var(--br);background:transparent;color:var(--tx2);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
 .msw.rm{border-color:var(--gd);color:var(--gd);background:var(--gdd)}
 .msw.nm{border-color:var(--ac);color:var(--ac);background:var(--acd)}
 .dtbar{background:var(--s2);border:1px solid var(--br2);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--sh2)}
-.mcard{background:var(--s2);border:1px solid var(--br2);border-radius:var(--r);margin-bottom:10px;overflow:hidden;box-shadow:var(--sh2);transition:opacity .35s}
+.mcard{background:var(--s2);border:1px solid var(--br2);border-radius:var(--r);margin-bottom:10px;overflow:hidden;box-shadow:var(--sh2)}
 .mc-hdr{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:10px}
 .mc-nm{font-size:18px;font-weight:800;margin-top:4px;line-height:1.3;color:var(--tx)}
 .mc-body{display:none;padding:16px 18px;border-top:1px solid var(--br2)}
@@ -145,7 +148,7 @@ input,select,button{font-family:inherit;font-size:inherit}
 .mpill{padding:5px 12px;border-radius:50px;font-size:14px;font-weight:700}
 .ing-i{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid var(--br2);font-size:15px;line-height:1.6;color:var(--tx2)}
 .ing-i:last-child{border:none}
-.ing-i::before{content:"\2022";color:var(--ac);font-size:18px;flex-shrink:0;line-height:1.4}
+.ing-i::before{content:"•";color:var(--ac);font-size:18px;flex-shrink:0;line-height:1.4}
 .minstr{background:var(--s3);border-radius:var(--r2);padding:14px;margin-top:10px;font-size:14px;color:var(--tx2);line-height:1.7;border:1px solid var(--br2)}
 .mactions{display:flex;gap:8px;margin-top:12px}
 .mactions .btn{flex:1;padding:14px;font-size:15px}
@@ -172,3 +175,1222 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 </style>
 </head>
 <body>
+<div class="toast" id="toast"></div>
+<div class="rtbar" id="rtbar" onclick="stopRT()">⏱ <span class="rtn" id="rtn">60</span>s</div>
+
+<!-- SPLASH -->
+<div class="page" id="pg-splash">
+  <div style="font-size:56px;margin-bottom:12px">🏋️</div>
+  <div class="logo">FITFUEL</div>
+  <div style="font-size:14px;color:var(--mt);letter-spacing:2px;margin:6px 0 24px">KETTLEBELL · NUTRITION · RAMADAN</div>
+  <div class="lrow">
+    <button class="lbtn on" onclick="setL('ar',this)">العربية</button>
+    <button class="lbtn" onclick="setL('en',this)">English</button>
+  </div>
+  <button class="btn bp" style="padding:15px 52px;font-size:17px" onclick="startApp()" id="sp-btn">ابدأ 🚀</button>
+</div>
+
+<!-- SETUP -->
+<div class="page" id="pg-setup">
+<div class="wrap" style="padding-top:28px">
+  <div class="prog" id="prog"></div>
+  <div class="step" id="s1">
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s1t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s1s">—</div>
+    <div class="fl"><label class="lb" id="l-nm">—</label><input class="fi" id="i-nm" type="text"></div>
+    <div class="ig2">
+      <div class="fl"><label class="lb" id="l-ag">—</label><input class="fi" id="i-ag" type="number" min="10" max="80" placeholder="25"></div>
+      <div class="fl"><label class="lb" id="l-gn">—</label>
+        <select class="fi" id="i-gn"><option value="male" id="op-m">—</option><option value="female" id="op-f">—</option></select>
+      </div>
+    </div>
+    <div class="ig2">
+      <div class="fl"><label class="lb" id="l-wt">—</label><input class="fi" id="i-wt" type="number" placeholder="70"></div>
+      <div class="fl"><label class="lb" id="l-ht">—</label><input class="fi" id="i-ht" type="number" placeholder="170"></div>
+    </div>
+    <div class="nb"><button class="btn bp bw" id="nx1" onclick="nx(1)">—</button></div>
+  </div>
+  <div class="step" id="s2">
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s2t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s2s">—</div>
+    <div class="g2">
+      <div class="oc" onclick="pick(this,'goal','lose')"><div class="oi">🔥</div><div class="ol" id="g-lose">—</div></div>
+      <div class="oc" onclick="pick(this,'goal','gain')"><div class="oi">💪</div><div class="ol" id="g-gain">—</div></div>
+      <div class="oc" onclick="pick(this,'goal','maintain')"><div class="oi">⚖️</div><div class="ol" id="g-main">—</div></div>
+      <div class="oc" onclick="pick(this,'goal','fit')"><div class="oi">🏃</div><div class="ol" id="g-fit">—</div></div>
+    </div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx2" onclick="nx(2)">—</button></div>
+  </div>
+  <div class="step" id="s3">
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s3t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s3s">—</div>
+    <div class="g1">
+      <div class="oc oc-h" onclick="pick(this,'level','beginner')"><div class="oi">🌱</div><div><div class="ol" id="lv-b">—</div><div class="os" id="lv-bs">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'level','intermediate')"><div class="oi">⚡</div><div><div class="ol" id="lv-i">—</div><div class="os" id="lv-is">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'level','advanced')"><div class="oi">🔥</div><div><div class="ol" id="lv-a">—</div><div class="os" id="lv-as">—</div></div></div>
+    </div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx3" onclick="nx(3)">—</button></div>
+  </div>
+  <div class="step" id="s4">
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s4t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s4s">—</div>
+    <div class="g1">
+      <div class="oc oc-h" onclick="pick(this,'act','1.2')"><div class="oi">🪑</div><div><div class="ol" id="ac-1">—</div><div class="os" id="ac-1s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.375')"><div class="oi">🚶</div><div><div class="ol" id="ac-2">—</div><div class="os" id="ac-2s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.55')"><div class="oi">🏃</div><div><div class="ol" id="ac-3">—</div><div class="os" id="ac-3s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.725')"><div class="oi">⚡</div><div><div class="ol" id="ac-4">—</div></div></div>
+    </div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx4" onclick="finSetup()">🚀 <span id="nx4t">—</span></button></div>
+  </div>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="page" id="pg-main">
+
+<!-- HOME TAB -->
+<div id="t-home" style="display:block">
+<div class="wrap" style="padding-top:16px">
+  <div class="rbanner" id="rbanner">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="font-size:24px" id="rb-ic">🌙</div>
+      <div><div style="font-size:16px;font-weight:800;color:var(--gd)" id="rb-t">—</div><div style="font-size:13px;color:var(--mt)" id="rb-s">—</div></div>
+    </div>
+    <button class="rtoggle" id="rtogbtn" onclick="toggleRamadan()">—</button>
+  </div>
+  <div class="hero">
+    <div style="font-size:14px;color:var(--mt)" id="hm-gr">—</div>
+    <div style="font-size:21px;font-weight:900;margin-bottom:8px" id="hm-nm">—</div>
+    <div class="ringwrap">
+      <div style="position:relative">
+        <svg class="rsvg" viewBox="0 0 90 90">
+          <circle class="rbg2" cx="45" cy="45" r="35"/>
+          <circle class="rfl" id="rfl" cx="45" cy="45" r="35"/>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:17px;font-weight:900;color:var(--ac)" id="r-num">0</div>
+          <div style="font-size:12px;color:var(--mt);font-weight:700" id="r-lbl">/2000</div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:14px;color:var(--mt)" id="cs1">—</span><span style="font-size:14px;font-weight:800;color:var(--ac)" id="cv1">—</span></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:14px;color:var(--mt)" id="cs2">—</span><span style="font-size:14px;font-weight:800" id="cv2">0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="font-size:14px;color:var(--mt)" id="cs3">—</span><span style="font-size:14px;font-weight:800" id="cv3">—</span></div>
+      </div>
+    </div>
+    <div class="mbars">
+      <div class="mb"><div class="mb-l" id="lb-pro">—</div><div class="mb-v" id="mb1v" style="color:var(--bl)">0g</div><div class="mbar"><div class="mbf" id="mb1f" style="background:var(--bl);width:0%"></div></div></div>
+      <div class="mb"><div class="mb-l" id="lb-car">—</div><div class="mb-v" id="mb2v" style="color:var(--or)">0g</div><div class="mbar"><div class="mbf" id="mb2f" style="background:var(--or);width:0%"></div></div></div>
+      <div class="mb"><div class="mb-l" id="lb-fat">—</div><div class="mb-v" id="mb3v" style="color:var(--pk)">0g</div><div class="mbar"><div class="mbf" id="mb3f" style="background:var(--pk);width:0%"></div></div></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <h3 style="font-size:16px" id="lbl-qlog">—</h3>
+  </div>
+  <div class="logrow" style="gap:6px">
+    <input class="fi" id="log-nm" type="text" style="border-radius:10px;padding:9px 11px">
+    <input class="fi" id="log-cl" type="number" placeholder="kcal" style="width:72px;flex:none;border-radius:10px;padding:9px">
+    <button class="btn bp" onclick="logFood()" style="border-radius:10px;padding:9px 13px">+</button>
+  </div>
+  <div class="litems" id="litems"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px">
+    <h3 style="font-size:16px" id="lbl-tw">—</h3>
+    <button class="btn bo" style="padding:5px 10px;font-size:13px" id="sa-btn" onclick="showTab('workout')">—</button>
+  </div>
+  <div class="twc" onclick="showTab('workout')">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><div class="bdg bb" id="tw-lv">—</div><div style="font-size:17px;font-weight:900;margin-top:4px" id="tw-nm">—</div></div>
+      <div style="font-size:28px">🏋️</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
+      <span style="font-size:14px;color:var(--mt)">⏱ <span id="tw-d">—</span></span>
+      <span style="font-size:14px;color:var(--mt)">🏋️ <span id="tw-e">—</span></span>
+      <span style="font-size:14px;color:var(--mt)">🔥 <span id="tw-c">—</span></span>
+    </div>
+  </div>
+</div></div>
+
+<!-- WORKOUT TAB -->
+<div id="t-workout" style="display:none">
+<div class="wrap" style="padding-top:16px">
+  <div style="text-align:center;margin-bottom:14px">
+    <div class="tag" id="wk-tag">—</div>
+    <h1 style="font-size:21px;margin-top:4px" id="wk-ti">—</h1>
+  </div>
+  <div class="dayplan" id="dayplan"></div>
+  <div class="lvlrow" id="lvlrow"></div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h3 style="font-size:16px" id="pg-t">—</h3>
+      <div class="bdg bg" id="pg-bdg">0</div>
+    </div>
+    <div class="pgrid">
+      <div class="pgst"><div class="pgst-v" id="pg1">0</div><div class="pgst-l" id="pg1l">—</div></div>
+      <div class="pgst"><div class="pgst-v" id="pg2">0</div><div class="pgst-l" id="pg2l">—</div></div>
+      <div class="pgst"><div class="pgst-v" id="pg3">1</div><div class="pgst-l" id="pg3l">—</div></div>
+    </div>
+  </div>
+  <div id="wkcnt"></div>
+  <div style="text-align:center;margin-top:6px">
+    <button class="btn bo" onclick="genWK(true)" style="padding:9px 18px">🔄 <span id="regen-t">—</span></button>
+  </div>
+</div></div>
+
+<!-- MEALS TAB -->
+<div id="t-meals" style="display:none">
+<div class="wrap" style="padding-top:16px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <h2 style="font-size:18px" id="ml-ti">—</h2>
+    <button class="btn bo" style="padding:6px 11px;font-size:14px" onclick="forceGenAllMeals()">🔄 <span id="all-t">—</span></button>
+  </div>
+  <div class="mode-sw">
+    <button class="msw" id="msw-rm" onclick="setMode('ramadan')">🌙 <span id="msw-rm-t">—</span></button>
+    <button class="msw" id="msw-nm" onclick="setMode('normal')">☀️ <span id="msw-nm-t">—</span></button>
+  </div>
+  <div class="daysel" id="daysel"></div>
+  <div class="dtbar">
+    <div><div class="tag" id="dt-lb">—</div><div style="font-size:19px;font-weight:900" id="dt-cl">—</div></div>
+    <div style="text-align:end"><div style="font-size:13px;color:var(--mt)" id="dt-lbt">—</div><div style="font-size:16px;font-weight:800" id="dt-tv">—</div></div>
+  </div>
+  <div id="mlcnt"></div>
+</div></div>
+
+<!-- PROFILE TAB -->
+<div id="t-profile" style="display:none">
+<div class="wrap" style="padding-top:16px">
+  <div style="text-align:center;margin-bottom:16px">
+    <div class="profav" id="profav">?</div>
+    <h2 style="font-size:19px" id="prof-nm">—</h2>
+    <div style="font-size:14px;color:var(--mt);margin-top:2px" id="prof-gl">—</div>
+    <button class="btn bo" style="margin-top:8px;font-size:14px;padding:6px 14px" onclick="openEdit()" id="edit-btn">✏️ —</button>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h3 style="font-size:16px;margin-bottom:10px" id="lbl-lang">—</h3>
+    <div class="lang-sw">
+      <button class="lsw" id="lsw-ar" onclick="switchLang('ar')">🇲🇦 العربية</button>
+      <button class="lsw" id="lsw-en" onclick="switchLang('en')">🇬🇧 English</button>
+    </div>
+  </div>
+  <div class="pstats" id="pstats"></div>
+  <div class="card" style="margin-bottom:10px">
+    <h3 style="font-size:16px;margin-bottom:4px" id="dc-t">—</h3>
+    <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="dc-sub">—</div>
+    <canvas id="dcChart" height="140" style="width:100%;display:block"></canvas>
+    <div style="display:flex;justify-content:center;gap:18px;margin-top:12px;font-size:12px;color:var(--mt)">
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--ac);margin-inline-end:5px;vertical-align:middle"></span><span id="dc-leg1">—</span></span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--br);margin-inline-end:5px;vertical-align:middle"></span><span id="dc-leg2">—</span></span>
+    </div>
+  </div>
+  <button class="rstbtn" onclick="doReset()" id="rst-btn">—</button>
+</div></div>
+
+<nav class="bnav" dir="ltr">
+  <button class="ni" onclick="showTab('profile')" id="nav-profile"><span class="ni-ic">👤</span><span class="ni-lb" id="nl-profile">—</span></button>
+  <button class="ni" onclick="showTab('meals')" id="nav-meals"><span class="ni-ic">🥗</span><span class="ni-lb" id="nl-meals">—</span></button>
+  <button class="ni" onclick="showTab('workout')" id="nav-workout"><span class="ni-ic">🏋️</span><span class="ni-lb" id="nl-workout">—</span></button>
+  <button class="ni on" onclick="showTab('home')" id="nav-home"><span class="ni-ic">🏠</span><span class="ni-lb" id="nl-home">—</span></button>
+</nav>
+</div>
+
+<div class="mov" id="editMov">
+<div class="modal">
+  <button class="mcls" onclick="closeMov('editMov')">✕</button>
+  <h3 style="margin-bottom:13px;font-size:17px" id="edit-ti">—</h3>
+  <div class="fl"><label class="lb" id="ed-lnm">—</label><input class="fi" id="ed-nm" type="text"></div>
+  <div class="ig2">
+    <div class="fl"><label class="lb" id="ed-lwt">—</label><input class="fi" id="ed-wt" type="number"></div>
+    <div class="fl"><label class="lb" id="ed-lht">—</label><input class="fi" id="ed-ht" type="number"></div>
+  </div>
+  <div class="fl"><label class="lb" id="ed-lag">—</label><input class="fi" id="ed-ag" type="number"></div>
+  <button class="btn bp bw" onclick="saveEdit()" style="margin-top:6px" id="ed-sv">—</button>
+</div>
+</div>
+
+<script>
+// ============================================================
+// TRANSLATIONS
+// ============================================================
+const T={
+  ar:{
+    'sp-btn':'ابدأ 🚀','s1t':'معلوماتك الشخصية','s1s':'نحسب لك السعرات بدقة',
+    'l-nm':'الاسم','l-ag':'العمر','l-gn':'الجنس','op-m':'ذكر','op-f':'أنثى',
+    'l-wt':'الوزن (كغ)','l-ht':'الطول (سم)','nx1':'التالي ←',
+    's2t':'هدفك','s2s':'اختر هدفك الرئيسي',
+    'g-lose':'خسارة وزن 🔥','g-gain':'بناء عضلات 💪','g-main':'الحفاظ على الوزن ⚖️','g-fit':'لياقة عامة 🏃','nx2':'التالي ←',
+    's3t':'مستوى التدريب','s3s':'اختر مستواك الحالي',
+    'lv-b':'مبتدئ','lv-bs':'أقل من 6 أشهر تدريب',
+    'lv-i':'متوسط','lv-is':'6-24 شهر تدريب',
+    'lv-a':'متقدم','lv-as':'أكثر من سنتين','nx3':'التالي ←',
+    's4t':'مستوى نشاطك','s4s':'كم تتحرك في اليوم',
+    'ac-1':'خامل جداً','ac-1s':'مكتبي، لا رياضة',
+    'ac-2':'خفيف','ac-2s':'رياضة 1-3 أيام/أسبوع',
+    'ac-3':'متوسط','ac-3s':'رياضة 3-5 أيام/أسبوع',
+    'ac-4':'نشيط جداً','nx4t':'ابدأ',
+    'nl-home':'الرئيسية','nl-workout':'تمارين','nl-meals':'وجبات','nl-profile':'الملف',
+    'hm-gr':'مرحباً،','cs1':'الهدف','cs2':'مستهلك','cs3':'متبقي',
+    'lb-pro':'بروتين','lb-car':'كربو','lb-fat':'دهون',
+    'lbl-qlog':'تسجيل سريع','log-nm-ph':'اسم الوجبة...','lbl-tw':'تمرين اليوم','sa-btn':'عرض الكل',
+    'wk-tag':'برنامج التدريب','wk-ti':'تمرين اليوم',
+    'pg-t':'تقدمك','pg1l':'جلسات','pg2l':'تتالي','pg3l':'المستوى',
+    'regen-t':'جلسة جديدة',
+    'sets-l':'مجموعة','reps-l':'تكرار','rest-l':'راحة','tips-t':'💡 نصائح','rt-btn':'⏱ بدء العداد',
+    'wtype-upper':'جسم علوي 💪','wtype-lower':'جسم سفلي 🦵','wtype-full':'جسم كامل ⚡','wtype-cardio':'كارديو 🏃','wtype-rest':'يوم راحة 😴',
+    'lv-beginner':'مبتدئ','lv-intermediate':'متوسط','lv-advanced':'متقدم',
+    'ml-ti':'وجباتك اليومية','all-t':'تجديد الكل',
+    'msw-rm-t':'رمضان','msw-nm-t':'عادي',
+    'dt-lb':'سعرات اليوم','dt-lbt':'الهدف اليومي',
+    'mtype-iftar':'إفطار 🌙','mtype-isha':'عشاء 🌙','mtype-suhoor':'سحور 🌅',
+    'mtype-breakfast':'فطور 🌅','mtype-lunch':'غداء ☀️','mtype-snack':'سناك 🍎','mtype-dinner':'عشاء 🌙',
+    'edit-btn':'تعديل الملف','lbl-lang':'اللغة',
+    'edit-ti':'تعديل بياناتك','ed-lnm':'الاسم','ed-lwt':'الوزن (كغ)','ed-lht':'الطول (سم)','ed-lag':'العمر','ed-sv':'حفظ',
+    'rst-btn':'🗑️ إعادة ضبط التطبيق',
+    'rb-t':'رمضان مبارك ⭐','rb-s':'وضع رمضان مفعّل',
+    'rtoggle-on':'إيقاف','rtoggle-off':'تفعيل رمضان',
+    'toast-saved':'✅ تم الحفظ','toast-lang':'🌐 تم تغيير اللغة',
+    'toast-meals':'🔄 تم تجديد الوجبات!','toast-meal1':'🔄 تم تغيير الوجبة!',
+    'toast-newses':'🔄 جلسة جديدة!','toast-act':'اختر مستوى النشاط',
+    'toast-ram-on':'🌙 وضع رمضان مفعّل','toast-ram-off':'☀️ وضع عادي مفعّل',
+    'toast-logfill':'أدخل اسم الوجبة والسعرات',
+    'confirm-reset':'هل تريد حذف كل البيانات؟',
+    'dc-t':'📅 روتيني اليومي','dc-leg1':'تمرين ✅','dc-leg2':'يوم راحة',
+  },
+  en:{
+    'sp-btn':'Start 🚀','s1t':'Your Info','s1s':'We calculate your calories precisely',
+    'l-nm':'Name','l-ag':'Age','l-gn':'Gender','op-m':'Male','op-f':'Female',
+    'l-wt':'Weight (kg)','l-ht':'Height (cm)','nx1':'Next →',
+    's2t':'Your Goal','s2s':'Choose your main goal',
+    'g-lose':'Lose Weight 🔥','g-gain':'Build Muscle 💪','g-main':'Maintain Weight ⚖️','g-fit':'General Fitness 🏃','nx2':'Next →',
+    's3t':'Training Level','s3s':'Choose your current level',
+    'lv-b':'Beginner','lv-bs':'Less than 6 months',
+    'lv-i':'Intermediate','lv-is':'6-24 months training',
+    'lv-a':'Advanced','lv-as':'More than 2 years','nx3':'Next →',
+    's4t':'Activity Level','s4s':'How much do you move daily',
+    'ac-1':'Sedentary','ac-1s':'Desk job, no sport',
+    'ac-2':'Light','ac-2s':'Sport 1-3 days/week',
+    'ac-3':'Moderate','ac-3s':'Sport 3-5 days/week',
+    'ac-4':'Very Active','nx4t':'Start',
+    'nl-home':'Home','nl-workout':'Workout','nl-meals':'Meals','nl-profile':'Profile',
+    'hm-gr':'Welcome,','cs1':'Target','cs2':'Consumed','cs3':'Remaining',
+    'lb-pro':'Protein','lb-car':'Carbs','lb-fat':'Fat',
+    'lbl-qlog':'Quick Log','log-nm-ph':'Meal name...','lbl-tw':'Today\'s Workout','sa-btn':'View All',
+    'wk-tag':'Training Program','wk-ti':'Today\'s Workout',
+    'pg-t':'Your Progress','pg1l':'Sessions','pg2l':'Streak','pg3l':'Level',
+    'regen-t':'New Session',
+    'sets-l':'sets','reps-l':'reps','rest-l':'rest','tips-t':'💡 Tips','rt-btn':'⏱ Start Timer',
+    'wtype-upper':'Upper Body 💪','wtype-lower':'Lower Body 🦵','wtype-full':'Full Body ⚡','wtype-cardio':'Cardio 🏃','wtype-rest':'Rest Day 😴',
+    'lv-beginner':'Beginner','lv-intermediate':'Intermediate','lv-advanced':'Advanced',
+    'ml-ti':'Your Daily Meals','all-t':'Refresh All',
+    'msw-rm-t':'Ramadan','msw-nm-t':'Normal',
+    'dt-lb':'Today\'s Calories','dt-lbt':'Daily Target',
+    'mtype-iftar':'Iftar 🌙','mtype-isha':'Dinner 🌙','mtype-suhoor':'Suhoor 🌅',
+    'mtype-breakfast':'Breakfast 🌅','mtype-lunch':'Lunch ☀️','mtype-snack':'Snack 🍎','mtype-dinner':'Dinner 🌙',
+    'edit-btn':'Edit Profile','lbl-lang':'Language',
+    'edit-ti':'Edit Your Info','ed-lnm':'Name','ed-lwt':'Weight (kg)','ed-lht':'Height (cm)','ed-lag':'Age','ed-sv':'Save',
+    'rst-btn':'🗑️ Reset App',
+    'rb-t':'Ramadan Mubarak ⭐','rb-s':'Ramadan mode ON',
+    'rtoggle-on':'Disable','rtoggle-off':'Enable Ramadan',
+    'toast-saved':'✅ Saved','toast-lang':'🌐 Language changed',
+    'toast-meals':'🔄 Meals refreshed!','toast-meal1':'🔄 Meal changed!',
+    'toast-newses':'🔄 New session!','toast-act':'Choose activity level',
+    'toast-ram-on':'🌙 Ramadan mode ON','toast-ram-off':'☀️ Normal mode ON',
+    'toast-logfill':'Enter meal name and calories',
+    'confirm-reset':'Delete all data?',
+    'dc-t':'📅 Daily Routine','dc-leg1':'Workout ✅','dc-leg2':'Rest day',
+  }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let L='ar', P={}, SEL={}, DLOG={}, WH=[], MP={}, CD=new Date().getDay(), CS=1;
+let isRamadan=true, mealMode='ramadan', _WP=null;
+let MP_RAM={}, MP_NRM={}, MEAL_EATEN={}; // MEAL_EATEN: {'2025-01-15_iftar': true, ...}
+
+function t(k){ return (T[L]&&T[L][k])||(T.ar&&T.ar[k])||k; }
+
+function applyLang(){
+  const ar=L==='ar';
+  document.documentElement.lang=L;
+  document.documentElement.dir=ar?'rtl':'ltr';
+  const ids=['sp-btn','s1t','s1s','l-nm','l-ag','l-gn','l-wt','l-ht','op-m','op-f','nx1',
+    's2t','s2s','g-lose','g-gain','g-main','g-fit','nx2',
+    's3t','s3s','lv-b','lv-bs','lv-i','lv-is','lv-a','lv-as','nx3',
+    's4t','s4s','ac-1','ac-1s','ac-2','ac-2s','ac-3','ac-3s','ac-4','nx4t',
+    'nl-home','nl-workout','nl-meals','nl-profile',
+    'hm-gr','cs1','cs2','cs3','lb-pro','lb-car','lb-fat','lbl-qlog','lbl-tw','sa-btn',
+    'wk-tag','wk-ti','pg-t','pg1l','pg2l','pg3l','regen-t',
+    'ml-ti','all-t','msw-rm-t','msw-nm-t','dt-lb','dt-lbt',
+    'edit-btn','lbl-lang','edit-ti','ed-lnm','ed-lwt','ed-lht','ed-lag','ed-sv','rst-btn'];
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&t(id)!==id)el.textContent=t(id);});
+  const logNm=document.getElementById('log-nm');
+  if(logNm) logNm.placeholder=t('log-nm-ph');
+  const lsar=document.getElementById('lsw-ar'), lsen=document.getElementById('lsw-en');
+  if(lsar) lsar.classList.toggle('on',L==='ar');
+  if(lsen) lsen.classList.toggle('on',L==='en');
+  document.querySelectorAll('.lbtn').forEach(b=>{
+    b.classList.toggle('on',(ar&&b.textContent.includes('العربية'))||(!ar&&b.textContent.includes('English')));
+  });
+}
+function setL(l,btn){
+  L=l;
+  document.querySelectorAll('.lbtn').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  applyLang();
+}
+function switchLang(l){
+  L=l; save(); applyLang();
+  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
+  toast(t('toast-lang'));
+}
+
+// ============================================================
+// SAVE / LOAD
+// ============================================================
+function save(){
+  try{
+    localStorage.setItem('ff8',JSON.stringify({L,P,SEL,DLOG,WH,MP,MP_RAM,MP_NRM,MEAL_EATEN,CD,isRamadan,mealMode,WP:_WP}));
+  }catch(e){}
+}
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ff8')||localStorage.getItem('ff7')||'null');
+    if(!d||!d.P||!d.P.name) return false;
+    L=d.L||'ar'; P=d.P||{}; SEL=d.SEL||{}; DLOG=d.DLOG||{};
+    WH=d.WH||[]; MP=d.MP||{}; CD=d.CD||0;
+    MP_RAM=d.MP_RAM||{}; MP_NRM=d.MP_NRM||{};
+    MEAL_EATEN=d.MEAL_EATEN||{};
+    isRamadan=d.isRamadan!==undefined?d.isRamadan:true;
+    mealMode=d.mealMode||'ramadan';
+    _WP=d.WP||null;
+    // Sync MP to current mode
+    if(mealMode==='ramadan'&&Object.keys(MP_RAM).length) MP=MP_RAM;
+    else if(mealMode==='normal'&&Object.keys(MP_NRM).length) MP=MP_NRM;
+    return true;
+  }catch(e){return false;}
+}
+function toast(msg,ms=3000){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),ms);
+}
+
+// ============================================================
+// CALORIE CALC
+// ============================================================
+function calcCal(){
+  const w=Number(P.weight)||70, h=Number(P.height)||170,
+        a=Number(P.age)||25, male=P.gender!=='female';
+  const bmr=male?(10*w+6.25*h-5*a+5):(10*w+6.25*h-5*a-161);
+  const tdee=Math.round(bmr*(Number(P.activity)||1.55));
+  const g=P.goal||'maintain';
+  P.targetCal=g==='lose'?tdee-400:g==='gain'?tdee+300:tdee;
+  P.protG=Math.round(w*2.0);
+  P.carbG=Math.round((P.targetCal*0.45)/4);
+  P.fatG=Math.round((P.targetCal*0.25)/9);
+}
+
+// ============================================================
+// SCREENS
+// ============================================================
+function showMain(){
+  document.getElementById('pg-splash').classList.remove('on');
+  document.getElementById('pg-setup').classList.remove('on');
+  document.getElementById('pg-main').classList.add('on');
+  applyLang();
+  const today=new Date().toDateString();
+  if(P.lastWD!==today){ P.doneToday=false; }
+  checkDailyMealRefresh();
+  if(!_WP||_WP._date!==today) genWK(false);
+  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
+}
+function showTab(tab){
+  ['home','workout','meals','profile'].forEach(tb=>{
+    document.getElementById('t-'+tb).style.display='none';
+    document.getElementById('nav-'+tb).classList.remove('on');
+  });
+  document.getElementById('t-'+tab).style.display='block';
+  document.getElementById('nav-'+tab).classList.add('on');
+  if(tab==='home'){ rRamadanUI(); rHome(); }
+  if(tab==='workout') rWorkout();
+  if(tab==='meals') rMeals();
+  if(tab==='profile'){ rProfile(); setTimeout(renderDailyChart,100); }
+}
+function checkDailyMealRefresh(){
+  const today=new Date().toDateString();
+  const lastMealDate=localStorage.getItem('ff8_meal_date');
+  if(lastMealDate!==today){
+    const tc=Math.round(P.targetCal)||2000;
+    for(let d=0;d<7;d++){
+      MP_RAM[d]=buildDay('ramadan',tc);
+      MP_NRM[d]=buildDay('normal',tc);
+    }
+    MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
+    MEAL_EATEN={};
+    localStorage.setItem('ff8_meal_date',today);
+    save();
+  }
+}
+
+// ============================================================
+// SETUP
+// ============================================================
+function rProg(){
+  document.getElementById('prog').innerHTML=
+    [1,2,3,4].map(i=>`<div class="prg ${i<CS?'d':i===CS?'c':''}"></div>`).join('');
+}
+function showStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on'); rProg(); applyLang();
+}
+function pick(el,k,v){
+  el.closest('.g1,.g2')?.querySelectorAll('.oc').forEach(o=>o.classList.remove('on'));
+  el.classList.add('on'); SEL[k]=v;
+}
+function nx(n){
+  if(n===1){
+    P.name=document.getElementById('i-nm').value.trim();
+    P.age=+document.getElementById('i-ag').value;
+    P.gender=document.getElementById('i-gn').value;
+    P.weight=+document.getElementById('i-wt').value;
+    P.height=+document.getElementById('i-ht').value;
+    if(!P.name||!P.age||!P.weight||!P.height){toast(L==='ar'?'أكمل بياناتك':'Fill all fields');return;}
+  }
+  if(n===2&&!SEL.goal){toast(L==='ar'?'اختر هدفك':'Choose goal');return;}
+  if(n===3&&!SEL.level){toast(L==='ar'?'اختر مستواك':'Choose level');return;}
+  CS=n+1; showStep(CS);
+}
+function pv(){ CS--; showStep(CS); }
+function finSetup(){
+  if(!SEL.act){toast(t('toast-act'));return;}
+  P.goal=SEL.goal; P.level=SEL.level; P.activity=parseFloat(SEL.act);
+  P.sessions=0; P.streak=0; P.intensity=1; P.lastWD=null; P.doneToday=false;
+  calcCal();
+  const tc=Math.round(P.targetCal)||2000;
+  for(let d=0;d<7;d++){
+    MP_RAM[d]=buildDay('ramadan',tc);
+    MP_NRM[d]=buildDay('normal',tc);
+  }
+  MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
+  MEAL_EATEN={};
+  localStorage.setItem('ff8_meal_date',new Date().toDateString());
+  genWK(false); save(); showMain();
+}
+
+// ============================================================
+// HOME
+// ============================================================
+function rHome(){
+  if(!P.name) return;
+  applyLang();
+  document.getElementById('hm-gr').textContent=t('hm-gr');
+  document.getElementById('hm-nm').textContent=P.name+' 👋';
+  const key=new Date().toDateString();
+  if(!DLOG[key]) DLOG[key]={foods:[],tCal:0,tP:0,tC:0,tF:0};
+  const log=DLOG[key];
+  const target=P.targetCal||2000, consumed=log.tCal||0;
+  const pct=Math.min(consumed/target,1);
+  document.getElementById('rfl').style.strokeDashoffset=220-(pct*220);
+  document.getElementById('r-num').textContent=consumed;
+  document.getElementById('r-lbl').textContent='/'+target;
+  document.getElementById('cv1').textContent=target+' kcal';
+  document.getElementById('cv2').textContent=consumed+' kcal';
+  document.getElementById('cv3').textContent=Math.max(0,target-consumed)+' kcal';
+  document.getElementById('mb1v').textContent=(log.tP||0)+'g';
+  document.getElementById('mb1f').style.width=Math.min((log.tP||0)/(P.protG||1)*100,100)+'%';
+  document.getElementById('mb2v').textContent=(log.tC||0)+'g';
+  document.getElementById('mb2f').style.width=Math.min((log.tC||0)/(P.carbG||1)*100,100)+'%';
+  document.getElementById('mb3v').textContent=(log.tF||0)+'g';
+  document.getElementById('mb3f').style.width=Math.min((log.tF||0)/(P.fatG||1)*100,100)+'%';
+  rLogItems(); rTWCard();
+}
+function rLogItems(){
+  const key=new Date().toDateString(), log=DLOG[key];
+  const el=document.getElementById('litems');
+  if(!log||!log.foods.length){el.innerHTML='';return;}
+  el.innerHTML=log.foods.map((f,i)=>`
+    <div class="li">
+      <span style="font-size:15px;font-weight:600">${f.name}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:14px;font-weight:800;color:var(--ac)">${f.cal} kcal</span>
+        <button class="li-del" onclick="delLog(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+function logFood(){
+  const nm=document.getElementById('log-nm').value.trim();
+  const cl=Math.round(+document.getElementById('log-cl').value);
+  if(!nm||!cl||cl<=0){toast(t('toast-logfill'));return;}
+  const key=new Date().toDateString();
+  if(!DLOG[key]) DLOG[key]={foods:[],tCal:0,tP:0,tC:0,tF:0};
+  const p=Math.round(cl*0.25/4),c2=Math.round(cl*0.45/4),f=Math.round(cl*0.30/9);
+  DLOG[key].foods.push({name:nm,cal:cl,p,c:c2,f});
+  DLOG[key].tCal=(DLOG[key].tCal||0)+cl;
+  DLOG[key].tP=(DLOG[key].tP||0)+p;
+  DLOG[key].tC=(DLOG[key].tC||0)+c2;
+  DLOG[key].tF=(DLOG[key].tF||0)+f;
+  document.getElementById('log-nm').value='';
+  document.getElementById('log-cl').value='';
+  save(); rHome();
+}
+function delLog(i){
+  const key=new Date().toDateString(), log=DLOG[key]; if(!log) return;
+  const f=log.foods.splice(i,1)[0];
+  if(f){ log.tCal-=f.cal||0; log.tP-=f.p||0; log.tC-=f.c||0; log.tF-=f.f||0; }
+  save(); rHome();
+}
+function logMeal(cal,nm){
+  const key=new Date().toDateString();
+  if(!DLOG[key]) DLOG[key]={foods:[],tCal:0,tP:0,tC:0,tF:0};
+  cal=Math.round(+cal);
+  const p=Math.round(cal*0.28/4),c2=Math.round(cal*0.42/4),f=Math.round(cal*0.30/9);
+  DLOG[key].foods.push({name:nm,cal,p,c:c2,f});
+  DLOG[key].tCal=(DLOG[key].tCal||0)+cal;
+  DLOG[key].tP=(DLOG[key].tP||0)+p;
+  DLOG[key].tC=(DLOG[key].tC||0)+c2;
+  DLOG[key].tF=(DLOG[key].tF||0)+f;
+  save(); rHome(); toast('✅ '+nm+' — '+cal+' kcal');
+}
+function eatMeal(mealKey,cal,nm){
+  // Lock the meal type for today
+  const todayKey=new Date().toDateString();
+  const lockKey=todayKey+'_'+mealKey;
+  if(MEAL_EATEN[lockKey]) return; // already eaten
+  MEAL_EATEN[lockKey]=true;
+  // Log to calorie tracker
+  logMeal(cal,nm);
+  // Re-render meals to show locked state
+  rDayMeals();
+  toast((L==='ar'?'🔒 تم تسجيل ':'🔒 Logged & locked: ')+nm);
+}
+
+// ============================================================
+// MEALS DB
+// ============================================================
+const ML={
+  ramadan:{
+    iftar:[
+      {ar:'حريرة مغربية + شباكية + تمر + حليب',en:'Moroccan Harira + Chebakia + Dates + Milk',cal:480,p:18,c:72,f:14,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['حريرة مغربية 400مل (طماطم، عدس، حمص، لحم)','شباكية 60غ (2 قطعة)','تمر 32غ (4 حبات)','حليب دافئ 200مل'],i_en:['Moroccan harira 400ml (tomato, lentils, chickpeas, meat)','chebakia 60g (2 pieces)','dates 32g (4 pcs)','warm milk 200ml'],p_ar:'سخّن الحريرة على نار هادئة 10 دق. ابدأ بالتمر والحليب. اشرب الحريرة الساخنة مع الشباكية.',p_en:'Heat harira on low heat 10 min. Start with dates and milk. Enjoy hot harira with chebakia.'},
+      {ar:'بيض بالطماطم والفلفل (شكشوكة) + خبز مغربي + تمر',en:'Shakshuka Eggs + Moroccan Bread + Dates',cal:520,p:26,c:56,f:22,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['بيض 150غ (3 حبات)','طماطم 200غ (2 حبة)','فلفل أحمر 80غ','بصل 60غ','زيت 15مل','خبز مغربي 80غ','تمر 24غ (3 حبات)'],i_en:['eggs 150g (3 pcs)','tomatoes 200g (2 pcs)','red pepper 80g','onion 60g','oil 15ml','Moroccan bread 80g','dates 24g (3 pcs)'],p_ar:'قلِّ البصل والفلفل 5 دق. أضف الطماطم المهروسة. اكسر البيض فوقها واطبخ 5 دق مغطى. قدّم ساخناً مع الخبز والتمر.',p_en:'Saute onion and pepper 5 min. Add crushed tomatoes. Crack eggs on top, cook 5 min covered. Serve hot with bread and dates.'},
+      {ar:'فطير مسّمن بالعسل + جبن كريمي + زيتون + تمر + شاي بالنعناع',en:'Msemen with Honey + Cream Cheese + Olives + Dates + Mint Tea',cal:560,p:18,c:70,f:24,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['مسّمن 120غ (2 قطعة)','جبن كريمي 40غ','عسل 20غ','زيتون مشكّل 50غ','تمر 32غ (4 حبات)','شاي مغربي 200مل بالنعناع'],i_en:['msemen 120g (2 pieces)','cream cheese 40g','honey 20g','mixed olives 50g','dates 32g (4 pcs)','Moroccan mint tea 200ml'],p_ar:'سخّن المسّمن على مقلاة جافة 2 دق كل جهة. قدّمه مع الجبن الكريمي والعسل والزيتون والتمر.',p_en:'Heat msemen on dry pan 2 min each side. Serve with cream cheese, honey, olives and dates.'},
+      {ar:'حساء العدس الأحمر بالكمون + خبز + تمر + لبن',en:'Red Lentil Soup with Cumin + Bread + Dates + Yogurt',cal:440,p:20,c:66,f:10,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['عدس أحمر 120غ','طماطم 150غ','بصل 80غ','ثوم 2 فص','كمون + كركم + ملح','خبز 60غ','تمر 24غ (3 حبات)','لبن 150مل'],i_en:['red lentils 120g','tomatoes 150g','onion 80g','2 garlic cloves','cumin + turmeric + salt','bread 60g','dates 24g (3 pcs)','yogurt 150ml'],p_ar:'اطبخ العدس مع البصل والطماطم والثوم 20 دق. اهرسه ناعماً. أضف الكمون وصبّه ساخناً.',p_en:'Cook lentils with onion, tomatoes and garlic 20 min. Blend smooth. Add cumin and serve hot.'},
+      {ar:'بريك بالتونة والبيض + سلطة طازجة + تمر + عصير ليمون',en:'Brik with Tuna & Egg + Fresh Salad + Dates + Lemonade',cal:490,p:28,c:48,f:20,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['ورق بريك 2 ورقة','تونة 80غ','بيض 100غ (بيضتان)','بصل 40غ + بقدونس','زيت قلي 20مل','سلطة طازجة 150غ','تمر 24غ','عصير ليمون طازج 200مل'],i_en:['brik pastry 2 sheets','tuna 80g','eggs 100g (2 pcs)','onion 40g + parsley','frying oil 20ml','fresh salad 150g','dates 24g','fresh lemonade 200ml'],p_ar:'اخلط التونة مع البصل والبقدونس. ضع في ورق البريك مع بيضة. اقلِ بزيت ساخن 3 دق كل جهة حتى يصبح ذهبياً.',p_en:'Mix tuna with onion and parsley. Place in brik with egg. Fry in hot oil 3 min each side until golden.'},
+      {ar:'فول مدمس بالزيت والليمون + بيض مسلوق + خبز + تمر',en:'Spiced Foul with Olive Oil & Lemon + Boiled Eggs + Bread + Dates',cal:500,p:28,c:60,f:16,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['فول مدمّس 250غ','زيت زيتون بكر 20مل','ليمون 30مل','ثوم مهروس','كمون + ملح + فلفل','بيض مسلوق 100غ (بيضتان)','خبز 80غ','تمر 24غ'],i_en:['foul medames 250g','extra virgin olive oil 20ml','lemon 30ml','mashed garlic','cumin + salt + pepper','boiled eggs 100g (2 pcs)','bread 80g','dates 24g'],p_ar:'سخّن الفول مع الثوم والكمون. أضف الزيت والليمون. قدّم مع البيض المسلوق والخبز والتمر.',p_en:'Heat foul with garlic and cumin. Add olive oil and lemon. Serve with boiled eggs, bread and dates.'},
+      {ar:'دجاج مشوي بالتوابل + أرز بالزعفران + سلطة + تمر',en:'Spiced Grilled Chicken + Saffron Rice + Salad + Dates',cal:620,p:48,c:64,f:14,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['صدر دجاج 200غ','أرز 100غ','زعفران قرصة','بهارات مشوي (كمون، فلفل، ثوم بودر)','زيت 10مل','سلطة 150غ','تمر 24غ'],i_en:['chicken breast 200g','rice 100g','pinch saffron','grill spices','oil 10ml','salad 150g','dates 24g'],p_ar:'تبّل الدجاج بالبهارات. اشوِه 6 دق كل جهة على حرارة عالية. اطبخ الأرز مع الزعفران.',p_en:'Season chicken with spices. Grill 6 min each side on high heat. Cook rice with saffron.'},
+      {ar:'حريرة + شوربة عدس + مسّمن + تمر + حليب',en:'Harira + Lentil Soup + Msemen + Dates + Milk',cal:510,p:22,c:74,f:14,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['حريرة 250مل','شوربة عدس 200مل','مسّمن 60غ (1 قطعة)','تمر 32غ (4 حبات)','حليب دافئ 200مل'],i_en:['harira 250ml','lentil soup 200ml','msemen 60g (1 piece)','dates 32g (4 pcs)','warm milk 200ml'],p_ar:'سخّن الحريرة والعدس. سخّن المسّمن على مقلاة. قدّم مع التمر والحليب.',p_en:'Heat harira and lentil soup. Heat msemen on pan. Serve with dates and warm milk.'},
+    ],
+    isha:[
+      {ar:'طاجين دجاج بالزيتون والليمون المخلّل + كسكس',en:'Chicken Tagine with Olives & Preserved Lemon + Couscous',cal:680,p:52,c:68,f:18,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['صدر دجاج 220غ','زيتون 50غ','ليمون مخلل نصف حبة','بصل 100غ','ثوم 3 فصوص','كزبرة + كمون + زعفران','كسكس 120غ','زيت 15مل'],i_en:['chicken breast 220g','olives 50g','half preserved lemon','onion 100g','3 garlic cloves','coriander + cumin + saffron','couscous 120g','oil 15ml'],p_ar:'قلِّ البصل والثوم 5 دق. أضف الدجاج والتوابل والزيتون والليمون. أضف ماء وسدّ 30 دق على نار هادئة. قدّم فوق الكسكس.',p_en:'Saute onion and garlic 5 min. Add chicken, spices, olives and lemon. Add water and simmer covered 30 min. Serve over couscous.'},
+      {ar:'كفتة مشوية + أرز أبيض + سلطة جزر بالكمون',en:'Grilled Kofta + White Rice + Cumin Carrot Salad',cal:620,p:46,c:60,f:20,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['لحم مفروم 250غ (بقر أو خروف)','بصل مبشور 80غ','كزبرة + بقدونس + كمون + فلفل','أرز 100غ','جزر مبشور 150غ + زيت زيتون 15مل + ليمون'],i_en:['minced meat 250g (beef or lamb)','grated onion 80g','coriander + parsley + cumin + pepper','rice 100g','grated carrots 150g + olive oil 15ml + lemon'],p_ar:'اخلط اللحم مع البصل والتوابل. شكّله على أسياخ. اشوِه 4 دق كل جهة. اطبخ الأرز. ابشر الجزر مع الزيت والليمون.',p_en:'Mix meat with onion and spices. Shape on skewers. Grill 4 min each side. Cook rice. Dress grated carrots with oil and lemon.'},
+      {ar:'معكرونة بصلصة الطماطم والدجاج + جبن مبشور + سلطة',en:'Chicken Tomato Pasta + Grated Cheese + Salad',cal:640,p:44,c:72,f:18,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['معكرونة 120غ','دجاج مفروم أو مقطع 180غ','طماطم مهروسة 250غ','بصل 80غ','ثوم 2 فص','زيت زيتون 15مل','أعشاب إيطالية','جبن مبشور 20غ','خس + خيار + زيتون'],i_en:['pasta 120g','ground or diced chicken 180g','crushed tomatoes 250g','onion 80g','2 garlic cloves','olive oil 15ml','Italian herbs','grated cheese 20g','lettuce + cucumber + olives'],p_ar:'قلِّ البصل والثوم 3 دق. أضف الدجاج واطبخ 8 دق. أضف الطماطم والأعشاب 15 دق. اسلق المعكرونة. اخلط وزيّن بالجبن.',p_en:'Saute onion and garlic 3 min. Add chicken, cook 8 min. Add tomatoes and herbs 15 min. Boil pasta. Toss together and top with cheese.'},
+      {ar:'سمك مشوي بالثوم والليمون + بطاطا مشوية + سلطة خضراء',en:'Garlic Lemon Grilled Fish + Roasted Potatoes + Green Salad',cal:560,p:46,c:48,f:16,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['سمك 250غ (دراد أو قاروص)','ثوم 3 فصوص','ليمون 40مل','زيت زيتون 20مل','أعشاب (زعتر، روزماري)','بطاطا 250غ (2 حبة)','سلطة خضراء 150غ'],i_en:['fish fillet 250g','3 garlic cloves','lemon 40ml','olive oil 20ml','herbs (thyme, rosemary)','potatoes 250g (2 pcs)','green salad 150g'],p_ar:'تبّل السمك بالثوم والزيت والليمون والأعشاب. اشوِه 5 دق كل جهة. اشوِ البطاطا في الفرن 25 دق مع الزيت والملح.',p_en:'Marinate fish with garlic, oil, lemon and herbs. Grill 5 min each side. Roast potatoes in oven 25 min with oil and salt.'},
+      {ar:'أرز بالدجاج والزعفران والخضار',en:'Saffron Chicken & Vegetable Rice',cal:600,p:44,c:66,f:16,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['دجاج 200غ (مكعبات)','أرز 120غ','جزر 80غ','بازلاء 80غ','فلفل أحمر 80غ','بصل 80غ','ثوم 2 فص','زيت 15مل','كمون + كركم + زعفران','مرق دجاج 300مل'],i_en:['chicken 200g (cubed)','rice 120g','carrots 80g','peas 80g','red pepper 80g','onion 80g','2 garlic cloves','oil 15ml','cumin + turmeric + saffron','chicken broth 300ml'],p_ar:'قلِّ الدجاج مع البصل والثوم 7 دق. أضف الخضار والتوابل 3 دق. أضف الأرز والمرق واطبخ 18 دق مغطى.',p_en:'Saute chicken with onion and garlic 7 min. Add vegetables and spices 3 min. Add rice and broth, cook 18 min covered.'},
+      {ar:'لحم بالبرقوق والسمسم + كسكس بالزبيب',en:'Lamb with Prunes & Sesame + Couscous with Raisins',cal:700,p:46,c:78,f:20,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['لحم خروف 220غ (مكعبات)','برقوق مجفف 80غ','سمسم 20غ','بصل 120غ','عسل 15غ','قرفة + زنجبيل + كمون','كسكس 120غ','زبيب 30غ','زبدة 10غ'],i_en:['lamb 220g (cubed)','prunes 80g','sesame seeds 20g','onion 120g','honey 15g','cinnamon + ginger + cumin','couscous 120g','raisins 30g','butter 10g'],p_ar:'قلِّ اللحم مع البصل والتوابل 10 دق. أضف البرقوق والعسل والماء واطبخ 40 دق. رشّ السمسم. ضع ماء مغلي على الكسكس 5 دق مع الزبيب والزبدة.',p_en:'Saute lamb with onion and spices 10 min. Add prunes, honey and water, cook 40 min. Sprinkle sesame. Pour boiling water over couscous 5 min with raisins and butter.'},
+      {ar:'شيش طاووق بصلصة الثوم + أرز أبيض + سلطة',en:'Chicken Shish Tawook + Garlic Sauce + White Rice + Salad',cal:590,p:50,c:58,f:14,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['صدر دجاج 230غ (مكعبات)','زبادي 80غ','ثوم 4 فصوص','ليمون 30مل','زيت زيتون 15مل','فلفل أحمر + كمون + بابريكا','أرز 100غ','مايونيز + ثوم للصلصة'],i_en:['chicken breast 230g (cubed)','yogurt 80g','4 garlic cloves','lemon 30ml','olive oil 15ml','red pepper + cumin + paprika','rice 100g','mayo + garlic for sauce'],p_ar:'تبّل الدجاج بالزبادي والثوم والليمون والبهارات لساعتين. اشوِه على أسياخ 5 دق كل جهة. اصنع صلصة الثوم بمزج الثوم مع المايونيز.',p_en:'Marinate chicken in yogurt, garlic, lemon and spices 2 hours. Grill on skewers 5 min each side. Make garlic sauce with mayo and garlic.'},
+    ],
+    suhoor:[
+      {ar:'شوفان بالحليب والموز والعسل والمكسرات',en:'Creamy Oatmeal with Banana, Honey & Nuts',cal:520,p:18,c:76,f:16,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['شوفان ملفوف 100غ','حليب كامل الدسم 300مل','موز 120غ (1 حبة)','عسل أصلي 20غ','مكسرات مشكلة 30غ (لوز + جوز)','قرفة قرصة'],i_en:['rolled oats 100g','full-fat milk 300ml','banana 120g','natural honey 20g','mixed nuts 30g','pinch cinnamon'],p_ar:'اطبخ الشوفان في الحليب على نار متوسطة 5 دق مع التحريك. ضع في طبق وزيّن بشرائح الموز والعسل والمكسرات والقرفة.',p_en:'Cook oats in milk on medium heat 5 min stirring. Pour in bowl and top with banana slices, honey, nuts and cinnamon.'},
+      {ar:'بيض مسلوق + أفوكادو + خبز مغربي + زيتون + حليب',en:'Boiled Eggs + Avocado Toast + Moroccan Bread + Olives + Milk',cal:560,p:26,c:46,f:30,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['بيض 150غ (3 حبات)','أفوكادو 100غ (نصف حبة)','خبز مغربي 80غ','زيتون 40غ','حليب 200مل','ملح البحر + فلفل أحمر'],i_en:['eggs 150g (3 pcs)','avocado 100g (half)','Moroccan bread 80g','olives 40g','milk 200ml','sea salt + red pepper'],p_ar:'اسلق البيض 8 دق. اهرس الأفوكادو مع الملح والفلفل. ادهن الخبز المحمّص بالأفوكادو وضع البيض فوقه.',p_en:'Boil eggs 8 min. Mash avocado with salt and pepper. Spread avocado on toasted bread and top with eggs.'},
+      {ar:'فطيرة بيض وجبن وخضار + حليب دافئ بالعسل',en:'Egg, Cheese & Veggie Omelette + Warm Honey Milk',cal:490,p:30,c:36,f:26,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['بيض 150غ (3 حبات)','جبن مبشور 40غ','فلفل ملوّن 80غ','طماطم 80غ','بصل 40غ','زيت 10مل','خبز 60غ','حليب دافئ 250مل + عسل 15غ'],i_en:['eggs 150g (3 pcs)','grated cheese 40g','colored peppers 80g','tomatoes 80g','onion 40g','oil 10ml','bread 60g','warm milk 250ml + honey 15g'],p_ar:'اخفق البيض مع الملح. قلِّ الخضار 3 دق. صبّ البيض فوقها. أضف الجبن وطوِها. قدّم مع الخبز والحليب الدافئ بالعسل.',p_en:'Whisk eggs with salt. Saute vegetables 3 min. Pour eggs over them. Add cheese and fold. Serve with bread and warm honey milk.'},
+      {ar:'كسكس بالحليب والعسل والزبيب واللوز',en:'Couscous with Milk, Honey, Raisins & Almonds',cal:540,p:16,c:82,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['كسكس ناعم 120غ','حليب ساخن 350مل','عسل 25غ','زبيب 40غ','لوز مقشور 30غ','قرفة + زبدة 10غ'],i_en:['fine couscous 120g','hot milk 350ml','honey 25g','raisins 40g','blanched almonds 30g','cinnamon + butter 10g'],p_ar:'ضع الكسكس في طبق. صبّ الحليب الساخن فوقه وغطِّه 5 دق. فرده بالشوكة. أضف الزبدة والعسل والزبيب واللوز والقرفة.',p_en:'Place couscous in bowl. Pour hot milk over it, cover 5 min. Fluff with fork. Add butter, honey, raisins, almonds and cinnamon.'},
+      {ar:'لبن يوناني مع الفواكه والمكسرات + خبز بالجبن والعسل',en:'Greek Yogurt Bowl with Fruits & Nuts + Cheese & Honey Bread',cal:510,p:22,c:66,f:18,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['لبن يوناني 200غ','موز 120غ','فراولة 80غ','عسل 20غ','مكسرات مشكلة 30غ','خبز 60غ','جبن ذوب 30غ'],i_en:['Greek yogurt 200g','banana 120g','strawberries 80g','honey 20g','mixed nuts 30g','bread 60g','melted cheese 30g'],p_ar:'اصنع بوول اللبن: ضع اللبن في طبق عميق وزيّن بالفاكهة والمكسرات والعسل. حمّر الخبز وضع الجبن فوقه حتى يذوب.',p_en:'Make yogurt bowl: place yogurt in deep bowl, top with fruits, nuts and honey. Toast bread and melt cheese on top.'},
+      {ar:'فول بالزيت والبيض + خبز + حليب + تمر',en:'Foul with Olive Oil & Eggs + Bread + Milk + Dates',cal:530,p:30,c:62,f:18,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['فول مدمّس 220غ','بيض مسلوق 100غ (بيضتان)','زيت زيتون 20مل','كمون + ليمون','خبز مغربي 80غ','حليب 250مل','تمر 32غ (4 حبات)'],i_en:['foul medames 220g','boiled eggs 100g (2 pcs)','olive oil 20ml','cumin + lemon','Moroccan bread 80g','milk 250ml','dates 32g (4 pcs)'],p_ar:'سخّن الفول مع الكمون. أضف الزيت والليمون وحرّك. قدّم مع البيض المسلوق والخبز والتمر والحليب الدافئ.',p_en:'Heat foul with cumin. Add olive oil and lemon, stir. Serve with boiled eggs, bread, dates and warm milk.'},
+      {ar:'بانكيك بالعسل والموز + حليب بالعسل',en:'Banana Honey Pancakes + Warm Honey Milk',cal:550,p:18,c:80,f:16,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['دقيق 120غ','بيض 50غ (1 حبة)','حليب 200مل','سكر 10غ','بيكنج باودر 5غ','زبدة 10غ','موز 120غ','عسل 25غ','حليب دافئ 250مل'],i_en:['flour 120g','egg 50g (1 pc)','milk 200ml','sugar 10g','baking powder 5g','butter 10g','banana 120g','honey 25g','warm milk 250ml'],p_ar:'اخلط الدقيق والبيض والحليب والسكر والبيكنج باودر. اطبخ على مقلاة بالزبدة كل بانكيك 2 دق كل جهة. قدّم مع الموز والعسل.',p_en:'Mix flour, egg, milk, sugar and baking powder. Cook on buttered pan each pancake 2 min per side. Serve with banana and honey.'},
+    ]
+  },
+  normal:{
+    breakfast:[
+      {ar:'بيض عيون بالزبدة + أفوكادو + خبز محمّص + قهوة',en:'Butter-Fried Eggs + Avocado Toast + Coffee',cal:480,p:22,c:38,f:28,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['بيض 150غ (3 حبات)','زبدة 15غ','أفوكادو 100غ (نصف حبة)','خبز محمّص 80غ (شريحتان)','ملح البحر + فلفل أحمر','قهوة أو شاي'],i_en:['eggs 150g (3 pcs)','butter 15g','avocado 100g (half)','toast 80g (2 slices)','sea salt + red pepper','coffee or tea'],p_ar:'ذوّب الزبدة على نار هادئة. اقلِ البيض برفق حتى تصبح الصفار نصف ناضجة. اهرس الأفوكادو وادهن على الخبز. ضع البيض فوقه.',p_en:'Melt butter on low heat. Gently fry eggs until yolks are half-set. Mash avocado and spread on toast. Top with eggs.'},
+      {ar:'عجة خضار ملوّنة + خبز + لبن بالعسل',en:'Colorful Veggie Omelette + Bread + Honey Yogurt',cal:440,p:26,c:42,f:20,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['بيض 150غ (3 حبات)','فلفل أحمر وأصفر 100غ','طماطم 80غ','بصل 50غ','جبن مبشور 30غ','زيت زيتون 10مل','خبز 60غ','لبن يوناني 150غ + عسل 15غ'],i_en:['eggs 150g (3 pcs)','red & yellow pepper 100g','tomatoes 80g','onion 50g','grated cheese 30g','olive oil 10ml','bread 60g','Greek yogurt 150g + honey 15g'],p_ar:'قلِّ الخضار 4 دق. اخفق البيض واصبّه فوق الخضار. رشّ الجبن واطوِ العجة. قدّم مع الخبز واللبن بالعسل.',p_en:'Saute vegetables 4 min. Whisk eggs and pour over vegetables. Sprinkle cheese and fold omelette. Serve with bread and honey yogurt.'},
+      {ar:'شوفان بالموز والفراولة والمكسرات',en:'Oatmeal with Banana, Strawberries & Nuts',cal:460,p:18,c:66,f:14,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['شوفان 90غ','حليب 300مل','موز 120غ','فراولة 80غ','لوز 25غ','عسل 15غ','قرفة'],i_en:['oats 90g','milk 300ml','banana 120g','strawberries 80g','almonds 25g','honey 15g','cinnamon'],p_ar:'اطبخ الشوفان في الحليب 5 دق مع التحريك. قدّم مع الفاكهة واللوز والعسل والقرفة.',p_en:'Cook oats in milk 5 min stirring. Serve with fruits, almonds, honey and cinnamon.'},
+      {ar:'فطور مغربي كامل: مسّمن + بيض + عسل + زيتون + شاي',en:'Full Moroccan Breakfast: Msemen + Eggs + Honey + Olives + Tea',cal:560,p:22,c:62,f:26,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['بيض مقلي 100غ (بيضتان)','مسّمن 80غ (1 قطعة)','زبدة 15غ','عسل 20غ','زيتون مشكّل 40غ','جبن كريمي 30غ','شاي مغربي بالنعناع 300مل'],i_en:['fried eggs 100g (2 pcs)','msemen 80g (1 piece)','butter 15g','honey 20g','mixed olives 40g','cream cheese 30g','Moroccan mint tea 300ml'],p_ar:'سخّن المسّمن على مقلاة جافة. قلِّ البيض بالزيت. قدّم كل شيء معاً على الطاولة.',p_en:'Heat msemen on dry pan. Fry eggs in oil. Serve everything together on the table.'},
+      {ar:'بانكيك بالموز والعسل + لبن + قهوة',en:'Banana Honey Pancakes + Yogurt + Coffee',cal:500,p:18,c:74,f:14,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['دقيق 120غ','بيض 50غ (1 حبة)','حليب 200مل','موز 120غ مهروس','عسل 25غ','زبدة 10غ','لبن يوناني 150غ','قهوة'],i_en:['flour 120g','egg 50g (1 pc)','milk 200ml','banana 120g mashed','honey 25g','butter 10g','Greek yogurt 150g','coffee'],p_ar:'اهرس الموز في العجينة. اخلط مع الدقيق والبيض والحليب. اطبخ على مقلاة بالزبدة 2 دق كل جهة. قدّم مع العسل واللبن.',p_en:'Mash banana into batter. Mix with flour, egg and milk. Cook on buttered pan 2 min each side. Serve with honey and yogurt.'},
+      {ar:'سموذي بول بالفاكهة + توست بالزبدة والعسل',en:'Smoothie Bowl + Butter & Honey Toast',cal:420,p:14,c:68,f:12,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['موز مجمّد 120غ','فراولة 100غ','لبن 150غ','عسل 15غ','غرانولا 30غ','خبز محمّص 60غ','زبدة 15غ + عسل 10غ'],i_en:['frozen banana 120g','strawberries 100g','yogurt 150g','honey 15g','granola 30g','toast 60g','butter 15g + honey 10g'],p_ar:'اخلط الموز المجمّد مع الفراولة واللبن في الخلاط. صبّ في طبق عميق. زيّن بالغرانولا والعسل. قدّم مع الخبز بالزبدة.',p_en:'Blend frozen banana with strawberries and yogurt. Pour in deep bowl. Top with granola and honey. Serve with buttered toast.'},
+    ],
+    lunch:[
+      {ar:'دجاج مشوي بالتوابل + أرز بسمتي + سلطة فتوش',en:'Spiced Grilled Chicken + Basmati Rice + Fattoush Salad',cal:640,p:52,c:66,f:16,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['صدر دجاج 220غ','أرز بسمتي 120غ','خس 80غ','طماطم 100غ','خيار 100غ','خبز محمّص مكسّر 30غ','زيت زيتون 15مل','ليمون','بهارات (كمون، ثوم، بابريكا)'],i_en:['chicken breast 220g','basmati rice 120g','lettuce 80g','tomatoes 100g','cucumber 100g','crispy croutons 30g','olive oil 15ml','lemon','spices (cumin, garlic, paprika)'],p_ar:'تبّل الدجاج واشوِه 7 دق كل جهة على حرارة عالية. اطبخ الأرز. اخلط الخضار مع الخبز المكسّر والزيت والليمون.',p_en:'Season chicken and grill 7 min each side on high heat. Cook rice. Toss vegetables with croutons, oil and lemon.'},
+      {ar:'طاجين لحم بالخضار والتوابل المغربية + خبز',en:'Moroccan Meat Tagine with Vegetables + Bread',cal:680,p:48,c:56,f:22,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['لحم بقر 220غ (مكعبات)','بطاطا 200غ','جزر 100غ','فلفل 80غ','طماطم 150غ','بصل 100غ','ثوم 3 فصوص','زيت 15مل','هريسة + ras el hanout','خبز مغربي 80غ'],i_en:['beef 220g (cubed)','potatoes 200g','carrots 100g','peppers 80g','tomatoes 150g','onion 100g','3 garlic cloves','oil 15ml','harissa + ras el hanout','Moroccan bread 80g'],p_ar:'قلِّ اللحم مع البصل والثوم والتوابل 8 دق. أضف الخضار والطماطم والماء. اطبخ مغطى 45 دق. قدّم مع الخبز.',p_en:'Saute meat with onion, garlic and spices 8 min. Add vegetables, tomatoes and water. Cook covered 45 min. Serve with bread.'},
+      {ar:'سمك بالصلصة الحمراء المغربية + أرز + سلطة',en:'Fish in Moroccan Red Sauce + Rice + Salad',cal:580,p:48,c:58,f:14,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['سمك 250غ (قطع)','طماطم مهروسة 200غ','فلفل أحمر 100غ','ثوم 3 فصوص','كزبرة + كمون + فلفل','زيت زيتون 15مل','أرز 120غ','سلطة خضراء'],i_en:['fish 250g','crushed tomatoes 200g','red pepper 100g','3 garlic cloves','coriander + cumin + pepper','olive oil 15ml','rice 120g','green salad'],p_ar:'اطبخ الصلصة: قلِّ الثوم والفلفل 3 دق. أضف الطماطم والتوابل 10 دق. أضف السمك واطبخ 12 دق. قدّم مع الأرز والسلطة.',p_en:'Make sauce: saute garlic and pepper 3 min. Add tomatoes and spices 10 min. Add fish and cook 12 min. Serve with rice and salad.'},
+      {ar:'كسكس مغربي بالدجاج والخضار الكاملة',en:'Full Moroccan Couscous with Chicken & Vegetables',cal:720,p:50,c:80,f:18,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['كسكس 130غ','دجاج 200غ','جزر 100غ','كوسا 100غ','لفت 80غ','بصل 100غ','حمص مسلوق 80غ','زعفران + ras el hanout + ملح','زبدة 15غ'],i_en:['couscous 130g','chicken 200g','carrots 100g','zucchini 100g','turnip 80g','onion 100g','cooked chickpeas 80g','saffron + ras el hanout + salt','butter 15g'],p_ar:'اطبخ المرق: سخّن الدجاج مع الخضار والتوابل والماء 35 دق. ضع ماء مغلي على الكسكس 5 دق مع الزبدة. قدّم الكسكس مع المرق فوقه.',p_en:'Make broth: cook chicken with vegetables, spices and water 35 min. Pour boiling water over couscous 5 min with butter. Serve couscous topped with broth.'},
+      {ar:'باستا بالدجاج والكريمة + سلطة خضراء',en:'Creamy Chicken Pasta + Green Salad',cal:660,p:46,c:70,f:20,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['معكرونة 130غ','صدر دجاج 180غ (شرائح)','كريمة طبخ 100مل','ثوم 3 فصوص','بصل 60غ','جبن بارميزان 25غ','زيت زيتون 15مل','أعشاب إيطالية','خس + طماطم شيري'],i_en:['pasta 130g','chicken breast 180g (strips)','cooking cream 100ml','3 garlic cloves','onion 60g','parmesan 25g','olive oil 15ml','Italian herbs','lettuce + cherry tomatoes'],p_ar:'اسلق المعكرونة. قلِّ الدجاج مع الثوم والبصل 7 دق. أضف الكريمة والأعشاب 5 دق. اخلط مع المعكرونة وزيّن بالبارميزان.',p_en:'Boil pasta. Saute chicken with garlic and onion 7 min. Add cream and herbs 5 min. Mix with pasta and top with parmesan.'},
+      {ar:'لحم مفروم بالطماطم والبيض + أرز + سلطة مغربية',en:'Spiced Minced Meat with Tomatoes & Eggs + Rice + Moroccan Salad',cal:580,p:42,c:52,f:22,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['لحم مفروم 200غ','طماطم 200غ','بصل 80غ','بيض 100غ (بيضتان)','زيت 15مل','ras el hanout + كمون','أرز 100غ','سلطة مغربية'],i_en:['minced meat 200g','tomatoes 200g','onion 80g','eggs 100g (2 pcs)','oil 15ml','ras el hanout + cumin','rice 100g','Moroccan salad'],p_ar:'قلِّ اللحم مع البصل والتوابل 8 دق. أضف الطماطم واطبخ 10 دق. اكسر البيض فوقه وحرّك حتى ينضج. قدّم مع الأرز.',p_en:'Saute meat with onion and spices 8 min. Add tomatoes and cook 10 min. Crack eggs on top and stir until cooked. Serve with rice.'},
+    ],
+    snack:[
+      {ar:'لبن يوناني بالعسل والتوت والغرانولا',en:'Greek Yogurt with Honey, Berries & Granola',cal:260,p:14,c:36,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['لبن يوناني 200غ','عسل 15غ','توت أو فراولة 80غ','غرانولا 30غ'],i_en:['Greek yogurt 200g','honey 15g','berries or strawberries 80g','granola 30g'],p_ar:'ضع اللبن في طبق. أضف العسل والتوت والغرانولا. لا طهي.',p_en:'Place yogurt in bowl. Add honey, berries and granola. No cooking.'},
+      {ar:'تفاح بزبدة اللوز + شاي أخضر',en:'Apple with Almond Butter + Green Tea',cal:220,p:6,c:30,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['تفاح 180غ (1 حبة كبيرة)','زبدة لوز 30غ','شاي أخضر'],i_en:['apple 180g (1 large)','almond butter 30g','green tea'],p_ar:'قطّع التفاح وقدّمه مع زبدة اللوز للغمس.',p_en:'Slice apple and serve with almond butter for dipping.'},
+      {ar:'مكسرات مشكلة + تمر + شاي أخضر',en:'Mixed Nuts + Dates + Green Tea',cal:240,p:7,c:22,f:16,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['مكسرات مشكلة 35غ (لوز + جوز + كاجو)','تمر 24غ (3 حبات)','شاي أخضر 300مل'],i_en:['mixed nuts 35g (almonds + walnuts + cashews)','dates 24g (3 pcs)','green tea 300ml'],p_ar:'قدّم المكسرات مع التمر والشاي الأخضر.',p_en:'Serve nuts with dates and green tea.'},
+      {ar:'موز بالحليب والعسل',en:'Banana Milk Shake with Honey',cal:280,p:10,c:42,f:6,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['موز 120غ (1 حبة)','حليب 250مل','عسل 10غ'],i_en:['banana 120g (1 pc)','milk 250ml','honey 10g'],p_ar:'اخلط كل شيء في الخلاط 30 ثانية. اشربه بارداً.',p_en:'Blend everything in blender 30 seconds. Drink cold.'},
+      {ar:'حمص + خبز محمّص + زيتون',en:'Hummus + Toast + Olives',cal:230,p:8,c:28,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['حمص جاهز 100غ','خبز محمّص 60غ (شريحتان)','زيتون 30غ','زيت زيتون + بابريكا'],i_en:['ready hummus 100g','toast 60g (2 slices)','olives 30g','olive oil + paprika'],p_ar:'ضع الحمص في طبق ورشّ الزيت والبابريكا. قدّم مع الخبز والزيتون.',p_en:'Place hummus in bowl, drizzle oil and paprika. Serve with toast and olives.'},
+    ],
+    dinner:[
+      {ar:'سمك مشوي بالأعشاب + بطاطا مشوية بالفرن + سلطة',en:'Herb Grilled Fish + Oven Roasted Potatoes + Salad',cal:520,p:44,c:46,f:18,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['سمك 230غ (دراد أو قاروص)','زيت زيتون 20مل','ليمون 40مل','ثوم 2 فص','زعتر + بقدونس','بطاطا 250غ (مشوية بالفرن)','سلطة طازجة'],i_en:['fish 230g','olive oil 20ml','lemon 40ml','2 garlic cloves','thyme + parsley','potatoes 250g (oven roasted)','fresh salad'],p_ar:'تبّل السمك وضعه في فرن 200 درجة 20 دق. اشوِ البطاطا مع الزيت والملح 25 دق. قدّم مع السلطة.',p_en:'Season fish and bake at 200 degrees 20 min. Roast potatoes with oil and salt 25 min. Serve with salad.'},
+      {ar:'دجاج محمّر بالليمون والثوم + كسكس + خضار مشوية',en:'Lemon Garlic Roasted Chicken + Couscous + Grilled Veggies',cal:600,p:50,c:56,f:18,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['صدر دجاج 200غ','ثوم 3 فصوص مهروس','ليمون 40مل','زيت زيتون 20مل','كزبرة مجففة + كمون','كسكس 100غ','كوسا + فلفل مشوية 150غ'],i_en:['chicken breast 200g','3 crushed garlic cloves','lemon 40ml','olive oil 20ml','dried coriander + cumin','couscous 100g','grilled zucchini + pepper 150g'],p_ar:'تبّل الدجاج بالثوم والزيت والليمون والتوابل. اشوِه 7 دق كل جهة. ضع ماء مغلي على الكسكس 5 دق. اشوِ الخضار.',p_en:'Season chicken with garlic, oil, lemon and spices. Grill 7 min each side. Pour boiling water over couscous 5 min. Grill vegetables.'},
+      {ar:'شوربة دجاج بالخضار + خبز مغربي',en:'Chicken Vegetable Soup + Moroccan Bread',cal:420,p:36,c:44,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['صدر دجاج 150غ (مكعبات)','جزر 80غ','كوسا 80غ','كرفس 60غ','بصل 80غ','ثوم 2 فص','معكرونة صغيرة 40غ','كزبرة + كمون + ملح','خبز 80غ'],i_en:['chicken breast 150g (cubed)','carrots 80g','zucchini 80g','celery 60g','onion 80g','2 garlic cloves','small pasta 40g','coriander + cumin + salt','bread 80g'],p_ar:'اطبخ الدجاج مع الخضار والتوابل في 1.5 لتر ماء 25 دق. أضف المعكرونة واطبخ 8 دق. زيّن بالكزبرة الطازجة.',p_en:'Cook chicken with vegetables and spices in 1.5L water 25 min. Add pasta and cook 8 min. Garnish with fresh coriander.'},
+      {ar:'بيض بالجبن والسبانخ + خبز مغربي + شاي بالنعناع',en:'Egg & Cheese Spinach Scramble + Moroccan Bread + Mint Tea',cal:430,p:28,c:38,f:20,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['بيض 150غ (3 حبات)','سبانخ طازجة 100غ','جبن مبشور 40غ','طماطم 80غ','زيت زيتون 10مل','خبز مغربي 80غ','شاي بالنعناع'],i_en:['eggs 150g (3 pcs)','fresh spinach 100g','grated cheese 40g','tomatoes 80g','olive oil 10ml','Moroccan bread 80g','mint tea'],p_ar:'قلِّ السبانخ مع الطماطم 3 دق. اخفق البيض وصبّه. حرّك على نار هادئة. أضف الجبن وأطفئ النار. قدّم مع الخبز والشاي.',p_en:'Saute spinach with tomatoes 3 min. Whisk eggs and pour in. Stir on low heat. Add cheese and remove from heat. Serve with bread and tea.'},
+      {ar:'معكرونة بالسردين والطماطم والأعشاب',en:'Pasta with Sardines, Tomatoes & Herbs',cal:510,p:34,c:58,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['معكرونة 120غ','سردين في الزيت 160غ (2 علبة)','طماطم مهروسة 200غ','ثوم 3 فصوص','بقدونس','زيت زيتون 10مل','فلفل أحمر حار اختياري'],i_en:['pasta 120g','sardines in oil 160g (2 cans)','crushed tomatoes 200g','3 garlic cloves','parsley','olive oil 10ml','optional chili'],p_ar:'قلِّ الثوم 2 دق. أضف الطماطم واطبخ 12 دق. أضف السردين وحرّك برفق. اسلق المعكرونة واخلطها مع الصلصة.',p_en:'Saute garlic 2 min. Add tomatoes and cook 12 min. Add sardines and stir gently. Boil pasta and toss with sauce.'},
+      {ar:'أرز بالخضار والبيض المقلي',en:'Fried Rice with Vegetables & Eggs',cal:480,p:20,c:66,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['أرز مطبوخ 200غ','بيض 100غ (بيضتان)','جزر مكعبات 80غ','بازلاء 60غ','بصل 60غ','ثوم 2 فص','زيت 15مل','صلصة صويا 15مل'],i_en:['cooked rice 200g','eggs 100g (2 pcs)','diced carrots 80g','peas 60g','onion 60g','2 garlic cloves','oil 15ml','soy sauce 15ml'],p_ar:'قلِّ البصل والثوم والخضار 4 دق. أضف الأرز واقلِّه 3 دق. ادفع للجانب واقلِ البيض. اخلط مع صلصة الصويا.',p_en:'Saute onion, garlic and vegetables 4 min. Add rice and fry 3 min. Push aside and fry eggs. Mix with soy sauce.'},
+    ]
+  }
+};
+
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+function scaleMeal(meal,targetCal,frac){
+  const target=Math.round(targetCal*frac);
+  const ratio=target/meal.cal;
+  return{...meal,cal:target,p:Math.round(meal.p*ratio),c:Math.round(meal.c*ratio),f:Math.round(meal.f*ratio)};
+}
+
+// Build a full day — last meal always = target minus sum of others (exact total)
+function buildDay(mode,targetCal){
+  const tc=Math.round(targetCal)||2000;
+  function fixLast(base,cal){
+    if(cal<=0) cal=Math.round(tc*0.1);
+    const r=cal/base.cal;
+    return{...base,cal,p:Math.round(base.p*r),c:Math.round(base.c*r),f:Math.round(base.f*r)};
+  }
+  if(mode==='ramadan'){
+    const iftar=scaleMeal(rand(ML.ramadan.iftar),tc,0.22);
+    const isha=scaleMeal(rand(ML.ramadan.isha),tc,0.50);
+    const suhoor=fixLast(rand(ML.ramadan.suhoor), tc-iftar.cal-isha.cal);
+    return{mode,iftar,isha,suhoor};
+  } else {
+    const breakfast=scaleMeal(rand(ML.normal.breakfast),tc,0.25);
+    const lunch=scaleMeal(rand(ML.normal.lunch),tc,0.35);
+    const snack=scaleMeal(rand(ML.normal.snack),tc,0.12);
+    const dinner=fixLast(rand(ML.normal.dinner), tc-breakfast.cal-lunch.cal-snack.cal);
+    return{mode,breakfast,lunch,snack,dinner};
+  }
+}
+
+function forceGenAllMeals(){
+  const tc=Math.round(P.targetCal)||2000;
+  for(let d=0;d<7;d++){
+    MP_RAM[d]=buildDay('ramadan',tc);
+    MP_NRM[d]=buildDay('normal',tc);
+  }
+  MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
+  MEAL_EATEN={};
+  localStorage.setItem('ff8_meal_date',new Date().toDateString());
+  toast(t('toast-meals')); save(); rMeals();
+}
+
+function refreshMeal(mKey){
+  if(!MP[CD]) return;
+  const tc=Math.round(P.targetCal)||2000;
+  // Rebuild a fresh day and take just the requested meal slot from it
+  const newDay=buildDay(mealMode,tc);
+  MP[CD][mKey]=newDay[mKey];
+  // Recalculate last meal to keep total = target
+  const day=MP[CD];
+  const isRam=mealMode==='ramadan';
+  const keys=isRam?['iftar','isha','suhoor']:['breakfast','lunch','snack','dinner'];
+  const lastKey=keys[keys.length-1];
+  if(mKey!==lastKey){
+    const othersTotal=keys.slice(0,-1).reduce((s,k)=>s+(day[k]?day[k].cal:0),0);
+    const rem=tc-othersTotal;
+    if(rem>50&&day[lastKey]){
+      const base=day[lastKey];const r=rem/base.cal;
+      day[lastKey]={...base,cal:rem,p:Math.round(base.p*r),c:Math.round(base.c*r),f:Math.round(base.f*r)};
+    }
+  }
+  save(); rDayMeals(); rMeals(); toast(t('toast-meal1'));
+}
+
+// ============================================================
+// MEALS RENDER
+// ============================================================
+function rMeals(){
+  if(!P.name) return;
+  const ar=L==='ar';
+  document.getElementById('ml-ti').textContent=t('ml-ti');
+  document.getElementById('all-t').textContent=t('all-t');
+  const msRm=document.getElementById('msw-rm'), msNm=document.getElementById('msw-nm');
+  msRm.className='msw'+(mealMode==='ramadan'?' rm':'');
+  msNm.className='msw'+(mealMode==='normal'?' nm':'');
+  const days_ar=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const days_en=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const todayIdx=new Date().getDay();
+  CD=todayIdx;
+  const daysel=document.getElementById('daysel');
+  daysel.innerHTML=[0,1,2,3,4,5,6].map(d=>{
+    const nm=ar?days_ar[d]:days_en[d];
+    const isToday=d===todayIdx;
+    return`<div class="dpill${isToday?' today':''}">${isToday?(ar?'📅 ':' 📅')+nm:nm}</div>`;
+  }).join('');
+  if(!MP[CD]) MP[CD]=buildDay(mealMode,Math.round(P.targetCal)||2000);
+  const day=MP[CD];
+  const meals=mealMode==='ramadan'
+    ?[{k:'iftar',m:day.iftar},{k:'isha',m:day.isha},{k:'suhoor',m:day.suhoor}]
+    :[{k:'breakfast',m:day.breakfast},{k:'lunch',m:day.lunch},{k:'snack',m:day.snack},{k:'dinner',m:day.dinner}];
+  const totalCal=meals.reduce((s,{m})=>s+(m&&m.cal||0),0);
+  const target=P.targetCal||2000;
+  document.getElementById('dt-lb').textContent=t('dt-lb');
+  document.getElementById('dt-cl').textContent=totalCal+' kcal';
+  document.getElementById('dt-lbt').textContent=t('dt-lbt');
+  document.getElementById('dt-tv').textContent=target+' kcal';
+  rDayMeals();
+}
+function rDayMeals(){
+  const ar=L==='ar';
+  if(!MP[CD]) return;
+  const day=MP[CD];
+  const meals=mealMode==='ramadan'
+    ?[{k:'iftar',m:day.iftar},{k:'isha',m:day.isha},{k:'suhoor',m:day.suhoor}]
+    :[{k:'breakfast',m:day.breakfast},{k:'lunch',m:day.lunch},{k:'snack',m:day.snack},{k:'dinner',m:day.dinner}];
+  const todayKey=new Date().toDateString();
+  let h='';
+  meals.forEach(({k,m})=>{
+    if(!m) return;
+    const nm=ar?m.ar:m.en;
+    const time=ar?m.time_ar:m.time_en;
+    const instr=ar?m.p_ar:m.p_en;
+    const ings=(ar?m.i_ar:m.i_en)||[];
+    const lockKey=todayKey+'_'+k;
+    const eaten=!!MEAL_EATEN[lockKey];
+    h+=`<div class="mcard${eaten?' locked':''}" id="mc-${k}">
+      <div class="mc-hdr" onclick="togMC('${k}')">
+        <div style="flex:1">
+          <div class="tag">${t('mtype-'+k)}</div>
+          <div class="mc-nm">${nm}</div>
+          <div style="font-size:13px;color:var(--mt);margin-top:3px">${time} · ${m.cal} kcal</div>
+          ${eaten?`<div class="meal-done-badge">✅ ${ar?'تم تناولها':'Eaten'}</div>`:''}
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          ${!eaten?`<button class="btn bo" style="padding:6px 10px;font-size:13px" onclick="event.stopPropagation();refreshMeal('${k}')">🔄</button>`:''}
+          <span style="color:var(--mt);font-size:14px">▼</span>
+        </div>
+      </div>
+      <div class="mc-body">
+        <div class="mmac">
+          <span class="mpill" style="background:var(--bld);color:var(--bl)">${m.p}g P</span>
+          <span class="mpill" style="background:var(--ord);color:var(--or)">${m.c}g C</span>
+          <span class="mpill" style="background:var(--pkd);color:var(--pk)">${m.f}g F</span>
+        </div>
+        <div>${ings.map(ig=>`<div class="ing-i">${ig}</div>`).join('')}</div>
+        <div class="minstr">${instr}</div>
+        <div class="mactions">
+          ${eaten
+            ? `<button class="btn done-btn cmp" disabled>🔒 ${ar?'تم تناولها — مقفلة حتى الغد':'Eaten — Locked until tomorrow'}</button>`
+            : `<button class="btn bp" onclick="eatMeal('${k}',${m.cal},'${nm.replace(/'/g,'')}')">✅ ${ar?'أكلتها':'I ate this'}</button>`
+          }
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('mlcnt').innerHTML=h;
+}
+function togMC(k){document.getElementById('mc-'+k)?.classList.toggle('exp');}
+
+// ============================================================
+// EXERCISES
+// ============================================================
+const EX={
+  warmup:[
+    {id:'w1',ic:'🏃',ar:'ركض في المكان',en:'High Knees',yt:'high knees warmup no equipment',dur:'45s',mAr:['الساقين','القلب'],mEn:['Legs','Cardio'],tAr:['ارفع الركبة للخصر'],tEn:['Lift knees to hip level'],wc:1},
+    {id:'w2',ic:'🔄',ar:'دوران الكتفين',en:'Shoulder Circles',yt:'shoulder circles warmup',dur:'30s',mAr:['الكتفين'],mEn:['Shoulders'],tAr:['في الاتجاهين'],tEn:['Both directions'],wc:1},
+    {id:'w3',ic:'🦵',ar:'قرفصاء هوائية',en:'Air Squats',yt:'air squats bodyweight warmup',dur:'15 reps',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['عمق كامل'],tEn:['Full depth'],wc:1},
+    {id:'w4',ic:'🤸',ar:'قفز النجمة',en:'Jumping Jacks',yt:'jumping jacks warmup no equipment',dur:'30s',mAr:['كل الجسم'],mEn:['Full Body'],tAr:['ذراعان ممدودان'],tEn:['Arms fully extended'],wc:1},
+    {id:'w5',ic:'🦶',ar:'دوائر بالورك',en:'Hip Circles',yt:'hip circles warmup mobility',dur:'30s',mAr:['الورك'],mEn:['Hips'],tAr:['دوائر واسعة'],tEn:['Wide circles'],wc:1},
+    {id:'w6',ic:'🦵',ar:'تأرجح الرجل',en:'Leg Swings',yt:'leg swings warmup',dur:'15 reps/leg',mAr:['الورك','الفخذ'],mEn:['Hips','Hamstrings'],tAr:['للأمام والخلف'],tEn:['Front and back'],wc:1},
+    {id:'w7',ic:'🔃',ar:'لفة الجذع',en:'Torso Twist',yt:'standing torso twist warmup',dur:'30s',mAr:['القلب'],mEn:['Core'],tAr:['يداك على الخصر'],tEn:['Hands on hips'],wc:1},
+    {id:'w8',ic:'🏃',ar:'طعنة متحركة',en:'Walking Lunge',yt:'walking lunge warmup no weight',dur:'10 reps',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الركبة لا تتجاوز القدم'],tEn:['Knee behind toe'],wc:1},
+  ],
+  cooldown:[
+    {id:'c1',ic:'🧘',ar:'تمديد الفخذ',en:'Quad Stretch',yt:'quad stretch cooldown',dur:'30s/leg',mAr:['الفخذ'],mEn:['Quads'],tAr:['اسحب القدم للأرداف'],tEn:['Pull foot to glutes'],wc:1},
+    {id:'c2',ic:'🧘',ar:'وضعية الطفل',en:'Child Pose',yt:'child pose stretch',dur:'60s',mAr:['الظهر'],mEn:['Back'],tAr:['تنفس بعمق'],tEn:['Breathe deeply'],wc:1},
+    {id:'c3',ic:'🧘',ar:'تمديد الهامسترينج',en:'Hamstring Stretch',yt:'hamstring stretch cooldown',dur:'30s/leg',mAr:['الهامسترينج'],mEn:['Hamstrings'],tAr:['ظهر مستقيم'],tEn:['Keep back straight'],wc:1},
+  ],
+  upper:[
+    {id:'ub1',ic:'🏋️',ar:'تأرجح بيدين',en:'Two-Hand KB Swing',yt:'two hand kettlebell swing tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'5×15'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الظهر'],mEn:['Glutes','Back'],tAr:['الحركة من الورك'],tEn:['Hinge from hips'],cal:8,diff:1},
+    {id:'ub2',ic:'⭕',ar:'هالو حول الرأس',en:'KB Halo',yt:'kettlebell halo tutorial',s:{'1':'2×8','2':'3×8','3':'3×10','4':'3×12','5':'4×12'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'45s'},mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['حركة بطيئة'],tEn:['Slow motion'],cal:5,diff:1},
+    {id:'ub3',ic:'💪',ar:'ضغط أرضي',en:'KB Floor Press',yt:'kettlebell floor press tutorial',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الصدر','الكتفين'],mEn:['Chest','Shoulders'],tAr:['المرفق 45°'],tEn:['Elbow 45°'],cal:6,diff:1},
+    {id:'ub4',ic:'🚣',ar:'تجديف للخلف',en:'Bent-Over Row',yt:'kettlebell bent over row tutorial',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الظهر','البايسبس'],mEn:['Back','Biceps'],tAr:['الكوع للأعلى'],tEn:['Elbow up'],cal:7,diff:1},
+    {id:'ui1',ic:'⚡',ar:'كلين بيد واحدة',en:'Single Arm Clean',yt:'single arm kettlebell clean tutorial',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['الأرداف','الكتفين'],mEn:['Glutes','Shoulders'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:12,diff:2},
+    {id:'ui2',ic:'🎯',ar:'ضغط عسكري',en:'KB Military Press',yt:'kettlebell military press tutorial',s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'5×10'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['الكتفين','الترايسبس'],mEn:['Shoulders','Triceps'],tAr:['مستقيم للأعلى'],tEn:['Press straight up'],cal:9,diff:2},
+    {id:'ua1',ic:'🔥',ar:'السناتش',en:'KB Snatch',yt:'kettlebell snatch tutorial',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:18,diff:3},
+    {id:'ua2',ic:'🏆',ar:'التركي الكامل',en:'Turkish Get-Up',yt:'turkish get up tutorial',s:{'1':'3×2','2':'3×3','3':'4×3','4':'4×4','5':'4×5'},r:{'1':'120s','2':'120s','3':'90s','4':'90s','5':'75s'},mAr:['كل الجسم','القلب'],mEn:['Full Body','Core'],tAr:['كل مرحلة متحكم فيها'],tEn:['Control every phase'],cal:16,diff:3},
+  ],
+  lower:[
+    {id:'lb1',ic:'🦵',ar:'جلسة الكأس',en:'Goblet Squat',yt:'goblet squat kettlebell tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×20'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['اجلس للخلف والأسفل'],tEn:['Sit back and down'],cal:8,diff:1},
+    {id:'lb2',ic:'🏋️',ar:'رفع ميت روماني',en:'Romanian Deadlift',yt:'kettlebell romanian deadlift',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'60s'},mAr:['الهامسترينج','الأرداف'],mEn:['Hamstrings','Glutes'],tAr:['انحنِ من الورك'],tEn:['Hinge from hips'],cal:9,diff:1},
+    {id:'lb3',ic:'🚶',ar:'طعنة للخلف',en:'Reverse Lunge',yt:'kettlebell reverse lunge tutorial',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الجذع مستقيم'],tEn:['Torso upright'],cal:7,diff:1},
+    {id:'lb4',ic:'🍑',ar:'جسر الأرداف',en:'Glute Bridge',yt:'glute bridge kettlebell tutorial',s:{'1':'3×12','2':'3×15','3':'4×15','4':'4×20','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الهامسترينج'],mEn:['Glutes','Hamstrings'],tAr:['اضغط الأرداف'],tEn:['Squeeze at top'],cal:6,diff:1},
+    {id:'lb5',ic:'🦵',ar:'خطوة جانبية',en:'Lateral Lunge',yt:'lateral lunge kettlebell',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ الداخلي','الأرداف'],mEn:['Adductors','Glutes'],tAr:['أبعد الركبة'],tEn:['Push knee out'],cal:7,diff:2},
+    {id:'la1',ic:'🦅',ar:'جلسة ساق واحدة',en:'Pistol Squat',yt:'pistol squat tutorial',s:{'1':'3×3','2':'3×4','3':'4×4','4':'4×5','5':'4×6'},r:{'1':'120s','2':'90s','3':'90s','4':'75s','5':'60s'},mAr:['الفخذ','التوازن'],mEn:['Quads','Balance'],tAr:['امسك للتوازن'],tEn:['Hold for balance'],cal:15,diff:3},
+  ],
+  full:[
+    {id:'fb1',ic:'⚡',ar:'تأرجح + جلسة',en:'Swing to Squat',yt:'kettlebell swing squat combo',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['حركة متدفقة'],tEn:['Fluid motion'],cal:10,diff:1},
+    {id:'fb2',ic:'🔄',ar:'دوران حول الجسم',en:'Around the Body Pass',yt:'kettlebell around body pass',s:{'1':'3×10','2':'3×12','3':'3×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الكتفين'],mEn:['Core','Shoulders'],tAr:['بدّل الاتجاه'],tEn:['Alternate direction'],cal:6,diff:1},
+    {id:'fb3',ic:'🌊',ar:'تأرجح + طعنة',en:'Swing + Lunge',yt:'kettlebell swing lunge combo',s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['تأرجح ثم طعنة'],tEn:['Swing then lunge'],cal:11,diff:1},
+    {id:'fi1',ic:'🎯',ar:'كلين + ضغط',en:'Clean & Press',yt:'kettlebell clean and press',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['الكلين أولاً'],tEn:['Clean then press'],cal:13,diff:2},
+    {id:'fa1',ic:'🏆',ar:'التركي الكامل',en:'Turkish Get-Up',yt:'turkish get up full body',s:{'1':'3×2','2':'3×3','3':'4×3','4':'4×4','5':'4×5'},r:{'1':'120s','2':'120s','3':'90s','4':'90s','5':'75s'},mAr:['كل الجسم','القلب'],mEn:['Full Body','Core'],tAr:['كل مرحلة متحكم فيها'],tEn:['Control every phase'],cal:16,diff:3},
+  ],
+  cardio:[
+    {id:'cb1',ic:'💥',ar:'تأرجح متقطع',en:'Swing Intervals',yt:'kettlebell swing intervals HIIT',s:{'1':'5×20s','2':'6×20s','3':'6×30s','4':'8×30s','5':'10×30s'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الأرداف'],mEn:['Cardio','Glutes'],tAr:['20 ث تأرجح ثم راحة'],tEn:['20s swing then rest'],cal:12,diff:1,isC:1},
+    {id:'cb2',ic:'🧳',ar:'مشي بالكيتل بيل',en:'Farmer Walk',yt:'farmer carry kettlebell tutorial',s:{'1':'4×30m','2':'4×40m','3':'5×40m','4':'5×50m','5':'6×50m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['القلب','القبضة'],mEn:['Cardio','Grip'],tAr:['الكتفان للخلف'],tEn:['Shoulders back'],cal:9,diff:1,isC:1},
+    {id:'cb3',ic:'⏱️',ar:'قرفصاء انفجاري',en:'Squat Thrusters',yt:'kettlebell squat thruster',s:{'1':'4×10','2':'4×12','3':'5×12','4':'5×15','5':'6×15'},r:{'1':'75s','2':'60s','3':'60s','4':'45s','5':'45s'},mAr:['القلب','كل الجسم'],mEn:['Cardio','Full Body'],tAr:['قوة انفجارية'],tEn:['Explosive power'],cal:14,diff:2,isC:1},
+    {id:'ai1',ic:'⚡',ar:'AMRAP',en:'AMRAP Circuit',yt:'AMRAP kettlebell circuit',s:{'1':'3×2min','2':'3×3min','3':'4×3min','4':'4×4min','5':'5×4min'},r:{'1':'2min','2':'90s','3':'75s','4':'75s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['أكبر عدد تكرارات'],tEn:['Maximum reps'],cal:20,diff:3,isC:1},
+  ]
+};
+
+const WEEK=['upper','lower','rest','full','cardio','rest','upper'];
+
+function getPool(type){
+  if(type==='rest') return [];
+  const il=P.intensity||1;
+  const maxDiff=il<=2?1:il===3?2:3;
+  const pool=(EX[type]||[]).filter(e=>e.diff<=maxDiff);
+  return shuf([...pool]).slice(0,4);
+}
+
+function genWK(regen){
+  const today=new Date().toDateString();
+  const type=WEEK[new Date().getDay()], il=Math.min(P.intensity||1,5);
+  _WP = type==='rest' ? {type:'rest',_date:today} :
+    {type,_date:today,main:getPool(type),warmup:shuf([...EX.warmup]).slice(0,3),cooldown:[...EX.cooldown],intensity:il};
+  if(regen){save();toast(t('toast-newses'));}
+  rWorkout(); rTWCard();
+}
+
+// ============================================================
+// WORKOUT RENDER
+// ============================================================
+function rTWCard(){
+  if(!_WP) return;
+  const il=P.intensity||1;
+  const lvMap={1:t('lv-beginner'),2:t('lv-beginner'),3:t('lv-intermediate'),4:t('lv-advanced'),5:t('lv-advanced')};
+  document.getElementById('tw-lv').textContent=lvMap[il]||t('lv-beginner');
+  document.getElementById('tw-nm').textContent=t('wtype-'+_WP.type)||_WP.type;
+  if(_WP.type==='rest'){
+    document.getElementById('tw-d').textContent=L==='ar'?'راحة':'Rest';
+    document.getElementById('tw-e').textContent='—';
+    document.getElementById('tw-c').textContent='—'; return;
+  }
+  const sk=String(Math.min(il,5));
+  const burn=(_WP.main||[]).reduce((s,e)=>{
+    const pts=(e.s&&e.s[sk])||'3×10';return s+(e.cal||8)*parseInt(pts);},0);
+  document.getElementById('tw-d').textContent=(25+il*5)+(L==='ar'?' دقيقة':' min');
+  document.getElementById('tw-e').textContent=(_WP.main||[]).length+' '+(L==='ar'?'تمارين':'exercises');
+  document.getElementById('tw-c').textContent='~'+burn+' kcal';
+}
+function rWorkout(){
+  if(!P.name) return;
+  const ar=L==='ar', il=P.intensity||1;
+  document.getElementById('wk-tag').textContent=t('wk-tag');
+  document.getElementById('wk-ti').textContent=t('wk-ti');
+  document.getElementById('pg-t').textContent=t('pg-t');
+  document.getElementById('pg1l').textContent=t('pg1l');
+  document.getElementById('pg2l').textContent=t('pg2l');
+  document.getElementById('pg3l').textContent=t('pg3l');
+  document.getElementById('regen-t').textContent=t('regen-t');
+  document.getElementById('pg-bdg').textContent=(P.sessions||0)+' '+(ar?'جلسات':'sessions');
+  document.getElementById('pg1').textContent=P.sessions||0;
+  document.getElementById('pg2').textContent=P.streak||0;
+  document.getElementById('pg3').textContent=il;
+  const today=new Date().getDay();
+  const dayN_ar=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+  const dayN_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  document.getElementById('dayplan').innerHTML=WEEK.map((tp,d)=>{
+    const nm=ar?dayN_ar[d]:dayN_en[d];
+    const ic={upper:'💪',lower:'🦵',rest:'😴',full:'⚡',cardio:'🏃'}[tp]||'🏋️';
+    const isToday=d===today;
+    return`<div class="dpc${isToday?' on':''}">${nm}<br>${ic}</div>`;
+  }).join('');
+  const levels=[{k:'beginner',l:ar?'مبتدئ':'Beginner',d:1},
+                {k:'intermediate',l:ar?'متوسط':'Intermediate',d:2},
+                {k:'advanced',l:ar?'متقدم':'Advanced',d:3}];
+  const curDiff=il<=2?1:il===3?2:3;
+  document.getElementById('lvlrow').innerHTML=levels.map(lv=>
+    `<div class="bdg ${lv.d===curDiff?'bg':'bo'}" style="cursor:pointer" onclick="setLevel(${lv.d})">${lv.l}</div>`
+  ).join('');
+  if(!_WP) return;
+  const sk=String(Math.min(il,5));
+  let h='';
+  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag">${ar?'الإحماء':'Warm Up'}</div><div class="wsec-l"></div></div>`;
+  (_WP.warmup||[]).forEach(e=>{ h+=exCard(e,null,sk,ar); });
+  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--ac)">${t('wtype-'+_WP.type)}</div><div class="wsec-l"></div></div>`;
+  if(_WP.type==='rest'){
+    h+=`<div class="card" style="text-align:center;padding:32px"><div style="font-size:48px">😴</div><div style="font-size:18px;font-weight:800;margin-top:12px">${ar?'يوم راحة — الجسم يحتاج للتعافي':'Rest Day — Your body needs recovery'}</div></div>`;
+  } else {
+    (_WP.main||[]).forEach(e=>{ h+=exCard(e,e.s?e.s[sk]:null,sk,ar); });
+  }
+  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag">${ar?'التهدئة':'Cool Down'}</div><div class="wsec-l"></div></div>`;
+  (_WP.cooldown||[]).forEach(e=>{ h+=exCard(e,null,sk,ar); });
+  if(_WP.type!=='rest'){
+    h+=`<button class="btn bp done-btn${P.doneToday?' cmp':''}" onclick="cmpSession()">${P.doneToday?(ar?'✅ تم اليوم':'✅ Done Today'):(ar?'✅ إنهاء التمرين':'✅ Complete Workout')}</button>`;
+  }
+  document.getElementById('wkcnt').innerHTML=h;
+}
+function setLevel(diff){
+  const newIntensity=diff===1?1:diff===2?3:5;
+  P.intensity=newIntensity;
+  genWK(false); save(); rWorkout();
+  toast(L==='ar'?'تم تغيير المستوى':'Level updated');
+}
+function exCard(e,si,sk,ar){
+  const nm=ar?e.ar:e.en;
+  const ms=ar?e.mAr:e.mEn;
+  const tips=ar?e.tAr:e.tEn;
+  const isWC=!!e.wc;
+  let sn=0,rn='';
+  if(si){const p=si.split('×');sn=parseInt(p[0]);rn=p[1]||'';}
+  const rv=e.r?e.r[sk]:null;
+  const ytQ=e.yt&&!e.yt.startsWith('http')?e.yt:((e.en||nm)+' tutorial');
+  const ytUrl=`https://www.youtube.com/results?search_query=${encodeURIComponent(ytQ)}`;
+  const ytLabel=ar?'📺 شرح على يوتيوب':'📺 Watch on YouTube';
+  return`<div class="excard" id="ec-${e.id}">
+    <div class="exhdr" onclick="togEx('${e.id}')">
+      <div class="exgif">${e.ic||'🏋️'}</div>
+      <div style="flex:1">
+        <div class="exnm">${nm}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:3px">${(ms||[]).slice(0,2).map(m=>`<span class="mtag">${m}</span>`).join('')}</div>
+        <div>${isWC?`<span style="font-size:13px;color:var(--mt)">⏱ ${e.dur||''}</span>`
+          :`<span style="font-size:13px;color:var(--mt)">📦 ${sn} ${t('sets-l')}</span>
+            <span style="font-size:13px;color:var(--mt);margin-inline-start:6px">🔁 ${rn}</span>
+            ${rv?`<span style="font-size:13px;color:var(--mt);margin-inline-start:6px">⏸ ${rv}</span>`:''}`}</div>
+      </div>
+      <div class="exchv">▼</div>
+    </div>
+    <div class="exbody">
+      ${!isWC?`<div class="exdg">
+        <div class="exd"><div class="exd-v">${sn}</div><div class="exd-l">${t('sets-l')}</div></div>
+        <div class="exd"><div class="exd-v">${rn}</div><div class="exd-l">${t('reps-l')}</div></div>
+        ${rv?`<div class="exd"><div class="exd-v" style="color:var(--or)">${rv}</div><div class="exd-l">${t('rest-l')}</div></div>`:''}
+      </div>`:''}
+      <div class="tips"><div class="tips-t">${t('tips-t')}</div><ul>${(tips||[]).map(tp=>`<li>${tp}</li>`).join('')}</ul></div>
+      <a href="${ytUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;padding:10px;border-radius:10px;background:#ff000018;border:1.5px solid #ff0000cc;color:#ff4444;font-size:15px;font-weight:800;text-decoration:none" onclick="event.stopPropagation()">${ytLabel}</a>
+      ${!isWC&&rv?`<button class="btn bo" style="margin-top:7px;width:100%;font-size:14px" onclick="startRT(event,'${rv}')">${t('rt-btn')}</button>`:''}
+    </div>
+  </div>`;
+}
+function togEx(id){document.getElementById('ec-'+id)?.classList.toggle('exp');}
+
+// ============================================================
+// SESSION COMPLETE
+// ============================================================
+function cmpSession(){
+  if(P.doneToday) return;
+  P.sessions=(P.sessions||0)+1;
+  const today=new Date().toDateString();
+  const lastD=P.lastWD?Math.floor((new Date()-new Date(P.lastWD))/86400000):99;
+  P.streak=lastD<=1?(P.streak||0)+1:1;
+  P.lastWD=today; P.doneToday=true;
+  if(P.sessions%3===0&&(P.intensity||1)<5){
+    P.intensity=Math.min((P.intensity||1)+1,5);
+    toast(L==='ar'?'🎯 تمت ترقيتك!':'🎯 Level up!');
+  }
+  WH.unshift({date:today,type:_WP&&_WP.type,intensity:P.intensity||1,exs:(_WP&&_WP.main||[]).length});
+  if(WH.length>90) WH=WH.slice(0,90);
+  save(); rWorkout(); rProfile(); toast(L==='ar'?'🎉 أحسنت! جلسة مكتملة':'🎉 Session complete!');
+}
+
+// ============================================================
+// PROFILE
+// ============================================================
+function rProfile(){
+  if(!P.name) return;
+  const ar=L==='ar';
+  document.getElementById('profav').textContent=P.name[0]?.toUpperCase()||'?';
+  document.getElementById('prof-nm').textContent=P.name;
+  const gMap={lose:ar?'خسارة وزن':'Weight Loss',gain:ar?'بناء عضلات':'Muscle Gain',maintain:ar?'الحفاظ على الوزن':'Maintain Weight',fit:ar?'لياقة عامة':'General Fitness'};
+  document.getElementById('prof-gl').textContent=gMap[P.goal]||P.goal||'';
+  document.getElementById('edit-btn').textContent='✏️ '+t('edit-btn');
+  document.getElementById('lbl-lang').textContent=t('lbl-lang');
+  document.getElementById('rst-btn').textContent=t('rst-btn');
+  const il=P.intensity||1;
+  const lvLabel=il<=2?(ar?'مبتدئ':'Beginner'):il===3?(ar?'متوسط':'Intermediate'):(ar?'متقدم':'Advanced');
+  const stats=[
+    {v:P.sessions||0,l:ar?'جلسة كاملة':'Sessions'},
+    {v:(P.streak||0)+(ar?' يوم':' days'),l:ar?'تتالي':'Streak'},
+    {v:(P.targetCal||2000)+' kcal',l:ar?'هدف يومي':'Daily Goal'},
+    {v:lvLabel,l:ar?'مستوى التدريب':'Level'},
+  ];
+  document.getElementById('pstats').innerHTML=stats.map(s=>
+    `<div class="pst"><div class="pst-v">${s.v}</div><div class="pst-l">${s.l}</div></div>`
+  ).join('');
+  document.getElementById('dc-t').textContent=t('dc-t');
+  document.getElementById('dc-leg1').textContent=t('dc-leg1');
+  document.getElementById('dc-leg2').textContent=t('dc-leg2');
+  const lsAr=document.getElementById('lsw-ar'), lsEn=document.getElementById('lsw-en');
+  if(lsAr) lsAr.classList.toggle('on',L==='ar');
+  if(lsEn) lsEn.classList.toggle('on',L==='en');
+}
+
+// ============================================================
+// DAILY CHART
+// ============================================================
+function renderDailyChart(){
+  const canvas=document.getElementById('dcChart');
+  if(!canvas) return;
+  const ar=L==='ar';
+  const days=14;
+  const today=new Date(); today.setHours(0,0,0,0);
+  const bars=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today); d.setDate(today.getDate()-i);
+    const key=d.toDateString();
+    const done=WH.some(h=>h.date===key);
+    const dayName=ar
+      ?['أحد','إثنين','ثلاث','أربع','خميس','جمعة','سبت'][d.getDay()]
+      :['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+    bars.push({key,done,label:i===0?(ar?'اليوم':'Today'):dayName,isToday:i===0});
+  }
+  const doneCount=bars.filter(b=>b.done).length;
+  const sub=document.getElementById('dc-sub');
+  if(sub) sub.textContent=ar?`${doneCount} تمرين من ${days} يوم`:`${doneCount} workouts in ${days} days`;
+  const W=canvas.getBoundingClientRect().width||canvas.offsetWidth||300;
+  const H=140;
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=Math.round(W*dpr);
+  canvas.height=Math.round(H*dpr);
+  canvas.style.width=W+'px';
+  canvas.style.height=H+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const padL=4,padR=4,padT=10,padB=28;
+  const barW=Math.floor((W-padL-padR)/days);
+  const gap=Math.max(2,Math.floor(barW*0.18));
+  const bw=barW-gap;
+  const maxH=H-padT-padB;
+  bars.forEach((b,i)=>{
+    const x=padL+i*barW;
+    const barH=b.done?maxH:Math.round(maxH*0.22);
+    const y=padT+(maxH-barH);
+    const r=Math.min(5,bw/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.lineTo(x+bw-r,y);
+    ctx.quadraticCurveTo(x+bw,y,x+bw,y+r);
+    ctx.lineTo(x+bw,y+barH); ctx.lineTo(x,y+barH);
+    ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+    if(b.done){
+      const g=ctx.createLinearGradient(0,y,0,y+barH);
+      g.addColorStop(0,'#c8f53a'); g.addColorStop(1,'rgba(200,245,58,0.5)');
+      ctx.fillStyle=g;
+    } else {
+      ctx.fillStyle=b.isToday?'rgba(77,184,255,0.25)':'#252540';
+    }
+    ctx.fill();
+    if(b.isToday){ctx.strokeStyle=b.done?'#c8f53a':'#4db8ff';ctx.lineWidth=1.5;ctx.stroke();}
+    ctx.fillStyle=b.isToday?'#4db8ff':(b.done?'#c8f53a':'#525270');
+    ctx.font=`bold ${b.isToday?10:9}px system-ui`;
+    ctx.textAlign='center';
+    ctx.fillText(b.label,x+bw/2,H-padB+14);
+  });
+}
+
+// ============================================================
+// RAMADAN
+// ============================================================
+function rRamadanUI(){
+  const on=isRamadan;
+  document.getElementById('rb-ic').textContent=on?'🌙':'☀️';
+  document.getElementById('rb-t').textContent=on?t('rb-t'):(L==='ar'?'وضع التمرين العادي':'Normal Training Mode');
+  document.getElementById('rb-s').textContent=on?t('rb-s'):(L==='ar'?'وضع عادي مفعّل':'Normal mode ON');
+  const btn=document.getElementById('rtogbtn');
+  btn.textContent=on?t('rtoggle-on'):t('rtoggle-off');
+  btn.classList.toggle('off',!on);
+}
+function toggleRamadan(){
+  isRamadan=!isRamadan; mealMode=isRamadan?'ramadan':'normal';
+  MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
+  calcCal(); rRamadanUI(); rHome(); rMeals();
+  toast(isRamadan?t('toast-ram-on'):t('toast-ram-off'));
+  save();
+}
+function setMode(m){
+  mealMode=m; isRamadan=(m==='ramadan');
+  MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
+  rRamadanUI(); rMeals(); save();
+}
+
+// ============================================================
+// REST TIMER
+// ============================================================
+let RTI=null, _AC=null;
+function getAC(){
+  if(!_AC||_AC.state==='closed') _AC=new(window.AudioContext||window.webkitAudioContext)();
+  if(_AC.state==='suspended') _AC.resume();
+  return _AC;
+}
+function beep(freq,dur,vol){
+  try{const ctx=getAC(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type='sine';g.gain.setValueAtTime(vol||0.4,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);o.start(ctx.currentTime);o.stop(ctx.currentTime+dur);}catch(e){}
+}
+function finishBeep(){
+  try{
+    const ctx=getAC(), now=ctx.currentTime;
+    function tone(freq,t,dur,vol){const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type='sine';g.gain.setValueAtTime(0.001,now+t);g.gain.linearRampToValueAtTime(vol,now+t+0.02);g.gain.setValueAtTime(vol,now+t+dur-0.05);g.gain.linearRampToValueAtTime(0.001,now+t+dur);o.start(now+t);o.stop(now+t+dur+0.05);}
+    tone(660,0.00,0.13,0.5); tone(770,0.22,0.13,0.55); tone(880,0.44,0.13,0.6); tone(990,0.66,0.13,0.65);
+    tone(1320,0.95,1.5,0.85);
+  }catch(e){}
+}
+function startRT(evt,rv){
+  evt.stopPropagation(); let s=parseInt(rv)||60; clearInterval(RTI);
+  const el=document.getElementById('rtbar');
+  let rem=s; document.getElementById('rtn').textContent=rem; el.classList.add('on');
+  RTI=setInterval(()=>{
+    rem--;
+    document.getElementById('rtn').textContent=rem;
+    if(rem>0&&rem<=10) beep(880,0.12,0.3);
+    if(rem<=0){clearInterval(RTI);el.classList.remove('on');finishBeep();toast(L==='ar'?'🎯 انتهت الراحة!':'🎯 Rest done!');}
+  },1000);
+}
+function stopRT(){clearInterval(RTI);document.getElementById('rtbar').classList.remove('on');}
+
+// ============================================================
+// EDIT PROFILE
+// ============================================================
+function openEdit(){
+  document.getElementById('ed-nm').value=P.name||'';
+  document.getElementById('ed-wt').value=P.weight||'';
+  document.getElementById('ed-ht').value=P.height||'';
+  document.getElementById('ed-ag').value=P.age||'';
+  applyLang();
+  document.getElementById('editMov').classList.add('on');
+}
+function closeMov(id){document.getElementById(id).classList.remove('on');}
+function saveEdit(){
+  const n=document.getElementById('ed-nm').value.trim();
+  const w=+document.getElementById('ed-wt').value;
+  const h=+document.getElementById('ed-ht').value;
+  const a=+document.getElementById('ed-ag').value;
+  if(!n){toast(L==='ar'?'أدخل الاسم':'Enter name');return;}
+  P.name=n;P.weight=w;P.height=h;P.age=a;
+  calcCal(); save(); closeMov('editMov'); rProfile(); rHome();
+  toast(t('toast-saved'));
+}
+function doReset(){
+  if(confirm(t('confirm-reset'))){
+    localStorage.clear(); location.reload();
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function startApp(){
+  document.getElementById('pg-splash').classList.remove('on');
+  document.getElementById('pg-setup').classList.add('on');
+  CS=1; showStep(1);
+}
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  const has=load();
+  applyLang();
+  if(has){
+    showMain();
+  } else {
+    document.getElementById('pg-splash').classList.add('on');
+  }
+  setInterval(()=>{
+    if(document.getElementById('pg-main').classList.contains('on')) save();
+  },30000);
+});
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').then(reg=>reg.update()).catch(()=>{});
+}
+</script>
+</body>
+</html>

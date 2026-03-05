@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'fitfuel-v22';
+const CACHE_VERSION = 'fitfuel-v1';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.jpg'];
 
 self.addEventListener('install', e => {
@@ -14,7 +14,6 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Cache-first: serve instantly, update in background
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   e.respondWith(

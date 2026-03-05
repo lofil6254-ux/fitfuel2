@@ -1113,12 +1113,8 @@ function showMain(){
   document.getElementById('pg-setup').classList.remove('on');
   document.getElementById('pg-main').classList.add('on');
   applyLang();
-  rRamadanUI();
-  rHome();
-  rWorkout();
-  rMeals();
-  rProfile();
   startPTLoop();
+  showTab('home');
 }
 function showTab(tab){
   ['home','workout','meals','profile'].forEach(tb=>{

@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'fitfuel-v3';
+const CACHE_VERSION = 'fitfuel-v23';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.jpg'];
 
 self.addEventListener('install', e => {

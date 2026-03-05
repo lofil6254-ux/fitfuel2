@@ -1,8 +1,5 @@
 // sw.js — FitFuel Service Worker
-// ⚠️ IMPORTANT: Bump CACHE_VERSION every time you push an update to GitHub.
-// Change 'fitfuel-v1' → 'fitfuel-v13' → 'fitfuel-v3' etc.
-// This forces your phone to delete the old cache and fetch fresh files.
-const CACHE_VERSION = 'fitfuel-v6';
+const CACHE_VERSION = 'fitfuel-v15';
 
 const ASSETS = [
   './',
@@ -11,42 +8,43 @@ const ASSETS = [
   './icon.jpg'
 ];
 
-// INSTALL — cache all core assets
+// INSTALL — cache all assets immediately
 self.addEventListener('install', event => {
-  self.skipWaiting(); // activate immediately, don't wait for old tabs to close
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_VERSION).then(cache => cache.addAll(ASSETS))
   );
 });
 
-// ACTIVATE — delete any old version caches
+// ACTIVATE — delete old caches, take control immediately
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
       .then(keys => Promise.all(
         keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k))
       ))
-      .then(() => self.clients.claim()) // take control of all open tabs immediately
+      .then(() => self.clients.claim())
   );
 });
 
-// FETCH — network-first strategy
-// Always tries the network first so updates from GitHub are picked up instantly.
-// Falls back to cache only when offline.
+// FETCH — cache-first, update in background
+// Serves from cache instantly (no blank screen), fetches fresh copy silently for next time
 self.addEventListener('fetch', event => {
-  // Only handle GET requests for same-origin resources
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        // Cache a fresh copy of every successful same-origin response
-        if (response && response.status === 200 && response.type === 'basic') {
-          const clone = response.clone();
-          caches.open(CACHE_VERSION).then(cache => cache.put(event.request, clone));
-        }
-        return response;
-      })
-      .catch(() => caches.match(event.request)) // offline fallback to cache
+    caches.open(CACHE_VERSION).then(cache => {
+      return cache.match(event.request).then(cached => {
+        const fetchPromise = fetch(event.request).then(response => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            cache.put(event.request, response.clone());
+          }
+          return response;
+        }).catch(() => null);
+
+        // Serve cache instantly, fall back to network if not cached yet
+        return cached || fetchPromise;
+      });
+    })
   );
 });

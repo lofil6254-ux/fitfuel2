@@ -208,15 +208,6 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 .rstbtn:hover{border-color:var(--pk);color:var(--pk);background:var(--pkd)}
 
 /* ── PRAYER (Ramadan mode) ───────────────────────────── */
-.ptcard{background:linear-gradient(145deg,#160f28,#1e1438);border:1px solid rgba(255,215,0,.18);border-radius:var(--r);padding:16px 18px;margin-bottom:14px;box-shadow:var(--sh)}
-.ptrow{display:flex;gap:7px;margin-top:10px}
-.ptime{flex:1;background:rgba(0,0,0,.3);border-radius:var(--r2);padding:10px 6px;text-align:center;border:1px solid transparent;transition:all .2s}
-.ptime-v{font-size:16px;font-weight:900;color:var(--gd);font-variant-numeric:tabular-nums}
-.ptime-l{font-size:11px;color:var(--mt);font-weight:700;margin-top:2px}
-.ptime.nx{border-color:var(--gd);background:var(--gdd)}
-.ptime.nx .ptime-l{color:var(--gd)}
-.ptcnt{font-size:14px;color:var(--gd);font-weight:700;text-align:center;margin-top:9px}
-.ptsrc{font-size:11px;color:var(--mt);text-align:center;margin-top:3px}
 </style>
 </head>
 <body>
@@ -303,17 +294,6 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
       <div><div style="font-size:16px;font-weight:800;color:var(--gd)" id="rb-t">—</div><div style="font-size:13px;color:var(--mt)" id="rb-s">—</div></div>
     </div>
     <button class="rtoggle" id="rtogbtn" onclick="toggleRamadan()">—</button>
-  </div>
-  <!-- PRAYER CARD -->
-  <div class="ptcard" id="ptcard" style="display:none">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-      <div class="tag" id="pt-tag">مواقيت الصلاة</div>
-      <div style="font-size:13px;color:var(--gd);font-weight:700" id="pt-badge">—</div>
-    </div>
-    <div style="font-size:13px;color:var(--mt);margin-bottom:6px" id="pt-date">—</div>
-    <div class="ptrow" id="ptrow"></div>
-    <div class="ptcnt" id="ptcnt"></div>
-    <div class="ptsrc" id="ptsrc"></div>
   </div>
   <div class="hero">
     <div style="font-size:14px;color:var(--mt)" id="hm-gr">—</div>
@@ -440,7 +420,7 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
   <button class="rstbtn" onclick="doReset()" id="rst-btn">—</button>
 </div></div>
 
-<nav class="bnav">
+<nav class="bnav" dir="ltr">
   <button class="ni on" onclick="showTab('home')" id="nav-home"><span class="ni-ic">🏠</span><span class="ni-lb" id="nl-home">—</span></button>
   <button class="ni" onclick="showTab('workout')" id="nav-workout"><span class="ni-ic">🏋️</span><span class="ni-lb" id="nl-workout">—</span></button>
   <button class="ni" onclick="showTab('meals')" id="nav-meals"><span class="ni-ic">🥗</span><span class="ni-lb" id="nl-meals">—</span></button>
@@ -567,7 +547,7 @@ const T={
 // STATE
 // ============================================================
 let L='ar', P={}, SEL={}, DLOG={}, WH=[], MP={}, CD=new Date().getDay(), CS=1;
-let isRamadan=true, mealMode='ramadan', _WP=null, _cachedPT=null, _CTD=null;
+let isRamadan=true, mealMode='ramadan', _WP=null;
 
 function t(k){ return (T[L]&&T[L][k])||(T.ar&&T.ar[k])||k; }
 
@@ -615,7 +595,7 @@ function switchLang(l){
 function save(){
   try{
     localStorage.setItem('ff7',JSON.stringify({
-      L,P,SEL,DLOG,WH,MP,CD,isRamadan,mealMode,WP:_WP,PT:_cachedPT
+      L,P,SEL,DLOG,WH,MP,CD,isRamadan,mealMode,WP:_WP
     }));
   }catch(e){}
 }
@@ -628,7 +608,7 @@ function load(){
     isRamadan=d.isRamadan!==undefined?d.isRamadan:true;
     mealMode=d.mealMode||'ramadan';
     _WP=d.WP||null;
-    _cachedPT=d.PT||null;
+    
     return true;
   }catch(e){return false;}
 }
@@ -668,7 +648,7 @@ function showMain(){
   checkDailyMealRefresh();
   // Daily workout refresh
   if(!_WP || _WP._date !== today) genWK(false);
-  startPTLoop();
+
   // Render all tabs so data is ready regardless of which tab user goes to
   rRamadanUI();
   rHome();
@@ -1330,8 +1310,8 @@ function rWorkout(){
   document.getElementById('dayplan').innerHTML=WEEK.map((tp,d)=>{
     const nm=ar?dayN_ar[d]:dayN_en[d];
     const ic={upper:'💪',lower:'🦵',rest:'😴',full:'⚡',cardio:'🏃'}[tp]||'🏋️';
-    const cls='dpc'+(d===today?' on':tp==='rest'?' rest':'');
-    return`<div class="${cls}">${nm}<br>${ic}</div>`;
+    const isToday=d===today;
+    return`<div class="dpc${isToday?' on':''}">${nm}<br>${ic}</div>`;
   }).join('');
   // Level badges
   const levels=[{k:'beginner',l:ar?'مبتدئ':'Beginner',d:1},
@@ -1353,11 +1333,14 @@ function rWorkout(){
     h+=`<div class="card" style="text-align:center;padding:32px"><div style="font-size:48px">😴</div><div style="font-size:18px;font-weight:800;margin-top:12px">${ar?'يوم راحة — الجسم يحتاج للتعافي':'Rest Day — Your body needs recovery'}</div></div>`;
   } else {
     (_WP.main||[]).forEach(e=>{ h+=exCard(e,e.s?e.s[sk]:null,sk,ar); });
-    h+=`<button class="btn bp done-btn${P.doneToday?' cmp':''}" onclick="cmpSession()">${P.doneToday?(ar?'✅ تم اليوم':'✅ Done Today'):(ar?'✅ إنهاء التمرين':'✅ Complete Workout')}</button>`;
   }
   // Cooldown
   h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag">${ar?'التهدئة':'Cool Down'}</div><div class="wsec-l"></div></div>`;
   (_WP.cooldown||[]).forEach(e=>{ h+=exCard(e,null,sk,ar); });
+  // Complete button always at the very bottom
+  if(_WP.type!=='rest'){
+    h+=`<button class="btn bp done-btn${P.doneToday?' cmp':''}" onclick="cmpSession()">${P.doneToday?(ar?'✅ تم اليوم':'✅ Done Today'):(ar?'✅ إنهاء التمرين':'✅ Complete Workout')}</button>`;
+  }
   document.getElementById('wkcnt').innerHTML=h;
 }
 function setLevel(diff){
@@ -1534,7 +1517,6 @@ function rRamadanUI(){
   const btn=document.getElementById('rtogbtn');
   btn.textContent=on?t('rtoggle-on'):t('rtoggle-off');
   btn.classList.toggle('off',!on);
-  rPrayerCard();
 }
 function toggleRamadan(){
   isRamadan=!isRamadan; mealMode=isRamadan?'ramadan':'normal';
@@ -1545,133 +1527,6 @@ function setMode(m){
   mealMode=m;
   forceGenAllMeals();
   rMeals();
-}
-
-// Prayer times (simplified — Casablanca fallback always works)
-let _adhanReady=false, _CTD2=null;
-function loadAdhan(){
-  return new Promise(resolve=>{
-    if(window.adhan){resolve(true);return;}
-    const s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/adhan@4.4.3/lib/adhan.min.js';
-    s.onload=()=>{_adhanReady=true;resolve(true);};
-    s.onerror=()=>resolve(false);
-    document.head.appendChild(s);
-  });
-}
-const CITIES=[
-  {n:'الدار البيضاء',e:'Casablanca',lat:33.5731,lng:-7.5898,tz:1},
-  {n:'الرباط',e:'Rabat',lat:33.9716,lng:-6.8498,tz:1},
-  {n:'فاس',e:'Fes',lat:34.0331,lng:-5.0003,tz:1},
-  {n:'مراكش',e:'Marrakech',lat:31.6295,lng:-7.9811,tz:1},
-  {n:'طنجة',e:'Tangier',lat:35.7595,lng:-5.8340,tz:1},
-];
-let _userCity=null;
-function getCityCoords(){try{return JSON.parse(localStorage.getItem('ff7_city')||'null');}catch(e){return null;}}
-
-function addM(t,m){
-  if(!t||t==='--:--') return '--:--';
-  const[h,mi]=t.split(':').map(Number);
-  const tot=h*60+mi+m;
-  return String(((tot/60|0)+24)%24).padStart(2,'0')+':'+String(((tot%60)+60)%60).padStart(2,'0');
-}
-function to12h(t){
-  if(!t||t==='--:--') return '--:--';
-  const[h,m]=t.split(':').map(Number);
-  const ap=h>=12?'PM':'AM';
-  return((h%12)||12)+':'+(String(m).padStart(2,'0'))+' '+ap;
-}
-function t2m(t){if(!t)return 0;const[h,m]=t.split(':').map(Number);return h*60+m;}
-
-function calcFallback(lat,lng){
-  const D2R=Math.PI/180,R2D=180/Math.PI;
-  const now=new Date(), jd=now/86400000+2440587.5;
-  const n=jd-2451545.0, L0=(280.46646+0.9856474*n)%360, M=(357.52911+0.9856003*n)*D2R;
-  const C=(1.914602-0.004817*n/36525)*Math.sin(M)+(0.019993-0.000101*n/36525)*Math.sin(2*M)+0.000289*Math.sin(3*M);
-  const sunLon=(L0+C)*D2R, e=23.439291111*D2R, dec=Math.asin(Math.sin(e)*Math.sin(sunLon));
-  const tz=1, eot=(-104*Math.sin(sunLon)+596*Math.cos(sunLon)-4*Math.sin(2*M)+4*Math.cos(2*M))/3600*60;
-  const transit=12+tz-lng/15-eot/60;
-  function ha(angle){const a=(-Math.sin(angle*D2R)-Math.sin(lat*D2R)*Math.sin(dec))/(Math.cos(lat*D2R)*Math.cos(dec));return Math.abs(a)<=1?Math.acos(a)*R2D/15:null;}
-  function toHM(h){if(h===null)return'--:--';let v=((h%24)+24)%24;const hh=Math.floor(v),mm=Math.round((v-hh)*60);return String(mm===60?hh+1:hh).padStart(2,'0')+':'+(mm===60?'00':String(mm).padStart(2,'0'));}
-  return{fajr:toHM(ha(18)!==null?transit-ha(18):null),maghrib:toHM(ha(0.833)!==null?transit+ha(0.833):null),isha:toHM(ha(17)!==null?transit+ha(17):null)};
-}
-function calcWithAdhan(lat,lng){
-  try{
-    const c=new adhan.Coordinates(lat,lng), p=adhan.CalculationMethod.MuslimWorldLeague(), d=new Date();
-    p.madhab=adhan.Madhab.Shafi;
-    const pt=new adhan.PrayerTimes(c,d,p);
-    const fmt=t=>t?String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0'):'--:--';
-    return{fajr:fmt(pt.fajr),maghrib:fmt(pt.maghrib),isha:fmt(pt.isha)};
-  }catch(e){return null;}
-}
-async function getCoords(){
-  const city=getCityCoords(); if(city) return{lat:city.lat,lng:city.lng,fromCity:true};
-  return new Promise(r=>{
-    if(!navigator.geolocation){r(null);return;}
-    navigator.geolocation.getCurrentPosition(p=>r({lat:p.coords.latitude,lng:p.coords.longitude}),()=>r(null),{timeout:5000,maximumAge:3600000});
-  });
-}
-async function fetchPT(){
-  const today=new Date().toDateString();
-  if(_cachedPT&&_cachedPT.date===today) return _cachedPT;
-  const coords=await Promise.race([getCoords(),new Promise(r=>setTimeout(()=>r(null),4000))]);
-  const lat=coords?coords.lat:33.5731, lng=coords?coords.lng:-7.5898, fromCity=coords&&coords.fromCity;
-  let times=null;
-  const ok=await loadAdhan(); if(ok) times=calcWithAdhan(lat,lng);
-  if(!times) times=calcFallback(lat,lng);
-  const src=fromCity?'city':coords?'gps':'default';
-  _cachedPT={fajr:times.fajr||'--:--',maghrib:times.maghrib||'--:--',isha:times.isha||'--:--',
-             suhoor:addM(times.fajr,-35),date:today,src};
-  try{localStorage.setItem('ff7_pt',JSON.stringify(_cachedPT));}catch(e){}
-  save(); return _cachedPT;
-}
-function getPT(){
-  if(_cachedPT&&_cachedPT.fajr) return _cachedPT;
-  const t=calcFallback(33.5731,-7.5898);
-  return{fajr:t.fajr||'--:--',maghrib:t.maghrib||'--:--',isha:t.isha||'--:--',suhoor:addM(t.fajr,-35),src:'default'};
-}
-function rPrayerCard(){
-  const ptcard=document.getElementById('ptcard');
-  if(!ptcard) return;
-  if(!isRamadan){ptcard.style.display='none';return;}
-  ptcard.style.display='block';
-  const pt=getPT(), now=new Date();
-  const months_ar=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-  const days_ar=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-  const days_en=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months_en=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const ds=L==='ar'?days_ar:days_en, ms=L==='ar'?months_ar:months_en;
-  document.getElementById('pt-date').textContent=`${ds[now.getDay()]} ${now.getDate()} ${ms[now.getMonth()]}`;
-  document.getElementById('pt-tag').textContent=t('pt-tag');
-  const items=[{k:'maghrib',lbl:t('pt-maghrib'),tm:pt.maghrib,ic:'🌅'},{k:'isha',lbl:t('pt-isha'),tm:pt.isha,ic:'🌙'},{k:'suhoor',lbl:t('pt-suhoor'),tm:pt.suhoor,ic:'⭐'}];
-  const nowMin=now.getHours()*60+now.getMinutes();
-  let nextIdx=-1;
-  items.forEach((x,i)=>{if(nextIdx===-1&&t2m(x.tm)>nowMin)nextIdx=i;});
-  document.getElementById('ptrow').innerHTML=items.map((x,i)=>
-    `<div class="ptime${i===nextIdx?' nx':''}"><div style="font-size:15px">${x.ic}</div><div class="ptime-v">${to12h(x.tm)}</div><div class="ptime-l">${x.lbl}</div></div>`
-  ).join('');
-  if(nextIdx>=0){
-    const nx=items[nextIdx];
-    const[th,tm2]=nx.tm.split(':').map(Number);
-    const tgt=th*3600+tm2*60, nowS=now.getHours()*3600+now.getMinutes()*60+now.getSeconds();
-    let diff=tgt-nowS; if(diff<0) diff+=86400;
-    const dh=Math.floor(diff/3600), dm=Math.floor((diff%3600)/60), ds2=diff%60;
-    const badge=dh>0?`${dh}h ${dm}m`:dm>0?`${dm}m ${ds2}s`:`${ds2}s`;
-    document.getElementById('pt-badge').textContent=badge;
-    document.getElementById('ptcnt').textContent=t('countdown-to')+nx.lbl+': '+(dh>0?`${dh}${t('h-label')}${dm}${t('m-label')}${ds2}s`:`${dm}${t('m-label')}${ds2}s`);
-  } else {
-    document.getElementById('pt-badge').textContent=t('day-done');
-    document.getElementById('ptcnt').textContent='';
-  }
-  const srcMap={city:t('ptsrc-city'),gps:t('ptsrc-gps'),default:t('ptsrc-default'),calc:t('ptsrc-calc')};
-  document.getElementById('ptsrc').textContent=srcMap[pt.src||'default']||'';
-}
-function startPTLoop(){
-  if(_CTD) clearInterval(_CTD);
-  if(_CTD2) clearInterval(_CTD2);
-  fetchPT().then(()=>rPrayerCard());
-  _CTD=setInterval(()=>{_cachedPT=null;fetchPT().then(()=>rPrayerCard());},3600000);
-  _CTD2=setInterval(()=>rPrayerCard(),1000);
 }
 
 // ============================================================

@@ -12,7 +12,6 @@
 <link rel="apple-touch-icon" href="icon.jpg">
 <title>FitFuel 🏋️</title>
 <style>
-/* ── DESIGN TOKENS ──────────────────────────────────────── */
 :root{
   --bg:#0d0d18;--s1:#13131f;--s2:#1a1a2e;--s3:#22223a;--s4:#2a2a46;
   --ac:#c8f53a;--acd:rgba(200,245,58,.13);--acg:linear-gradient(135deg,#c8f53a,#8ed010);
@@ -28,50 +27,31 @@
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 input,select,button{font-family:inherit;font-size:inherit}
-
-/* ── LAYOUT ───────────────────────────────────────────── */
 .page{position:fixed;inset:0;overflow-y:auto;display:none;flex-direction:column;padding-bottom:96px;scroll-behavior:smooth}
 .page.on{display:flex}
 .wrap{width:100%;max-width:480px;margin:0 auto;padding:0 18px}
-
-/* ── BUTTONS ──────────────────────────────────────────── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 28px;border-radius:50px;border:none;cursor:pointer;font-size:17px;font-weight:700;letter-spacing:.2px;transition:transform .15s,box-shadow .15s;box-shadow:var(--sh2)}
 .btn:active{transform:scale(.95)}
 .bp{background:var(--acg);color:#0a0a10;box-shadow:0 4px 20px rgba(200,245,58,.28)}
 .bo{background:var(--s3);border:1.5px solid var(--br);color:var(--tx2)}
 .bo:hover,.bo:focus{border-color:var(--ac);color:var(--ac)}
 .bw{width:100%}
-
-/* ── BADGES ───────────────────────────────────────────── */
 .bdg{display:inline-flex;align-items:center;padding:5px 13px;border-radius:50px;font-size:13px;font-weight:700;letter-spacing:.2px}
 .bg{background:var(--acd);color:var(--ac)}.bb{background:var(--bld);color:var(--bl)}
 .bpk{background:var(--pkd);color:var(--pk)}.bor{background:var(--ord);color:var(--or)}.bgd{background:var(--gdd);color:var(--gd)}
-
-/* ── CARDS ────────────────────────────────────────────── */
 .card{background:var(--s2);border:1px solid var(--br2);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--sh2)}
 .tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--mt)}
 .mt{color:var(--mt)}
-
-/* ── TOAST ────────────────────────────────────────────── */
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--s3);border:1.5px solid var(--ac);color:var(--ac);padding:12px 22px;border-radius:50px;font-size:15px;font-weight:700;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;max-width:92vw;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 .toast.on{transform:translateX(-50%) translateY(0)}
-.savfl{position:fixed;bottom:104px;right:16px;background:var(--acd);border:1px solid var(--ac);color:var(--ac);padding:6px 14px;border-radius:50px;font-size:12px;font-weight:700;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none}
-[dir=ltr] .savfl{right:auto;left:16px}
-.savfl.on{opacity:1}
-
-/* ── REST TIMER ───────────────────────────────────────── */
 .rtbar{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--s2);border:2px solid var(--bl);border-radius:50px;padding:12px 28px;font-size:15px;font-weight:800;color:var(--bl);z-index:400;display:none;align-items:center;gap:12px;cursor:pointer;box-shadow:0 4px 20px rgba(77,184,255,.25)}
 .rtbar.on{display:flex}
 .rtn{font-size:32px;font-weight:900;min-width:44px;text-align:center;font-variant-numeric:tabular-nums}
-
-/* ── SPLASH ───────────────────────────────────────────── */
 #pg-splash{align-items:center;justify-content:center;text-align:center;padding:48px 24px;background:radial-gradient(ellipse at 50% 30%,rgba(200,245,58,.06) 0%,transparent 70%)}
 .logo{font-size:72px;font-weight:900;letter-spacing:5px;background:linear-gradient(135deg,var(--ac),var(--bl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .lrow{display:flex;gap:10px;justify-content:center;margin-bottom:28px}
 .lbtn{padding:13px 28px;border-radius:50px;border:2px solid var(--br);background:var(--s2);color:var(--tx2);font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
 .lbtn.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:0 0 20px rgba(200,245,58,.15)}
-
-/* ── SETUP ────────────────────────────────────────────── */
 #pg-setup{padding:28px 0 100px}
 .prog{display:flex;gap:6px;justify-content:center;margin-bottom:28px}
 .prg{height:5px;width:48px;border-radius:3px;background:var(--br);transition:all .3s}
@@ -91,15 +71,11 @@ input,select,button{font-family:inherit;font-size:inherit}
 .ol{font-size:16px;font-weight:700;color:var(--tx)}.os{font-size:13px;color:var(--mt);margin-top:2px}
 .nb{display:flex;gap:10px;margin-top:22px}
 .ig2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-/* ── BOTTOM NAV ───────────────────────────────────────── */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--s1);border-top:1px solid var(--br2);display:flex;z-index:300;padding:10px 0 14px;box-shadow:0 -4px 24px rgba(0,0,0,.45)}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 4px;border:none;background:transparent;color:var(--mt);transition:color .18s}
 .ni.on{color:var(--ac)}
 .ni-ic{font-size:26px}
 .ni-lb{font-size:12px;font-weight:700;letter-spacing:.3px}
-
-/* ── HOME ─────────────────────────────────────────────── */
 .hero{background:linear-gradient(145deg,var(--s3),var(--s2));border:1px solid var(--br);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--sh)}
 .ringwrap{display:flex;align-items:center;gap:18px;margin-top:10px}
 .rsvg{width:90px;height:90px;flex-shrink:0}
@@ -115,20 +91,15 @@ input,select,button{font-family:inherit;font-size:inherit}
 .litems{display:flex;flex-direction:column;gap:7px;margin-top:10px;max-height:170px;overflow-y:auto}
 .li{display:flex;justify-content:space-between;align-items:center;background:var(--s3);border-radius:10px;padding:10px 14px;border:1px solid var(--br2)}
 .li-del{background:none;border:none;color:var(--mt);cursor:pointer;font-size:18px;padding:0 4px}
-
-/* ── RAMADAN BANNER ───────────────────────────────────── */
 .rbanner{background:linear-gradient(145deg,var(--s3),var(--s2));border:1px solid rgba(255,215,0,.18);border-radius:var(--r);padding:16px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:var(--sh2)}
 .rtoggle{border:2px solid var(--gd);color:var(--gd);background:var(--gdd);border-radius:50px;padding:8px 18px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
 .rtoggle.off{border-color:var(--br);color:var(--mt);background:transparent}
 .twc{background:var(--s2);border:1px solid var(--br2);border-radius:var(--r);padding:16px;cursor:pointer;transition:border-color .2s,box-shadow .2s;box-shadow:var(--sh2)}
 .twc:active{border-color:var(--ac)}
-
-/* ── WORKOUT ──────────────────────────────────────────── */
 .dayplan{display:flex;overflow-x:auto;gap:8px;padding:4px 0 10px;scrollbar-width:none}
 .dayplan::-webkit-scrollbar{display:none}
 .dpc{padding:10px 12px;border-radius:var(--r2);border:2px solid var(--br);background:var(--s2);color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s;text-align:center;min-width:68px}
 .dpc.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:0 0 12px rgba(200,245,58,.15)}
-.dpc.done{border-color:var(--pk);color:var(--pk)}.dpc.rest{border-color:var(--bl);color:var(--bl)}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
 .pgst{text-align:center;background:var(--s3);border-radius:var(--r2);padding:14px 8px;border:1px solid var(--br2)}
 .pgst-v{font-size:24px;font-weight:900;color:var(--ac)}
@@ -139,7 +110,6 @@ input,select,button{font-family:inherit;font-size:inherit}
 .excard.exp{border-color:var(--bl);box-shadow:0 4px 20px rgba(77,184,255,.12)}
 .exhdr{display:flex;gap:14px;align-items:center;padding:16px;cursor:pointer}
 .exgif{width:68px;height:68px;border-radius:12px;overflow:hidden;flex-shrink:0;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:30px;border:1px solid var(--br2)}
-.exgif img{width:100%;height:100%;object-fit:cover}
 .exnm{font-size:17px;font-weight:800;margin-bottom:5px;color:var(--tx)}
 .mtag{padding:4px 10px;border-radius:50px;font-size:12px;font-weight:700;background:var(--pkd);color:var(--pk)}
 .exchv{font-size:14px;color:var(--mt);margin-inline-start:auto;transition:transform .25s;flex-shrink:0}
@@ -157,8 +127,6 @@ input,select,button{font-family:inherit;font-size:inherit}
 .done-btn{width:100%;margin-top:16px;padding:19px;font-size:18px;letter-spacing:.3px}
 .done-btn.cmp{background:var(--acd)!important;color:var(--ac)!important;border:2px solid var(--ac)!important;cursor:default!important;box-shadow:none!important}
 .lvlrow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-
-/* ── MEALS ────────────────────────────────────────────── */
 .daysel{display:flex;overflow-x:auto;gap:8px;padding:4px 0 10px;scrollbar-width:none}
 .daysel::-webkit-scrollbar{display:none}
 .dpill{padding:10px 18px;border-radius:50px;border:2px solid var(--br);background:var(--s2);color:var(--tx2);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s}
@@ -181,16 +149,11 @@ input,select,button{font-family:inherit;font-size:inherit}
 .minstr{background:var(--s3);border-radius:var(--r2);padding:14px;margin-top:10px;font-size:14px;color:var(--tx2);line-height:1.7;border:1px solid var(--br2)}
 .mactions{display:flex;gap:8px;margin-top:12px}
 .mactions .btn{flex:1;padding:14px;font-size:15px}
-
-/* ── PROFILE ──────────────────────────────────────────── */
 .profav{width:80px;height:80px;border-radius:50%;background:var(--acg);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;color:#0a0a10;margin:0 auto 12px;box-shadow:0 4px 24px rgba(200,245,58,.3)}
 .pstats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
 .pst{background:var(--s2);border:1px solid var(--br2);border-radius:var(--r);padding:16px;text-align:center;box-shadow:var(--sh2)}
 .pst-v{font-size:22px;font-weight:900;color:var(--ac)}
 .pst-l{font-size:12px;color:var(--mt);font-weight:700;margin-top:3px;text-transform:uppercase;letter-spacing:.4px}
-.hist-i{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--s3);border-radius:var(--r2);margin-bottom:7px;border:1px solid var(--br2)}
-.alarm-i{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--s3);border-radius:var(--r2);margin-bottom:7px;border:1px solid var(--br2)}
-.altime{font-size:20px;font-weight:900;color:var(--gd);font-variant-numeric:tabular-nums}
 .tsw{position:relative;width:46px;height:26px;cursor:pointer;flex-shrink:0}
 .tsw input{opacity:0;width:0;height:0}
 .tsl{position:absolute;inset:0;background:var(--br);border-radius:34px;transition:.3s;cursor:pointer}
@@ -206,13 +169,10 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 .mcls{float:inline-end;background:var(--s3);border:none;color:var(--tx2);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
 .rstbtn{width:100%;padding:15px;border-radius:var(--r2);border:2px solid var(--br);background:transparent;color:var(--mt);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;transition:all .2s}
 .rstbtn:hover{border-color:var(--pk);color:var(--pk);background:var(--pkd)}
-
-/* ── PRAYER (Ramadan mode) ───────────────────────────── */
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
-<div class="savfl" id="savfl">💾</div>
 <div class="rtbar" id="rtbar" onclick="stopRT()">⏱ <span class="rtn" id="rtn">60</span>s</div>
 
 <!-- SPLASH -->
@@ -346,6 +306,7 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
     </div>
   </div>
 </div></div>
+
 <!-- WORKOUT TAB -->
 <div id="t-workout" style="display:none">
 <div class="wrap" style="padding-top:16px">
@@ -482,16 +443,12 @@ const T={
     'rst-btn':'🗑️ إعادة ضبط التطبيق',
     'rb-t':'رمضان مبارك ⭐','rb-s':'وضع رمضان مفعّل',
     'rtoggle-on':'إيقاف','rtoggle-off':'تفعيل رمضان',
-    'pt-tag':'مواقيت الصلاة','pt-maghrib':'المغرب','pt-isha':'العشاء','pt-suhoor':'السحور',
     'toast-saved':'✅ تم الحفظ','toast-lang':'🌐 تم تغيير اللغة',
     'toast-meals':'🔄 تم تجديد الوجبات!','toast-meal1':'🔄 تم تغيير الوجبة!',
     'toast-newses':'🔄 جلسة جديدة!','toast-act':'اختر مستوى النشاط',
     'toast-ram-on':'🌙 وضع رمضان مفعّل','toast-ram-off':'☀️ وضع عادي مفعّل',
     'toast-logfill':'أدخل اسم الوجبة والسعرات',
     'confirm-reset':'هل تريد حذف كل البيانات؟',
-    'ptsrc-city':'🟢 محسوب لمدينتك 🏙️','ptsrc-gps':'🟢 GPS دقيق 📍','ptsrc-default':'🟡 الدار البيضاء (افتراضي)','ptsrc-calc':'🟢 محسوب',
-    'countdown-to':'الوقت المتبقي لـ ','h-label':'س ','m-label':'د ','day-done':'انتهى اليوم',
-    'no-sessions':'لا توجد جلسات بعد!',
     'dc-t':'📅 روتيني اليومي','dc-leg1':'تمرين ✅','dc-leg2':'يوم راحة',
   },
   en:{
@@ -529,16 +486,12 @@ const T={
     'rst-btn':'🗑️ Reset App',
     'rb-t':'Ramadan Mubarak ⭐','rb-s':'Ramadan mode ON',
     'rtoggle-on':'Disable','rtoggle-off':'Enable Ramadan',
-    'pt-tag':'Prayer Times','pt-maghrib':'Maghrib','pt-isha':'Isha','pt-suhoor':'Suhoor',
     'toast-saved':'✅ Saved','toast-lang':'🌐 Language changed',
     'toast-meals':'🔄 Meals refreshed!','toast-meal1':'🔄 Meal changed!',
     'toast-newses':'🔄 New session!','toast-act':'Choose activity level',
     'toast-ram-on':'🌙 Ramadan mode ON','toast-ram-off':'☀️ Normal mode ON',
     'toast-logfill':'Enter meal name and calories',
     'confirm-reset':'Delete all data?',
-    'ptsrc-city':'🟢 Calculated for your city 🏙️','ptsrc-gps':'🟢 GPS accurate 📍','ptsrc-default':'🟡 Casablanca (default)','ptsrc-calc':'🟢 Calculated',
-    'countdown-to':'Time to ','h-label':'h ','m-label':'m ','day-done':'Day done',
-    'no-sessions':'No sessions yet!',
     'dc-t':'📅 Daily Routine','dc-leg1':'Workout ✅','dc-leg2':'Rest day',
   }
 };
@@ -551,9 +504,6 @@ let isRamadan=true, mealMode='ramadan', _WP=null;
 
 function t(k){ return (T[L]&&T[L][k])||(T.ar&&T.ar[k])||k; }
 
-// ============================================================
-// APPLY LANG
-// ============================================================
 function applyLang(){
   const ar=L==='ar';
   document.documentElement.lang=L;
@@ -594,21 +544,18 @@ function switchLang(l){
 // ============================================================
 function save(){
   try{
-    localStorage.setItem('ff7',JSON.stringify({
-      L,P,SEL,DLOG,WH,MP,CD,isRamadan,mealMode,WP:_WP
-    }));
+    localStorage.setItem('ff8',JSON.stringify({L,P,SEL,DLOG,WH,MP,CD,isRamadan,mealMode,WP:_WP}));
   }catch(e){}
 }
 function load(){
   try{
-    const d=JSON.parse(localStorage.getItem('ff7')||'null');
+    const d=JSON.parse(localStorage.getItem('ff8')||localStorage.getItem('ff7')||'null');
     if(!d||!d.P||!d.P.name) return false;
     L=d.L||'ar'; P=d.P||{}; SEL=d.SEL||{}; DLOG=d.DLOG||{};
     WH=d.WH||[]; MP=d.MP||{}; CD=d.CD||0;
     isRamadan=d.isRamadan!==undefined?d.isRamadan:true;
     mealMode=d.mealMode||'ramadan';
     _WP=d.WP||null;
-    
     return true;
   }catch(e){return false;}
 }
@@ -641,22 +588,12 @@ function showMain(){
   document.getElementById('pg-setup').classList.remove('on');
   document.getElementById('pg-main').classList.add('on');
   applyLang();
-  // Trigger daily reset check
   const today=new Date().toDateString();
   if(P.lastWD!==today){ P.doneToday=false; }
-  // Daily meal refresh — new day = new meals
   checkDailyMealRefresh();
-  // Daily workout refresh
-  if(!_WP || _WP._date !== today) genWK(false);
-
-  // Render all tabs so data is ready regardless of which tab user goes to
-  rRamadanUI();
-  rHome();
-  rWorkout();
-  rMeals();
-  rProfile();
+  if(!_WP||_WP._date!==today) genWK(false);
+  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
 }
-
 function showTab(tab){
   ['home','workout','meals','profile'].forEach(tb=>{
     document.getElementById('t-'+tb).style.display='none';
@@ -669,18 +606,13 @@ function showTab(tab){
   if(tab==='meals') rMeals();
   if(tab==='profile'){ rProfile(); setTimeout(renderDailyChart,100); }
 }
-
-// ============================================================
-// DAILY REFRESH LOGIC
-// ============================================================
 function checkDailyMealRefresh(){
   const today=new Date().toDateString();
-  const lastMealDate=localStorage.getItem('ff7_meal_date');
+  const lastMealDate=localStorage.getItem('ff8_meal_date');
   if(lastMealDate!==today){
-    // New day — regenerate all meals
     const tc=Math.round(P.targetCal)||2000;
     for(let d=0;d<7;d++) MP[d]=buildDay(mealMode,tc);
-    localStorage.setItem('ff7_meal_date',today);
+    localStorage.setItem('ff8_meal_date',today);
     save();
   }
 }
@@ -721,7 +653,7 @@ function finSetup(){
   calcCal();
   const tc=Math.round(P.targetCal)||2000;
   for(let d=0;d<7;d++) MP[d]=buildDay(mealMode,tc);
-  localStorage.setItem('ff7_meal_date',new Date().toDateString());
+  localStorage.setItem('ff8_meal_date',new Date().toDateString());
   genWK(false); save(); showMain();
 }
 
@@ -806,510 +738,101 @@ function logMeal(cal,nm){
 const ML={
   ramadan:{
     iftar:[
-      {ar:'بيض مسلوق + خبز + زيتون + تمر',en:'Boiled Eggs + Bread + Olives + Dates',
-       cal:360,p:20,c:38,f:14,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['3 بيضات (150غ)','خبز 50غ','زيتون 30غ (8 حبات)','تمر 24غ (3 حبات)'],i_en:['3 eggs (150g)','bread 50g','olives 30g (8 pcs)','dates 24g (3 pcs)'],
-       p_ar:'اسلق البيض 8 دق. قدم مع الخبز والزيتون والتمر.',p_en:'Boil eggs 8 min. Serve with bread, olives, dates.'},
-      {ar:'تونة + خبز + طماطم + تمر',en:'Tuna + Bread + Tomato + Dates',
-       cal:330,p:26,c:30,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['تونة 80غ','خبز 30غ','طماطم 100غ','تمر 24غ (3 حبات)'],i_en:['tuna 80g','bread 30g','tomato 100g','dates 24g (3 pcs)'],
-       p_ar:'افتح التونة. قطع الطماطم. قدم مع الخبز.',p_en:'Open tuna. Slice tomato. Serve with bread.'},
-      {ar:'سردين + خبز + طماطم',en:'Sardines + Bread + Tomato',
-       cal:320,p:24,c:28,f:12,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['سردين 90غ','خبز 30غ','طماطم 100غ','تمر 24غ (3 حبات)'],i_en:['sardines 90g','bread 30g','tomato 100g','dates 24g (3 pcs)'],
-       p_ar:'افتح السردين. قدم مع الخبز والطماطم.',p_en:'Open sardines. Serve with bread and tomato.'},
-      {ar:'لبن + تمر + خبز',en:'Yogurt + Dates + Bread',
-       cal:280,p:12,c:44,f:6,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['لبن 250مل','تمر 32غ (4 حبات)','خبز 30غ'],i_en:['yogurt 250ml','dates 32g (4 pcs)','bread 30g'],
-       p_ar:'قدم اللبن مع التمر والخبز.',p_en:'Serve yogurt with dates and bread.'},
-      {ar:'حريرة + خبز + تمر',en:'Harira + Bread + Dates',
-       cal:340,p:14,c:50,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['حريرة 300مل','خبز 30غ','تمر 24غ (3 حبات)'],i_en:['harira 300ml','bread 30g','dates 24g (3 pcs)'],
-       p_ar:'سخن الحريرة. قدم مع التمر والخبز.',p_en:'Heat harira. Serve with dates and bread.'},
-      {ar:'شوربة خضار + خبز + تمر',en:'Vegetable Soup + Bread + Dates',
-       cal:300,p:10,c:46,f:6,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['خضار مشكلة 300غ','خبز 30غ','تمر 24غ (3 حبات)','ملح + كمون'],i_en:['mixed vegetables 300g','bread 30g','dates 24g (3 pcs)','salt + cumin'],
-       p_ar:'اسلق الخضار 15 دق. قدم مع التمر والخبز.',p_en:'Boil vegetables 15 min. Serve with dates and bread.'},
-      {ar:'لبن + موز + تمر',en:'Yogurt + Banana + Dates',
-       cal:310,p:12,c:52,f:6,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['لبن 200مل','موز 120غ','تمر 24غ (3 حبات)'],i_en:['yogurt 200ml','banana 120g','dates 24g (3 pcs)'],
-       p_ar:'لا طهي. أسرع إفطار.',p_en:'No cooking. Quickest iftar.'},
-      {ar:'بيض + سردين + خبز + تمر',en:'Eggs + Sardines + Bread + Dates',
-       cal:370,p:28,c:28,f:16,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['بيض 100غ (بيضتان)','سردين 90غ','خبز 30غ','تمر 16غ (2 حبة)'],i_en:['eggs 100g (2 pcs)','sardines 90g','bread 30g','dates 16g (2 pcs)'],
-       p_ar:'اسلق البيض. افتح السردين. قدم مع الخبز والتمر.',p_en:'Boil eggs. Open sardines. Serve with bread and dates.'},
-      {ar:'خبز + جبن + زيتون + تمر',en:'Bread + Cheese + Olives + Dates',
-       cal:340,p:14,c:36,f:16,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['خبز 90غ (3 شرائح)','جبن 40غ','زيتون 30غ (8 حبات)','تمر 24غ (3 حبات)'],i_en:['bread 90g (3 slices)','cheese 40g','olives 30g (8 pcs)','dates 24g (3 pcs)'],
-       p_ar:'لا طهي. قدم كل شيء مباشرة.',p_en:'No cooking. Serve everything directly.'},
-      {ar:'شوفان + حليب + تمر + عسل',en:'Oats + Milk + Dates + Honey',
-       cal:380,p:12,c:66,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['شوفان 80غ','حليب 250مل','تمر 32غ (4 حبات)','عسل 15غ'],i_en:['oats 80g','milk 250ml','dates 32g (4 pcs)','honey 15g'],
-       p_ar:'اطبخ الشوفان 5 دق. أضف التمر والعسل.',p_en:'Cook oats 5 min. Add dates and honey.'},
-      {ar:'بيض مسلوق + خبز + طماطم + تمر',en:'Boiled Eggs + Bread + Tomato + Dates',
-       cal:320,p:18,c:36,f:12,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['بيض 100غ (بيضتان)','خبز 60غ (شريحتان)','طماطم 100غ','تمر 24غ (3 حبات)'],i_en:['eggs 100g (2 pcs)','bread 60g (2 slices)','tomato 100g','dates 24g (3 pcs)'],
-       p_ar:'اسلق البيض 8 دق. قطع الطماطم. قدم مع الخبز والتمر.',p_en:'Boil eggs 8 min. Slice tomato. Serve with bread and dates.'},
-      {ar:'فول + خبز + تمر',en:'Foul + Bread + Dates',
-       cal:360,p:16,c:56,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
-       i_ar:['فول 180غ','خبز 60غ (شريحتان)','تمر 24غ (3 حبات)'],i_en:['foul 180g','bread 60g (2 slices)','dates 24g (3 pcs)'],
-       p_ar:'سخن الفول. قدم مع الخبز والتمر.',p_en:'Heat foul. Serve with bread and dates.'},
+      {ar:'بيض مسلوق + خبز + زيتون + تمر',en:'Boiled Eggs + Bread + Olives + Dates',cal:360,p:20,c:38,f:14,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['3 بيضات (150غ)','خبز 50غ','زيتون 30غ (8 حبات)','تمر 24غ (3 حبات)'],i_en:['3 eggs (150g)','bread 50g','olives 30g (8 pcs)','dates 24g (3 pcs)'],p_ar:'اسلق البيض 8 دق. قدم مع الخبز والزيتون والتمر.',p_en:'Boil eggs 8 min. Serve with bread, olives, dates.'},
+      {ar:'تونة + خبز + طماطم + تمر',en:'Tuna + Bread + Tomato + Dates',cal:330,p:26,c:30,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['تونة 80غ','خبز 30غ','طماطم 100غ','تمر 24غ (3 حبات)'],i_en:['tuna 80g','bread 30g','tomato 100g','dates 24g (3 pcs)'],p_ar:'افتح التونة. قطع الطماطم. قدم مع الخبز.',p_en:'Open tuna. Slice tomato. Serve with bread.'},
+      {ar:'سردين + خبز + طماطم + تمر',en:'Sardines + Bread + Tomato + Dates',cal:320,p:24,c:28,f:12,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['سردين 90غ','خبز 30غ','طماطم 100غ','تمر 24غ (3 حبات)'],i_en:['sardines 90g','bread 30g','tomato 100g','dates 24g (3 pcs)'],p_ar:'افتح السردين. قدم مع الخبز والطماطم.',p_en:'Open sardines. Serve with bread and tomato.'},
+      {ar:'لبن + تمر + خبز',en:'Yogurt + Dates + Bread',cal:280,p:12,c:44,f:6,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['لبن 250مل','تمر 32غ (4 حبات)','خبز 30غ'],i_en:['yogurt 250ml','dates 32g (4 pcs)','bread 30g'],p_ar:'قدم اللبن مع التمر والخبز.',p_en:'Serve yogurt with dates and bread.'},
+      {ar:'حريرة + خبز + تمر',en:'Harira + Bread + Dates',cal:340,p:14,c:50,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['حريرة 300مل','خبز 30غ','تمر 24غ (3 حبات)'],i_en:['harira 300ml','bread 30g','dates 24g (3 pcs)'],p_ar:'سخن الحريرة. قدم مع التمر والخبز.',p_en:'Heat harira. Serve with dates and bread.'},
+      {ar:'شوربة خضار + خبز + تمر',en:'Vegetable Soup + Bread + Dates',cal:300,p:10,c:46,f:6,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['خضار مشكلة 300غ','خبز 30غ','تمر 24غ (3 حبات)','ملح + كمون'],i_en:['mixed vegetables 300g','bread 30g','dates 24g (3 pcs)','salt + cumin'],p_ar:'اسلق الخضار 15 دق. قدم مع التمر والخبز.',p_en:'Boil vegetables 15 min. Serve with dates and bread.'},
+      {ar:'لبن + موز + تمر',en:'Yogurt + Banana + Dates',cal:310,p:12,c:52,f:6,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['لبن 200مل','موز 120غ','تمر 24غ (3 حبات)'],i_en:['yogurt 200ml','banana 120g','dates 24g (3 pcs)'],p_ar:'لا طهي. أسرع إفطار.',p_en:'No cooking. Quickest iftar.'},
+      {ar:'بيض + سردين + خبز + تمر',en:'Eggs + Sardines + Bread + Dates',cal:370,p:28,c:28,f:16,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['بيض 100غ (بيضتان)','سردين 90غ','خبز 30غ','تمر 16غ (2 حبة)'],i_en:['eggs 100g (2 pcs)','sardines 90g','bread 30g','dates 16g (2 pcs)'],p_ar:'اسلق البيض. افتح السردين. قدم مع الخبز والتمر.',p_en:'Boil eggs. Open sardines. Serve with bread and dates.'},
+      {ar:'خبز + جبن + زيتون + تمر',en:'Bread + Cheese + Olives + Dates',cal:340,p:14,c:36,f:16,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['خبز 90غ (3 شرائح)','جبن 40غ','زيتون 30غ (8 حبات)','تمر 24غ (3 حبات)'],i_en:['bread 90g (3 slices)','cheese 40g','olives 30g (8 pcs)','dates 24g (3 pcs)'],p_ar:'لا طهي. قدم كل شيء مباشرة.',p_en:'No cooking. Serve everything directly.'},
+      {ar:'شوفان + حليب + تمر + عسل',en:'Oats + Milk + Dates + Honey',cal:380,p:12,c:66,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['شوفان 80غ','حليب 250مل','تمر 32غ (4 حبات)','عسل 15غ'],i_en:['oats 80g','milk 250ml','dates 32g (4 pcs)','honey 15g'],p_ar:'اطبخ الشوفان 5 دق. أضف التمر والعسل.',p_en:'Cook oats 5 min. Add dates and honey.'},
+      {ar:'فول + خبز + تمر',en:'Foul + Bread + Dates',cal:360,p:16,c:56,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['فول 180غ','خبز 60غ (شريحتان)','تمر 24غ (3 حبات)'],i_en:['foul 180g','bread 60g (2 slices)','dates 24g (3 pcs)'],p_ar:'سخن الفول. قدم مع الخبز والتمر.',p_en:'Heat foul. Serve with bread and dates.'},
+      {ar:'بيض مسلوق + خبز + طماطم + تمر',en:'Boiled Eggs + Bread + Tomato + Dates',cal:320,p:18,c:36,f:12,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',i_ar:['بيض 100غ (بيضتان)','خبز 60غ (شريحتان)','طماطم 100غ','تمر 24غ (3 حبات)'],i_en:['eggs 100g (2 pcs)','bread 60g (2 slices)','tomato 100g','dates 24g (3 pcs)'],p_ar:'اسلق البيض 8 دق. قطع الطماطم. قدم مع الخبز والتمر.',p_en:'Boil eggs 8 min. Slice tomato. Serve with bread and dates.'},
     ],
     isha:[
-      {ar:'دجاج مسلوق + أرز',en:'Boiled Chicken + Rice',
-       cal:520,p:46,c:54,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['صدر دجاج 200غ','أرز 100غ','ملح + كمون حسب الذوق'],i_en:['chicken breast 200g','rice 100g','salt + cumin to taste'],
-       p_ar:'اسلق الدجاج 20 دق. اطبخ الأرز.',p_en:'Boil chicken 20 min. Cook rice.'},
-      {ar:'تونة + أرز + طماطم',en:'Tuna + Rice + Tomato',
-       cal:480,p:36,c:58,f:8,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['تونة 160غ (2 علبة)','أرز 100غ','طماطم 200غ (2 حبة)'],i_en:['tuna 160g (2 cans)','rice 100g','tomatoes 200g (2 pcs)'],
-       p_ar:'اطبخ الأرز. صفِّ التونة. قدم مع الطماطم.',p_en:'Cook rice. Drain tuna. Serve with tomatoes.'},
-      {ar:'بيض مقلي + بطاطا',en:'Fried Eggs + Potatoes',
-       cal:460,p:22,c:52,f:18,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['بيض 150غ (3 حبات)','بطاطا 300غ (2 حبة)','زيت 10مل'],i_en:['eggs 150g (3 pcs)','potatoes 300g (2 pcs)','oil 10ml'],
-       p_ar:'اسلق البطاطا 15 دق. اقلي البيض 3 دق.',p_en:'Boil potatoes 15 min. Fry eggs 3 min.'},
-      {ar:'معكرونة + تونة',en:'Pasta + Tuna',
-       cal:500,p:32,c:66,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['معكرونة 100غ','تونة 160غ (2 علبة)','طماطم 150غ'],i_en:['pasta 100g','tuna 160g (2 cans)','tomatoes 150g'],
-       p_ar:'اسلق المعكرونة. اخلط مع التونة والطماطم.',p_en:'Boil pasta. Mix with tuna and tomatoes.'},
-      {ar:'عدس + خبز',en:'Lentils + Bread',
-       cal:400,p:20,c:58,f:6,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['عدس 150غ','طماطم 200غ (2 حبة)','زيت 10مل + كمون'],i_en:['lentils 150g','tomatoes 200g (2 pcs)','oil 10ml + cumin'],
-       p_ar:'اسلق العدس 20 دق. أضف الطماطم والتوابل.',p_en:'Boil lentils 20 min. Add tomatoes and spices.'},
-      {ar:'سردين + بطاطا',en:'Sardines + Potatoes',
-       cal:440,p:30,c:38,f:16,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['سردين 180غ (2 علبة)','بطاطا 300غ (2 حبة)','ليمون 30مل'],i_en:['sardines 180g (2 cans)','potatoes 300g (2 pcs)','lemon juice 30ml'],
-       p_ar:'اسلق البطاطا. قدم مع السردين والليمون.',p_en:'Boil potatoes. Serve with sardines and lemon.'},
-      {ar:'فول + بيض + خبز',en:'Foul + Eggs + Bread',
-       cal:440,p:24,c:52,f:14,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['فول 200غ','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['foul 200g','eggs 100g (2 pcs)','bread 60g (2 slices)'],
-       p_ar:'سخن الفول. اقلِ البيض. قدم مع الخبز.',p_en:'Heat foul. Fry eggs. Serve with bread.'},
-      {ar:'أرز + سردين + طماطم',en:'Rice + Sardines + Tomato',
-       cal:470,p:32,c:54,f:12,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['أرز 100غ','سردين 180غ (2 علبة)','طماطم 150غ'],i_en:['rice 100g','sardines 180g (2 cans)','tomatoes 150g'],
-       p_ar:'اطبخ الأرز. افتح السردين. قدم مع الطماطم.',p_en:'Cook rice. Open sardines. Serve with tomatoes.'},
-      {ar:'معكرونة + بيض + زيت',en:'Pasta + Eggs + Oil',
-       cal:490,p:22,c:64,f:16,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['معكرونة 100غ','بيض 100غ (بيضتان)','زيت زيتون 15مل'],i_en:['pasta 100g','eggs 100g (2 pcs)','olive oil 15ml'],
-       p_ar:'اسلق المعكرونة. اقلِ البيض. اخلط مع الزيت.',p_en:'Boil pasta. Fry eggs. Mix with oil.'},
-      {ar:'دجاج + معكرونة + طماطم',en:'Chicken + Pasta + Tomato',
-       cal:540,p:42,c:60,f:12,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['صدر دجاج 150غ','معكرونة 100غ','طماطم 150غ','زيت 10مل'],i_en:['chicken breast 150g','pasta 100g','tomatoes 150g','oil 10ml'],
-       p_ar:'اطبخ الدجاج 15 دق. اسلق المعكرونة. اخلط مع الطماطم.',p_en:'Cook chicken 15 min. Boil pasta. Mix with tomatoes.'},
-      {ar:'أرز + فول + بيض',en:'Rice + Foul + Eggs',
-       cal:510,p:26,c:74,f:12,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['أرز 100غ','فول 150غ','بيض 100غ (بيضتان)','زيت 10مل'],i_en:['rice 100g','foul 150g','eggs 100g (2 pcs)','oil 10ml'],
-       p_ar:'اطبخ الأرز. سخن الفول. اقلِ البيض. قدم معاً.',p_en:'Cook rice. Heat foul. Fry eggs. Serve together.'},
-      {ar:'بطاطا + دجاج + زيت',en:'Potatoes + Chicken + Oil',
-       cal:490,p:36,c:48,f:14,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['بطاطا 300غ (2 حبة)','صدر دجاج 150غ','زيت زيتون 10مل','ملح + كمون'],i_en:['potatoes 300g (2 pcs)','chicken breast 150g','olive oil 10ml','salt + cumin'],
-       p_ar:'اسلق البطاطا والدجاج 20 دق. أضف الزيت.',p_en:'Boil potatoes and chicken 20 min. Add oil.'},
-      {ar:'عدس + أرز + بصل مقلي',en:'Lentils + Rice + Fried Onion',
-       cal:470,p:18,c:76,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',
-       i_ar:['عدس 100غ','أرز 100غ','بصل 100غ','زيت 15مل'],i_en:['lentils 100g','rice 100g','onion 100g','oil 15ml'],
-       p_ar:'اسلق العدس 15 دق. أضف الأرز. قلِّ البصل فوقهما.',p_en:'Boil lentils 15 min. Add rice. Fry onion on top.'},
+      {ar:'دجاج مسلوق + أرز',en:'Boiled Chicken + Rice',cal:520,p:46,c:54,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['صدر دجاج 200غ','أرز 100غ','ملح + كمون حسب الذوق'],i_en:['chicken breast 200g','rice 100g','salt + cumin to taste'],p_ar:'اسلق الدجاج 20 دق. اطبخ الأرز.',p_en:'Boil chicken 20 min. Cook rice.'},
+      {ar:'تونة + أرز + طماطم',en:'Tuna + Rice + Tomato',cal:480,p:36,c:58,f:8,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['تونة 160غ (2 علبة)','أرز 100غ','طماطم 200غ (2 حبة)'],i_en:['tuna 160g (2 cans)','rice 100g','tomatoes 200g (2 pcs)'],p_ar:'اطبخ الأرز. صفِّ التونة. قدم مع الطماطم.',p_en:'Cook rice. Drain tuna. Serve with tomatoes.'},
+      {ar:'بيض مقلي + بطاطا',en:'Fried Eggs + Potatoes',cal:460,p:22,c:52,f:18,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['بيض 150غ (3 حبات)','بطاطا 300غ (2 حبة)','زيت 10مل'],i_en:['eggs 150g (3 pcs)','potatoes 300g (2 pcs)','oil 10ml'],p_ar:'اسلق البطاطا 15 دق. اقلي البيض 3 دق.',p_en:'Boil potatoes 15 min. Fry eggs 3 min.'},
+      {ar:'معكرونة + تونة',en:'Pasta + Tuna',cal:500,p:32,c:66,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['معكرونة 100غ','تونة 160غ (2 علبة)','طماطم 150غ'],i_en:['pasta 100g','tuna 160g (2 cans)','tomatoes 150g'],p_ar:'اسلق المعكرونة. اخلط مع التونة والطماطم.',p_en:'Boil pasta. Mix with tuna and tomatoes.'},
+      {ar:'عدس + خبز',en:'Lentils + Bread',cal:400,p:20,c:58,f:6,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['عدس 150غ','طماطم 200غ (2 حبة)','زيت 10مل + كمون'],i_en:['lentils 150g','tomatoes 200g (2 pcs)','oil 10ml + cumin'],p_ar:'اسلق العدس 20 دق. أضف الطماطم والتوابل.',p_en:'Boil lentils 20 min. Add tomatoes and spices.'},
+      {ar:'سردين + بطاطا',en:'Sardines + Potatoes',cal:440,p:30,c:38,f:16,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['سردين 180غ (2 علبة)','بطاطا 300غ (2 حبة)','ليمون 30مل'],i_en:['sardines 180g (2 cans)','potatoes 300g (2 pcs)','lemon juice 30ml'],p_ar:'اسلق البطاطا. قدم مع السردين والليمون.',p_en:'Boil potatoes. Serve with sardines and lemon.'},
+      {ar:'فول + بيض + خبز',en:'Foul + Eggs + Bread',cal:440,p:24,c:52,f:14,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['فول 200غ','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['foul 200g','eggs 100g (2 pcs)','bread 60g (2 slices)'],p_ar:'سخن الفول. اقلِ البيض. قدم مع الخبز.',p_en:'Heat foul. Fry eggs. Serve with bread.'},
+      {ar:'أرز + سردين + طماطم',en:'Rice + Sardines + Tomato',cal:470,p:32,c:54,f:12,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['أرز 100غ','سردين 180غ (2 علبة)','طماطم 150غ'],i_en:['rice 100g','sardines 180g (2 cans)','tomatoes 150g'],p_ar:'اطبخ الأرز. افتح السردين. قدم مع الطماطم.',p_en:'Cook rice. Open sardines. Serve with tomatoes.'},
+      {ar:'معكرونة + بيض + زيت',en:'Pasta + Eggs + Oil',cal:490,p:22,c:64,f:16,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['معكرونة 100غ','بيض 100غ (بيضتان)','زيت زيتون 15مل'],i_en:['pasta 100g','eggs 100g (2 pcs)','olive oil 15ml'],p_ar:'اسلق المعكرونة. اقلِ البيض. اخلط مع الزيت.',p_en:'Boil pasta. Fry eggs. Mix with oil.'},
+      {ar:'دجاج + معكرونة + طماطم',en:'Chicken + Pasta + Tomato',cal:540,p:42,c:60,f:12,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['صدر دجاج 150غ','معكرونة 100غ','طماطم 150غ','زيت 10مل'],i_en:['chicken breast 150g','pasta 100g','tomatoes 150g','oil 10ml'],p_ar:'اطبخ الدجاج 15 دق. اسلق المعكرونة. اخلط مع الطماطم.',p_en:'Cook chicken 15 min. Boil pasta. Mix with tomatoes.'},
+      {ar:'أرز + فول + بيض',en:'Rice + Foul + Eggs',cal:510,p:26,c:74,f:12,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['أرز 100غ','فول 150غ','بيض 100غ (بيضتان)','زيت 10مل'],i_en:['rice 100g','foul 150g','eggs 100g (2 pcs)','oil 10ml'],p_ar:'اطبخ الأرز. سخن الفول. اقلِ البيض. قدم معاً.',p_en:'Cook rice. Heat foul. Fry eggs. Serve together.'},
+      {ar:'بطاطا + دجاج + زيت',en:'Potatoes + Chicken + Oil',cal:490,p:36,c:48,f:14,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['بطاطا 300غ (2 حبة)','صدر دجاج 150غ','زيت زيتون 10مل','ملح + كمون'],i_en:['potatoes 300g (2 pcs)','chicken breast 150g','olive oil 10ml','salt + cumin'],p_ar:'اسلق البطاطا والدجاج 20 دق. أضف الزيت.',p_en:'Boil potatoes and chicken 20 min. Add oil.'},
+      {ar:'عدس + أرز + بصل مقلي',en:'Lentils + Rice + Fried Onion',cal:470,p:18,c:76,f:10,time_ar:'بعد التراويح 🌙',time_en:'After Tarawih 🌙',i_ar:['عدس 100غ','أرز 100غ','بصل 100غ','زيت 15مل'],i_en:['lentils 100g','rice 100g','onion 100g','oil 15ml'],p_ar:'اسلق العدس 15 دق. أضف الأرز. قلِّ البصل فوقهما.',p_en:'Boil lentils 15 min. Add rice. Fry onion on top.'},
     ],
     suhoor:[
-      {ar:'شوفان + حليب + تمر',en:'Oats + Milk + Dates',
-       cal:460,p:16,c:72,f:12,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['شوفان 100غ','حليب 300مل','تمر 32غ (4 حبات)'],i_en:['oats 100g','milk 300ml','dates 32g (4 pcs)'],
-       p_ar:'اطبخ الشوفان بالحليب 5 دق. أضف التمر.',p_en:'Cook oats in milk 5 min. Add dates.'},
-      {ar:'بيض + خبز + زيتون',en:'Eggs + Bread + Olives',
-       cal:380,p:20,c:36,f:16,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['بيض 150غ (3 حبات)','خبز 60غ (شريحتان)','زيتون 30غ (8 حبات)','حليب 200مل'],i_en:['eggs 150g (3 pcs)','bread 60g (2 slices)','olives 30g (8 pcs)','milk 200ml'],
-       p_ar:'اسلق البيض. قدم مع الخبز والزيتون والحليب.',p_en:'Boil eggs. Serve with bread, olives, milk.'},
-      {ar:'موز + حليب + تمر',en:'Banana + Milk + Dates',
-       cal:360,p:10,c:64,f:8,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['موز 240غ (2 حبة)','حليب 300مل','تمر 24غ (3 حبات)'],i_en:['bananas 240g (2 pcs)','milk 300ml','dates 24g (3 pcs)'],
-       p_ar:'لا طهي. أسرع سحور.',p_en:'No cooking. Fastest suhoor.'},
-      {ar:'شوفان + موز + عسل',en:'Oats + Banana + Honey',
-       cal:420,p:14,c:70,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['شوفان 100غ','حليب 250مل','موز 120غ (1 حبة)','عسل 20غ'],i_en:['oats 100g','milk 250ml','banana 120g (1 pc)','honey 20g'],
-       p_ar:'اطبخ الشوفان 5 دق. ضع الموز والعسل.',p_en:'Cook oats 5 min. Add banana and honey.'},
-      {ar:'جبن + بيض + خبز',en:'Cheese + Eggs + Bread',
-       cal:410,p:24,c:32,f:18,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['جبن 40غ (شريحتان)','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['cheese 40g (2 slices)','eggs 100g (2 pcs)','bread 60g (2 slices)'],
-       p_ar:'اقلي البيض. قدم مع الجبن والخبز.',p_en:'Fry eggs. Serve with cheese and bread.'},
-      {ar:'فول + خبز + زيت زيتون',en:'Foul + Bread + Olive Oil',
-       cal:390,p:18,c:54,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['فول 200غ','خبز 60غ (شريحتان)','زيت زيتون 10مل'],i_en:['foul 200g','bread 60g (2 slices)','olive oil 10ml'],
-       p_ar:'سخن الفول. أضف الزيت. قدم مع الخبز.',p_en:'Heat foul. Add oil. Serve with bread.'},
-      {ar:'شوفان + لبن + عسل + مكسرات',en:'Oats + Yogurt + Honey + Nuts',
-       cal:430,p:16,c:62,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['شوفان 80غ','لبن 150مل','عسل 15غ','مكسرات 20غ'],i_en:['oats 80g','yogurt 150ml','honey 15g','nuts 20g'],
-       p_ar:'اخلط كل شيء. لا طهي.',p_en:'Mix everything. No cooking.'},
-      {ar:'بيض + تونة + خبز',en:'Eggs + Tuna + Bread',
-       cal:400,p:32,c:28,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['بيض 100غ (بيضتان)','تونة 80غ','خبز 60غ (شريحتان)'],i_en:['eggs 100g (2 pcs)','tuna 80g','bread 60g (2 slices)'],
-       p_ar:'اقلِ البيض. افتح التونة. قدم مع الخبز.',p_en:'Fry eggs. Open tuna. Serve with bread.'},
-      {ar:'حليب + شوفان + موز + عسل',en:'Milk + Oats + Banana + Honey',
-       cal:450,p:14,c:74,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['حليب 300مل','شوفان 80غ','موز 120غ','عسل 15غ'],i_en:['milk 300ml','oats 80g','banana 120g','honey 15g'],
-       p_ar:'اطبخ الشوفان بالحليب 5 دق. أضف الموز والعسل.',p_en:'Cook oats in milk 5 min. Add banana and honey.'},
-      {ar:'فول + بيض + خبز',en:'Foul + Eggs + Bread',
-       cal:430,p:24,c:50,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['فول 180غ','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['foul 180g','eggs 100g (2 pcs)','bread 60g (2 slices)'],
-       p_ar:'سخن الفول. اقلِ البيض. قدم مع الخبز.',p_en:'Heat foul. Fry eggs. Serve with bread.'},
-      {ar:'أرز + بيض + زيت زيتون',en:'Rice + Eggs + Olive Oil',
-       cal:420,p:18,c:60,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['أرز 100غ','بيض 100غ (بيضتان)','زيت زيتون 15مل','ملح'],i_en:['rice 100g','eggs 100g (2 pcs)','olive oil 15ml','salt'],
-       p_ar:'اطبخ الأرز. اقلِ البيض. أضف الزيت.',p_en:'Cook rice. Fry eggs. Add oil.'},
-      {ar:'خبز + جبن + بيض + حليب',en:'Bread + Cheese + Eggs + Milk',
-       cal:460,p:26,c:42,f:18,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['خبز 90غ (3 شرائح)','جبن 40غ','بيض 50غ (1 حبة)','حليب 200مل'],i_en:['bread 90g (3 slices)','cheese 40g','egg 50g (1 pc)','milk 200ml'],
-       p_ar:'اقلِ البيضة. قدم مع الجبن والخبز والحليب.',p_en:'Fry egg. Serve with cheese, bread and milk.'},
-      {ar:'معكرونة + جبن + بيض',en:'Pasta + Cheese + Eggs',
-       cal:470,p:22,c:58,f:16,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',
-       i_ar:['معكرونة 100غ','جبن مبشور 30غ','بيض 100غ (بيضتان)','زيت 5مل'],i_en:['pasta 100g','grated cheese 30g','eggs 100g (2 pcs)','oil 5ml'],
-       p_ar:'اسلق المعكرونة 10 دق. اقلِ البيض. أضف الجبن.',p_en:'Boil pasta 10 min. Fry eggs. Add cheese.'},
+      {ar:'شوفان + حليب + تمر',en:'Oats + Milk + Dates',cal:460,p:16,c:72,f:12,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['شوفان 100غ','حليب 300مل','تمر 32غ (4 حبات)'],i_en:['oats 100g','milk 300ml','dates 32g (4 pcs)'],p_ar:'اطبخ الشوفان بالحليب 5 دق. أضف التمر.',p_en:'Cook oats in milk 5 min. Add dates.'},
+      {ar:'بيض + خبز + زيتون',en:'Eggs + Bread + Olives',cal:380,p:20,c:36,f:16,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['بيض 150غ (3 حبات)','خبز 60غ (شريحتان)','زيتون 30غ (8 حبات)','حليب 200مل'],i_en:['eggs 150g (3 pcs)','bread 60g (2 slices)','olives 30g (8 pcs)','milk 200ml'],p_ar:'اسلق البيض. قدم مع الخبز والزيتون والحليب.',p_en:'Boil eggs. Serve with bread, olives, milk.'},
+      {ar:'موز + حليب + تمر',en:'Banana + Milk + Dates',cal:360,p:10,c:64,f:8,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['موز 240غ (2 حبة)','حليب 300مل','تمر 24غ (3 حبات)'],i_en:['bananas 240g (2 pcs)','milk 300ml','dates 24g (3 pcs)'],p_ar:'لا طهي. أسرع سحور.',p_en:'No cooking. Fastest suhoor.'},
+      {ar:'شوفان + موز + عسل',en:'Oats + Banana + Honey',cal:420,p:14,c:70,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['شوفان 100غ','حليب 250مل','موز 120غ (1 حبة)','عسل 20غ'],i_en:['oats 100g','milk 250ml','banana 120g (1 pc)','honey 20g'],p_ar:'اطبخ الشوفان 5 دق. ضع الموز والعسل.',p_en:'Cook oats 5 min. Add banana and honey.'},
+      {ar:'جبن + بيض + خبز',en:'Cheese + Eggs + Bread',cal:410,p:24,c:32,f:18,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['جبن 40غ (شريحتان)','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['cheese 40g (2 slices)','eggs 100g (2 pcs)','bread 60g (2 slices)'],p_ar:'اقلي البيض. قدم مع الجبن والخبز.',p_en:'Fry eggs. Serve with cheese and bread.'},
+      {ar:'فول + خبز + زيت زيتون',en:'Foul + Bread + Olive Oil',cal:390,p:18,c:54,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['فول 200غ','خبز 60غ (شريحتان)','زيت زيتون 10مل'],i_en:['foul 200g','bread 60g (2 slices)','olive oil 10ml'],p_ar:'سخن الفول. أضف الزيت. قدم مع الخبز.',p_en:'Heat foul. Add oil. Serve with bread.'},
+      {ar:'شوفان + لبن + عسل + مكسرات',en:'Oats + Yogurt + Honey + Nuts',cal:430,p:16,c:62,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['شوفان 80غ','لبن 150مل','عسل 15غ','مكسرات 20غ'],i_en:['oats 80g','yogurt 150ml','honey 15g','nuts 20g'],p_ar:'اخلط كل شيء. لا طهي.',p_en:'Mix everything. No cooking.'},
+      {ar:'بيض + تونة + خبز',en:'Eggs + Tuna + Bread',cal:400,p:32,c:28,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['بيض 100غ (بيضتان)','تونة 80غ','خبز 60غ (شريحتان)'],i_en:['eggs 100g (2 pcs)','tuna 80g','bread 60g (2 slices)'],p_ar:'اقلِ البيض. افتح التونة. قدم مع الخبز.',p_en:'Fry eggs. Open tuna. Serve with bread.'},
+      {ar:'حليب + شوفان + موز + عسل',en:'Milk + Oats + Banana + Honey',cal:450,p:14,c:74,f:10,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['حليب 300مل','شوفان 80غ','موز 120غ','عسل 15غ'],i_en:['milk 300ml','oats 80g','banana 120g','honey 15g'],p_ar:'اطبخ الشوفان بالحليب 5 دق. أضف الموز والعسل.',p_en:'Cook oats in milk 5 min. Add banana and honey.'},
+      {ar:'فول + بيض + خبز',en:'Foul + Eggs + Bread',cal:430,p:24,c:50,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['فول 180غ','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['foul 180g','eggs 100g (2 pcs)','bread 60g (2 slices)'],p_ar:'سخن الفول. اقلِ البيض. قدم مع الخبز.',p_en:'Heat foul. Fry eggs. Serve with bread.'},
+      {ar:'أرز + بيض + زيت زيتون',en:'Rice + Eggs + Olive Oil',cal:420,p:18,c:60,f:14,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['أرز 100غ','بيض 100غ (بيضتان)','زيت زيتون 15مل','ملح'],i_en:['rice 100g','eggs 100g (2 pcs)','olive oil 15ml','salt'],p_ar:'اطبخ الأرز. اقلِ البيض. أضف الزيت.',p_en:'Cook rice. Fry eggs. Add oil.'},
+      {ar:'خبز + جبن + بيض + حليب',en:'Bread + Cheese + Eggs + Milk',cal:460,p:26,c:42,f:18,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['خبز 90غ (3 شرائح)','جبن 40غ','بيض 50غ (1 حبة)','حليب 200مل'],i_en:['bread 90g (3 slices)','cheese 40g','egg 50g (1 pc)','milk 200ml'],p_ar:'اقلِ البيضة. قدم مع الجبن والخبز والحليب.',p_en:'Fry egg. Serve with cheese, bread and milk.'},
+      {ar:'معكرونة + جبن + بيض',en:'Pasta + Cheese + Eggs',cal:470,p:22,c:58,f:16,time_ar:'قبل الفجر 🌙',time_en:'Before Fajr 🌙',i_ar:['معكرونة 100غ','جبن مبشور 30غ','بيض 100غ (بيضتان)','زيت 5مل'],i_en:['pasta 100g','grated cheese 30g','eggs 100g (2 pcs)','oil 5ml'],p_ar:'اسلق المعكرونة 10 دق. اقلِ البيض. أضف الجبن.',p_en:'Boil pasta 10 min. Fry eggs. Add cheese.'},
     ]
   },
   normal:{
     breakfast:[
-      {ar:'بيض مقلي + خبز',en:'Fried Eggs + Bread',cal:350,p:18,c:34,f:16,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 150غ (3 حبات)','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['eggs 150g (3 pcs)','bread 60g (2 slices)','oil 10ml'],
-       p_ar:'اقلي البيض 3 دق.',p_en:'Fry eggs 3 min.'},
-      {ar:'شوفان + حليب + موز',en:'Oats + Milk + Banana',cal:380,p:14,c:62,f:10,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['شوفان 80غ','حليب 250مل','موز 120غ'],i_en:['oats 80g','milk 250ml','banana 120g'],
-       p_ar:'اطبخ الشوفان 5 دق.',p_en:'Cook oats 5 min.'},
-      {ar:'جبن + بيض + خبز',en:'Cheese + Eggs + Bread',cal:400,p:22,c:30,f:18,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['جبن 40غ (شريحتان)','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['cheese 40g (2 slices)','eggs 100g (2 pcs)','bread 60g (2 slices)'],
-       p_ar:'اقلي البيض مع الجبن.',p_en:'Fry eggs with cheese.'},
-      {ar:'لبن + تمر + خبز',en:'Yogurt + Dates + Bread',cal:300,p:12,c:46,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['لبن 200مل','تمر 24غ (3 حبات)','خبز 30غ'],i_en:['yogurt 200ml','dates 24g (3 pcs)','bread 30g'],
-       p_ar:'قدم اللبن مع التمر والخبز.',p_en:'Serve yogurt with dates and bread.'},
-      {ar:'فول + خبز + زيت',en:'Foul + Bread + Oil',cal:370,p:18,c:50,f:10,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['فول 200غ','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['foul 200g','bread 60g (2 slices)','oil 10ml'],
-       p_ar:'سخن الفول. قدم مع الخبز.',p_en:'Heat foul. Serve with bread.'},
-      {ar:'بيض مسلوق + موز + حليب',en:'Boiled Eggs + Banana + Milk',cal:340,p:18,c:42,f:10,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 100غ (بيضتان)','موز 120غ (1 حبة)','حليب 200مل'],i_en:['eggs 100g (2 pcs)','banana 120g','milk 200ml'],
-       p_ar:'اسلق البيض 8 دق. قدم مع الموز والحليب.',p_en:'Boil eggs 8 min. Serve with banana and milk.'},
-      {ar:'خبز + زبدة فول سوداني + موز',en:'Bread + Peanut Butter + Banana',cal:420,p:14,c:54,f:16,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['خبز 60غ (شريحتان)','زبدة فول سوداني 30غ','موز 120غ'],i_en:['bread 60g (2 slices)','peanut butter 30g','banana 120g'],
-       p_ar:'ادهن الخبز بالزبدة. قدم مع الموز.',p_en:'Spread peanut butter on bread. Serve with banana.'},
-      {ar:'شوفان + تمر + عسل',en:'Oats + Dates + Honey',cal:390,p:10,c:70,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['شوفان 80غ','حليب 250مل','تمر 32غ (4 حبات)','عسل 15غ'],i_en:['oats 80g','milk 250ml','dates 32g (4 pcs)','honey 15g'],
-       p_ar:'اطبخ الشوفان 5 دق. أضف التمر والعسل.',p_en:'Cook oats 5 min. Add dates and honey.'},
-      {ar:'بيض مخفوق + جبن + خبز',en:'Scrambled Eggs + Cheese + Bread',cal:430,p:24,c:32,f:20,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 150غ (3 حبات)','جبن مبشور 30غ','خبز 60غ (شريحتان)','زيت 5مل'],i_en:['eggs 150g (3 pcs)','grated cheese 30g','bread 60g (2 slices)','oil 5ml'],
-       p_ar:'اخفق البيض مع الجبن. اقلِ 3 دق.',p_en:'Whisk eggs with cheese. Fry 3 min.'},
-      {ar:'حليب + موز + عسل',en:'Milk + Banana + Honey',cal:290,p:10,c:50,f:6,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['حليب 300مل','موز 120غ','عسل 15غ'],i_en:['milk 300ml','banana 120g','honey 15g'],
-       p_ar:'اخلط كل شيء. لا طهي.',p_en:'Mix everything. No cooking.'},
-      {ar:'تونة + بيض + خبز',en:'Tuna + Egg + Bread',cal:380,p:30,c:28,f:12,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['تونة 80غ','بيض 50غ (1 حبة)','خبز 60غ (شريحتان)'],i_en:['tuna 80g','egg 50g (1 pc)','bread 60g (2 slices)'],
-       p_ar:'اقلِ البيضة. افتح التونة. قدم مع الخبز.',p_en:'Fry egg. Open tuna. Serve with bread.'},
-      {ar:'لبن + شوفان بارد + فواكه',en:'Yogurt + Cold Oats + Fruit',cal:360,p:16,c:56,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['لبن 200مل','شوفان 60غ','موز 60غ','تمر 16غ (2 حبة)'],i_en:['yogurt 200ml','oats 60g','banana 60g','dates 16g (2 pcs)'],
-       p_ar:'اخلط كل شيء في وعاء. ضعه في الثلاجة ليلاً.',p_en:'Mix everything in a bowl. Refrigerate overnight.'},
-      {ar:'خبز + زبدة + عسل',en:'Bread + Butter + Honey',cal:330,p:6,c:50,f:12,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['خبز 90غ (3 شرائح)','زبدة 15غ','عسل 20غ'],i_en:['bread 90g (3 slices)','butter 15g','honey 20g'],
-       p_ar:'لا طهي. انشر الزبدة والعسل على الخبز.',p_en:'No cooking. Spread butter and honey on bread.'},
-      {ar:'تفاح + جبن + مكسرات',en:'Apple + Cheese + Nuts',cal:310,p:10,c:34,f:16,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['تفاح 150غ','جبن 40غ','مكسرات 20غ'],i_en:['apple 150g','cheese 40g','nuts 20g'],
-       p_ar:'لا طهي.',p_en:'No cooking.'},
-      {ar:'حليب سخن + شوفان + تمر',en:'Warm Milk + Oats + Dates',cal:380,p:14,c:64,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['حليب 300مل','شوفان 80غ','تمر 32غ (4 حبات)'],i_en:['milk 300ml','oats 80g','dates 32g (4 pcs)'],
-       p_ar:'اطبخ الشوفان بالحليب 5 دق.',p_en:'Cook oats in milk 5 min.'},
-      {ar:'بيض + سبانخ + خبز',en:'Eggs + Spinach + Bread',cal:360,p:22,c:30,f:16,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 150غ (3 حبات)','سبانخ 50غ','خبز 60غ (شريحتان)'],i_en:['eggs 150g (3 pcs)','spinach 50g','bread 60g (2 slices)'],
-       p_ar:'اقلِ البيض مع السبانخ 4 دق.',p_en:'Fry eggs with spinach 4 min.'},
-      {ar:'موز + لبن + شوفان بارد',en:'Banana + Yogurt + Cold Oats',cal:350,p:12,c:56,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['موز 120غ','لبن 150مل','شوفان 60غ'],i_en:['banana 120g','yogurt 150ml','oats 60g'],
-       p_ar:'اخلط الكل. لا طهي.',p_en:'Mix everything. No cooking.'},
-      {ar:'خبز + تونة + خيار',en:'Bread + Tuna + Cucumber',cal:320,p:24,c:28,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['خبز 60غ (شريحتان)','تونة 80غ','خيار 100غ'],i_en:['bread 60g (2 slices)','tuna 80g','cucumber 100g'],
-       p_ar:'افتح التونة. قدم مع الخبز والخيار.',p_en:'Open tuna. Serve with bread and cucumber.'},
-      {ar:'حليب + موز + عسل + شوفان',en:'Milk + Banana + Honey + Oats',cal:420,p:13,c:72,f:9,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['حليب 250مل','موز 120غ','عسل 15غ','شوفان 70غ'],i_en:['milk 250ml','banana 120g','honey 15g','oats 70g'],
-       p_ar:'اطبخ الشوفان 5 دق. أضف الموز والعسل.',p_en:'Cook oats 5 min. Add banana and honey.'},
-      {ar:'بيض + بصل + خبز',en:'Eggs + Onion + Bread',cal:340,p:20,c:30,f:14,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 150غ (3 حبات)','بصل 80غ','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['eggs 150g (3 pcs)','onion 80g','bread 60g (2 slices)','oil 10ml'],
-       p_ar:'قلِّ البصل 3 دق. أضف البيض. اقلِ 3 دق. قدم مع الخبز.',p_en:'Fry onion 3 min. Add eggs. Fry 3 min. Serve with bread.'},
-      {ar:'بيض مسلوق + طماطم + خبز',en:'Boiled Eggs + Tomato + Bread',cal:340,p:18,c:30,f:12,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 150غ (3 حبات)','طماطم 150غ','خبز 60غ (شريحتان)','زيت زيتون 10مل'],i_en:['eggs 150g (3 pcs)','tomatoes 150g','bread 60g (2 slices)','olive oil 10ml'],
-       p_ar:'اسلق البيض 8 دق. قطع الطماطم. قدم مع الخبز والزيت.',p_en:'Boil eggs 8 min. Slice tomatoes. Serve with bread and oil.'},
-      {ar:'شوفان + لبن + موز + عسل',en:'Oats + Yogurt + Banana + Honey',cal:360,p:14,c:58,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['شوفان 70غ','لبن 200مل','موز 120غ','عسل 10غ'],i_en:['oats 70g','yogurt 200ml','banana 120g','honey 10g'],
-       p_ar:'اخلط كل شيء بارداً. لا طهي.',p_en:'Mix everything cold. No cooking.'},
-       p_ar:'اخلط كل شيء بارداً. لا طهي.',p_en:'Mix everything cold. No cooking.'},
-      {ar:'خبز + بيض + بندورة مشوية',en:'Bread + Eggs + Grilled Tomato',cal:330,p:16,c:36,f:12,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['خبز 60غ (شريحتان)','بيض 100غ (بيضتان)','طماطم 200غ (2 حبة)','زيت 5مل'],i_en:['bread 60g (2 slices)','eggs 100g (2 pcs)','tomatoes 200g (2 pcs)','oil 5ml'],
-       p_ar:'اشوِ الطماطم 5 دق. اقلِ البيض. قدم مع الخبز.',p_en:'Grill tomatoes 5 min. Fry eggs. Serve with bread.'},
-      {ar:'كورن فليكس + حليب + موز',en:'Cornflakes + Milk + Banana',cal:380,p:10,c:70,f:6,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['كورن فليكس 60غ','حليب 250مل','موز 120غ'],i_en:['cornflakes 60g','milk 250ml','banana 120g'],
-       p_ar:'صب الحليب على الكورن فليكس. أضف الموز. لا طهي.',p_en:'Pour milk on cornflakes. Add banana. No cooking.'},
-      {ar:'عجة خضار',en:'Vegetable Omelette',cal:360,p:22,c:14,f:22,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 150غ (3 حبات)','فلفل 80غ','طماطم 80غ','بصل 40غ','زيت 10مل'],i_en:['eggs 150g (3 pcs)','pepper 80g','tomatoes 80g','onion 40g','oil 10ml'],
-       p_ar:'قطع الخضار. اخفق البيض. اقلِ كل شيء معاً 5 دق.',p_en:'Chop vegetables. Whisk eggs. Fry everything together 5 min.'},
-      {ar:'خبز + زبدة + عسل + حليب',en:'Bread + Butter + Honey + Milk',cal:400,p:10,c:58,f:14,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['خبز 90غ (3 شرائح)','زبدة 20غ','عسل 20غ','حليب 200مل'],i_en:['bread 90g (3 slices)','butter 20g','honey 20g','milk 200ml'],
-       p_ar:'ادهن الخبز بالزبدة والعسل. قدم مع الحليب.',p_en:'Spread butter and honey on bread. Serve with milk.'},
-      {ar:'بيض مقلي + فاصوليا + خبز',en:'Fried Eggs + Beans + Bread',cal:430,p:24,c:48,f:14,time_ar:'08:00 🌅',time_en:'08:00 🌅',
-       i_ar:['بيض 100غ (بيضتان)','فاصوليا بيضاء 150غ','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['eggs 100g (2 pcs)','white beans 150g','bread 60g (2 slices)','oil 10ml'],
-       p_ar:'سخن الفاصوليا. اقلِ البيض. قدم مع الخبز.',p_en:'Heat beans. Fry eggs. Serve with bread.'},
+      {ar:'بيض مقلي + خبز',en:'Fried Eggs + Bread',cal:350,p:18,c:34,f:16,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['بيض 150غ (3 حبات)','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['eggs 150g (3 pcs)','bread 60g (2 slices)','oil 10ml'],p_ar:'اقلي البيض 3 دق.',p_en:'Fry eggs 3 min.'},
+      {ar:'شوفان + حليب + موز',en:'Oats + Milk + Banana',cal:380,p:14,c:62,f:10,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['شوفان 80غ','حليب 250مل','موز 120غ'],i_en:['oats 80g','milk 250ml','banana 120g'],p_ar:'اطبخ الشوفان 5 دق.',p_en:'Cook oats 5 min.'},
+      {ar:'جبن + بيض + خبز',en:'Cheese + Eggs + Bread',cal:400,p:22,c:30,f:18,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['جبن 40غ (شريحتان)','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['cheese 40g (2 slices)','eggs 100g (2 pcs)','bread 60g (2 slices)'],p_ar:'اقلي البيض مع الجبن.',p_en:'Fry eggs with cheese.'},
+      {ar:'لبن + تمر + خبز',en:'Yogurt + Dates + Bread',cal:300,p:12,c:46,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['لبن 200مل','تمر 24غ (3 حبات)','خبز 30غ'],i_en:['yogurt 200ml','dates 24g (3 pcs)','bread 30g'],p_ar:'قدم اللبن مع التمر والخبز.',p_en:'Serve yogurt with dates and bread.'},
+      {ar:'فول + خبز + زيت',en:'Foul + Bread + Oil',cal:370,p:18,c:50,f:10,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['فول 200غ','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['foul 200g','bread 60g (2 slices)','oil 10ml'],p_ar:'سخن الفول. قدم مع الخبز.',p_en:'Heat foul. Serve with bread.'},
+      {ar:'بيض مسلوق + موز + حليب',en:'Boiled Eggs + Banana + Milk',cal:340,p:18,c:42,f:10,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['بيض 100غ (بيضتان)','موز 120غ (1 حبة)','حليب 200مل'],i_en:['eggs 100g (2 pcs)','banana 120g','milk 200ml'],p_ar:'اسلق البيض 8 دق. قدم مع الموز والحليب.',p_en:'Boil eggs 8 min. Serve with banana and milk.'},
+      {ar:'شوفان + تمر + عسل',en:'Oats + Dates + Honey',cal:390,p:10,c:70,f:8,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['شوفان 80غ','حليب 250مل','تمر 32غ (4 حبات)','عسل 15غ'],i_en:['oats 80g','milk 250ml','dates 32g (4 pcs)','honey 15g'],p_ar:'اطبخ الشوفان 5 دق. أضف التمر والعسل.',p_en:'Cook oats 5 min. Add dates and honey.'},
+      {ar:'تونة + بيض + خبز',en:'Tuna + Egg + Bread',cal:380,p:30,c:28,f:12,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['تونة 80غ','بيض 50غ (1 حبة)','خبز 60غ (شريحتان)'],i_en:['tuna 80g','egg 50g (1 pc)','bread 60g (2 slices)'],p_ar:'اقلِ البيضة. افتح التونة. قدم مع الخبز.',p_en:'Fry egg. Open tuna. Serve with bread.'},
+      {ar:'عجة خضار',en:'Vegetable Omelette',cal:360,p:22,c:14,f:22,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['بيض 150غ (3 حبات)','فلفل 80غ','طماطم 80غ','بصل 40غ','زيت 10مل'],i_en:['eggs 150g (3 pcs)','pepper 80g','tomatoes 80g','onion 40g','oil 10ml'],p_ar:'قطع الخضار. اخفق البيض. اقلِ كل شيء معاً 5 دق.',p_en:'Chop vegetables. Whisk eggs. Fry everything together 5 min.'},
+      {ar:'خبز + زبدة فول سوداني + موز',en:'Bread + Peanut Butter + Banana',cal:420,p:14,c:54,f:16,time_ar:'08:00 🌅',time_en:'08:00 🌅',i_ar:['خبز 60غ (شريحتان)','زبدة فول سوداني 30غ','موز 120غ'],i_en:['bread 60g (2 slices)','peanut butter 30g','banana 120g'],p_ar:'ادهن الخبز بالزبدة. قدم مع الموز.',p_en:'Spread peanut butter on bread. Serve with banana.'},
     ],
     lunch:[
-      {ar:'دجاج + أرز + سلطة',en:'Chicken + Rice + Salad',cal:580,p:48,c:58,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['دجاج 200غ','أرز 100غ','طماطم 100غ + خيار 100غ'],i_en:['chicken 200g','rice 100g','tomato 100g + cucumber 100g'],
-       p_ar:'اطبخ الدجاج. اطبخ الأرز. قدم مع السلطة.',p_en:'Cook chicken. Cook rice. Serve with salad.'},
-      {ar:'تونة + أرز + زيت',en:'Tuna + Rice + Oil',cal:500,p:36,c:56,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['تونة 160غ (2 علبة)','أرز 100غ','زيت 10مل'],i_en:['tuna 160g (2 cans)','rice 100g','oil 10ml'],
-       p_ar:'اطبخ الأرز. أضف التونة والزيت.',p_en:'Cook rice. Add tuna and oil.'},
-      {ar:'بيض + بطاطا + سلطة',en:'Eggs + Potatoes + Salad',cal:460,p:22,c:48,f:18,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['بيض 150غ (3 حبات)','بطاطا 300غ (2 حبة)','طماطم 100غ'],i_en:['eggs 150g (3 pcs)','potatoes 300g (2 pcs)','tomato 100g'],
-       p_ar:'اسلق البطاطا. اقلي البيض.',p_en:'Boil potatoes. Fry eggs.'},
-      {ar:'عدس + خبز + زيتون',en:'Lentils + Bread + Olives',cal:420,p:22,c:58,f:8,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['عدس 150غ','خبز 60غ (شريحتان)','زيتون 30غ (8 حبات)'],i_en:['lentils 150g','bread 60g (2 slices)','olives 30g (8 pcs)'],
-       p_ar:'اسلق العدس 20 دق.',p_en:'Boil lentils 20 min.'},
-      {ar:'معكرونة + تونة + طماطم',en:'Pasta + Tuna + Tomato',cal:520,p:32,c:62,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['معكرونة 100غ','تونة 160غ (2 علبة)','طماطم 150غ'],i_en:['pasta 100g','tuna 160g (2 cans)','tomatoes 150g'],
-       p_ar:'اسلق المعكرونة. اخلط مع التونة.',p_en:'Boil pasta. Mix with tuna.'},
-      {ar:'أرز + بيض مقلي + صلصة',en:'Rice + Fried Egg + Sauce',cal:480,p:20,c:70,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['أرز 120غ','بيض 100غ (بيضتان)','صلصة طماطم 50غ','زيت 10مل'],i_en:['rice 120g','eggs 100g (2 pcs)','tomato sauce 50g','oil 10ml'],
-       p_ar:'اطبخ الأرز. اقلِ البيض. قدم مع الصلصة.',p_en:'Cook rice. Fry eggs. Serve with sauce.'},
-      {ar:'فراخ مسلوقة + بطاطا',en:'Boiled Chicken + Potatoes',cal:540,p:44,c:46,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['صدر دجاج 180غ','بطاطا 250غ (2 حبة)','ملح + كمون'],i_en:['chicken breast 180g','potatoes 250g (2 pcs)','salt + cumin'],
-       p_ar:'اسلق الدجاج والبطاطا 20 دق.',p_en:'Boil chicken and potatoes 20 min.'},
-      {ar:'سردين + أرز + ليمون',en:'Sardines + Rice + Lemon',cal:490,p:34,c:54,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['سردين 180غ (2 علبة)','أرز 100غ','ليمون 30مل'],i_en:['sardines 180g (2 cans)','rice 100g','lemon juice 30ml'],
-       p_ar:'اطبخ الأرز. افتح السردين. أضف الليمون.',p_en:'Cook rice. Open sardines. Add lemon.'},
-      {ar:'فول + بيض + خبز',en:'Foul + Eggs + Bread',cal:450,p:26,c:52,f:14,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['فول 200غ','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['foul 200g','eggs 100g (2 pcs)','bread 60g (2 slices)'],
-       p_ar:'سخن الفول. اقلِ البيض. قدم مع الخبز.',p_en:'Heat foul. Fry eggs. Serve with bread.'},
-      {ar:'معكرونة + بيض + زيت زيتون',en:'Pasta + Eggs + Olive Oil',cal:500,p:22,c:64,f:16,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['معكرونة 100غ','بيض 100غ (بيضتان)','زيت زيتون 15مل','ملح + فلفل'],i_en:['pasta 100g','eggs 100g (2 pcs)','olive oil 15ml','salt + pepper'],
-       p_ar:'اسلق المعكرونة. اقلِ البيض. اخلط مع الزيت.',p_en:'Boil pasta. Fry eggs. Mix with oil.'},
-      {ar:'شوربة عدس + خبز',en:'Lentil Soup + Bread',cal:420,p:20,c:62,f:6,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['عدس 150غ','بصل 80غ','طماطم 100غ','خبز 60غ'],i_en:['lentils 150g','onion 80g','tomatoes 100g','bread 60g'],
-       p_ar:'اسلق العدس مع البصل والطماطم 25 دق.',p_en:'Boil lentils with onion and tomatoes 25 min.'},
-      {ar:'أرز + عدس (مجدرة)',en:'Rice + Lentils (Mujaddara)',cal:460,p:18,c:76,f:8,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['أرز 80غ','عدس 80غ','بصل 100غ','زيت 10مل'],i_en:['rice 80g','lentils 80g','onion 100g','oil 10ml'],
-       p_ar:'اطبخ العدس 15 دق. أضف الأرز والبصل المقلي.',p_en:'Cook lentils 15 min. Add rice and fried onion.'},
-      {ar:'أرز + سردين + خيار',en:'Rice + Sardines + Cucumber',cal:470,p:32,c:52,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['أرز 100غ','سردين 90غ','خيار 150غ'],i_en:['rice 100g','sardines 90g','cucumber 150g'],
-       p_ar:'اطبخ الأرز 15 دق. افتح السردين. قدم مع الخيار.',p_en:'Cook rice 15 min. Open sardines. Serve with cucumber.'},
-      {ar:'عجة بالطماطم + بطاطا',en:'Tomato Omelette + Potatoes',cal:490,p:24,c:54,f:18,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['بيض 150غ (3 حبات)','طماطم 100غ','بطاطا 200غ','زيت 10مل'],i_en:['eggs 150g (3 pcs)','tomato 100g','potatoes 200g','oil 10ml'],
-       p_ar:'اسلق البطاطا 15 دق. اصنع العجة 3 دق.',p_en:'Boil potatoes 15 min. Make omelette 3 min.'},
-      {ar:'دجاج + كسكس + جزر',en:'Chicken + Couscous + Carrots',cal:560,p:44,c:62,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['دجاج 180غ','كسكس 100غ','جزر 100غ'],i_en:['chicken 180g','couscous 100g','carrots 100g'],
-       p_ar:'اسلق الدجاج 20 دق. ضع ماء مغلي على الكسكس 5 دق.',p_en:'Boil chicken 20 min. Pour boiling water on couscous 5 min.'},
-      {ar:'أرز + حمص + زيت زيتون',en:'Rice + Chickpeas + Olive Oil',cal:500,p:18,c:80,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['أرز 100غ','حمص معلب 150غ','زيت زيتون 10مل'],i_en:['rice 100g','canned chickpeas 150g','olive oil 10ml'],
-       p_ar:'اطبخ الأرز. سخن الحمص. اخلط مع الزيت.',p_en:'Cook rice. Heat chickpeas. Mix with oil.'},
-      {ar:'ماكرون + بيض + جبن',en:'Macaroni + Egg + Cheese',cal:510,p:24,c:68,f:16,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['معكرونة 100غ','بيض 100غ (بيضتان)','جبن 30غ'],i_en:['macaroni 100g','eggs 100g (2 pcs)','cheese 30g'],
-       p_ar:'اسلق المعكرونة 10 دق. اقلِ البيض. ضع الجبن.',p_en:'Boil macaroni 10 min. Fry eggs. Add cheese.'},
-      {ar:'خضروات مسلوقة + بيض',en:'Boiled Vegetables + Eggs',cal:350,p:18,c:42,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['كوسا 150غ','جزر 100غ','بيض 150غ (3 حبات)','زيت 10مل'],i_en:['zucchini 150g','carrots 100g','eggs 150g (3 pcs)','oil 10ml'],
-       p_ar:'اسلق الخضروات 10 دق. اقلِ البيض.',p_en:'Boil vegetables 10 min. Fry eggs.'},
-      {ar:'بطاطا + تونة + زيت زيتون',en:'Potatoes + Tuna + Olive Oil',cal:440,p:30,c:52,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['بطاطا 250غ (2 حبة)','تونة 80غ','زيت زيتون 10مل','ليمون 20مل'],i_en:['potatoes 250g (2 pcs)','tuna 80g','olive oil 10ml','lemon 20ml'],
-       p_ar:'اسلق البطاطا 15 دق. افتح التونة. أضف الزيت والليمون.',p_en:'Boil potatoes 15 min. Open tuna. Add oil and lemon.'},
-      {ar:'فول + أرز',en:'Foul + Rice',cal:480,p:22,c:74,f:8,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['فول 200غ','أرز 100غ','زيت 10مل'],i_en:['foul 200g','rice 100g','oil 10ml'],
-       p_ar:'سخن الفول. اطبخ الأرز. قدم معاً.',p_en:'Heat foul. Cook rice. Serve together.'},
-      {ar:'دجاج مشوي + خضار',en:'Grilled Chicken + Vegetables',cal:420,p:46,c:18,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['صدر دجاج 200غ','كوسا 100غ','جزر 80غ','زيت 10مل','ملح + فلفل'],i_en:['chicken breast 200g','zucchini 100g','carrots 80g','oil 10ml','salt + pepper'],
-       p_ar:'تبّل الدجاج. اشوِه 15 دق. قدم مع الخضار المشوية.',p_en:'Season chicken. Grill 15 min. Serve with grilled vegetables.'},
-      {ar:'بيض مخفوق + بطاطا + بصل',en:'Scrambled Eggs + Potatoes + Onion',cal:470,p:20,c:54,f:18,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['بيض 150غ (3 حبات)','بطاطا 200غ','بصل 60غ','زيت 15مل'],i_en:['eggs 150g (3 pcs)','potatoes 200g','onion 60g','oil 15ml'],
-       p_ar:'اسلق البطاطا 15 دق. قلِّ البصل. أضف البيض. اقلِ 5 دق.',p_en:'Boil potatoes 15 min. Fry onion. Add eggs. Fry 5 min.'},
-      {ar:'عدس + أرز + كمون',en:'Lentils + Rice + Cumin',cal:500,p:20,c:82,f:6,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['عدس 100غ','أرز 100غ','بصل 80غ','زيت 10مل','كمون'],i_en:['lentils 100g','rice 100g','onion 80g','oil 10ml','cumin'],
-       p_ar:'اسلق العدس 15 دق. أضف الأرز. قلِّ البصل فوقهما.',p_en:'Boil lentils 15 min. Add rice. Fry onion on top.'},
-      {ar:'حمص + خبز + زيت زيتون',en:'Hummus + Bread + Olive Oil',cal:430,p:16,c:52,f:18,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['حمص 200غ','خبز 90غ (3 شرائح)','زيت زيتون 15مل','ليمون 20مل'],i_en:['hummus 200g','bread 90g (3 slices)','olive oil 15ml','lemon 20ml'],
-       p_ar:'قدم الحمص مع الزيت والليمون والخبز.',p_en:'Serve hummus with oil, lemon and bread.'},
-      {ar:'دجاج + معكرونة + زيت',en:'Chicken + Pasta + Oil',cal:560,p:42,c:62,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['صدر دجاج 150غ','معكرونة 100غ','زيت زيتون 10مل','ملح + فلفل'],i_en:['chicken breast 150g','pasta 100g','olive oil 10ml','salt + pepper'],
-       p_ar:'اسلق المعكرونة. اطبخ الدجاج. اخلط مع الزيت.',p_en:'Boil pasta. Cook chicken. Mix with oil.'},
-      {ar:'أرز + فاصوليا + بيض',en:'Rice + Beans + Eggs',cal:510,p:26,c:72,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['أرز 100غ','فاصوليا 150غ','بيض 100غ (بيضتان)','زيت 10مل'],i_en:['rice 100g','beans 150g','eggs 100g (2 pcs)','oil 10ml'],
-       p_ar:'اطبخ الأرز. سخن الفاصوليا. اقلِ البيض.',p_en:'Cook rice. Heat beans. Fry eggs.'},
-      {ar:'شوربة دجاج + خبز',en:'Chicken Soup + Bread',cal:390,p:30,c:38,f:8,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['صدر دجاج 150غ','جزر 80غ','بطاطا 100غ','خبز 60غ','ملح + كمون'],i_en:['chicken breast 150g','carrots 80g','potatoes 100g','bread 60g','salt + cumin'],
-       p_ar:'اسلق كل شيء 25 دق. قدم مع الخبز.',p_en:'Boil everything 25 min. Serve with bread.'},
-      {ar:'بيض + سبانخ + خبز',en:'Eggs + Spinach + Bread',cal:360,p:22,c:30,f:16,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',
-       i_ar:['بيض 150غ (3 حبات)','سبانخ 100غ','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['eggs 150g (3 pcs)','spinach 100g','bread 60g (2 slices)','oil 10ml'],
-       p_ar:'قلِّ السبانخ 2 دق. أضف البيض. اقلِ 3 دق.',p_en:'Fry spinach 2 min. Add eggs. Fry 3 min.'},
+      {ar:'دجاج + أرز + سلطة',en:'Chicken + Rice + Salad',cal:580,p:48,c:58,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['دجاج 200غ','أرز 100غ','طماطم 100غ + خيار 100غ'],i_en:['chicken 200g','rice 100g','tomato 100g + cucumber 100g'],p_ar:'اطبخ الدجاج. اطبخ الأرز. قدم مع السلطة.',p_en:'Cook chicken. Cook rice. Serve with salad.'},
+      {ar:'تونة + أرز + زيت',en:'Tuna + Rice + Oil',cal:500,p:36,c:56,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['تونة 160غ (2 علبة)','أرز 100غ','زيت 10مل'],i_en:['tuna 160g (2 cans)','rice 100g','oil 10ml'],p_ar:'اطبخ الأرز. أضف التونة والزيت.',p_en:'Cook rice. Add tuna and oil.'},
+      {ar:'بيض + بطاطا + سلطة',en:'Eggs + Potatoes + Salad',cal:460,p:22,c:48,f:18,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['بيض 150غ (3 حبات)','بطاطا 300غ (2 حبة)','طماطم 100غ'],i_en:['eggs 150g (3 pcs)','potatoes 300g (2 pcs)','tomato 100g'],p_ar:'اسلق البطاطا. اقلي البيض.',p_en:'Boil potatoes. Fry eggs.'},
+      {ar:'معكرونة + تونة + طماطم',en:'Pasta + Tuna + Tomato',cal:520,p:32,c:62,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['معكرونة 100غ','تونة 160غ (2 علبة)','طماطم 150غ'],i_en:['pasta 100g','tuna 160g (2 cans)','tomatoes 150g'],p_ar:'اسلق المعكرونة. اخلط مع التونة.',p_en:'Boil pasta. Mix with tuna.'},
+      {ar:'عدس + خبز + زيتون',en:'Lentils + Bread + Olives',cal:420,p:22,c:58,f:8,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['عدس 150غ','خبز 60غ (شريحتان)','زيتون 30غ (8 حبات)'],i_en:['lentils 150g','bread 60g (2 slices)','olives 30g (8 pcs)'],p_ar:'اسلق العدس 20 دق.',p_en:'Boil lentils 20 min.'},
+      {ar:'فراخ مسلوقة + بطاطا',en:'Boiled Chicken + Potatoes',cal:540,p:44,c:46,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['صدر دجاج 180غ','بطاطا 250غ (2 حبة)','ملح + كمون'],i_en:['chicken breast 180g','potatoes 250g (2 pcs)','salt + cumin'],p_ar:'اسلق الدجاج والبطاطا 20 دق.',p_en:'Boil chicken and potatoes 20 min.'},
+      {ar:'سردين + أرز + ليمون',en:'Sardines + Rice + Lemon',cal:490,p:34,c:54,f:12,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['سردين 180غ (2 علبة)','أرز 100غ','ليمون 30مل'],i_en:['sardines 180g (2 cans)','rice 100g','lemon juice 30ml'],p_ar:'اطبخ الأرز. افتح السردين. أضف الليمون.',p_en:'Cook rice. Open sardines. Add lemon.'},
+      {ar:'فول + بيض + خبز',en:'Foul + Eggs + Bread',cal:450,p:26,c:52,f:14,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['فول 200غ','بيض 100غ (بيضتان)','خبز 60غ (شريحتان)'],i_en:['foul 200g','eggs 100g (2 pcs)','bread 60g (2 slices)'],p_ar:'سخن الفول. اقلِ البيض. قدم مع الخبز.',p_en:'Heat foul. Fry eggs. Serve with bread.'},
+      {ar:'دجاج + كسكس + جزر',en:'Chicken + Couscous + Carrots',cal:560,p:44,c:62,f:10,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['دجاج 180غ','كسكس 100غ','جزر 100غ'],i_en:['chicken 180g','couscous 100g','carrots 100g'],p_ar:'اسلق الدجاج 20 دق. ضع ماء مغلي على الكسكس 5 دق.',p_en:'Boil chicken 20 min. Pour boiling water on couscous 5 min.'},
+      {ar:'شوربة عدس + خبز',en:'Lentil Soup + Bread',cal:420,p:20,c:62,f:6,time_ar:'13:00 ☀️',time_en:'13:00 ☀️',i_ar:['عدس 150غ','بصل 80غ','طماطم 100غ','خبز 60غ'],i_en:['lentils 150g','onion 80g','tomatoes 100g','bread 60g'],p_ar:'اسلق العدس مع البصل والطماطم 25 دق.',p_en:'Boil lentils with onion and tomatoes 25 min.'},
     ],
     snack:[
-      {ar:'موز + لبن',en:'Banana + Yogurt',cal:200,p:8,c:36,f:4,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['موز 240غ (2 حبة)','لبن 150مل'],i_en:['bananas 240g (2 pcs)','yogurt 150ml'],
-       p_ar:'قدم الموز مع اللبن.',p_en:'Serve banana with yogurt.'},
-      {ar:'تفاح + جبن',en:'Apple + Cheese',cal:180,p:6,c:28,f:6,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['تفاح 150غ (1 حبة)','جبن 30غ'],i_en:['apple 150g (1 pc)','cheese 30g'],
-       p_ar:'قطع التفاح. قدم مع الجبن.',p_en:'Slice apple. Serve with cheese.'},
-      {ar:'مكسرات + تمر',en:'Nuts + Dates',cal:220,p:6,c:24,f:14,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['مكسرات 30غ','تمر 24غ (3 حبات)'],i_en:['mixed nuts 30g','dates 24g (3 pcs)'],
-       p_ar:'قدم المكسرات مع التمر.',p_en:'Serve nuts with dates.'},
-      {ar:'بيضة + خبز',en:'Egg + Bread',cal:200,p:10,c:22,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['بيض 50غ (1 حبة)','خبز 30غ'],i_en:['egg 50g (1 pc)','bread 30g'],
-       p_ar:'اسلق البيضة. قدم مع الخبز.',p_en:'Boil egg. Serve with bread.'},
-      {ar:'حليب + تمر',en:'Milk + Dates',cal:190,p:8,c:30,f:6,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['حليب 250مل','تمر 24غ (3 حبات)'],i_en:['milk 250ml','dates 24g (3 pcs)'],
-       p_ar:'اشرب الحليب مع التمر.',p_en:'Drink milk with dates.'},
-      {ar:'بيضة + جبن + خيار',en:'Egg + Cheese + Cucumber',cal:180,p:12,c:4,f:12,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['بيض 50غ (1 حبة)','جبن 30غ','خيار 100غ'],i_en:['egg 50g (1 pc)','cheese 30g','cucumber 100g'],
-       p_ar:'اسلق البيضة. قدم مع الجبن والخيار.',p_en:'Boil egg. Serve with cheese and cucumber.'},
-      {ar:'تمر + زبدة فول سوداني',en:'Dates + Peanut Butter',cal:230,p:6,c:30,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['تمر 40غ (5 حبات)','زبدة فول سوداني 20غ'],i_en:['dates 40g (5 pcs)','peanut butter 20g'],
-       p_ar:'ادهن التمر بالزبدة. لا طهي.',p_en:'Spread peanut butter on dates. No cooking.'},
-      {ar:'موز + مكسرات',en:'Banana + Nuts',cal:240,p:5,c:36,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['موز 120غ','مكسرات 25غ'],i_en:['banana 120g','nuts 25g'],
-       p_ar:'لا طهي. وجبة سريعة.',p_en:'No cooking. Quick snack.'},
-      {ar:'لبن + عسل + مكسرات',en:'Yogurt + Honey + Nuts',cal:250,p:10,c:28,f:12,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['لبن 200مل','عسل 15غ','مكسرات 20غ'],i_en:['yogurt 200ml','honey 15g','nuts 20g'],
-       p_ar:'أضف العسل والمكسرات على اللبن.',p_en:'Add honey and nuts on yogurt.'},
-      {ar:'خبز + جبن + طماطم',en:'Bread + Cheese + Tomato',cal:210,p:8,c:26,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['خبز 60غ (شريحتان)','جبن 30غ','طماطم 80غ'],i_en:['bread 60g (2 slices)','cheese 30g','tomato 80g'],
-       p_ar:'ضع الجبن والطماطم على الخبز.',p_en:'Put cheese and tomato on bread.'},
-      {ar:'برتقال + مكسرات',en:'Orange + Nuts',cal:170,p:4,c:28,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['برتقال 180غ (1 حبة)','مكسرات 20غ'],i_en:['orange 180g (1 pc)','nuts 20g'],
-       p_ar:'قشر البرتقال. قدم مع المكسرات.',p_en:'Peel orange. Serve with nuts.'},
-      {ar:'برتقال + لبن',en:'Orange + Yogurt',cal:160,p:7,c:28,f:3,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['برتقال 180غ (1 حبة)','لبن 100مل'],i_en:['orange 180g (1 pc)','yogurt 100ml'],
-       p_ar:'قشر البرتقال. قدم مع اللبن.',p_en:'Peel orange. Serve with yogurt.'},
-      {ar:'موز + زبدة فول سوداني',en:'Banana + Peanut Butter',cal:260,p:7,c:34,f:12,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['موز 120غ (1 حبة)','زبدة فول سوداني 20غ'],i_en:['banana 120g (1 pc)','peanut butter 20g'],
-       p_ar:'لا طهي.',p_en:'No cooking.'},
-      {ar:'حليب + تمر + مكسرات',en:'Milk + Dates + Nuts',cal:240,p:9,c:34,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['حليب 200مل','تمر 32غ (4 حبات)','مكسرات 15غ'],i_en:['milk 200ml','dates 32g (4 pcs)','nuts 15g'],
-       p_ar:'لا طهي.',p_en:'No cooking.'},
-      {ar:'خبز + عسل + حليب',en:'Bread + Honey + Milk',cal:270,p:9,c:46,f:5,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['خبز 60غ (شريحتان)','عسل 20غ','حليب 150مل'],i_en:['bread 60g (2 slices)','honey 20g','milk 150ml'],
-       p_ar:'لا طهي.',p_en:'No cooking.'},
-      {ar:'لبن + تمر + جوز',en:'Yogurt + Dates + Walnuts',cal:230,p:8,c:30,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['لبن 150مل','تمر 24غ (3 حبات)','جوز 15غ'],i_en:['yogurt 150ml','dates 24g (3 pcs)','walnuts 15g'],
-       p_ar:'لا طهي.',p_en:'No cooking.'},
-      {ar:'بيض مسلوق + جبن',en:'Boiled Egg + Cheese',cal:160,p:13,c:1,f:11,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['بيض 50غ (1 حبة)','جبن 40غ'],i_en:['egg 50g (1 pc)','cheese 40g'],
-       p_ar:'اسلق البيضة 8 دق. قدم مع الجبن.',p_en:'Boil egg 8 min. Serve with cheese.'},
-      {ar:'تفاح + لوز',en:'Apple + Almonds',cal:200,p:5,c:28,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['تفاح 150غ (1 حبة)','لوز 20غ'],i_en:['apple 150g (1 pc)','almonds 20g'],
-       p_ar:'لا طهي.',p_en:'No cooking.'},
-      {ar:'شوفان بارد + لبن + موز',en:'Cold Oats + Yogurt + Banana',cal:280,p:12,c:44,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['شوفان 50غ','لبن 150مل','موز 120غ'],i_en:['oats 50g','yogurt 150ml','banana 120g'],
-       p_ar:'اخلط كل شيء. لا طهي.',p_en:'Mix everything. No cooking.'},
-      {ar:'خبز + زبدة فول سوداني',en:'Bread + Peanut Butter',cal:280,p:10,c:30,f:14,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['خبز 60غ (شريحتان)','زبدة فول سوداني 30غ'],i_en:['bread 60g (2 slices)','peanut butter 30g'],
-       p_ar:'ادهن الخبز بالزبدة. لا طهي.',p_en:'Spread peanut butter on bread. No cooking.'},
-      {ar:'بيض مسلوق + خيار + طماطم',en:'Boiled Eggs + Cucumber + Tomato',cal:160,p:12,c:8,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['بيض 100غ (بيضتان)','خيار 100غ','طماطم 100غ','ملح'],i_en:['eggs 100g (2 pcs)','cucumber 100g','tomatoes 100g','salt'],
-       p_ar:'اسلق البيض. قطع الخضار. لا طبخ إضافي.',p_en:'Boil eggs. Chop vegetables. No extra cooking.'},
-      {ar:'حمص + خيار + زيت',en:'Hummus + Cucumber + Oil',cal:220,p:8,c:20,f:12,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['حمص 100غ','خيار 150غ','زيت زيتون 10مل'],i_en:['hummus 100g','cucumber 150g','olive oil 10ml'],
-       p_ar:'قدم الحمص مع الخيار والزيت. لا طهي.',p_en:'Serve hummus with cucumber and oil. No cooking.'},
-      {ar:'موز + زبدة فول سوداني',en:'Banana + Peanut Butter',cal:260,p:7,c:38,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['موز 120غ','زبدة فول سوداني 20غ'],i_en:['banana 120g','peanut butter 20g'],
-       p_ar:'قطع الموز. ادهن بالزبدة. لا طهي.',p_en:'Slice banana. Spread peanut butter. No cooking.'},
-      {ar:'جبن + زيتون + خيار',en:'Cheese + Olives + Cucumber',cal:190,p:9,c:6,f:14,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['جبن 50غ','زيتون 30غ (8 حبات)','خيار 150غ'],i_en:['cheese 50g','olives 30g (8 pcs)','cucumber 150g'],
-       p_ar:'قطع الجبن والخيار. قدم مع الزيتون. لا طهي.',p_en:'Cut cheese and cucumber. Serve with olives. No cooking.'},
-      {ar:'تمر + لوز + حليب',en:'Dates + Almonds + Milk',cal:290,p:10,c:38,f:12,time_ar:'16:00 🍎',time_en:'16:00 🍎',
-       i_ar:['تمر 40غ (5 حبات)','لوز 25غ','حليب 200مل'],i_en:['dates 40g (5 pcs)','almonds 25g','milk 200ml'],
-       p_ar:'قدم التمر واللوز مع الحليب. لا طهي.',p_en:'Serve dates and almonds with milk. No cooking.'},
+      {ar:'موز + لبن',en:'Banana + Yogurt',cal:200,p:8,c:36,f:4,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['موز 240غ (2 حبة)','لبن 150مل'],i_en:['bananas 240g (2 pcs)','yogurt 150ml'],p_ar:'قدم الموز مع اللبن.',p_en:'Serve banana with yogurt.'},
+      {ar:'تفاح + جبن',en:'Apple + Cheese',cal:180,p:6,c:28,f:6,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['تفاح 150غ (1 حبة)','جبن 30غ'],i_en:['apple 150g (1 pc)','cheese 30g'],p_ar:'قطع التفاح. قدم مع الجبن.',p_en:'Slice apple. Serve with cheese.'},
+      {ar:'مكسرات + تمر',en:'Nuts + Dates',cal:220,p:6,c:24,f:14,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['مكسرات 30غ','تمر 24غ (3 حبات)'],i_en:['mixed nuts 30g','dates 24g (3 pcs)'],p_ar:'قدم المكسرات مع التمر.',p_en:'Serve nuts with dates.'},
+      {ar:'بيضة + خبز',en:'Egg + Bread',cal:200,p:10,c:22,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['بيض 50غ (1 حبة)','خبز 30غ'],i_en:['egg 50g (1 pc)','bread 30g'],p_ar:'اسلق البيضة. قدم مع الخبز.',p_en:'Boil egg. Serve with bread.'},
+      {ar:'حليب + تمر',en:'Milk + Dates',cal:190,p:8,c:30,f:6,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['حليب 250مل','تمر 24غ (3 حبات)'],i_en:['milk 250ml','dates 24g (3 pcs)'],p_ar:'اشرب الحليب مع التمر.',p_en:'Drink milk with dates.'},
+      {ar:'لبن + عسل + مكسرات',en:'Yogurt + Honey + Nuts',cal:250,p:10,c:28,f:12,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['لبن 200مل','عسل 15غ','مكسرات 20غ'],i_en:['yogurt 200ml','honey 15g','nuts 20g'],p_ar:'أضف العسل والمكسرات على اللبن.',p_en:'Add honey and nuts on yogurt.'},
+      {ar:'خبز + جبن + طماطم',en:'Bread + Cheese + Tomato',cal:210,p:8,c:26,f:8,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['خبز 60غ (شريحتان)','جبن 30غ','طماطم 80غ'],i_en:['bread 60g (2 slices)','cheese 30g','tomato 80g'],p_ar:'ضع الجبن والطماطم على الخبز.',p_en:'Put cheese and tomato on bread.'},
+      {ar:'موز + مكسرات',en:'Banana + Nuts',cal:240,p:5,c:36,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['موز 120غ','مكسرات 25غ'],i_en:['banana 120g','nuts 25g'],p_ar:'لا طهي. وجبة سريعة.',p_en:'No cooking. Quick snack.'},
+      {ar:'بيض مسلوق + جبن',en:'Boiled Egg + Cheese',cal:160,p:13,c:1,f:11,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['بيض 50غ (1 حبة)','جبن 40غ'],i_en:['egg 50g (1 pc)','cheese 40g'],p_ar:'اسلق البيضة 8 دق. قدم مع الجبن.',p_en:'Boil egg 8 min. Serve with cheese.'},
+      {ar:'تفاح + لوز',en:'Apple + Almonds',cal:200,p:5,c:28,f:10,time_ar:'16:00 🍎',time_en:'16:00 🍎',i_ar:['تفاح 150غ (1 حبة)','لوز 20غ'],i_en:['apple 150g (1 pc)','almonds 20g'],p_ar:'لا طهي.',p_en:'No cooking.'},
     ],
     dinner:[
-      {ar:'سردين + خبز + طماطم',en:'Sardines + Bread + Tomato',cal:360,p:26,c:32,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['سردين 90غ','خبز 60غ (شريحتان)','طماطم 100غ'],i_en:['sardines 90g','bread 60g (2 slices)','tomato 100g'],
-       p_ar:'افتح السردين. لا طهي.',p_en:'Open sardines. No cooking.'},
-      {ar:'بيض + خبز + زيتون',en:'Eggs + Bread + Olives',cal:340,p:18,c:30,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['بيض 150غ (3 حبات)','خبز 60غ (شريحتان)','زيتون 30غ (8 حبات)'],i_en:['eggs 150g (3 pcs)','bread 60g (2 slices)','olives 30g (8 pcs)'],
-       p_ar:'اقلي البيض. قدم مع الخبز والزيتون.',p_en:'Fry eggs. Serve with bread and olives.'},
-      {ar:'شوفان + حليب + تمر',en:'Oats + Milk + Dates',cal:360,p:12,c:60,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['شوفان 80غ','حليب 250مل','تمر 24غ (3 حبات)'],i_en:['oats 80g','milk 250ml','dates 24g (3 pcs)'],
-       p_ar:'اطبخ الشوفان 5 دق.',p_en:'Cook oats 5 min.'},
-      {ar:'عدس + خبز',en:'Lentils + Bread',cal:380,p:20,c:56,f:6,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['عدس 120غ','طماطم 100غ','خبز 30غ'],i_en:['lentils 120g','tomato 100g','bread 30g'],
-       p_ar:'اسلق العدس 20 دق.',p_en:'Boil lentils 20 min.'},
-      {ar:'تونة + خبز + طماطم',en:'Tuna + Bread + Tomato',cal:330,p:26,c:28,f:8,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['تونة 80غ','خبز 60غ (شريحتان)','طماطم 100غ'],i_en:['tuna 80g','bread 60g (2 slices)','tomato 100g'],
-       p_ar:'افتح التونة. قدم مع الخبز والطماطم.',p_en:'Open tuna. Serve with bread and tomato.'},
-      {ar:'بيض + فول + خبز',en:'Eggs + Foul + Bread',cal:400,p:24,c:46,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['بيض 100غ (بيضتان)','فول 150غ','خبز 30غ'],i_en:['eggs 100g (2 pcs)','foul 150g','bread 30g'],
-       p_ar:'اقلِ البيض. سخن الفول. قدم مع الخبز.',p_en:'Fry eggs. Heat foul. Serve with bread.'},
-      {ar:'سردين + بطاطا مسلوقة',en:'Sardines + Boiled Potatoes',cal:380,p:28,c:36,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['سردين 90غ','بطاطا 200غ (2 حبة)','ليمون 20مل'],i_en:['sardines 90g','potatoes 200g (2 pcs)','lemon 20ml'],
-       p_ar:'اسلق البطاطا 15 دق. افتح السردين. أضف الليمون.',p_en:'Boil potatoes 15 min. Open sardines. Add lemon.'},
-      {ar:'معكرونة + زيت زيتون + جبن',en:'Pasta + Olive Oil + Cheese',cal:450,p:16,c:62,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['معكرونة 100غ','زيت زيتون 15مل','جبن مبشور 30غ'],i_en:['pasta 100g','olive oil 15ml','grated cheese 30g'],
-       p_ar:'اسلق المعكرونة 10 دق. أضف الزيت والجبن.',p_en:'Boil pasta 10 min. Add oil and cheese.'},
-      {ar:'خبز + تونة + بيض',en:'Bread + Tuna + Egg',cal:360,p:28,c:28,f:12,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['خبز 60غ (شريحتان)','تونة 80غ','بيض 50غ (1 حبة)'],i_en:['bread 60g (2 slices)','tuna 80g','egg 50g (1 pc)'],
-       p_ar:'اقلِ البيضة. افتح التونة. قدم مع الخبز.',p_en:'Fry egg. Open tuna. Serve with bread.'},
-      {ar:'أرز + تونة + زيتون',en:'Rice + Tuna + Olives',cal:440,p:30,c:52,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['أرز 100غ','تونة 80غ','زيتون 30غ (8 حبات)'],i_en:['rice 100g','tuna 80g','olives 30g (8 pcs)'],
-       p_ar:'اطبخ الأرز. افتح التونة. اخلط مع الزيتون.',p_en:'Cook rice. Open tuna. Mix with olives.'},
-      {ar:'شوفان + لبن + تمر',en:'Oats + Yogurt + Dates',cal:340,p:14,c:54,f:8,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['شوفان 70غ','لبن 150مل','تمر 24غ (3 حبات)'],i_en:['oats 70g','yogurt 150ml','dates 24g (3 pcs)'],
-       p_ar:'اخلط الشوفان مع اللبن. أضف التمر.',p_en:'Mix oats with yogurt. Add dates.'},
-      {ar:'بطاطا مسلوقة + بيض + زيت',en:'Boiled Potatoes + Eggs + Oil',cal:390,p:16,c:52,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['بطاطا 250غ (2 حبة)','بيض 100غ (بيضتان)','زيت زيتون 10مل'],i_en:['potatoes 250g (2 pcs)','eggs 100g (2 pcs)','olive oil 10ml'],
-       p_ar:'اسلق البطاطا 15 دق. اقلِ البيض. أضف الزيت.',p_en:'Boil potatoes 15 min. Fry eggs. Add oil.'},
-      {ar:'عجة + طماطم + خبز',en:'Omelette + Tomato + Bread',cal:350,p:18,c:32,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['بيض 150غ (3 حبات)','طماطم 100غ','خبز 30غ','زيت 10مل'],i_en:['eggs 150g (3 pcs)','tomato 100g','bread 30g','oil 10ml'],
-       p_ar:'اخفق البيض. قلِّه مع الطماطم 4 دق.',p_en:'Whisk eggs. Fry with tomato 4 min.'},
-      {ar:'معكرونة + صلصة طماطم',en:'Pasta + Tomato Sauce',cal:410,p:12,c:72,f:8,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['معكرونة 100غ','صلصة طماطم 100غ','زيت 10مل'],i_en:['pasta 100g','tomato sauce 100g','oil 10ml'],
-       p_ar:'اسلق المعكرونة 10 دق. أضف الصلصة.',p_en:'Boil pasta 10 min. Add sauce.'},
-      {ar:'حمص + خبز + زيتون',en:'Hummus + Bread + Olives',cal:380,p:14,c:48,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['حمص 150غ','خبز 60غ (شريحتان)','زيتون 30غ'],i_en:['hummus 150g','bread 60g (2 slices)','olives 30g'],
-       p_ar:'افتح الحمص. قدم مع الخبز والزيتون.',p_en:'Open hummus. Serve with bread and olives.'},
-      {ar:'فريك + خضروات',en:'Freekeh + Vegetables',cal:400,p:16,c:66,f:8,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['فريك 100غ','جزر 80غ','كوسا 80غ','ملح + زيت 10مل'],i_en:['freekeh 100g','carrots 80g','zucchini 80g','salt + oil 10ml'],
-       p_ar:'اسلق الفريك 20 دق. أضف الخضروات.',p_en:'Boil freekeh 20 min. Add vegetables.'},
-      {ar:'بيض + حمص + خبز',en:'Eggs + Chickpeas + Bread',cal:410,p:22,c:48,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['بيض 100غ (بيضتان)','حمص معلب 100غ','خبز 60غ (شريحتان)'],i_en:['eggs 100g (2 pcs)','canned chickpeas 100g','bread 60g (2 slices)'],
-       p_ar:'اقلِ البيض. سخن الحمص. قدم مع الخبز.',p_en:'Fry eggs. Heat chickpeas. Serve with bread.'},
-      {ar:'أرز + جزر + زيت',en:'Rice + Carrots + Oil',cal:360,p:8,c:66,f:8,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['أرز 100غ','جزر 150غ','زيت زيتون 10مل','ملح'],i_en:['rice 100g','carrots 150g','olive oil 10ml','salt'],
-       p_ar:'اطبخ الأرز. اسلق الجزر 10 دق. أضف الزيت.',p_en:'Cook rice. Boil carrots 10 min. Add oil.'},
-      {ar:'تونة + حمص + خبز',en:'Tuna + Chickpeas + Bread',cal:420,p:32,c:44,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['تونة 80غ','حمص معلب 120غ','خبز 60غ (شريحتان)'],i_en:['tuna 80g','canned chickpeas 120g','bread 60g (2 slices)'],
-       p_ar:'افتح التونة والحمص. قدم مع الخبز.',p_en:'Open tuna and chickpeas. Serve with bread.'},
-      {ar:'بيض مقلي + فلفل + خبز',en:'Fried Eggs + Pepper + Bread',cal:350,p:18,c:30,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['بيض 150غ (3 حبات)','فلفل أحمر 100غ','خبز 60غ (شريحتان)','زيت 10مل'],i_en:['eggs 150g (3 pcs)','red pepper 100g','bread 60g (2 slices)','oil 10ml'],
-       p_ar:'قلِّ الفلفل 3 دق. أضف البيض. اقلِ 3 دق.',p_en:'Fry pepper 3 min. Add eggs. Fry 3 min.'},
-      {ar:'فول + بيض + زيت زيتون',en:'Foul + Eggs + Olive Oil',cal:420,p:24,c:44,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['فول 180غ','بيض 100غ (بيضتان)','زيت زيتون 10مل','ليمون 20مل'],i_en:['foul 180g','eggs 100g (2 pcs)','olive oil 10ml','lemon 20ml'],
-       p_ar:'سخن الفول. اسلق البيض. أضف الزيت والليمون.',p_en:'Heat foul. Boil eggs. Add oil and lemon.'},
-      {ar:'حمص + خضار + خبز',en:'Hummus + Vegetables + Bread',cal:380,p:14,c:50,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['حمص 150غ','خيار 100غ','طماطم 100غ','خبز 60غ (شريحتان)'],i_en:['hummus 150g','cucumber 100g','tomatoes 100g','bread 60g (2 slices)'],
-       p_ar:'قدم الحمص مع الخضار والخبز. لا طهي.',p_en:'Serve hummus with vegetables and bread. No cooking.'},
-      {ar:'أرز + بصل + بيض مقلي',en:'Rice + Onion + Fried Eggs',cal:430,p:18,c:62,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['أرز 100غ','بصل 80غ','بيض 100غ (بيضتان)','زيت 15مل'],i_en:['rice 100g','onion 80g','eggs 100g (2 pcs)','oil 15ml'],
-       p_ar:'اطبخ الأرز. قلِّ البصل حتى يذهب. اقلِ البيض.',p_en:'Cook rice. Fry onion until golden. Fry eggs.'},
-      {ar:'سبانخ + بيض + خبز',en:'Spinach + Eggs + Bread',cal:330,p:20,c:28,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['سبانخ 150غ','بيض 150غ (3 حبات)','خبز 30غ','زيت 10مل'],i_en:['spinach 150g','eggs 150g (3 pcs)','bread 30g','oil 10ml'],
-       p_ar:'قلِّ السبانخ 2 دق. أضف البيض المخفوق. اقلِ 3 دق.',p_en:'Fry spinach 2 min. Add whisked eggs. Fry 3 min.'},
-      {ar:'جبن + طماطم + زيتون + خبز',en:'Cheese + Tomato + Olives + Bread',cal:360,p:14,c:32,f:18,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['جبن 60غ','طماطم 150غ','زيتون 30غ','خبز 60غ (شريحتان)'],i_en:['cheese 60g','tomatoes 150g','olives 30g','bread 60g (2 slices)'],
-       p_ar:'قطع كل شيء. قدم مع الخبز. لا طهي.',p_en:'Cut everything. Serve with bread. No cooking.'},
-      {ar:'دجاج مسلوق + خضار مسلوقة',en:'Boiled Chicken + Boiled Vegetables',cal:380,p:42,c:22,f:8,time_ar:'20:00 🌙',time_en:'20:00 🌙',
-       i_ar:['صدر دجاج 180غ','جزر 100غ','بطاطا 150غ','ملح + كمون'],i_en:['chicken breast 180g','carrots 100g','potatoes 150g','salt + cumin'],
-       p_ar:'اسلق كل شيء معاً 20 دق. وجبة صحية كاملة.',p_en:'Boil everything together 20 min. Complete healthy meal.'},
+      {ar:'سردين + خبز + طماطم',en:'Sardines + Bread + Tomato',cal:360,p:26,c:32,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['سردين 90غ','خبز 60غ (شريحتان)','طماطم 100غ'],i_en:['sardines 90g','bread 60g (2 slices)','tomato 100g'],p_ar:'افتح السردين. لا طهي.',p_en:'Open sardines. No cooking.'},
+      {ar:'بيض + خبز + زيتون',en:'Eggs + Bread + Olives',cal:340,p:18,c:30,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['بيض 150غ (3 حبات)','خبز 60غ (شريحتان)','زيتون 30غ (8 حبات)'],i_en:['eggs 150g (3 pcs)','bread 60g (2 slices)','olives 30g (8 pcs)'],p_ar:'اقلي البيض. قدم مع الخبز والزيتون.',p_en:'Fry eggs. Serve with bread and olives.'},
+      {ar:'شوفان + حليب + تمر',en:'Oats + Milk + Dates',cal:360,p:12,c:60,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['شوفان 80غ','حليب 250مل','تمر 24غ (3 حبات)'],i_en:['oats 80g','milk 250ml','dates 24g (3 pcs)'],p_ar:'اطبخ الشوفان 5 دق.',p_en:'Cook oats 5 min.'},
+      {ar:'تونة + خبز + طماطم',en:'Tuna + Bread + Tomato',cal:330,p:26,c:28,f:8,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['تونة 80غ','خبز 60غ (شريحتان)','طماطم 100غ'],i_en:['tuna 80g','bread 60g (2 slices)','tomato 100g'],p_ar:'افتح التونة. قدم مع الخبز والطماطم.',p_en:'Open tuna. Serve with bread and tomato.'},
+      {ar:'بيض + فول + خبز',en:'Eggs + Foul + Bread',cal:400,p:24,c:46,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['بيض 100غ (بيضتان)','فول 150غ','خبز 30غ'],i_en:['eggs 100g (2 pcs)','foul 150g','bread 30g'],p_ar:'اقلِ البيض. سخن الفول. قدم مع الخبز.',p_en:'Fry eggs. Heat foul. Serve with bread.'},
+      {ar:'معكرونة + زيت زيتون + جبن',en:'Pasta + Olive Oil + Cheese',cal:450,p:16,c:62,f:16,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['معكرونة 100غ','زيت زيتون 15مل','جبن مبشور 30غ'],i_en:['pasta 100g','olive oil 15ml','grated cheese 30g'],p_ar:'اسلق المعكرونة 10 دق. أضف الزيت والجبن.',p_en:'Boil pasta 10 min. Add oil and cheese.'},
+      {ar:'عدس + خبز',en:'Lentils + Bread',cal:380,p:20,c:56,f:6,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['عدس 120غ','طماطم 100غ','خبز 30غ'],i_en:['lentils 120g','tomato 100g','bread 30g'],p_ar:'اسلق العدس 20 دق.',p_en:'Boil lentils 20 min.'},
+      {ar:'أرز + تونة + زيتون',en:'Rice + Tuna + Olives',cal:440,p:30,c:52,f:10,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['أرز 100غ','تونة 80غ','زيتون 30غ (8 حبات)'],i_en:['rice 100g','tuna 80g','olives 30g (8 pcs)'],p_ar:'اطبخ الأرز. افتح التونة. اخلط مع الزيتون.',p_en:'Cook rice. Open tuna. Mix with olives.'},
+      {ar:'بطاطا مسلوقة + بيض + زيت',en:'Boiled Potatoes + Eggs + Oil',cal:390,p:16,c:52,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['بطاطا 250غ (2 حبة)','بيض 100غ (بيضتان)','زيت زيتون 10مل'],i_en:['potatoes 250g (2 pcs)','eggs 100g (2 pcs)','olive oil 10ml'],p_ar:'اسلق البطاطا 15 دق. اقلِ البيض. أضف الزيت.',p_en:'Boil potatoes 15 min. Fry eggs. Add oil.'},
+      {ar:'حمص + خبز + زيتون',en:'Hummus + Bread + Olives',cal:380,p:14,c:48,f:14,time_ar:'20:00 🌙',time_en:'20:00 🌙',i_ar:['حمص 150غ','خبز 60غ (شريحتان)','زيتون 30غ'],i_en:['hummus 150g','bread 60g (2 slices)','olives 30g'],p_ar:'افتح الحمص. قدم مع الخبز والزيتون.',p_en:'Open hummus. Serve with bread and olives.'},
     ]
   }
 };
-
-// Small foods to top up calories
-const TOPUPS=[
-  {ar:'تمرة',en:'1 Date',cal:23,p:0,c:6,f:0},
-  {ar:'كوب حليب',en:'Glass of Milk',cal:120,p:6,c:12,f:5},
-  {ar:'موزة',en:'Banana',cal:90,p:1,c:23,f:0},
-  {ar:'ملعقة زيت زيتون',en:'Tbsp Olive Oil',cal:120,p:0,c:0,f:14},
-  {ar:'شريحة خبز',en:'Bread Slice',cal:80,p:3,c:15,f:1},
-  {ar:'بيضة مسلوقة',en:'Boiled Egg',cal:78,p:6,c:1,f:5},
-  {ar:'حفنة مكسرات',en:'Handful Nuts',cal:160,p:5,c:6,f:14},
-  {ar:'لبن صغير',en:'Small Yogurt',cal:100,p:5,c:10,f:4},
-  {ar:'تفاحة',en:'Apple',cal:80,p:0,c:21,f:0},
-  {ar:'ملعقة عسل',en:'Tbsp Honey',cal:64,p:0,c:17,f:0},
-  {ar:'قطعة جبن',en:'Cheese Slice',cal:80,p:5,c:1,f:6},
-  {ar:'كوب شاي بحليب',en:'Tea with Milk',cal:50,p:2,c:6,f:2},
-];
 
 function shuf(a){for(let i=a.length-1;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
 function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
@@ -1320,64 +843,55 @@ function scaleMeal(meal,targetCal,frac){
   return{...meal,cal:target,p:Math.round(meal.p*ratio),c:Math.round(meal.c*ratio),f:Math.round(meal.f*ratio)};
 }
 
-// Build a day's meals — last meal absorbs rounding so total always = target
+// Build a full day — last meal always = target minus sum of others (exact total)
 function buildDay(mode,targetCal){
   const tc=Math.round(targetCal)||2000;
-  function fix(base,cal){
+  function fixLast(base,cal){
+    if(cal<=0) cal=Math.round(tc*0.1);
     const r=cal/base.cal;
     return{...base,cal,p:Math.round(base.p*r),c:Math.round(base.c*r),f:Math.round(base.f*r)};
   }
-  let day;
   if(mode==='ramadan'){
-    const iftar=scaleMeal(rand(ML.ramadan.iftar),tc,.22);
-    const isha=scaleMeal(rand(ML.ramadan.isha),tc,.50);
-    const suhoor=fix(rand(ML.ramadan.suhoor), tc-iftar.cal-isha.cal);
-    day={mode,iftar,isha,suhoor};
+    const iftar=scaleMeal(rand(ML.ramadan.iftar),tc,0.22);
+    const isha=scaleMeal(rand(ML.ramadan.isha),tc,0.50);
+    const suhoor=fixLast(rand(ML.ramadan.suhoor), tc-iftar.cal-isha.cal);
+    return{mode,iftar,isha,suhoor};
   } else {
-    const breakfast=scaleMeal(rand(ML.normal.breakfast),tc,.25);
-    const lunch=scaleMeal(rand(ML.normal.lunch),tc,.35);
-    const snack=scaleMeal(rand(ML.normal.snack),tc,.12);
-    const dinner=fix(rand(ML.normal.dinner), tc-breakfast.cal-lunch.cal-snack.cal);
-    day={mode,breakfast,lunch,snack,dinner};
+    const breakfast=scaleMeal(rand(ML.normal.breakfast),tc,0.25);
+    const lunch=scaleMeal(rand(ML.normal.lunch),tc,0.35);
+    const snack=scaleMeal(rand(ML.normal.snack),tc,0.12);
+    const dinner=fixLast(rand(ML.normal.dinner), tc-breakfast.cal-lunch.cal-snack.cal);
+    return{mode,breakfast,lunch,snack,dinner};
   }
-  return day;
 }
 
-function genAllMeals(showToast){
-  const tc=Math.round(P.targetCal)||2000;
-  for(let d=0;d<7;d++) if(!MP[d]||MP[d].mode!==mealMode) MP[d]=buildDay(mealMode,tc);
-  if(showToast) toast(t('toast-meals'));
-  save(); rMeals();
-}
 function forceGenAllMeals(){
   const tc=Math.round(P.targetCal)||2000;
   for(let d=0;d<7;d++) MP[d]=buildDay(mealMode,tc);
-  localStorage.setItem('ff7_meal_date',new Date().toDateString());
+  localStorage.setItem('ff8_meal_date',new Date().toDateString());
   toast(t('toast-meals')); save(); rMeals();
 }
+
 function refreshMeal(mKey){
   if(!MP[CD]) return;
   const tc=Math.round(P.targetCal)||2000;
-  const pool=mealMode==='ramadan'?ML.ramadan[mKey]:ML.normal[mKey];
-  if(!pool) return;
-  const cur=MP[CD][mKey]; let nxt,tries=0;
-  do{nxt=rand(pool);tries++;}while(tries<10&&cur&&nxt.ar===cur.ar);
-  // Rebuild full day with new meal, keeping total = target
+  // Rebuild a fresh day and take just the requested meal slot from it
   const newDay=buildDay(mealMode,tc);
-  // Only swap the requested meal, recalc last meal to fix total
   MP[CD][mKey]=newDay[mKey];
-  // Recalculate total and fix
+  // Recalculate last meal to keep total = target
   const day=MP[CD];
   const isRam=mealMode==='ramadan';
   const keys=isRam?['iftar','isha','suhoor']:['breakfast','lunch','snack','dinner'];
   const lastKey=keys[keys.length-1];
-  const othersTotal=keys.slice(0,-1).reduce((s,k)=>s+(day[k]?day[k].cal:0),0);
-  const rem=tc-othersTotal;
-  if(rem>0&&day[lastKey]){
-    const base=day[lastKey];const r=rem/base.cal;
-    day[lastKey]={...base,cal:rem,p:Math.round(base.p*r),c:Math.round(base.c*r),f:Math.round(base.f*r)};
+  if(mKey!==lastKey){
+    const othersTotal=keys.slice(0,-1).reduce((s,k)=>s+(day[k]?day[k].cal:0),0);
+    const rem=tc-othersTotal;
+    if(rem>50&&day[lastKey]){
+      const base=day[lastKey];const r=rem/base.cal;
+      day[lastKey]={...base,cal:rem,p:Math.round(base.p*r),c:Math.round(base.c*r),f:Math.round(base.f*r)};
+    }
   }
-  save(); rDayMeals(); toast(t('toast-meal1'));
+  save(); rDayMeals(); rMeals(); toast(t('toast-meal1'));
 }
 
 // ============================================================
@@ -1391,10 +905,8 @@ function rMeals(){
   const msRm=document.getElementById('msw-rm'), msNm=document.getElementById('msw-nm');
   msRm.className='msw'+(mealMode==='ramadan'?' rm':'');
   msNm.className='msw'+(mealMode==='normal'?' nm':'');
-  // Day selector
   const days_ar=['أحد','إثنين','ثلاث','أربع','خميس','جمعة','سبت'];
   const days_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const todayD=new Date().getDay();
   const daysel=document.getElementById('daysel');
   daysel.innerHTML=[0,1,2,3,4,5,6].map(d=>{
     const nm=ar?days_ar[d]:days_en[d];
@@ -1406,11 +918,9 @@ function rMeals(){
     ?[{k:'iftar',m:day.iftar},{k:'isha',m:day.isha},{k:'suhoor',m:day.suhoor}]
     :[{k:'breakfast',m:day.breakfast},{k:'lunch',m:day.lunch},{k:'snack',m:day.snack},{k:'dinner',m:day.dinner}];
   const totalCal=meals.reduce((s,{m})=>s+(m&&m.cal||0),0);
-  const topupCal=(day.topup||[]).reduce((s,x)=>s+(x.cal||0),0);
-  const grandTotal=totalCal+topupCal;
   const target=P.targetCal||2000;
   document.getElementById('dt-lb').textContent=t('dt-lb');
-  document.getElementById('dt-cl').textContent=grandTotal+' kcal';
+  document.getElementById('dt-cl').textContent=totalCal+' kcal';
   document.getElementById('dt-lbt').textContent=t('dt-lbt');
   document.getElementById('dt-tv').textContent=target+' kcal';
   rDayMeals();
@@ -1455,28 +965,12 @@ function rDayMeals(){
       </div>
     </div>`;
   });
-  // Topup extras
-  if(day.topup&&day.topup.length){
-    const topupTotal=day.topup.reduce((s,x)=>s+(x.cal||0),0);
-    h+=`<div class="card" style="border-color:var(--ac);border-width:1.5px">
-      <div style="font-size:14px;font-weight:800;color:var(--ac);margin-bottom:8px">
-        ⚡ ${ar?'إضافات لإكمال السعرات (+'+topupTotal+' kcal)':'Calorie Topups (+'+topupTotal+' kcal)'}
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px">
-        ${day.topup.map(x=>`
-          <div style="background:var(--s3);border:1px solid var(--br);border-radius:10px;padding:8px 12px;font-size:13px">
-            <div style="font-weight:700">${ar?x.ar:x.en}</div>
-            <div style="color:var(--ac);font-weight:800">${x.cal} kcal</div>
-          </div>`).join('')}
-      </div>
-    </div>`;
-  }
   document.getElementById('mlcnt').innerHTML=h;
 }
 function togMC(k){document.getElementById('mc-'+k)?.classList.toggle('exp');}
 
 // ============================================================
-// EXERCISES — All levels in one flat pool, sorted by difficulty
+// EXERCISES
 // ============================================================
 const EX={
   warmup:[
@@ -1494,105 +988,41 @@ const EX={
     {id:'c2',ic:'🧘',ar:'وضعية الطفل',en:'Child Pose',yt:'child pose stretch',dur:'60s',mAr:['الظهر'],mEn:['Back'],tAr:['تنفس بعمق'],tEn:['Breathe deeply'],wc:1},
     {id:'c3',ic:'🧘',ar:'تمديد الهامسترينج',en:'Hamstring Stretch',yt:'hamstring stretch cooldown',dur:'30s/leg',mAr:['الهامسترينج'],mEn:['Hamstrings'],tAr:['ظهر مستقيم'],tEn:['Keep back straight'],wc:1},
   ],
-  // Upper body — 3 difficulty tiers mixed in one pool
   upper:[
-    // Beginner
-    {id:'ub1',ic:'🏋️',ar:'تأرجح بيدين',en:'Two-Hand KB Swing',yt:'two hand kettlebell swing tutorial',
-     s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'5×15'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},
-     mAr:['الأرداف','الظهر'],mEn:['Glutes','Back'],tAr:['الحركة من الورك'],tEn:['Hinge from hips'],cal:8,diff:1},
-    {id:'ub2',ic:'⭕',ar:'هالو حول الرأس',en:'KB Halo',yt:'kettlebell halo tutorial',
-     s:{'1':'2×8','2':'3×8','3':'3×10','4':'3×12','5':'4×12'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'45s'},
-     mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['حركة بطيئة'],tEn:['Slow motion'],cal:5,diff:1},
-    {id:'ub3',ic:'💪',ar:'ضغط أرضي',en:'KB Floor Press',yt:'kettlebell floor press tutorial',
-     s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['الصدر','الكتفين'],mEn:['Chest','Shoulders'],tAr:['المرفق 45°'],tEn:['Elbow 45°'],cal:6,diff:1},
-    {id:'ub4',ic:'🚣',ar:'تجديف للخلف',en:'Bent-Over Row',yt:'kettlebell bent over row tutorial',
-     s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['الظهر','البايسبس'],mEn:['Back','Biceps'],tAr:['الكوع للأعلى'],tEn:['Elbow up'],cal:7,diff:1},
-    {id:'ub5',ic:'🎯',ar:'رفع فوق الرأس',en:'KB Overhead Carry',yt:'kettlebell overhead carry',
-     s:{'1':'3×20m','2':'3×25m','3':'4×25m','4':'4×30m','5':'4×40m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['اضغط الكتف'],tEn:['Pack shoulder'],cal:6,diff:1},
-    // Intermediate
-    {id:'ui1',ic:'⚡',ar:'كلين بيد واحدة',en:'Single Arm Clean',yt:'single arm kettlebell clean tutorial',
-     s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},
-     mAr:['الأرداف','الكتفين'],mEn:['Glutes','Shoulders'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:12,diff:2},
-    {id:'ui2',ic:'🎯',ar:'ضغط عسكري',en:'KB Military Press',yt:'kettlebell military press tutorial',
-     s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'5×10'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},
-     mAr:['الكتفين','الترايسبس'],mEn:['Shoulders','Triceps'],tAr:['مستقيم للأعلى'],tEn:['Press straight up'],cal:9,diff:2},
-    {id:'ui3',ic:'💥',ar:'ضغط بيد واحدة',en:'Single Arm Floor Press',yt:'single arm kettlebell floor press',
-     s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['الصدر','القلب'],mEn:['Chest','Core'],tAr:['حافظ على التوازن'],tEn:['Keep body stable'],cal:6,diff:2},
-    // Advanced
-    {id:'ua1',ic:'🔥',ar:'السناتش',en:'KB Snatch',yt:'kettlebell snatch tutorial',
-     s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},
-     mAr:['كل الجسم'],mEn:['Full Body'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:18,diff:3},
-    {id:'ua2',ic:'🏆',ar:'التركي الكامل',en:'Turkish Get-Up',yt:'turkish get up tutorial',
-     s:{'1':'3×2','2':'3×3','3':'4×3','4':'4×4','5':'4×5'},r:{'1':'120s','2':'120s','3':'90s','4':'90s','5':'75s'},
-     mAr:['كل الجسم','القلب'],mEn:['Full Body','Core'],tAr:['كل مرحلة متحكم فيها'],tEn:['Control every phase'],cal:16,diff:3},
+    {id:'ub1',ic:'🏋️',ar:'تأرجح بيدين',en:'Two-Hand KB Swing',yt:'two hand kettlebell swing tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'5×15'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الظهر'],mEn:['Glutes','Back'],tAr:['الحركة من الورك'],tEn:['Hinge from hips'],cal:8,diff:1},
+    {id:'ub2',ic:'⭕',ar:'هالو حول الرأس',en:'KB Halo',yt:'kettlebell halo tutorial',s:{'1':'2×8','2':'3×8','3':'3×10','4':'3×12','5':'4×12'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'45s'},mAr:['الكتفين','القلب'],mEn:['Shoulders','Core'],tAr:['حركة بطيئة'],tEn:['Slow motion'],cal:5,diff:1},
+    {id:'ub3',ic:'💪',ar:'ضغط أرضي',en:'KB Floor Press',yt:'kettlebell floor press tutorial',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الصدر','الكتفين'],mEn:['Chest','Shoulders'],tAr:['المرفق 45°'],tEn:['Elbow 45°'],cal:6,diff:1},
+    {id:'ub4',ic:'🚣',ar:'تجديف للخلف',en:'Bent-Over Row',yt:'kettlebell bent over row tutorial',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الظهر','البايسبس'],mEn:['Back','Biceps'],tAr:['الكوع للأعلى'],tEn:['Elbow up'],cal:7,diff:1},
+    {id:'ui1',ic:'⚡',ar:'كلين بيد واحدة',en:'Single Arm Clean',yt:'single arm kettlebell clean tutorial',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['الأرداف','الكتفين'],mEn:['Glutes','Shoulders'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:12,diff:2},
+    {id:'ui2',ic:'🎯',ar:'ضغط عسكري',en:'KB Military Press',yt:'kettlebell military press tutorial',s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'5×10'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['الكتفين','الترايسبس'],mEn:['Shoulders','Triceps'],tAr:['مستقيم للأعلى'],tEn:['Press straight up'],cal:9,diff:2},
+    {id:'ua1',ic:'🔥',ar:'السناتش',en:'KB Snatch',yt:'kettlebell snatch tutorial',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['القوة من الورك'],tEn:['Power from hips'],cal:18,diff:3},
+    {id:'ua2',ic:'🏆',ar:'التركي الكامل',en:'Turkish Get-Up',yt:'turkish get up tutorial',s:{'1':'3×2','2':'3×3','3':'4×3','4':'4×4','5':'4×5'},r:{'1':'120s','2':'120s','3':'90s','4':'90s','5':'75s'},mAr:['كل الجسم','القلب'],mEn:['Full Body','Core'],tAr:['كل مرحلة متحكم فيها'],tEn:['Control every phase'],cal:16,diff:3},
   ],
   lower:[
-    {id:'lb1',ic:'🦵',ar:'جلسة الكأس',en:'Goblet Squat',yt:'goblet squat kettlebell tutorial',
-     s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×20'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['اجلس للخلف والأسفل'],tEn:['Sit back and down'],cal:8,diff:1},
-    {id:'lb2',ic:'🏋️',ar:'رفع ميت روماني',en:'Romanian Deadlift',yt:'kettlebell romanian deadlift',
-     s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'60s'},
-     mAr:['الهامسترينج','الأرداف'],mEn:['Hamstrings','Glutes'],tAr:['انحنِ من الورك'],tEn:['Hinge from hips'],cal:9,diff:1},
-    {id:'lb3',ic:'🚶',ar:'طعنة للخلف',en:'Reverse Lunge',yt:'kettlebell reverse lunge tutorial',
-     s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الجذع مستقيم'],tEn:['Torso upright'],cal:7,diff:1},
-    {id:'lb4',ic:'🍑',ar:'جسر الأرداف',en:'Glute Bridge',yt:'glute bridge kettlebell tutorial',
-     s:{'1':'3×12','2':'3×15','3':'4×15','4':'4×20','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},
-     mAr:['الأرداف','الهامسترينج'],mEn:['Glutes','Hamstrings'],tAr:['اضغط الأرداف'],tEn:['Squeeze at top'],cal:6,diff:1},
-    {id:'lb5',ic:'🦵',ar:'خطوة جانبية',en:'Lateral Lunge',yt:'lateral lunge kettlebell',
-     s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['الفخذ الداخلي','الأرداف'],mEn:['Adductors','Glutes'],tAr:['أبعد الركبة'],tEn:['Push knee out'],cal:7,diff:2},
-    {id:'lb6',ic:'🍑',ar:'تأرجح لتقوية الأرداف',en:'Glute-Focus Swing',yt:'kettlebell swing glute focus',
-     s:{'1':'4×12','2':'4×15','3':'5×15','4':'5×20','5':'6×20'},r:{'1':'60s','2':'45s','3':'45s','4':'30s','5':'30s'},
-     mAr:['الأرداف','الهامسترينج'],mEn:['Glutes','Hamstrings'],tAr:['اضغط الأرداف في الأعلى'],tEn:['Squeeze glutes at top'],cal:10,diff:2},
-    {id:'la1',ic:'🦅',ar:'جلسة ساق واحدة',en:'Pistol Squat',yt:'pistol squat tutorial',
-     s:{'1':'3×3','2':'3×4','3':'4×4','4':'4×5','5':'4×6'},r:{'1':'120s','2':'90s','3':'90s','4':'75s','5':'60s'},
-     mAr:['الفخذ','التوازن'],mEn:['Quads','Balance'],tAr:['امسك للتوازن'],tEn:['Hold for balance'],cal:15,diff:3},
+    {id:'lb1',ic:'🦵',ar:'جلسة الكأس',en:'Goblet Squat',yt:'goblet squat kettlebell tutorial',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×20'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['اجلس للخلف والأسفل'],tEn:['Sit back and down'],cal:8,diff:1},
+    {id:'lb2',ic:'🏋️',ar:'رفع ميت روماني',en:'Romanian Deadlift',yt:'kettlebell romanian deadlift',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'60s'},mAr:['الهامسترينج','الأرداف'],mEn:['Hamstrings','Glutes'],tAr:['انحنِ من الورك'],tEn:['Hinge from hips'],cal:9,diff:1},
+    {id:'lb3',ic:'🚶',ar:'طعنة للخلف',en:'Reverse Lunge',yt:'kettlebell reverse lunge tutorial',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الجذع مستقيم'],tEn:['Torso upright'],cal:7,diff:1},
+    {id:'lb4',ic:'🍑',ar:'جسر الأرداف',en:'Glute Bridge',yt:'glute bridge kettlebell tutorial',s:{'1':'3×12','2':'3×15','3':'4×15','4':'4×20','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['الأرداف','الهامسترينج'],mEn:['Glutes','Hamstrings'],tAr:['اضغط الأرداف'],tEn:['Squeeze at top'],cal:6,diff:1},
+    {id:'lb5',ic:'🦵',ar:'خطوة جانبية',en:'Lateral Lunge',yt:'lateral lunge kettlebell',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ الداخلي','الأرداف'],mEn:['Adductors','Glutes'],tAr:['أبعد الركبة'],tEn:['Push knee out'],cal:7,diff:2},
+    {id:'la1',ic:'🦅',ar:'جلسة ساق واحدة',en:'Pistol Squat',yt:'pistol squat tutorial',s:{'1':'3×3','2':'3×4','3':'4×4','4':'4×5','5':'4×6'},r:{'1':'120s','2':'90s','3':'90s','4':'75s','5':'60s'},mAr:['الفخذ','التوازن'],mEn:['Quads','Balance'],tAr:['امسك للتوازن'],tEn:['Hold for balance'],cal:15,diff:3},
   ],
   full:[
-    {id:'fb1',ic:'⚡',ar:'تأرجح + جلسة',en:'Swing to Squat',yt:'kettlebell swing squat combo',
-     s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['كل الجسم'],mEn:['Full Body'],tAr:['حركة متدفقة'],tEn:['Fluid motion'],cal:10,diff:1},
-    {id:'fb2',ic:'🔄',ar:'دوران حول الجسم',en:'Around the Body Pass',yt:'kettlebell around body pass',
-     s:{'1':'3×10','2':'3×12','3':'3×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},
-     mAr:['القلب','الكتفين'],mEn:['Core','Shoulders'],tAr:['بدّل الاتجاه'],tEn:['Alternate direction'],cal:6,diff:1},
-    {id:'fb3',ic:'🌊',ar:'تأرجح + طعنة',en:'Swing + Lunge',yt:'kettlebell swing lunge combo',
-     s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['كل الجسم'],mEn:['Full Body'],tAr:['تأرجح ثم طعنة'],tEn:['Swing then lunge'],cal:11,diff:1},
-    {id:'fi1',ic:'🎯',ar:'كلين + ضغط',en:'Clean & Press',yt:'kettlebell clean and press',
-     s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},
-     mAr:['كل الجسم'],mEn:['Full Body'],tAr:['الكلين أولاً'],tEn:['Clean then press'],cal:13,diff:2},
-    {id:'fa1',ic:'🏆',ar:'التركي الكامل',en:'Turkish Get-Up',yt:'turkish get up full body',
-     s:{'1':'3×2','2':'3×3','3':'4×3','4':'4×4','5':'4×5'},r:{'1':'120s','2':'120s','3':'90s','4':'90s','5':'75s'},
-     mAr:['كل الجسم','القلب'],mEn:['Full Body','Core'],tAr:['كل مرحلة متحكم فيها'],tEn:['Control every phase'],cal:16,diff:3},
+    {id:'fb1',ic:'⚡',ar:'تأرجح + جلسة',en:'Swing to Squat',yt:'kettlebell swing squat combo',s:{'1':'3×8','2':'3×10','3':'3×12','4':'4×12','5':'4×15'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['حركة متدفقة'],tEn:['Fluid motion'],cal:10,diff:1},
+    {id:'fb2',ic:'🔄',ar:'دوران حول الجسم',en:'Around the Body Pass',yt:'kettlebell around body pass',s:{'1':'3×10','2':'3×12','3':'3×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الكتفين'],mEn:['Core','Shoulders'],tAr:['بدّل الاتجاه'],tEn:['Alternate direction'],cal:6,diff:1},
+    {id:'fb3',ic:'🌊',ar:'تأرجح + طعنة',en:'Swing + Lunge',yt:'kettlebell swing lunge combo',s:{'1':'3×6','2':'3×8','3':'4×8','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['تأرجح ثم طعنة'],tEn:['Swing then lunge'],cal:11,diff:1},
+    {id:'fi1',ic:'🎯',ar:'كلين + ضغط',en:'Clean & Press',yt:'kettlebell clean and press',s:{'1':'3×5','2':'3×6','3':'4×6','4':'4×8','5':'5×8'},r:{'1':'90s','2':'90s','3':'75s','4':'60s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['الكلين أولاً'],tEn:['Clean then press'],cal:13,diff:2},
+    {id:'fa1',ic:'🏆',ar:'التركي الكامل',en:'Turkish Get-Up',yt:'turkish get up full body',s:{'1':'3×2','2':'3×3','3':'4×3','4':'4×4','5':'4×5'},r:{'1':'120s','2':'120s','3':'90s','4':'90s','5':'75s'},mAr:['كل الجسم','القلب'],mEn:['Full Body','Core'],tAr:['كل مرحلة متحكم فيها'],tEn:['Control every phase'],cal:16,diff:3},
   ],
   cardio:[
-    {id:'cb1',ic:'💥',ar:'تأرجح متقطع',en:'Swing Intervals',yt:'kettlebell swing intervals HIIT',
-     s:{'1':'5×20s','2':'6×20s','3':'6×30s','4':'8×30s','5':'10×30s'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},
-     mAr:['القلب','الأرداف'],mEn:['Cardio','Glutes'],tAr:['20 ث تأرجح ثم راحة'],tEn:['20s swing then rest'],cal:12,diff:1,isC:1},
-    {id:'cb2',ic:'🧳',ar:'مشي بالكيتل بيل',en:'Farmer Walk',yt:'farmer carry kettlebell tutorial',
-     s:{'1':'4×30m','2':'4×40m','3':'5×40m','4':'5×50m','5':'6×50m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},
-     mAr:['القلب','القبضة'],mEn:['Cardio','Grip'],tAr:['الكتفان للخلف'],tEn:['Shoulders back'],cal:9,diff:1,isC:1},
-    {id:'cb3',ic:'⏱️',ar:'قرفصاء انفجاري',en:'Squat Thrusters',yt:'kettlebell squat thruster',
-     s:{'1':'4×10','2':'4×12','3':'5×12','4':'5×15','5':'6×15'},r:{'1':'75s','2':'60s','3':'60s','4':'45s','5':'45s'},
-     mAr:['القلب','كل الجسم'],mEn:['Cardio','Full Body'],tAr:['قوة انفجارية'],tEn:['Explosive power'],cal:14,diff:2,isC:1},
-    {id:'ci1',ic:'🔥',ar:'مجموعة التحمل',en:'KB Complex',yt:'kettlebell complex workout',
-     s:{'1':'3×5','2':'4×5','3':'4×6','4':'5×6','5':'5×8'},r:{'1':'120s','2':'90s','3':'90s','4':'75s','5':'60s'},
-     mAr:['كل الجسم'],mEn:['Full Body'],tAr:['لا تضع الكيتل بيل'],tEn:["Don't put bell down"],cal:16,diff:2,isC:1},
-    {id:'ai1',ic:'⚡',ar:'AMRAP',en:'AMRAP Circuit',yt:'AMRAP kettlebell circuit',
-     s:{'1':'3×2min','2':'3×3min','3':'4×3min','4':'4×4min','5':'5×4min'},r:{'1':'2min','2':'90s','3':'75s','4':'75s','5':'60s'},
-     mAr:['كل الجسم'],mEn:['Full Body'],tAr:['أكبر عدد تكرارات'],tEn:['Maximum reps'],cal:20,diff:3,isC:1},
+    {id:'cb1',ic:'💥',ar:'تأرجح متقطع',en:'Swing Intervals',yt:'kettlebell swing intervals HIIT',s:{'1':'5×20s','2':'6×20s','3':'6×30s','4':'8×30s','5':'10×30s'},r:{'1':'60s','2':'60s','3':'45s','4':'45s','5':'30s'},mAr:['القلب','الأرداف'],mEn:['Cardio','Glutes'],tAr:['20 ث تأرجح ثم راحة'],tEn:['20s swing then rest'],cal:12,diff:1,isC:1},
+    {id:'cb2',ic:'🧳',ar:'مشي بالكيتل بيل',en:'Farmer Walk',yt:'farmer carry kettlebell tutorial',s:{'1':'4×30m','2':'4×40m','3':'5×40m','4':'5×50m','5':'6×50m'},r:{'1':'90s','2':'75s','3':'60s','4':'60s','5':'45s'},mAr:['القلب','القبضة'],mEn:['Cardio','Grip'],tAr:['الكتفان للخلف'],tEn:['Shoulders back'],cal:9,diff:1,isC:1},
+    {id:'cb3',ic:'⏱️',ar:'قرفصاء انفجاري',en:'Squat Thrusters',yt:'kettlebell squat thruster',s:{'1':'4×10','2':'4×12','3':'5×12','4':'5×15','5':'6×15'},r:{'1':'75s','2':'60s','3':'60s','4':'45s','5':'45s'},mAr:['القلب','كل الجسم'],mEn:['Cardio','Full Body'],tAr:['قوة انفجارية'],tEn:['Explosive power'],cal:14,diff:2,isC:1},
+    {id:'ai1',ic:'⚡',ar:'AMRAP',en:'AMRAP Circuit',yt:'AMRAP kettlebell circuit',s:{'1':'3×2min','2':'3×3min','3':'4×3min','4':'4×4min','5':'5×4min'},r:{'1':'2min','2':'90s','3':'75s','4':'75s','5':'60s'},mAr:['كل الجسم'],mEn:['Full Body'],tAr:['أكبر عدد تكرارات'],tEn:['Maximum reps'],cal:20,diff:3,isC:1},
   ]
 };
 
 const WEEK=['upper','lower','rest','full','cardio','rest','upper'];
 
-// Progressive pool: picks exercises matching current intensity level
-// intensity 1-2 = beginner (diff:1), 3 = intermediate (diff:1+2), 4-5 = all
 function getPool(type){
   if(type==='rest') return [];
   const il=P.intensity||1;
@@ -1645,7 +1075,6 @@ function rWorkout(){
   document.getElementById('pg1').textContent=P.sessions||0;
   document.getElementById('pg2').textContent=P.streak||0;
   document.getElementById('pg3').textContent=il;
-  // Day plan
   const today=new Date().getDay();
   const dayN_ar=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
   const dayN_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -1655,7 +1084,6 @@ function rWorkout(){
     const isToday=d===today;
     return`<div class="dpc${isToday?' on':''}">${nm}<br>${ic}</div>`;
   }).join('');
-  // Level badges
   const levels=[{k:'beginner',l:ar?'مبتدئ':'Beginner',d:1},
                 {k:'intermediate',l:ar?'متوسط':'Intermediate',d:2},
                 {k:'advanced',l:ar?'متقدم':'Advanced',d:3}];
@@ -1666,20 +1094,16 @@ function rWorkout(){
   if(!_WP) return;
   const sk=String(Math.min(il,5));
   let h='';
-  // Warmup
   h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag">${ar?'الإحماء':'Warm Up'}</div><div class="wsec-l"></div></div>`;
   (_WP.warmup||[]).forEach(e=>{ h+=exCard(e,null,sk,ar); });
-  // Main
   h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--ac)">${t('wtype-'+_WP.type)}</div><div class="wsec-l"></div></div>`;
   if(_WP.type==='rest'){
     h+=`<div class="card" style="text-align:center;padding:32px"><div style="font-size:48px">😴</div><div style="font-size:18px;font-weight:800;margin-top:12px">${ar?'يوم راحة — الجسم يحتاج للتعافي':'Rest Day — Your body needs recovery'}</div></div>`;
   } else {
     (_WP.main||[]).forEach(e=>{ h+=exCard(e,e.s?e.s[sk]:null,sk,ar); });
   }
-  // Cooldown
   h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag">${ar?'التهدئة':'Cool Down'}</div><div class="wsec-l"></div></div>`;
   (_WP.cooldown||[]).forEach(e=>{ h+=exCard(e,null,sk,ar); });
-  // Complete button always at the very bottom
   if(_WP.type!=='rest'){
     h+=`<button class="btn bp done-btn${P.doneToday?' cmp':''}" onclick="cmpSession()">${P.doneToday?(ar?'✅ تم اليوم':'✅ Done Today'):(ar?'✅ إنهاء التمرين':'✅ Complete Workout')}</button>`;
   }
@@ -1739,7 +1163,6 @@ function cmpSession(){
   const lastD=P.lastWD?Math.floor((new Date()-new Date(P.lastWD))/86400000):99;
   P.streak=lastD<=1?(P.streak||0)+1:1;
   P.lastWD=today; P.doneToday=true;
-  // Auto-progress intensity every 3 sessions
   if(P.sessions%3===0&&(P.intensity||1)<5){
     P.intensity=Math.min((P.intensity||1)+1,5);
     toast(L==='ar'?'🎯 تمت ترقيتك!':'🎯 Level up!');
@@ -1803,8 +1226,6 @@ function renderDailyChart(){
   const doneCount=bars.filter(b=>b.done).length;
   const sub=document.getElementById('dc-sub');
   if(sub) sub.textContent=ar?`${doneCount} تمرين من ${days} يوم`:`${doneCount} workouts in ${days} days`;
-
-  // Force canvas to recalculate width
   const W=canvas.getBoundingClientRect().width||canvas.offsetWidth||300;
   const H=140;
   const dpr=window.devicePixelRatio||1;
@@ -1814,13 +1235,11 @@ function renderDailyChart(){
   canvas.style.height=H+'px';
   const ctx=canvas.getContext('2d');
   ctx.scale(dpr,dpr);
-
   const padL=4,padR=4,padT=10,padB=28;
   const barW=Math.floor((W-padL-padR)/days);
   const gap=Math.max(2,Math.floor(barW*0.18));
   const bw=barW-gap;
   const maxH=H-padT-padB;
-
   bars.forEach((b,i)=>{
     const x=padL+i*barW;
     const barH=b.done?maxH:Math.round(maxH*0.22);
@@ -1849,7 +1268,7 @@ function renderDailyChart(){
 }
 
 // ============================================================
-// RAMADAN / PRAYER
+// RAMADAN
 // ============================================================
 function rRamadanUI(){
   const on=isRamadan;
@@ -1866,13 +1285,12 @@ function toggleRamadan(){
   toast(isRamadan?t('toast-ram-on'):t('toast-ram-off'));
 }
 function setMode(m){
-  mealMode=m;
-  forceGenAllMeals();
-  rMeals();
+  mealMode=m; isRamadan=(m==='ramadan');
+  forceGenAllMeals(); rRamadanUI(); rMeals();
 }
 
 // ============================================================
-// REST TIMER + AUDIO
+// REST TIMER
 // ============================================================
 let RTI=null, _AC=null;
 function getAC(){
@@ -1922,9 +1340,6 @@ function saveEdit(){
   const h=+document.getElementById('ed-ht').value;
   const a=+document.getElementById('ed-ag').value;
   if(!n){toast(L==='ar'?'أدخل الاسم':'Enter name');return;}
-  if(!a||a<10||a>100){toast(L==='ar'?'العمر 10-100':'Age 10-100');return;}
-  if(!w||w<20||w>300){toast(L==='ar'?'الوزن 20-300':'Weight 20-300');return;}
-  if(!h||h<100||h>250){toast(L==='ar'?'الطول 100-250':'Height 100-250');return;}
   P.name=n;P.weight=w;P.height=h;P.age=a;
   calcCal(); save(); closeMov('editMov'); rProfile(); rHome();
   toast(t('toast-saved'));
@@ -1936,16 +1351,14 @@ function doReset(){
 }
 
 // ============================================================
-// INIT — THE KEY FIX
+// INIT
 // ============================================================
 function startApp(){
-  // Called by "ابدأ" button — new user goes to setup
   document.getElementById('pg-splash').classList.remove('on');
   document.getElementById('pg-setup').classList.add('on');
   CS=1; showStep(1);
 }
 
-// Called on page load
 window.addEventListener('DOMContentLoaded', ()=>{
   const has=load();
   applyLang();
@@ -1959,7 +1372,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
   },30000);
 });
 
-// Register Service Worker
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./sw.js').then(reg=>reg.update()).catch(()=>{});
 }

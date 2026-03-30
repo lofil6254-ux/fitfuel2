@@ -286,22 +286,18 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 <!-- HOME TAB -->
 <div id="t-home" style="display:block">
 <div class="wrap" style="padding-top:16px">
-  <div class="wibanner" id="wibanner" onclick="openEdit()">
-    <div style="display:flex;align-items:center;gap:10px">
+  <div class="wibanner" id="wibanner">
+    <div style="display:flex;align-items:center;gap:10px;flex:1;cursor:pointer" onclick="openEdit()">
       <div style="font-size:22px">⚖️</div>
       <div>
         <div style="font-size:14px;font-weight:800;color:var(--bl)" id="wi-t">—</div>
         <div style="font-size:12px;color:var(--mt);margin-top:2px" id="wi-s">—</div>
       </div>
     </div>
-    <button class="wi-btn" id="wi-btn">—</button>
-  </div>
-  <div class="rbanner" id="rbanner">
-    <div style="display:flex;align-items:center;gap:9px">
-      <div style="font-size:24px" id="rb-ic">🌙</div>
-      <div><div style="font-size:16px;font-weight:800;color:var(--gd)" id="rb-t">—</div><div style="font-size:13px;color:var(--mt)" id="rb-s">—</div></div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <button class="wi-btn" id="wi-btn" onclick="openEdit()">—</button>
+      <button onclick="dismissWeighBanner()" style="background:none;border:none;color:var(--mt);font-size:18px;cursor:pointer;padding:4px;line-height:1">×</button>
     </div>
-    <button class="rtoggle" id="rtogbtn" onclick="toggleRamadan()">—</button>
   </div>
   <div class="hero">
     <div style="font-size:14px;color:var(--mt)" id="hm-gr">—</div>
@@ -718,7 +714,11 @@ function nx(n){
     P.gender=document.getElementById('i-gn').value;
     P.weight=+document.getElementById('i-wt').value;
     P.height=+document.getElementById('i-ht').value;
-    if(!P.name||!P.age||!P.weight||!P.height){toast(L==='ar'?'أكمل بياناتك':'Fill all fields');return;}
+    const ar2=L==='ar';
+    if(!P.name||!P.age||!P.weight||!P.height){toast(ar2?'أكمل بياناتك':'Fill all fields');return;}
+    if(P.weight<30||P.weight>300){toast(ar2?'الوزن يجب أن يكون بين 30 و 300 كغ':'Weight must be 30–300 kg');return;}
+    if(P.height<100||P.height>250){toast(ar2?'الطول يجب أن يكون بين 100 و 250 سم':'Height must be 100–250 cm');return;}
+    if(P.age<10||P.age>100){toast(ar2?'العمر يجب أن يكون بين 10 و 100':'Age must be 10–100');return;}
   }
   if(n===2&&!SEL.goal){toast(L==='ar'?'اختر هدفك':'Choose goal');return;}
   if(n===3&&!SEL.level){toast(L==='ar'?'اختر مستواك':'Choose level');return;}
@@ -733,8 +733,8 @@ function finSetup(){
   calcCal();
   const tc=Math.round(P.targetCal)||2000;
   for(let d=0;d<7;d++){
-    MP_RAM[d]=buildDay('ramadan',tc);
-    MP_NRM[d]=buildDay('normal',tc);
+    MP_RAM[d]=buildDay('ramadan',tc,d);
+    MP_NRM[d]=buildDay('normal',tc,d);
   }
   MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
   MEAL_EATEN={};
@@ -750,15 +750,19 @@ function rWeighInBanner(){
   const banner=document.getElementById('wibanner');
   const last=P.lastWeighIn||0;
   const daysSince=Math.floor((Date.now()-last)/(1000*60*60*24));
-  const due=daysSince>=30;
+  const due=daysSince>=30&&!P.bannerDismissed;
   banner.classList.toggle('on',due);
   if(!due) return;
-  const weeks=Math.floor(daysSince/7);
   document.getElementById('wi-t').textContent=ar?'حان وقت تحديث وزنك! ⚖️':'Time to update your weight! ⚖️';
   document.getElementById('wi-s').textContent=ar
     ?`آخر تحديث منذ ${daysSince} يوم — وزنك الحالي قد تغيّر`
     :`Last updated ${daysSince} days ago — your weight may have changed`;
   document.getElementById('wi-btn').textContent=ar?'تحديث الآن':'Update Now';
+}
+function dismissWeighBanner(){
+  P.bannerDismissed=true;
+  save();
+  document.getElementById('wibanner').classList.remove('on');
 }
 function rHome(){
   if(!P.name) return;
@@ -2816,13 +2820,7 @@ function renderDailyChart(){
 // RAMADAN
 // ============================================================
 function rRamadanUI(){
-  const on=isRamadan;
-  document.getElementById('rb-ic').textContent=on?'🌙':'☀️';
-  document.getElementById('rb-t').textContent=on?t('rb-t'):(L==='ar'?'وضع التمرين العادي':'Normal Training Mode');
-  document.getElementById('rb-s').textContent=on?t('rb-s'):(L==='ar'?'وضع عادي مفعّل':'Normal mode ON');
-  const btn=document.getElementById('rtogbtn');
-  btn.textContent=on?t('rtoggle-on'):t('rtoggle-off');
-  btn.classList.toggle('off',!on);
+  // banner removed — mode state is shown via the mode-sw buttons in meals tab
 }
 function toggleRamadan(){
   isRamadan=!isRamadan; mealMode=isRamadan?'ramadan':'normal';
@@ -2887,10 +2885,22 @@ function saveEdit(){
   const w=+document.getElementById('ed-wt').value;
   const h=+document.getElementById('ed-ht').value;
   const a=+document.getElementById('ed-ag').value;
-  if(!n){toast(L==='ar'?'أدخل الاسم':'Enter name');return;}
+  const ar=L==='ar';
+  if(!n){toast(ar?'أدخل الاسم':'Enter name');return;}
+  if(!w||w<30||w>300){toast(ar?'الوزن يجب أن يكون بين 30 و 300 كغ':'Weight must be between 30–300 kg');return;}
+  if(!h||h<100||h>250){toast(ar?'الطول يجب أن يكون بين 100 و 250 سم':'Height must be between 100–250 cm');return;}
+  if(!a||a<10||a<10||a>100){toast(ar?'العمر يجب أن يكون بين 10 و 100':'Age must be between 10–100');return;}
   P.name=n;P.weight=w;P.height=h;P.age=a;
   P.lastWeighIn=Date.now();
-  calcCal(); save(); closeMov('editMov'); rProfile(); rHome();
+  P.bannerDismissed=false;
+  calcCal();
+  const tc=Math.round(P.targetCal)||2000;
+  for(let d=0;d<7;d++){
+    MP_RAM[d]=buildDay('ramadan',tc,d);
+    MP_NRM[d]=buildDay('normal',tc,d);
+  }
+  MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
+  save(); closeMov('editMov'); rProfile(); rHome(); rMeals();
   toast(t('toast-saved'));
 }
 function doReset(){

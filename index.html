@@ -172,6 +172,36 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 .mcls{float:inline-end;background:var(--s3);border:none;color:var(--tx2);font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
 .rstbtn{width:100%;padding:15px;border-radius:var(--r2);border:2px solid var(--br);background:transparent;color:var(--mt);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;transition:all .2s}
 .rstbtn:hover{border-color:var(--pk);color:var(--pk);background:var(--pkd)}
+.wibanner{background:linear-gradient(145deg,rgba(77,184,255,.12),rgba(77,184,255,.06));border:1.5px solid rgba(77,184,255,.4);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;display:none;align-items:center;justify-content:space-between;gap:10px;box-shadow:var(--sh2);cursor:pointer}
+.wibanner.on{display:flex}
+.wi-btn{border:2px solid var(--bl);color:var(--bl);background:var(--bld);border-radius:50px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:16px}
+.wday{display:flex;flex-direction:column;align-items:center;gap:4px}
+.wday-nm{font-size:10px;font-weight:800;color:var(--mt);text-transform:uppercase;letter-spacing:.3px}
+.wday-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid var(--br);background:var(--s3);position:relative;flex-shrink:0}
+.wday-circle.trained{border-color:var(--ac);background:rgba(200,245,58,.15)}
+.wday-circle.today{box-shadow:0 0 0 2px var(--bl)}
+.wday-dots{display:flex;gap:3px;margin-top:1px}
+.wdot{width:6px;height:6px;border-radius:50%;background:var(--br)}
+.wdot.cal{background:var(--or)}
+.wdot.pro{background:var(--bl)}
+.dash-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.dstat{background:var(--s3);border-radius:var(--r2);padding:12px;border:1px solid var(--br2);text-align:center}
+.dstat-ic{font-size:20px;margin-bottom:4px}
+.dstat-v{font-size:18px;font-weight:900;color:var(--ac)}
+.dstat-l{font-size:11px;color:var(--mt);font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+.legend-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--mt)}
+.shoplist{background:var(--s2);border:1px solid var(--br2);border-radius:var(--r);padding:18px;margin-top:14px;box-shadow:var(--sh2)}
+.shoplist-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.shoplist-ic{font-size:24px}
+.shoplist-ttl{font-size:17px;font-weight:900;color:var(--tx)}
+.shoplist-sub{font-size:13px;color:var(--mt);margin-top:2px}
+.shop-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--br2)}
+.shop-item:last-child{border:none}
+.shop-nm{font-size:15px;color:var(--tx);font-weight:600}
+.shop-amt{font-size:15px;font-weight:900;color:var(--ac)}
+.shop-cat{font-size:11px;color:var(--mt);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -217,7 +247,12 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
       <div class="oc" onclick="pick(this,'goal','lose')"><div class="oi">🔥</div><div class="ol" id="g-lose">—</div></div>
       <div class="oc" onclick="pick(this,'goal','gain')"><div class="oi">💪</div><div class="ol" id="g-gain">—</div></div>
       <div class="oc" onclick="pick(this,'goal','maintain')"><div class="oi">⚖️</div><div class="ol" id="g-main">—</div></div>
-      <div class="oc" onclick="pick(this,'goal','fit')"><div class="oi">🏃</div><div class="ol" id="g-fit">—</div></div>
+      <div class="oc" onclick="pick(this,'goal','fit')"><div class="oi">🏃</div><div class="ol" id="g-fit">—</div></div></div>
+    <div class="g1" style="margin-top:10px">
+      <div class="oc oc-h" onclick="pick(this,'goal','recomp')" style="border-color:rgba(200,245,58,.3);background:linear-gradient(135deg,rgba(200,245,58,.05),rgba(77,184,255,.05))">
+        <div class="oi">🔥💪</div>
+        <div><div class="ol" id="g-recomp">—</div><div class="os" id="g-recomps">—</div></div>
+      </div>
     </div>
     <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx2" onclick="nx(2)">—</button></div>
   </div>
@@ -251,6 +286,16 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 <!-- HOME TAB -->
 <div id="t-home" style="display:block">
 <div class="wrap" style="padding-top:16px">
+  <div class="wibanner" id="wibanner" onclick="openEdit()">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="font-size:22px">⚖️</div>
+      <div>
+        <div style="font-size:14px;font-weight:800;color:var(--bl)" id="wi-t">—</div>
+        <div style="font-size:12px;color:var(--mt);margin-top:2px" id="wi-s">—</div>
+      </div>
+    </div>
+    <button class="wi-btn" id="wi-btn">—</button>
+  </div>
   <div class="rbanner" id="rbanner">
     <div style="display:flex;align-items:center;gap:9px">
       <div style="font-size:24px" id="rb-ic">🌙</div>
@@ -339,9 +384,8 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 <!-- MEALS TAB -->
 <div id="t-meals" style="display:none">
 <div class="wrap" style="padding-top:16px">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+  <div style="margin-bottom:10px">
     <h2 style="font-size:18px" id="ml-ti">—</h2>
-    <button class="btn bo" style="padding:6px 11px;font-size:14px" onclick="forceGenAllMeals()">🔄 <span id="all-t">—</span></button>
   </div>
   <div class="mode-sw">
     <button class="msw" id="msw-rm" onclick="setMode('ramadan')">🌙 <span id="msw-rm-t">—</span></button>
@@ -350,9 +394,17 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
   <div class="daysel" id="daysel"></div>
   <div class="dtbar">
     <div><div class="tag" id="dt-lb">—</div><div style="font-size:19px;font-weight:900" id="dt-cl">—</div></div>
+    <div style="text-align:center"><div style="font-size:11px;color:var(--bl);font-weight:800;text-transform:uppercase;letter-spacing:.5px" id="dt-plb">—</div><div style="font-size:16px;font-weight:900;color:var(--bl)" id="dt-pv">—</div></div>
     <div style="text-align:end"><div style="font-size:13px;color:var(--mt)" id="dt-lbt">—</div><div style="font-size:16px;font-weight:800" id="dt-tv">—</div></div>
   </div>
   <div id="mlcnt"></div>
+  <div class="shoplist" id="shoplist" style="display:none">
+    <div class="shoplist-hdr">
+      <div class="shoplist-ic">🛒</div>
+      <div><div class="shoplist-ttl" id="shop-ttl">—</div><div class="shoplist-sub" id="shop-sub">—</div></div>
+    </div>
+    <div id="shopitems"></div>
+  </div>
 </div></div>
 
 <!-- PROFILE TAB -->
@@ -373,13 +425,15 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
   </div>
   <div class="pstats" id="pstats"></div>
   <div class="card" style="margin-bottom:10px">
-    <h3 style="font-size:16px;margin-bottom:4px" id="dc-t">—</h3>
+    <h3 style="font-size:16px;margin-bottom:3px" id="dc-t">—</h3>
     <div style="font-size:12px;color:var(--mt);margin-bottom:14px" id="dc-sub">—</div>
-    <canvas id="dcChart" height="140" style="width:100%;display:block"></canvas>
-    <div style="display:flex;justify-content:center;gap:18px;margin-top:12px;font-size:12px;color:var(--mt)">
-      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--ac);margin-inline-end:5px;vertical-align:middle"></span><span id="dc-leg1">—</span></span>
-      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--br);margin-inline-end:5px;vertical-align:middle"></span><span id="dc-leg2">—</span></span>
+    <div class="week-grid" id="week-grid"></div>
+    <div class="legend-row">
+      <div class="leg-item"><span style="width:10px;height:10px;border-radius:50%;background:var(--ac);display:inline-block"></span><span id="dc-leg1">—</span></div>
+      <div class="leg-item"><span class="wdot cal" style="display:inline-block"></span><span id="dc-leg2">—</span></div>
+      <div class="leg-item"><span class="wdot pro" style="display:inline-block"></span><span id="dc-leg3">—</span></div>
     </div>
+    <div class="dash-stats" id="dash-stats" style="margin-top:14px"></div>
   </div>
   <button class="rstbtn" onclick="doReset()" id="rst-btn">—</button>
 </div></div>
@@ -416,7 +470,9 @@ const T={
     'l-nm':'الاسم','l-ag':'العمر','l-gn':'الجنس','op-m':'ذكر','op-f':'أنثى',
     'l-wt':'الوزن (كغ)','l-ht':'الطول (سم)','nx1':'التالي ←',
     's2t':'هدفك','s2s':'اختر هدفك الرئيسي',
-    'g-lose':'خسارة وزن 🔥','g-gain':'بناء عضلات 💪','g-main':'الحفاظ على الوزن ⚖️','g-fit':'لياقة عامة 🏃','nx2':'التالي ←',
+    'g-lose':'خسارة وزن 🔥','g-gain':'بناء عضلات 💪','g-main':'الحفاظ على الوزن ⚖️','g-fit':'لياقة عامة 🏃',
+    'g-recomp':'حرق الدهون + بناء العضلات 🔥💪','g-recomps':'إعادة التركيب الجسمي — الأصعب والأفضل نتيجة',
+    'nx2':'التالي ←',
     's3t':'مستوى التدريب','s3s':'اختر مستواك الحالي',
     'lv-b':'مبتدئ','lv-bs':'أقل من 6 أشهر تدريب',
     'lv-i':'متوسط','lv-is':'6-24 شهر تدريب',
@@ -452,14 +508,17 @@ const T={
     'toast-ram-on':'🌙 وضع رمضان مفعّل','toast-ram-off':'☀️ وضع عادي مفعّل',
     'toast-logfill':'أدخل اسم الوجبة والسعرات',
     'confirm-reset':'هل تريد حذف كل البيانات؟',
-    'dc-t':'📅 روتيني اليومي','dc-leg1':'تمرين ✅','dc-leg2':'يوم راحة',
+    'dc-t':'📊 أسبوعك الحالي','dc-sub':'كل يوم: تمرين + سعرات + بروتين',
+    'dc-leg1':'تمرين ✅','dc-leg2':'سعرات هدف','dc-leg3':'بروتين هدف',
   },
   en:{
     'sp-btn':'Start 🚀','s1t':'Your Info','s1s':'We calculate your calories precisely',
     'l-nm':'Name','l-ag':'Age','l-gn':'Gender','op-m':'Male','op-f':'Female',
     'l-wt':'Weight (kg)','l-ht':'Height (cm)','nx1':'Next →',
     's2t':'Your Goal','s2s':'Choose your main goal',
-    'g-lose':'Lose Weight 🔥','g-gain':'Build Muscle 💪','g-main':'Maintain Weight ⚖️','g-fit':'General Fitness 🏃','nx2':'Next →',
+    'g-lose':'Lose Weight 🔥','g-gain':'Build Muscle 💪','g-main':'Maintain Weight ⚖️','g-fit':'General Fitness 🏃',
+    'g-recomp':'Burn Fat + Build Muscle 🔥💪','g-recomps':'Body Recomposition — hardest, best results',
+    'nx2':'Next →',
     's3t':'Training Level','s3s':'Choose your current level',
     'lv-b':'Beginner','lv-bs':'Less than 6 months',
     'lv-i':'Intermediate','lv-is':'6-24 months training',
@@ -495,7 +554,8 @@ const T={
     'toast-ram-on':'🌙 Ramadan mode ON','toast-ram-off':'☀️ Normal mode ON',
     'toast-logfill':'Enter meal name and calories',
     'confirm-reset':'Delete all data?',
-    'dc-t':'📅 Daily Routine','dc-leg1':'Workout ✅','dc-leg2':'Rest day',
+    'dc-t':'📊 This Week','dc-sub':'Each day: workout + calories + protein',
+    'dc-leg1':'Workout ✅','dc-leg2':'Calories on target','dc-leg3':'Protein on target',
   }
 };
 
@@ -513,13 +573,13 @@ function applyLang(){
   document.documentElement.lang=L;
   document.documentElement.dir=ar?'rtl':'ltr';
   const ids=['sp-btn','s1t','s1s','l-nm','l-ag','l-gn','l-wt','l-ht','op-m','op-f','nx1',
-    's2t','s2s','g-lose','g-gain','g-main','g-fit','nx2',
+    's2t','s2s','g-lose','g-gain','g-main','g-fit','g-recomp','g-recomps','nx2',
     's3t','s3s','lv-b','lv-bs','lv-i','lv-is','lv-a','lv-as','nx3',
     's4t','s4s','ac-1','ac-1s','ac-2','ac-2s','ac-3','ac-3s','ac-4','nx4t',
     'nl-home','nl-workout','nl-meals','nl-profile',
     'hm-gr','cs1','cs2','cs3','lb-pro','lb-car','lb-fat','lbl-qlog','lbl-tw','sa-btn',
     'wk-tag','wk-ti','pg-t','pg1l','pg2l','pg3l','regen-t',
-    'ml-ti','all-t','msw-rm-t','msw-nm-t','dt-lb','dt-lbt',
+    'ml-ti','msw-rm-t','msw-nm-t','dt-lb','dt-lbt',
     'edit-btn','lbl-lang','edit-ti','ed-lnm','ed-lwt','ed-lht','ed-lag','ed-sv','rst-btn'];
   ids.forEach(id=>{const el=document.getElementById(id);if(el&&t(id)!==id)el.textContent=t(id);});
   const logNm=document.getElementById('log-nm');
@@ -548,20 +608,25 @@ function switchLang(l){
 // ============================================================
 function save(){
   try{
-    localStorage.setItem('ff8',JSON.stringify({L,P,SEL,DLOG,WH,MP,MP_RAM,MP_NRM,MEAL_EATEN,CD,isRamadan,mealMode,WP:_WP}));
+    localStorage.setItem('ff9',JSON.stringify({L,P,SEL,DLOG,WH,MP,MP_RAM,MP_NRM,MEAL_EATEN,CD,isRamadan,mealMode,WP:_WP}));
   }catch(e){}
 }
 function load(){
   try{
-    const d=JSON.parse(localStorage.getItem('ff8')||localStorage.getItem('ff7')||'null');
+    // Try ff9 first, fall back to ff8 (old key) to preserve profile — but reset meals to force fresh generation
+    const raw=localStorage.getItem('ff9');
+    const old=localStorage.getItem('ff8');
+    const d=JSON.parse(raw||old||'null');
     if(!d||!d.P||!d.P.name) return false;
     L=d.L||'ar'; P=d.P||{}; SEL=d.SEL||{}; DLOG=d.DLOG||{};
-    WH=d.WH||[]; MP=d.MP||{}; CD=d.CD||0;
-    MP_RAM=d.MP_RAM||{}; MP_NRM=d.MP_NRM||{};
+    WH=d.WH||[]; CD=d.CD||0;
     MEAL_EATEN=d.MEAL_EATEN||{};
     isRamadan=d.isRamadan!==undefined?d.isRamadan:true;
     mealMode=d.mealMode||'ramadan';
     _WP=d.WP||null;
+    // If loaded from old key (ff8), reset meals so new WEEK_PLAN is used
+    if(!raw&&old){MP={}; MP_RAM={}; MP_NRM={}; localStorage.removeItem('ff9_meal_date');}
+    else{MP=d.MP||{}; MP_RAM=d.MP_RAM||{}; MP_NRM=d.MP_NRM||{};}
     // Sync MP to current mode
     if(mealMode==='ramadan'&&Object.keys(MP_RAM).length) MP=MP_RAM;
     else if(mealMode==='normal'&&Object.keys(MP_NRM).length) MP=MP_NRM;
@@ -583,9 +648,9 @@ function calcCal(){
   const bmr=male?(10*w+6.25*h-5*a+5):(10*w+6.25*h-5*a-161);
   const tdee=Math.round(bmr*(Number(P.activity)||1.55));
   const g=P.goal||'maintain';
-  P.targetCal=g==='lose'?tdee-400:g==='gain'?tdee+300:tdee;
-  P.protG=Math.round(w*2.0);
-  P.carbG=Math.round((P.targetCal*0.45)/4);
+  P.targetCal=g==='lose'?tdee-400:g==='gain'?tdee+300:g==='recomp'?tdee-200:tdee;
+  P.protG=Math.round(w*(g==='recomp'||g==='gain'?2.2:2.0));
+  P.carbG=Math.round((P.targetCal*(g==='recomp'?0.35:0.45))/4);
   P.fatG=Math.round((P.targetCal*0.25)/9);
 }
 
@@ -617,16 +682,16 @@ function showTab(tab){
 }
 function checkDailyMealRefresh(){
   const today=new Date().toDateString();
-  const lastMealDate=localStorage.getItem('ff8_meal_date');
+  const lastMealDate=localStorage.getItem('ff9_meal_date');
   if(lastMealDate!==today){
     const tc=Math.round(P.targetCal)||2000;
     for(let d=0;d<7;d++){
-      MP_RAM[d]=buildDay('ramadan',tc);
-      MP_NRM[d]=buildDay('normal',tc);
+      MP_RAM[d]=buildDay('ramadan',tc,d);
+      MP_NRM[d]=buildDay('normal',tc,d);
     }
     MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
     MEAL_EATEN={};
-    localStorage.setItem('ff8_meal_date',today);
+    localStorage.setItem('ff9_meal_date',today);
     save();
   }
 }
@@ -664,6 +729,7 @@ function finSetup(){
   if(!SEL.act){toast(t('toast-act'));return;}
   P.goal=SEL.goal; P.level=SEL.level; P.activity=parseFloat(SEL.act);
   P.sessions=0; P.streak=0; P.intensity=1; P.lastWD=null; P.doneToday=false;
+  P.lastWeighIn=Date.now();
   calcCal();
   const tc=Math.round(P.targetCal)||2000;
   for(let d=0;d<7;d++){
@@ -672,15 +738,31 @@ function finSetup(){
   }
   MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
   MEAL_EATEN={};
-  localStorage.setItem('ff8_meal_date',new Date().toDateString());
+  localStorage.setItem('ff9_meal_date',new Date().toDateString());
   genWK(false); save(); showMain();
 }
 
 // ============================================================
 // HOME
 // ============================================================
+function rWeighInBanner(){
+  const ar=L==='ar';
+  const banner=document.getElementById('wibanner');
+  const last=P.lastWeighIn||0;
+  const daysSince=Math.floor((Date.now()-last)/(1000*60*60*24));
+  const due=daysSince>=30;
+  banner.classList.toggle('on',due);
+  if(!due) return;
+  const weeks=Math.floor(daysSince/7);
+  document.getElementById('wi-t').textContent=ar?'حان وقت تحديث وزنك! ⚖️':'Time to update your weight! ⚖️';
+  document.getElementById('wi-s').textContent=ar
+    ?`آخر تحديث منذ ${daysSince} يوم — وزنك الحالي قد تغيّر`
+    :`Last updated ${daysSince} days ago — your weight may have changed`;
+  document.getElementById('wi-btn').textContent=ar?'تحديث الآن':'Update Now';
+}
 function rHome(){
   if(!P.name) return;
+  rWeighInBanner();
   applyLang();
   document.getElementById('hm-gr').textContent=t('hm-gr');
   document.getElementById('hm-nm').textContent=P.name+' 👋';
@@ -1453,6 +1535,13 @@ const KCAL={
   'lemon juice':22,'orange juice':45,'lemonade':40,
   // Extras
   'whey protein':370,'protein powder':370,
+  // Body-recomp additions
+  'brown rice':370,'quinoa':368,'whole wheat bread':247,'whole wheat pasta':356,
+  'cottage cheese':98,'Greek yogurt':97,'shrimp':99,'turkey breast':135,
+  'chicken thigh':177,'ground beef':215,'salmon':208,'tuna canned':116,
+  'sweet potato':86,'broccoli':34,'asparagus':20,'green beans':31,
+  'cherry tomatoes':18,'coleslaw':65,'maple syrup':260,'pita bread':275,
+  'cream':340,
 };
 
 // Each meal ingredient: {key, amount(g/ml), unit, kcal_per100, label_ar, label_en}
@@ -1462,6 +1551,651 @@ const KCAL={
 // Display shows the scaled amount
 
 function getKcal(key){ return KCAL[key]||100; }
+
+// ============================================================
+// 7-DAY FIXED MEAL PLAN — RAMADAN MODE (body recomposition)
+// ============================================================
+const WEEK_PLAN_RAM=[
+  // Day 0 — Sunday
+  {
+    iftar:{
+      ar:'شوربة عدس + تمر + عصير برتقال',en:'Lentil Soup + Dates + Orange Juice',
+      p:22,c:55,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+      ings:[
+        {key:'lentils',amt:120,unit:'g',ar:'عدس أحمر',en:'red lentils'},
+        {key:'onion',amt:80,unit:'g',ar:'بصل',en:'onion'},
+        {key:'olive oil',amt:10,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+        {key:'dates',amt:40,unit:'pcs',ar:'تمر',en:'dates',gPerPc:8,pcs_ar:'حبات',pcs_en:'pcs'},
+        {key:'orange juice',amt:200,unit:'ml',ar:'عصير برتقال طبيعي',en:'fresh orange juice'},
+      ],
+      p_ar:'اطبخ العدس مع البصل 20 دق. اهرسه وأضف الليمون. ابدأ بالتمر والعصير لكسر الصيام.',
+      p_en:'Cook lentils with onion 20 min. Blend and add lemon. Break fast with dates and juice first.',
+      fridge_ar:'✅ الشوربة تُحضّر مسبقاً',fridge_en:'✅ Soup can be made in advance'},
+    isha:{
+      ar:'صدر دجاج مشوي + أرز بني + بروكلي',en:'Grilled Chicken + Brown Rice + Broccoli',
+      p:70,c:75,f:20,time_ar:'بعد العشاء 🌙',time_en:'After Isha 🌙',
+      ings:[
+        {key:'chicken breast',amt:250,unit:'g',ar:'صدر دجاج',en:'chicken breast'},
+        {key:'brown rice',amt:110,unit:'g',ar:'أرز بني',en:'brown rice'},
+        {key:'broccoli',amt:150,unit:'g',ar:'بروكلي',en:'broccoli'},
+        {key:'olive oil',amt:15,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اشوِ الدجاج 7 دق كل جهة. اطبخ الأرز. اطبخ البروكلي بالبخار 5 دق. وجبتك الرئيسية بعد الصلاة.',
+      p_en:'Grill chicken 7 min each side. Cook rice. Steam broccoli 5 min. Your main meal after Isha prayer.',
+      fridge_ar:'✅ يصمد 3 أيام في الثلاجة',fridge_en:'✅ Stays 3 days in fridge'},
+    suhoor:{
+      ar:'شوفان بروتين + موز + زبدة لوز',en:'Protein Oatmeal + Banana + Almond Butter',
+      p:48,c:55,f:18,time_ar:'السحور 🌄',time_en:'Suhoor 🌄',
+      ings:[
+        {key:'oats',amt:90,unit:'g',ar:'شوفان',en:'oats'},
+        {key:'protein powder',amt:30,unit:'g',ar:'بروتين واي',en:'protein powder'},
+        {key:'banana',amt:120,unit:'g',ar:'موز',en:'banana'},
+        {key:'peanut butter',amt:20,unit:'g',ar:'زبدة فول سوداني',en:'peanut butter'},
+      ],
+      p_ar:'حضّره ليلاً كشوفان بارد. في السحور أضف الموز وزبدة الفول السوداني. الشوفان يشبعك طوال اليوم.',
+      p_en:'Prep as overnight oats. At suhoor add banana and peanut butter. Oats keep you full all day.',
+      fridge_ar:'✅ يُحضّر ليلاً — جاهز في السحور',fridge_en:'✅ Prep night before — ready at suhoor'}
+  },
+  // Day 1 — Monday
+  {
+    iftar:{
+      ar:'شوربة دجاج بالخضار + تمر',en:'Chicken Vegetable Soup + Dates',
+      p:28,c:48,f:10,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+      ings:[
+        {key:'chicken breast',amt:150,unit:'g',ar:'دجاج',en:'chicken breast'},
+        {key:'carrots',amt:80,unit:'g',ar:'جزر',en:'carrots'},
+        {key:'zucchini',amt:80,unit:'g',ar:'كوسا',en:'zucchini'},
+        {key:'dates',amt:32,unit:'pcs',ar:'تمر',en:'dates',gPerPc:8,pcs_ar:'حبات',pcs_en:'pcs'},
+      ],
+      p_ar:'اطبخ الدجاج مع الخضار في الماء 25 دق. أضف التوابل. ابدأ بالتمر لكسر الصيام.',
+      p_en:'Cook chicken with vegetables in water 25 min. Season well. Start with dates.',
+      fridge_ar:'✅ الشوربة تُحضّر مسبقاً',fridge_en:'✅ Soup can be pre-made'},
+    isha:{
+      ar:'سردين + أرز + سبانخ مقلي',en:'Sardines + Rice + Sautéed Spinach',
+      p:48,c:68,f:16,time_ar:'بعد العشاء 🌙',time_en:'After Isha 🌙',
+      ings:[
+        {key:'sardines',amt:200,unit:'g',ar:'سردين معلب',en:'canned sardines'},
+        {key:'rice',amt:110,unit:'g',ar:'أرز',en:'rice'},
+        {key:'spinach',amt:100,unit:'g',ar:'سبانخ',en:'spinach'},
+        {key:'oil',amt:15,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اطبخ الأرز. قلِّ السبانخ بالزيت دقيقتين. افتح السردين وضعه فوق الأرز مع السبانخ. سريع ورخيص.',
+      p_en:'Cook rice. Sauté spinach in oil 2 min. Open sardines and serve on rice with spinach. Fast and cheap.',
+      fridge_ar:'✅ الأرز يُطبخ مسبقاً',fridge_en:'✅ Pre-cook rice'},
+    suhoor:{
+      ar:'بيض مخفوق + زبادي + خبز',en:'Scrambled Eggs + Yogurt + Bread',
+      p:38,c:48,f:16,time_ar:'السحور 🌄',time_en:'Suhoor 🌄',
+      ings:[
+        {key:'eggs',amt:150,unit:'g',ar:'بيض (3 حبات)',en:'eggs (3 pcs)'},
+        {key:'yogurt',amt:150,unit:'g',ar:'زبادي',en:'yogurt'},
+        {key:'bread',amt:80,unit:'g',ar:'خبز',en:'bread'},
+        {key:'oil',amt:8,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اطبخ البيض المخفوق 3 دق. قدّمه مع الجبن والخبز. غني بالبروتين يشبعك طوال يوم الصيام.',
+      p_en:'Cook scrambled eggs 3 min. Serve with yogurt and bread. Protein-rich to sustain you through the fast.',
+      fridge_ar:'✅ يُطبخ في 5 دقائق',fridge_en:'✅ Ready in 5 minutes'}
+  },
+  // Day 2 — Tuesday
+  {
+    iftar:{
+      ar:'تمر + حليب + موز',en:'Dates + Milk + Banana',
+      p:15,c:58,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+      ings:[
+        {key:'dates',amt:48,unit:'pcs',ar:'تمر',en:'dates',gPerPc:8,pcs_ar:'حبات',pcs_en:'pcs'},
+        {key:'milk',amt:300,unit:'ml',ar:'حليب كامل الدسم',en:'whole milk'},
+        {key:'banana',amt:120,unit:'g',ar:'موز',en:'banana'},
+      ],
+      p_ar:'ابدأ بالتمر والحليب فوراً عند المغرب. كُل الموز. خفيف على المعدة بعد يوم الصيام.',
+      p_en:'Start with dates and milk immediately at Maghrib. Eat banana. Light on stomach after fasting.',
+      fridge_ar:'✅ جاهز فوراً',fridge_en:'✅ Ready instantly'},
+    isha:{
+      ar:'لحم مفروم + بطاطا حلوة + سلطة',en:'Ground Beef + Sweet Potato + Salad',
+      p:70,c:72,f:24,time_ar:'بعد العشاء 🌙',time_en:'After Isha 🌙',
+      ings:[
+        {key:'ground beef',amt:220,unit:'g',ar:'لحم بقري مفروم',en:'ground beef'},
+        {key:'sweet potato',amt:250,unit:'g',ar:'بطاطا حلوة',en:'sweet potato'},
+        {key:'tomatoes',amt:100,unit:'g',ar:'طماطم وخيار',en:'tomatoes & cucumber'},
+        {key:'oil',amt:15,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اخبز البطاطا 200° مدة 30 دق. قلِّ اللحم مع التوابل 8 دق. أعدّ السلطة. وجبة قوية للعضلات.',
+      p_en:'Bake sweet potato 200° for 30 min. Cook beef with spices 8 min. Make salad. Muscle-building meal.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'},
+    suhoor:{
+      ar:'زبادي + شوفان + عسل + لوز',en:'Yogurt + Oats + Honey + Almonds',
+      p:30,c:55,f:14,time_ar:'السحور 🌄',time_en:'Suhoor 🌄',
+      ings:[
+        {key:'yogurt',amt:250,unit:'g',ar:'زبادي',en:'yogurt'},
+        {key:'oats',amt:70,unit:'g',ar:'شوفان',en:'oats'},
+        {key:'honey',amt:20,unit:'g',ar:'عسل',en:'honey'},
+        {key:'almonds',amt:25,unit:'g',ar:'لوز',en:'almonds'},
+      ],
+      p_ar:'اخلط الزبادي مع الشوفان والعسل. أضف اللوز. حضّره قبل النوم وضعه في الثلاجة.',
+      p_en:'Mix yogurt with oats and honey. Add almonds. Prep before sleep and refrigerate.',
+      fridge_ar:'✅ يُحضّر قبل النوم',fridge_en:'✅ Prep before sleep'}
+  },
+  // Day 3 — Wednesday
+  {
+    iftar:{
+      ar:'شوربة طماطم + تمر + خبز قمح',en:'Tomato Soup + Dates + Whole Wheat Bread',
+      p:12,c:52,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+      ings:[
+        {key:'tomatoes',amt:300,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'onion',amt:80,unit:'g',ar:'بصل',en:'onion'},
+        {key:'dates',amt:32,unit:'pcs',ar:'تمر',en:'dates',gPerPc:8,pcs_ar:'حبات',pcs_en:'pcs'},
+        {key:'whole wheat bread',amt:60,unit:'g',ar:'خبز قمح',en:'whole wheat bread'},
+        {key:'olive oil',amt:10,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اطبخ الطماطم والبصل 15 دق ثم اهرسهم. ابدأ بالتمر ثم الشوربة مع الخبز.',
+      p_en:'Cook tomatoes and onion 15 min then blend. Start with dates then soup with bread.',
+      fridge_ar:'✅ الشوربة تُحضّر مسبقاً',fridge_en:'✅ Soup can be pre-made'},
+    isha:{
+      ar:'فخذ دجاج مشوي + أرز بني + فاصولياء خضراء',en:'Roasted Chicken Thigh + Brown Rice + Green Beans',
+      p:68,c:70,f:22,time_ar:'بعد العشاء 🌙',time_en:'After Isha 🌙',
+      ings:[
+        {key:'chicken thigh',amt:250,unit:'g',ar:'فخذ دجاج',en:'chicken thigh'},
+        {key:'brown rice',amt:110,unit:'g',ar:'أرز بني',en:'brown rice'},
+        {key:'green beans',amt:150,unit:'g',ar:'فاصولياء خضراء',en:'green beans'},
+        {key:'olive oil',amt:15,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اشوِ الفخذ في الفرن 200° مدة 30 دق. اطبخ الأرز. اسلق الفاصولياء 5 دق. وجبة متكاملة.',
+      p_en:'Roast chicken thigh at 200° for 30 min. Cook rice. Boil green beans 5 min. Complete balanced meal.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'},
+    suhoor:{
+      ar:'أومليت بيض + جبن + سبانخ + خبز قمح',en:'Egg Omelette + Cheese + Spinach + Whole Wheat Bread',
+      p:50,c:45,f:24,time_ar:'السحور 🌄',time_en:'Suhoor 🌄',
+      ings:[
+        {key:'eggs',amt:200,unit:'g',ar:'بيض (4 حبات)',en:'eggs (4 pcs)'},
+        {key:'grated cheese',amt:40,unit:'g',ar:'جبن',en:'cheese'},
+        {key:'spinach',amt:80,unit:'g',ar:'سبانخ',en:'spinach'},
+        {key:'whole wheat bread',amt:80,unit:'g',ar:'خبز قمح',en:'whole wheat bread'},
+      ],
+      p_ar:'قلِّ السبانخ دقيقة. أضف البيض المخفوق والجبن واطبخ 3 دق. قدّم مع الخبز. بروتين عالي للصيام.',
+      p_en:'Sauté spinach 1 min. Add whisked eggs and cheese, cook 3 min. Serve with bread. High protein for fasting.',
+      fridge_ar:'✅ يُطبخ في 7 دقائق',fridge_en:'✅ Ready in 7 minutes'}
+  },
+  // Day 4 — Thursday
+  {
+    iftar:{
+      ar:'حريرة خفيفة + تمر + برتقال',en:'Light Harira Soup + Dates + Orange',
+      p:18,c:50,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+      ings:[
+        {key:'lentils',amt:80,unit:'g',ar:'عدس',en:'lentils'},
+        {key:'chickpeas',amt:80,unit:'g',ar:'حمص',en:'chickpeas'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'dates',amt:32,unit:'pcs',ar:'تمر',en:'dates',gPerPc:8,pcs_ar:'حبات',pcs_en:'pcs'},
+      ],
+      p_ar:'اطبخ الحريرة بالعدس والحمص والطماطم 25 دق. ابدأ بالتمر ثم الشوربة.',
+      p_en:'Cook harira with lentils, chickpeas and tomatoes 25 min. Start with dates then soup.',
+      fridge_ar:'✅ تُحضّر مسبقاً',fridge_en:'✅ Can be pre-made'},
+    isha:{
+      ar:'كرات دجاج مفروم + معكرونة + طماطم',en:'Ground Chicken Meatballs + Pasta + Tomato',
+      p:60,c:70,f:16,time_ar:'بعد العشاء 🌙',time_en:'After Isha 🌙',
+      ings:[
+        {key:'chicken breast',amt:250,unit:'g',ar:'دجاج مفروم',en:'ground chicken'},
+        {key:'pasta',amt:110,unit:'g',ar:'معكرونة',en:'pasta'},
+        {key:'tomatoes',amt:200,unit:'g',ar:'صلصة طماطم',en:'tomato sauce'},
+        {key:'olive oil',amt:12,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اشكّل كرات اللحم وقلِّها 8 دق. أضف الصلصة 10 دق. اسلق المعكرونة. وجبة رمضانية قوية.',
+      p_en:'Form meatballs and pan-cook 8 min. Add sauce and simmer 10 min. Boil pasta. Strong Ramadan meal.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'},
+    suhoor:{
+      ar:'شوفان بارد بالبروتين + مكسرات',en:'Overnight Protein Oats + Mixed Nuts',
+      p:48,c:56,f:20,time_ar:'السحور 🌄',time_en:'Suhoor 🌄',
+      ings:[
+        {key:'oats',amt:90,unit:'g',ar:'شوفان',en:'oats'},
+        {key:'protein powder',amt:30,unit:'g',ar:'بروتين واي',en:'protein powder'},
+        {key:'mixed nuts',amt:30,unit:'g',ar:'مكسرات مشكّلة',en:'mixed nuts'},
+        {key:'honey',amt:15,unit:'g',ar:'عسل',en:'honey'},
+      ],
+      p_ar:'حضّره قبل النوم: شوفان + بروتين + حليب في الثلاجة. في السحور أضف المكسرات والعسل. جاهز بدون طبخ.',
+      p_en:'Prep before sleep: oats + protein + milk in fridge. At suhoor add nuts and honey. Zero cooking.',
+      fridge_ar:'✅ جاهز من الثلاجة — بدون طبخ',fridge_en:'✅ Grab from fridge — no cooking'}
+  },
+  // Day 5 — Friday
+  {
+    iftar:{
+      ar:'تمر + شوربة عدس + خبز',en:'Dates + Lentil Soup + Bread',
+      p:20,c:58,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+      ings:[
+        {key:'dates',amt:40,unit:'pcs',ar:'تمر',en:'dates',gPerPc:8,pcs_ar:'حبات',pcs_en:'pcs'},
+        {key:'lentils',amt:120,unit:'g',ar:'عدس أحمر',en:'red lentils'},
+        {key:'whole wheat bread',amt:60,unit:'g',ar:'خبز قمح',en:'whole wheat bread'},
+        {key:'olive oil',amt:10,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'ابدأ بالتمر. تناول شوربة العدس مع الخبز. خفيف لكسر الصيام.',
+      p_en:'Start with dates. Have lentil soup with bread. Light to break the fast.',
+      fridge_ar:'✅ الشوربة تُحضّر مسبقاً',fridge_en:'✅ Soup pre-made'},
+    isha:{
+      ar:'سردين + أرز بني + سلطة خضراء',en:'Sardines + Brown Rice + Green Salad',
+      p:65,c:68,f:26,time_ar:'بعد العشاء 🌙',time_en:'After Isha 🌙',
+      ings:[
+        {key:'sardines',amt:200,unit:'g',ar:'سردين معلب',en:'canned sardines'},
+        {key:'brown rice',amt:110,unit:'g',ar:'أرز بني',en:'brown rice'},
+        {key:'lettuce',amt:100,unit:'g',ar:'خس وخيار',en:'lettuce & cucumber'},
+        {key:'olive oil',amt:15,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اطبخ الأرز. افتح السردين وضعه جانب الأرز. أعدّ السلطة بالزيت والليمون. سريع وغني بالبروتين.',
+      p_en:'Cook rice. Open sardines and serve beside rice. Make salad with oil and lemon. Quick and protein-rich.',
+      fridge_ar:'✅ الأرز يُطبخ مسبقاً',fridge_en:'✅ Rice can be pre-cooked'},
+    suhoor:{
+      ar:'زبادي + بيضتان مسلوقتان + موز',en:'Yogurt + 2 Boiled Eggs + Banana',
+      p:28,c:45,f:10,time_ar:'السحور 🌄',time_en:'Suhoor 🌄',
+      ings:[
+        {key:'yogurt',amt:250,unit:'g',ar:'زبادي',en:'yogurt'},
+        {key:'eggs',amt:100,unit:'g',ar:'بيض مسلوق (2 حبات)',en:'boiled eggs (2 pcs)'},
+        {key:'banana',amt:120,unit:'g',ar:'موز',en:'banana'},
+      ],
+      p_ar:'اسلق البيض مسبقاً وضعه في الثلاجة. في السحور ضع الزبادي في وعاء وكُل البيض والموز جانبه.',
+      p_en:'Pre-boil eggs and keep in fridge. At suhoor put yogurt in a bowl and eat eggs and banana on the side.',
+      fridge_ar:'✅ البيض يُسلق مسبقاً',fridge_en:'✅ Pre-boil eggs ahead'}
+  },
+  // Day 6 — Saturday
+  {
+    iftar:{
+      ar:'شوربة دجاج + تمر + عصير ليمون',en:'Chicken Soup + Dates + Lemonade',
+      p:25,c:50,f:8,time_ar:'عند المغرب 🌅',time_en:'At Maghrib 🌅',
+      ings:[
+        {key:'chicken breast',amt:120,unit:'g',ar:'دجاج',en:'chicken breast'},
+        {key:'carrots',amt:80,unit:'g',ar:'جزر',en:'carrots'},
+        {key:'dates',amt:32,unit:'pcs',ar:'تمر',en:'dates',gPerPc:8,pcs_ar:'حبات',pcs_en:'pcs'},
+        {key:'lemonade',amt:250,unit:'ml',ar:'عصير ليمون طبيعي',en:'fresh lemonade'},
+      ],
+      p_ar:'اطبخ الدجاج مع الجزر 20 دق. ابدأ بالتمر والعصير ثم الشوربة.',
+      p_en:'Cook chicken with carrots 20 min. Start with dates and lemonade then soup.',
+      fridge_ar:'✅ تُحضّر مسبقاً',fridge_en:'✅ Pre-made'},
+    isha:{
+      ar:'صدر دجاج مشوي + أرز + فلفل ملون',en:'Grilled Chicken + Rice + Bell Peppers',
+      p:62,c:72,f:14,time_ar:'بعد العشاء 🌙',time_en:'After Isha 🌙',
+      ings:[
+        {key:'chicken breast',amt:250,unit:'g',ar:'صدر دجاج',en:'chicken breast'},
+        {key:'rice',amt:110,unit:'g',ar:'أرز',en:'rice'},
+        {key:'peppers',amt:150,unit:'g',ar:'فلفل ملون',en:'bell peppers'},
+        {key:'oil',amt:12,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اشوِ الدجاج 7 دق كل جهة. اطبخ الأرز 20 دق. قلِّ الفلفل بالزيت 5 دق. وجبة مثالية.',
+      p_en:'Grill chicken 7 min each side. Cook rice 20 min. Sauté peppers in oil 5 min. Perfect meal.',
+      fridge_ar:'✅ الأرز يُطبخ مسبقاً',fridge_en:'✅ Pre-cook rice'},
+    suhoor:{
+      ar:'بيض مسلوق + زبادي + خبز + حليب',en:'Boiled Eggs + Yogurt + Bread + Milk',
+      p:35,c:52,f:14,time_ar:'السحور 🌄',time_en:'Suhoor 🌄',
+      ings:[
+        {key:'eggs',amt:150,unit:'g',ar:'بيض مسلوق (3 حبات)',en:'boiled eggs (3 pcs)'},
+        {key:'yogurt',amt:150,unit:'g',ar:'زبادي',en:'yogurt'},
+        {key:'bread',amt:80,unit:'g',ar:'خبز',en:'bread'},
+        {key:'milk',amt:200,unit:'ml',ar:'حليب',en:'milk'},
+      ],
+      p_ar:'اسلق البيض مسبقاً وضعه في الثلاجة. في السحور أكله مع الزبادي والخبز والحليب.',
+      p_en:'Pre-boil eggs and refrigerate. At suhoor eat with yogurt, bread and milk.',
+      fridge_ar:'✅ البيض يُسلق مسبقاً',fridge_en:'✅ Pre-boil eggs ahead'}
+  }
+];
+
+// ============================================================
+// 7-DAY FIXED MEAL PLAN — NORMAL MODE (body recomposition)
+// Different meal every day, HIGH PROTEIN, BUDGET-FRIENDLY
+// No avocado, no salmon, no shrimp, no Greek yogurt, no almond butter, no quinoa
+// Cheap staples: eggs(2-3), tuna/sardines, chicken, lentils, chickpeas, oats, rice, bread
+// p/c/f are base ratios — scaled to user's targetCal by scaleMealToTarget
+// ============================================================
+const WEEK_PLAN=[
+  // Day 0 — Sunday
+  {
+    breakfast:{
+      ar:'شوفان + حليب + موز + زبدة فول سوداني',en:'Oatmeal + Milk + Banana + Peanut Butter',
+      p:28,c:60,f:14,time_ar:'الفطور 🌅',time_en:'Breakfast 🌅',
+      ings:[
+        {key:'oats',amt:90,unit:'g',ar:'شوفان',en:'oats'},
+        {key:'milk',amt:250,unit:'ml',ar:'حليب',en:'milk'},
+        {key:'banana',amt:120,unit:'g',ar:'موز',en:'banana'},
+        {key:'peanut butter',amt:25,unit:'g',ar:'زبدة فول سوداني',en:'peanut butter'},
+      ],
+      p_ar:'اطبخ الشوفان مع الحليب 5 دق. ضع الموز المقطّع وزبدة الفول السوداني فوقه. يُحضّر ليلاً ويُخزّن في الثلاجة.',
+      p_en:'Cook oats with milk 5 min. Top with sliced banana and peanut butter. Can prep overnight in fridge.',
+      fridge_ar:'✅ يُحضّر ليلاً',fridge_en:'✅ Prep the night before'},
+    lunch:{
+      ar:'صدر دجاج + أرز + زكيني + بصل',en:'Chicken Breast + Rice + Zucchini + Onion',
+      p:55,c:72,f:10,time_ar:'الغداء ☀️',time_en:'Lunch ☀️',
+      ings:[
+        {key:'chicken breast',amt:200,unit:'g',ar:'صدر دجاج',en:'chicken breast'},
+        {key:'rice',amt:110,unit:'g',ar:'أرز',en:'rice'},
+        {key:'zucchini',amt:150,unit:'g',ar:'كوسا',en:'zucchini'},
+        {key:'onion',amt:60,unit:'g',ar:'بصل',en:'onion'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'قلِّ الدجاج مع البصل 8 دق. أضف الكوسا 5 دق. اطبخ الأرز. يُخزّن في الثلاجة 3 أيام.',
+      p_en:'Cook chicken with onion 8 min. Add zucchini 5 min. Cook rice. Stores in fridge 3 days.',
+      fridge_ar:'✅ يصمد 3 أيام في الثلاجة',fridge_en:'✅ Stores 3 days in fridge'},
+    snack:{
+      ar:'زبادي + زبدة فول سوداني',en:'Yogurt + Peanut Butter',
+      p:18,c:22,f:10,time_ar:'سناك 🍎',time_en:'Snack 🍎',
+      ings:[
+        {key:'yogurt',amt:200,unit:'g',ar:'زبادي',en:'yogurt'},
+        {key:'peanut butter',amt:20,unit:'g',ar:'زبدة فول سوداني',en:'peanut butter'},
+      ],
+      p_ar:'ضع الزبادي في وعاء وأضف زبدة الفول السوداني فوقه. جاهز في دقيقة.',
+      p_en:'Put yogurt in a bowl and top with peanut butter. Ready in 1 minute.',
+      fridge_ar:'✅ جاهز فوراً',fridge_en:'✅ Ready instantly'},
+    dinner:{
+      ar:'تونا معلبة + بطاطا + سلطة طماطم',en:'Canned Tuna + Potatoes + Tomato Salad',
+      p:45,c:58,f:8,time_ar:'العشاء 🌙',time_en:'Dinner 🌙',
+      ings:[
+        {key:'tuna canned',amt:200,unit:'g',ar:'تونا معلبة',en:'canned tuna'},
+        {key:'potatoes',amt:250,unit:'g',ar:'بطاطا مسلوقة',en:'boiled potatoes'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اسلق البطاطا 20 دق أو في الميكروويف 8 دق. افتح التونا. أعدّ السلطة. كل شيء جاهز من الثلاجة.',
+      p_en:'Boil potatoes 20 min or microwave 8 min. Open tuna. Make salad. Everything ready from fridge.',
+      fridge_ar:'✅ البطاطا تُسلق مسبقاً',fridge_en:'✅ Pre-boil potatoes'}
+  },
+  // Day 1 — Monday
+  {
+    breakfast:{
+      ar:'بيضتان مخفوقتان + خبز + طماطم',en:'2 Scrambled Eggs + Bread + Tomato',
+      p:22,c:48,f:12,time_ar:'الفطور 🌅',time_en:'Breakfast 🌅',
+      ings:[
+        {key:'eggs',amt:100,unit:'g',ar:'بيض (2 حبات)',en:'eggs (2 pcs)'},
+        {key:'bread',amt:100,unit:'g',ar:'خبز',en:'bread'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'oil',amt:8,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اخفق البيض واطبخه على نار هادئة 3 دق. حمّص الخبز. قدّم مع الطماطم المقطّعة.',
+      p_en:'Whisk eggs and cook on low 3 min. Toast bread. Serve with sliced tomatoes.',
+      fridge_ar:'✅ يُطبخ في 5 دقائق',fridge_en:'✅ Ready in 5 minutes'},
+    lunch:{
+      ar:'عدس + أرز + بصل محمّر',en:'Lentils + Rice + Caramelised Onion',
+      p:28,c:75,f:8,time_ar:'الغداء ☀️',time_en:'Lunch ☀️',
+      ings:[
+        {key:'lentils',amt:150,unit:'g',ar:'عدس',en:'lentils'},
+        {key:'rice',amt:100,unit:'g',ar:'أرز',en:'rice'},
+        {key:'onion',amt:100,unit:'g',ar:'بصل',en:'onion'},
+        {key:'oil',amt:15,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اطبخ العدس مع الأرز 20 دق. قلِّ البصل بالزيت حتى يحمرّ. ضعه فوق العدس والأرز. أرخص وجبة بروتين.',
+      p_en:'Cook lentils with rice 20 min. Fry onion in oil until golden. Put on top. Cheapest protein meal.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'},
+    snack:{
+      ar:'موز + زبدة فول سوداني + خبز',en:'Banana + Peanut Butter + Bread',
+      p:12,c:45,f:10,time_ar:'سناك 🍎',time_en:'Snack 🍎',
+      ings:[
+        {key:'banana',amt:120,unit:'g',ar:'موز',en:'banana'},
+        {key:'peanut butter',amt:25,unit:'g',ar:'زبدة فول سوداني',en:'peanut butter'},
+        {key:'bread',amt:60,unit:'g',ar:'خبز',en:'bread'},
+      ],
+      p_ar:'ادهن الخبز بزبدة الفول السوداني. كُل الموز جانبه. جاهز فوراً.',
+      p_en:'Spread peanut butter on bread. Eat banana on the side. Ready instantly.',
+      fridge_ar:'✅ جاهز فوراً',fridge_en:'✅ Ready instantly'},
+    dinner:{
+      ar:'فخذ دجاج + بطاطا + جزر',en:'Chicken Thigh + Potatoes + Carrots',
+      p:48,c:55,f:14,time_ar:'العشاء 🌙',time_en:'Dinner 🌙',
+      ings:[
+        {key:'chicken thigh',amt:220,unit:'g',ar:'فخذ دجاج',en:'chicken thigh'},
+        {key:'potatoes',amt:200,unit:'g',ar:'بطاطا',en:'potatoes'},
+        {key:'carrots',amt:120,unit:'g',ar:'جزر',en:'carrots'},
+        {key:'oil',amt:12,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'ضع الدجاج مع البطاطا والجزر في صينية. أضف الزيت والملح والتوابل. اخبز في فرن 200° مدة 35 دق.',
+      p_en:'Put chicken with potatoes and carrots in a tray. Add oil and seasoning. Bake at 200° for 35 min.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'}
+  },
+  // Day 2 — Tuesday
+  {
+    breakfast:{
+      ar:'شوفان + حليب + موز + عسل',en:'Oatmeal + Milk + Banana + Honey',
+      p:20,c:65,f:6,time_ar:'الفطور 🌅',time_en:'Breakfast 🌅',
+      ings:[
+        {key:'oats',amt:100,unit:'g',ar:'شوفان',en:'oats'},
+        {key:'milk',amt:300,unit:'ml',ar:'حليب',en:'milk'},
+        {key:'banana',amt:120,unit:'g',ar:'موز',en:'banana'},
+        {key:'honey',amt:20,unit:'g',ar:'عسل',en:'honey'},
+      ],
+      p_ar:'اطبخ الشوفان مع الحليب 5 دق. أضف الموز المهروس والعسل. حضّره ليلاً وضعه في الثلاجة.',
+      p_en:'Cook oats with milk 5 min. Add mashed banana and honey. Prep overnight in fridge.',
+      fridge_ar:'✅ يُحضّر ليلاً',fridge_en:'✅ Prep the night before'},
+    lunch:{
+      ar:'سردين + معكرونة + طماطم + زيت',en:'Sardines + Pasta + Tomatoes + Oil',
+      p:42,c:70,f:16,time_ar:'الغداء ☀️',time_en:'Lunch ☀️',
+      ings:[
+        {key:'sardines',amt:150,unit:'g',ar:'سردين معلب',en:'canned sardines'},
+        {key:'pasta',amt:110,unit:'g',ar:'معكرونة',en:'pasta'},
+        {key:'tomatoes',amt:200,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'oil',amt:15,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+        {key:'onion',amt:60,unit:'g',ar:'بصل',en:'onion'},
+      ],
+      p_ar:'اسلق المعكرونة 10 دق. قلِّ البصل والطماطم 5 دق. افتح السردين وامزجه مع الصلصة والمعكرونة. يصمد يومين.',
+      p_en:'Boil pasta 10 min. Cook onion and tomatoes 5 min. Open sardines and mix with sauce and pasta. Stores 2 days.',
+      fridge_ar:'✅ يصمد يومين',fridge_en:'✅ Stores 2 days'},
+    snack:{
+      ar:'بيضتان مسلوقتان + طماطم',en:'2 Boiled Eggs + Tomatoes',
+      p:14,c:8,f:10,time_ar:'سناك 🍎',time_en:'Snack 🍎',
+      ings:[
+        {key:'eggs',amt:100,unit:'g',ar:'بيض مسلوق (2 حبات)',en:'boiled eggs (2 pcs)'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم',en:'tomatoes'},
+      ],
+      p_ar:'اسلق البيض مسبقاً وضعه في الثلاجة. يؤكل بارداً مع الطماطم والملح.',
+      p_en:'Pre-boil eggs and keep in fridge. Eat cold with tomatoes and salt.',
+      fridge_ar:'✅ يُسلق مسبقاً',fridge_en:'✅ Pre-boil and refrigerate'},
+    dinner:{
+      ar:'صدر دجاج + أرز + جزر + بصل',en:'Chicken Breast + Rice + Carrots + Onion',
+      p:52,c:68,f:10,time_ar:'العشاء 🌙',time_en:'Dinner 🌙',
+      ings:[
+        {key:'chicken breast',amt:200,unit:'g',ar:'صدر دجاج',en:'chicken breast'},
+        {key:'rice',amt:110,unit:'g',ar:'أرز',en:'rice'},
+        {key:'carrots',amt:120,unit:'g',ar:'جزر',en:'carrots'},
+        {key:'onion',amt:70,unit:'g',ar:'بصل',en:'onion'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'قلِّ الدجاج مع البصل والجزر 10 دق حتى ينضج. اطبخ الأرز. يُخزّن 3 أيام.',
+      p_en:'Cook chicken with onion and carrots 10 min until done. Cook rice. Stores 3 days.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'}
+  },
+  // Day 3 — Wednesday
+  {
+    breakfast:{
+      ar:'بانكيك شوفان وبيض وموز',en:'Oat & Egg Banana Pancakes',
+      p:24,c:55,f:10,time_ar:'الفطور 🌅',time_en:'Breakfast 🌅',
+      ings:[
+        {key:'oats',amt:80,unit:'g',ar:'شوفان مطحون',en:'ground oats'},
+        {key:'eggs',amt:100,unit:'g',ar:'بيض (2 حبات)',en:'eggs (2 pcs)'},
+        {key:'banana',amt:100,unit:'g',ar:'موز',en:'banana'},
+        {key:'honey',amt:15,unit:'g',ar:'عسل',en:'honey'},
+      ],
+      p_ar:'اهرس الموز. اخلطه مع البيض والشوفان. اطبخ في مقلاة بدون زيت 2 دق كل وجه. أضف العسل.',
+      p_en:'Mash banana. Mix with eggs and oats. Cook in dry pan 2 min each side. Drizzle honey.',
+      fridge_ar:'✅ يُعاد تسخينه من الثلاجة',fridge_en:'✅ Reheat from fridge'},
+    lunch:{
+      ar:'لحم مفروم + أرز + فلفل + بصل',en:'Ground Beef + Rice + Peppers + Onion',
+      p:50,c:68,f:20,time_ar:'الغداء ☀️',time_en:'Lunch ☀️',
+      ings:[
+        {key:'minced meat',amt:180,unit:'g',ar:'لحم مفروم',en:'minced beef'},
+        {key:'rice',amt:100,unit:'g',ar:'أرز',en:'rice'},
+        {key:'peppers',amt:120,unit:'g',ar:'فلفل',en:'peppers'},
+        {key:'onion',amt:80,unit:'g',ar:'بصل',en:'onion'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'قلِّ اللحم مع البصل 5 دق. أضف الفلفل والطماطم 8 دق. اطبخ الأرز. يصمد 3 أيام.',
+      p_en:'Cook beef with onion 5 min. Add peppers and tomatoes 8 min. Cook rice. Stores 3 days.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'},
+    snack:{
+      ar:'زبادي + موز',en:'Yogurt + Banana',
+      p:10,c:32,f:4,time_ar:'سناك 🍎',time_en:'Snack 🍎',
+      ings:[
+        {key:'yogurt',amt:200,unit:'g',ar:'زبادي',en:'yogurt'},
+        {key:'banana',amt:120,unit:'g',ar:'موز',en:'banana'},
+      ],
+      p_ar:'ضع الزبادي في وعاء. قطّع الموز فوقه. جاهز فوراً.',
+      p_en:'Put yogurt in bowl. Slice banana on top. Ready instantly.',
+      fridge_ar:'✅ جاهز فوراً',fridge_en:'✅ Ready instantly'},
+    dinner:{
+      ar:'تونا + أرز + سلطة طماطم وخيار',en:'Tuna + Rice + Tomato & Cucumber Salad',
+      p:45,c:65,f:8,time_ar:'العشاء 🌙',time_en:'Dinner 🌙',
+      ings:[
+        {key:'tuna canned',amt:200,unit:'g',ar:'تونا معلبة',en:'canned tuna'},
+        {key:'rice',amt:110,unit:'g',ar:'أرز',en:'rice'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم وخيار',en:'tomatoes & cucumber'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اطبخ الأرز. افتح التونا وضعها فوق الأرز. أعدّ السلطة بالزيت والليمون.',
+      p_en:'Cook rice. Open tuna and place on rice. Make salad with oil and lemon.',
+      fridge_ar:'✅ الأرز يُطبخ مسبقاً',fridge_en:'✅ Pre-cook rice'}
+  },
+  // Day 4 — Thursday
+  {
+    breakfast:{
+      ar:'خبز + بيضتان + طماطم + زيت زيتون',en:'Bread + 2 Eggs + Tomato + Olive Oil',
+      p:20,c:50,f:14,time_ar:'الفطور 🌅',time_en:'Breakfast 🌅',
+      ings:[
+        {key:'bread',amt:100,unit:'g',ar:'خبز',en:'bread'},
+        {key:'eggs',amt:100,unit:'g',ar:'بيض (2 حبات)',en:'eggs (2 pcs)'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اطبخ البيض مقلياً أو مسلوقاً. حمّص الخبز. قدّم مع الطماطم المقطّعة والزيت.',
+      p_en:'Fry or boil the eggs. Toast bread. Serve with sliced tomatoes and olive oil.',
+      fridge_ar:'✅ يُطبخ في 5 دقائق',fridge_en:'✅ Ready in 5 minutes'},
+    lunch:{
+      ar:'دجاج + عدس + جزر',en:'Chicken + Lentils + Carrots',
+      p:55,c:65,f:10,time_ar:'الغداء ☀️',time_en:'Lunch ☀️',
+      ings:[
+        {key:'chicken breast',amt:180,unit:'g',ar:'صدر دجاج',en:'chicken breast'},
+        {key:'lentils',amt:120,unit:'g',ar:'عدس',en:'lentils'},
+        {key:'carrots',amt:120,unit:'g',ar:'جزر',en:'carrots'},
+        {key:'onion',amt:60,unit:'g',ar:'بصل',en:'onion'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اطبخ العدس 20 دق. قلِّ الدجاج مع البصل والجزر 10 دق. اخلطهم. غني بالبروتين وبأرخص تكلفة.',
+      p_en:'Cook lentils 20 min. Cook chicken with onion and carrots 10 min. Combine. High protein, lowest cost.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'},
+    snack:{
+      ar:'شوفان بارد + حليب + عسل',en:'Cold Oats + Milk + Honey',
+      p:14,c:50,f:6,time_ar:'سناك 🍎',time_en:'Snack 🍎',
+      ings:[
+        {key:'oats',amt:70,unit:'g',ar:'شوفان',en:'oats'},
+        {key:'milk',amt:200,unit:'ml',ar:'حليب',en:'milk'},
+        {key:'honey',amt:15,unit:'g',ar:'عسل',en:'honey'},
+      ],
+      p_ar:'اخلط الشوفان مع الحليب والعسل. حضّره قبل النوم وضعه في الثلاجة. جاهز من الثلاجة.',
+      p_en:'Mix oats with milk and honey. Prep the night before. Grab from fridge.',
+      fridge_ar:'✅ يُحضّر ليلاً',fridge_en:'✅ Prep the night before'},
+    dinner:{
+      ar:'فخذ دجاج + بطاطا حلوة + ملفوف',en:'Chicken Thigh + Sweet Potato + Cabbage',
+      p:50,c:60,f:14,time_ar:'العشاء 🌙',time_en:'Dinner 🌙',
+      ings:[
+        {key:'chicken thigh',amt:220,unit:'g',ar:'فخذ دجاج',en:'chicken thigh'},
+        {key:'sweet potato',amt:200,unit:'g',ar:'بطاطا حلوة',en:'sweet potato'},
+        {key:'coleslaw',amt:100,unit:'g',ar:'ملفوف',en:'cabbage'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'اشوِ الفخذ في الفرن 200° 30 دق. اخبز البطاطا الحلوة 8 دق في الميكروويف. قطّع الملفوف مع الليمون.',
+      p_en:'Roast chicken thigh at 200° 30 min. Microwave sweet potato 8 min. Slice cabbage with lemon.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'}
+  },
+  // Day 5 — Friday
+  {
+    breakfast:{
+      ar:'أومليت 3 بيضات + خبز + بصل + طماطم',en:'3-Egg Omelette + Bread + Onion + Tomato',
+      p:26,c:52,f:14,time_ar:'الفطور 🌅',time_en:'Breakfast 🌅',
+      ings:[
+        {key:'eggs',amt:150,unit:'g',ar:'بيض (3 حبات)',en:'eggs (3 pcs)'},
+        {key:'bread',amt:100,unit:'g',ar:'خبز',en:'bread'},
+        {key:'tomatoes',amt:100,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'onion',amt:50,unit:'g',ar:'بصل',en:'onion'},
+        {key:'oil',amt:8,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'قلِّ البصل والطماطم دقيقتين. أضف البيض المخفوق واطبخ 3 دق. حمّص الخبز. وجبة رخيصة وغنية.',
+      p_en:'Cook onion and tomatoes 2 min. Add whisked eggs and cook 3 min. Toast bread. Cheap and filling.',
+      fridge_ar:'✅ يُطبخ في 8 دقائق',fridge_en:'✅ Ready in 8 minutes'},
+    lunch:{
+      ar:'سردين + أرز + بصل + طماطم',en:'Sardines + Rice + Onion + Tomatoes',
+      p:40,c:70,f:14,time_ar:'الغداء ☀️',time_en:'Lunch ☀️',
+      ings:[
+        {key:'sardines',amt:150,unit:'g',ar:'سردين معلب',en:'canned sardines'},
+        {key:'rice',amt:120,unit:'g',ar:'أرز',en:'rice'},
+        {key:'onion',amt:80,unit:'g',ar:'بصل',en:'onion'},
+        {key:'tomatoes',amt:150,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+      ],
+      p_ar:'اطبخ الأرز. قلِّ البصل والطماطم 5 دق. افتح السردين وضعه فوق الأرز مع الصلصة. سريع ورخيص.',
+      p_en:'Cook rice. Fry onion and tomatoes 5 min. Open sardines and place on rice with sauce. Fast and cheap.',
+      fridge_ar:'✅ الأرز يُطبخ مسبقاً',fridge_en:'✅ Pre-cook rice'},
+    snack:{
+      ar:'خبز + زبدة فول سوداني',en:'Bread + Peanut Butter',
+      p:12,c:40,f:12,time_ar:'سناك 🍎',time_en:'Snack 🍎',
+      ings:[
+        {key:'bread',amt:100,unit:'g',ar:'خبز',en:'bread'},
+        {key:'peanut butter',amt:30,unit:'g',ar:'زبدة فول سوداني',en:'peanut butter'},
+      ],
+      p_ar:'ادهن الخبز بزبدة الفول السوداني. جاهز في ثانية.',
+      p_en:'Spread peanut butter on bread. Ready in seconds.',
+      fridge_ar:'✅ جاهز فوراً',fridge_en:'✅ Ready instantly'},
+    dinner:{
+      ar:'صدر دجاج + معكرونة + طماطم',en:'Chicken Breast + Pasta + Tomato Sauce',
+      p:52,c:68,f:10,time_ar:'العشاء 🌙',time_en:'Dinner 🌙',
+      ings:[
+        {key:'chicken breast',amt:200,unit:'g',ar:'صدر دجاج مقطّع',en:'diced chicken breast'},
+        {key:'pasta',amt:110,unit:'g',ar:'معكرونة',en:'pasta'},
+        {key:'tomatoes',amt:200,unit:'g',ar:'طماطم مهروسة',en:'crushed tomatoes'},
+        {key:'onion',amt:60,unit:'g',ar:'بصل',en:'onion'},
+        {key:'oil',amt:10,unit:'ml',ar:'زيت',en:'oil'},
+      ],
+      p_ar:'قلِّ الدجاج مع البصل 6 دق. أضف الطماطم واطبخ 10 دق. اسلق المعكرونة. اخلطهم. يصمد 3 أيام.',
+      p_en:'Cook chicken with onion 6 min. Add tomatoes and simmer 10 min. Boil pasta and toss. Stores 3 days.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'}
+  },
+  // Day 6 — Saturday
+  {
+    breakfast:{
+      ar:'شوفان + حليب + بيضتان مسلوقتان + عسل',en:'Oatmeal + Milk + 2 Boiled Eggs + Honey',
+      p:28,c:62,f:10,time_ar:'الفطور 🌅',time_en:'Breakfast 🌅',
+      ings:[
+        {key:'oats',amt:90,unit:'g',ar:'شوفان',en:'oats'},
+        {key:'milk',amt:250,unit:'ml',ar:'حليب',en:'milk'},
+        {key:'eggs',amt:100,unit:'g',ar:'بيض مسلوق (2 حبات)',en:'boiled eggs (2 pcs)'},
+        {key:'honey',amt:20,unit:'g',ar:'عسل',en:'honey'},
+      ],
+      p_ar:'اطبخ الشوفان مع الحليب. اسلق البيض مسبقاً وضعه في الثلاجة. في الصباح أكل الشوفان بالعسل مع البيض.',
+      p_en:'Cook oats with milk. Pre-boil eggs and keep in fridge. Morning: eat oatmeal with honey and cold eggs.',
+      fridge_ar:'✅ البيض يُسلق مسبقاً',fridge_en:'✅ Pre-boil eggs ahead'},
+    lunch:{
+      ar:'حمص + أرز + بصل + زيت زيتون',en:'Chickpeas + Rice + Onion + Olive Oil',
+      p:22,c:75,f:10,time_ar:'الغداء ☀️',time_en:'Lunch ☀️',
+      ings:[
+        {key:'chickpeas',amt:200,unit:'g',ar:'حمص مسلوق أو معلب',en:'cooked or canned chickpeas'},
+        {key:'rice',amt:110,unit:'g',ar:'أرز',en:'rice'},
+        {key:'onion',amt:80,unit:'g',ar:'بصل',en:'onion'},
+        {key:'oil',amt:15,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+        {key:'tomatoes',amt:100,unit:'g',ar:'طماطم',en:'tomatoes'},
+      ],
+      p_ar:'اطبخ الأرز. قلِّ البصل والطماطم 5 دق. أضف الحمص ودفّئه. ضعه فوق الأرز. وجبة نباتية رخيصة وشبعانة.',
+      p_en:'Cook rice. Fry onion and tomatoes 5 min. Add chickpeas and warm through. Put on rice. Cheap filling meal.',
+      fridge_ar:'✅ يصمد 3 أيام',fridge_en:'✅ Stores 3 days'},
+    snack:{
+      ar:'بيضتان مسلوقتان + خبز',en:'2 Boiled Eggs + Bread',
+      p:16,c:35,f:10,time_ar:'سناك 🍎',time_en:'Snack 🍎',
+      ings:[
+        {key:'eggs',amt:100,unit:'g',ar:'بيض مسلوق (2 حبات)',en:'boiled eggs (2 pcs)'},
+        {key:'bread',amt:80,unit:'g',ar:'خبز',en:'bread'},
+      ],
+      p_ar:'اسلق البيض مسبقاً. يؤكل بارداً من الثلاجة مع الخبز والملح.',
+      p_en:'Pre-boil eggs. Eat cold from fridge with bread and salt.',
+      fridge_ar:'✅ جاهز من الثلاجة',fridge_en:'✅ Ready from fridge'},
+    dinner:{
+      ar:'تونا باستا باردة من الثلاجة',en:'Cold Tuna Pasta from Fridge',
+      p:45,c:68,f:10,time_ar:'العشاء 🌙',time_en:'Dinner 🌙',
+      ings:[
+        {key:'tuna canned',amt:200,unit:'g',ar:'تونا معلبة',en:'canned tuna'},
+        {key:'pasta',amt:110,unit:'g',ar:'معكرونة',en:'pasta'},
+        {key:'tomatoes',amt:120,unit:'g',ar:'طماطم',en:'tomatoes'},
+        {key:'oil',amt:12,unit:'ml',ar:'زيت زيتون',en:'olive oil'},
+        {key:'onion',amt:50,unit:'g',ar:'بصل',en:'onion'},
+      ],
+      p_ar:'اسلق المعكرونة وبرّدها. امزج التونا مع المعكرونة والطماطم والبصل والزيت. يُحضّر الليل كله ويؤكل بارداً.',
+      p_en:'Boil pasta and cool. Mix tuna with pasta, tomatoes, onion and oil. Prep night before, eat cold.',
+      fridge_ar:'✅ يُحضّر ليلاً — جاهز من الثلاجة',fridge_en:'✅ Prep night before — grab from fridge'}
+  }
+];
 
 function scaleMealToTarget(meal, targetCal){
   if(!meal.ings || !meal.ings.length){
@@ -1501,34 +2235,30 @@ function fmtIng(ing, lang){
   return amtStr+' '+lbl;
 }
 
-function buildDay(mode, targetCal){
+function buildDay(mode, targetCal, dayIdx){
   const tc = Math.round(targetCal)||2000;
+  const d = (dayIdx !== undefined ? dayIdx : new Date().getDay()) % 7;
   if(mode==='ramadan'){
-    const iftarBase = rand(ML.ramadan.iftar);
-    const ishaBase  = rand(ML.ramadan.isha);
-    const suhoorBase= rand(ML.ramadan.suhoor);
+    const plan = WEEK_PLAN_RAM[d];
     const iftarCal  = Math.round(tc*0.25);
     const ishaCal   = Math.round(tc*0.45);
     const suhoorCal = tc - iftarCal - ishaCal;
     return{mode,
-      iftar: scaleMealToTarget(iftarBase, iftarCal),
-      isha:  scaleMealToTarget(ishaBase,  ishaCal),
-      suhoor:scaleMealToTarget(suhoorBase,suhoorCal>0?suhoorCal:Math.round(tc*0.30))
+      iftar: scaleMealToTarget(plan.iftar, iftarCal),
+      isha:  scaleMealToTarget(plan.isha,  ishaCal),
+      suhoor:scaleMealToTarget(plan.suhoor,suhoorCal>0?suhoorCal:Math.round(tc*0.30))
     };
   } else {
-    const bfBase  = rand(ML.normal.breakfast);
-    const lnBase  = rand(ML.normal.lunch);
-    const snBase  = rand(ML.normal.snack);
-    const dnBase  = rand(ML.normal.dinner);
+    const plan = WEEK_PLAN[d];
     const bfCal   = Math.round(tc*0.25);
     const lnCal   = Math.round(tc*0.35);
     const snCal   = Math.round(tc*0.12);
     const dnCal   = tc - bfCal - lnCal - snCal;
     return{mode,
-      breakfast:scaleMealToTarget(bfBase, bfCal),
-      lunch:    scaleMealToTarget(lnBase, lnCal),
-      snack:    scaleMealToTarget(snBase, snCal),
-      dinner:   scaleMealToTarget(dnBase, dnCal>0?dnCal:Math.round(tc*0.28))
+      breakfast:scaleMealToTarget(plan.breakfast, bfCal),
+      lunch:    scaleMealToTarget(plan.lunch,     lnCal),
+      snack:    scaleMealToTarget(plan.snack,     snCal),
+      dinner:   scaleMealToTarget(plan.dinner,    dnCal>0?dnCal:Math.round(tc*0.28))
     };
   }
 }
@@ -1536,12 +2266,12 @@ function buildDay(mode, targetCal){
 function forceGenAllMeals(){
   const tc=Math.round(P.targetCal)||2000;
   for(let d=0;d<7;d++){
-    MP_RAM[d]=buildDay('ramadan',tc);
-    MP_NRM[d]=buildDay('normal',tc);
+    MP_RAM[d]=buildDay('ramadan',tc,d);
+    MP_NRM[d]=buildDay('normal',tc,d);
   }
   MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
   MEAL_EATEN={};
-  localStorage.setItem('ff8_meal_date',new Date().toDateString());
+  localStorage.setItem('ff9_meal_date',new Date().toDateString());
   toast(t('toast-meals')); save(); rMeals();
 }
 
@@ -1564,7 +2294,6 @@ function rMeals(){
   if(!P.name) return;
   const ar=L==='ar';
   document.getElementById('ml-ti').textContent=t('ml-ti');
-  document.getElementById('all-t').textContent=t('all-t');
   const msRm=document.getElementById('msw-rm'), msNm=document.getElementById('msw-nm');
   msRm.className='msw'+(mealMode==='ramadan'?' rm':'');
   msNm.className='msw'+(mealMode==='normal'?' nm':'');
@@ -1578,15 +2307,19 @@ function rMeals(){
     const isToday=d===todayIdx;
     return`<div class="dpill${isToday?' today':''}">${isToday?(ar?'📅 ':' 📅')+nm:nm}</div>`;
   }).join('');
-  if(!MP[CD]) MP[CD]=buildDay(mealMode,Math.round(P.targetCal)||2000);
+  if(!MP[CD]) MP[CD]=buildDay(mealMode,Math.round(P.targetCal)||2000,CD);
   const day=MP[CD];
   const meals=mealMode==='ramadan'
     ?[{k:'iftar',m:day.iftar},{k:'isha',m:day.isha},{k:'suhoor',m:day.suhoor}]
     :[{k:'breakfast',m:day.breakfast},{k:'lunch',m:day.lunch},{k:'snack',m:day.snack},{k:'dinner',m:day.dinner}];
   const totalCal=meals.reduce((s,{m})=>s+(m&&m.cal||0),0);
+  const totalP=meals.reduce((s,{m})=>s+(m&&m.p||0),0);
   const target=P.targetCal||2000;
+  const proteinTarget=Math.round((P.weight||80)*2);
   document.getElementById('dt-lb').textContent=t('dt-lb');
   document.getElementById('dt-cl').textContent=totalCal+' kcal';
+  document.getElementById('dt-plb').textContent=ar?'بروتين اليوم':'Daily Protein';
+  document.getElementById('dt-pv').textContent=totalP+'g / '+proteinTarget+'g';
   document.getElementById('dt-lbt').textContent=t('dt-lbt');
   document.getElementById('dt-tv').textContent=target+' kcal';
   rDayMeals();
@@ -1605,6 +2338,7 @@ function rDayMeals(){
     const nm=ar?m.ar:m.en;
     const time=ar?m.time_ar:m.time_en;
     const instr=ar?m.p_ar:m.p_en;
+    const fridgeNote=ar?(m.fridge_ar||''):(m.fridge_en||'');
     // Build ingredient display from scaled ings array
     const ings = (m.ings||[]).map(ing => fmtIng(ing, L));
     const lockKey=todayKey+'_'+k;
@@ -1614,11 +2348,11 @@ function rDayMeals(){
         <div style="flex:1">
           <div class="tag">${t('mtype-'+k)}</div>
           <div class="mc-nm">${nm}</div>
-          <div style="font-size:13px;color:var(--mt);margin-top:3px">${time} · ${m.cal} kcal</div>
+          <div style="font-size:13px;color:var(--mt);margin-top:3px">${time} · ${m.cal} kcal · <span style="color:var(--bl)">${m.p}g protein</span></div>
+          ${fridgeNote?`<div style="font-size:12px;color:var(--ac);font-weight:700;margin-top:3px">${fridgeNote}</div>`:''}
           ${eaten?`<div class="meal-done-badge">✅ ${ar?'تم تناولها':'Eaten'}</div>`:''}
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          ${!eaten?`<button class="btn bo" style="padding:6px 10px;font-size:13px" onclick="event.stopPropagation();refreshMeal('${k}')">🔄</button>`:''}
           <span style="color:var(--mt);font-size:14px">▼</span>
         </div>
       </div>
@@ -1640,8 +2374,67 @@ function rDayMeals(){
     </div>`;
   });
   document.getElementById('mlcnt').innerHTML=h;
+  rShopList(meals);
 }
 function togMC(k){document.getElementById('mc-'+k)?.classList.toggle('exp');}
+
+// ============================================================
+// SHOPPING LIST
+// ============================================================
+const ING_CATEGORY={
+  'chicken breast':'🍗','chicken thigh':'🍗','ground beef':'🥩','beef':'🥩',
+  'minced meat':'🥩','turkey breast':'🦃','salmon':'🐟','fish fillet':'🐟',
+  'sardines':'🐟','tuna canned':'🐟','tuna':'🐟','shrimp':'🦐','eggs':'🥚',
+  'milk':'🥛','Greek yogurt':'🥛','yogurt':'🥛','cottage cheese':'🧀',
+  'grated cheese':'🧀','cheese':'🧀','butter':'🧈','cream':'🥛',
+  'protein powder':'💊','whey protein':'💊',
+  'oats':'🌾','brown rice':'🌾','rice':'🌾','quinoa':'🌾',
+  'whole wheat bread':'🍞','whole wheat pasta':'🍝','pasta':'🍝','bread':'🍞',
+  'pita bread':'🍞','sweet potato':'🍠','potatoes':'🥔',
+  'banana':'🍌','avocado':'🥑','apple':'🍎','strawberries':'🍓',
+  'tomatoes':'🍅','cherry tomatoes':'🍅','onion':'🧅','peppers':'🫑',
+  'carrots':'🥕','spinach':'🥬','broccoli':'🥦','asparagus':'🌿',
+  'lettuce':'🥗','zucchini':'🥒','green beans':'🌿','coleslaw':'🥗',
+  'lentils':'🫘','chickpeas':'🫘','peas':'🫘','hummus':'🫘',
+  'olive oil':'🫒','oil':'🫒','almond butter':'🥜','peanut butter':'🥜',
+  'almonds':'🥜','walnuts':'🥜','cashews':'🥜','mixed nuts':'🥜',
+  'honey':'🍯','dates':'🫙','maple syrup':'🍯',
+  'orange juice':'🍊','lemonade':'🍋',
+};
+function ingCategory(key){return ING_CATEGORY[key]||'🛒';}
+function rShopList(meals){
+  const ar=L==='ar';
+  const shopEl=document.getElementById('shoplist');
+  const itemsEl=document.getElementById('shopitems');
+  if(!meals||!meals.length){shopEl.style.display='none';return;}
+  // Aggregate all ingredients across all meals
+  const agg={};
+  meals.forEach(({m})=>{
+    if(!m||!m.ings) return;
+    m.ings.forEach(ing=>{
+      const key=ing.key;
+      const label=ar?ing.ar:ing.en;
+      if(!agg[key]) agg[key]={label,amt:0,unit:ing.unit,key};
+      // Convert pcs to grams
+      const grams=ing.unit==='pcs'?(ing.amt):(ing.amt);
+      agg[key].amt+=grams;
+    });
+  });
+  const items=Object.values(agg).sort((a,b)=>a.label.localeCompare(b.label));
+  document.getElementById('shop-ttl').textContent=ar?'قائمة المشتريات اليوم':'Today\'s Shopping List';
+  document.getElementById('shop-sub').textContent=ar?`${items.length} مكوّن — كمّيات دقيقة لليوم`:`${items.length} ingredients — exact amounts for today`;
+  itemsEl.innerHTML=items.map(it=>{
+    const icon=ingCategory(it.key);
+    const amtStr=it.unit==='ml'?it.amt+'ml':it.amt+'g';
+    return`<div class="shop-item">
+      <div>
+        <div class="shop-nm">${icon} ${it.label}</div>
+      </div>
+      <div class="shop-amt">${amtStr}</div>
+    </div>`;
+  }).join('');
+  shopEl.style.display='block';
+}
 
 // ============================================================
 // EXERCISES
@@ -1902,7 +2695,7 @@ function rProfile(){
   const ar=L==='ar';
   document.getElementById('profav').textContent=P.name[0]?.toUpperCase()||'?';
   document.getElementById('prof-nm').textContent=P.name;
-  const gMap={lose:ar?'خسارة وزن':'Weight Loss',gain:ar?'بناء عضلات':'Muscle Gain',maintain:ar?'الحفاظ على الوزن':'Maintain Weight',fit:ar?'لياقة عامة':'General Fitness'};
+  const gMap={lose:ar?'خسارة وزن':'Weight Loss',gain:ar?'بناء عضلات':'Muscle Gain',maintain:ar?'الحفاظ على الوزن':'Maintain Weight',fit:ar?'لياقة عامة':'General Fitness',recomp:ar?'حرق دهون + بناء عضلات 🔥💪':'Burn Fat + Build Muscle 🔥💪'};
   document.getElementById('prof-gl').textContent=gMap[P.goal]||P.goal||'';
   document.getElementById('edit-btn').textContent='✏️ '+t('edit-btn');
   document.getElementById('lbl-lang').textContent=t('lbl-lang');
@@ -1921,6 +2714,7 @@ function rProfile(){
   document.getElementById('dc-t').textContent=t('dc-t');
   document.getElementById('dc-leg1').textContent=t('dc-leg1');
   document.getElementById('dc-leg2').textContent=t('dc-leg2');
+  document.getElementById('dc-leg3').textContent=t('dc-leg3');
   const lsAr=document.getElementById('lsw-ar'), lsEn=document.getElementById('lsw-en');
   if(lsAr) lsAr.classList.toggle('on',L==='ar');
   if(lsEn) lsEn.classList.toggle('on',L==='en');
@@ -1930,63 +2724,92 @@ function rProfile(){
 // DAILY CHART
 // ============================================================
 function renderDailyChart(){
-  const canvas=document.getElementById('dcChart');
-  if(!canvas) return;
+  const grid=document.getElementById('week-grid');
+  const statsBox=document.getElementById('dash-stats');
+  const subEl=document.getElementById('dc-sub');
+  if(!grid) return;
   const ar=L==='ar';
-  const days=14;
   const today=new Date(); today.setHours(0,0,0,0);
-  const bars=[];
-  for(let i=days-1;i>=0;i--){
-    const d=new Date(today); d.setDate(today.getDate()-i);
+  const tc=P.targetCal||2000;
+  const tp=P.protG||Math.round((P.weight||80)*2);
+
+  // Build current week Mon–Sun (7 days ending on coming Sunday)
+  // Find Monday of this week
+  const dow=today.getDay(); // 0=Sun
+  const mondayOffset=dow===0?-6:1-dow;
+  const monday=new Date(today); monday.setDate(today.getDate()+mondayOffset);
+
+  const dayNamesAr=['أحد','إثنين','ثلاث','أربع','خميس','جمعة','سبت'];
+  const dayNamesEn=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  const weekDays=[];
+  for(let i=0;i<7;i++){
+    const d=new Date(monday); d.setDate(monday.getDate()+i);
     const key=d.toDateString();
-    const done=WH.some(h=>h.date===key);
-    const dayName=ar
-      ?['أحد','إثنين','ثلاث','أربع','خميس','جمعة','سبت'][d.getDay()]
-      :['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
-    bars.push({key,done,label:i===0?(ar?'اليوم':'Today'):dayName,isToday:i===0});
+    const trained=WH.some(h=>h.date===key);
+    const log=DLOG[key]||{tCal:0,tP:0};
+    const calOk=log.tCal>0&&log.tCal>=(tc*0.85);
+    const proOk=log.tP>0&&log.tP>=(tp*0.85);
+    const isToday=d.getTime()===today.getTime();
+    const isFuture=d.getTime()>today.getTime();
+    const name=ar?dayNamesAr[d.getDay()]:dayNamesEn[d.getDay()];
+    weekDays.push({key,trained,calOk,proOk,isToday,isFuture,name,cal:log.tCal,pro:log.tP});
   }
-  const doneCount=bars.filter(b=>b.done).length;
-  const sub=document.getElementById('dc-sub');
-  if(sub) sub.textContent=ar?`${doneCount} تمرين من ${days} يوم`:`${doneCount} workouts in ${days} days`;
-  const W=canvas.getBoundingClientRect().width||canvas.offsetWidth||300;
-  const H=140;
-  const dpr=window.devicePixelRatio||1;
-  canvas.width=Math.round(W*dpr);
-  canvas.height=Math.round(H*dpr);
-  canvas.style.width=W+'px';
-  canvas.style.height=H+'px';
-  const ctx=canvas.getContext('2d');
-  ctx.scale(dpr,dpr);
-  const padL=4,padR=4,padT=10,padB=28;
-  const barW=Math.floor((W-padL-padR)/days);
-  const gap=Math.max(2,Math.floor(barW*0.18));
-  const bw=barW-gap;
-  const maxH=H-padT-padB;
-  bars.forEach((b,i)=>{
-    const x=padL+i*barW;
-    const barH=b.done?maxH:Math.round(maxH*0.22);
-    const y=padT+(maxH-barH);
-    const r=Math.min(5,bw/2);
-    ctx.beginPath();
-    ctx.moveTo(x+r,y); ctx.lineTo(x+bw-r,y);
-    ctx.quadraticCurveTo(x+bw,y,x+bw,y+r);
-    ctx.lineTo(x+bw,y+barH); ctx.lineTo(x,y+barH);
-    ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
-    ctx.closePath();
-    if(b.done){
-      const g=ctx.createLinearGradient(0,y,0,y+barH);
-      g.addColorStop(0,'#c8f53a'); g.addColorStop(1,'rgba(200,245,58,0.5)');
-      ctx.fillStyle=g;
-    } else {
-      ctx.fillStyle=b.isToday?'rgba(77,184,255,0.25)':'#252540';
-    }
-    ctx.fill();
-    if(b.isToday){ctx.strokeStyle=b.done?'#c8f53a':'#4db8ff';ctx.lineWidth=1.5;ctx.stroke();}
-    ctx.fillStyle=b.isToday?'#4db8ff':(b.done?'#c8f53a':'#525270');
-    ctx.font=`bold ${b.isToday?10:9}px system-ui`;
-    ctx.textAlign='center';
-    ctx.fillText(b.label,x+bw/2,H-padB+14);
-  });
+
+  grid.innerHTML=weekDays.map(d=>{
+    const circleClass='wday-circle'+(d.trained?' trained':'')+(d.isToday?' today':'')+(d.isFuture?' future':'');
+    const todayStyle=d.isToday&&!d.trained?'border-color:#4db8ff;':'';
+    const futureStyle=d.isFuture?'opacity:0.35;':'';
+    const dots=(!d.isFuture)
+      ?`<div class="wday-dots">
+          <span class="wdot cal" style="${d.calOk?'':'opacity:0.2'}"></span>
+          <span class="wdot pro" style="${d.proOk?'':'opacity:0.2'}"></span>
+        </div>`
+      :'<div class="wday-dots"></div>';
+    return `<div class="wday">
+      <div class="${circleClass}" style="${todayStyle}${futureStyle}">${d.trained?'✓':d.isToday?'●':'·'}</div>
+      <div style="font-size:10px;color:${d.isToday?'#4db8ff':d.isFuture?'#444':'var(--mt)'};font-weight:${d.isToday?'700':'400'}">${d.name}</div>
+      ${dots}
+    </div>`;
+  }).join('');
+
+  // Stats: streak, sessions this month, avg kcal 7d, avg prot 7d
+  const streak=P.streak||0;
+  const now=new Date();
+  const monthStart=new Date(now.getFullYear(),now.getMonth(),1).toDateString();
+  const sessionsThisMonth=WH.filter(h=>{
+    const hd=new Date(h.date);
+    return hd>=new Date(monthStart);
+  }).length;
+
+  // 7-day avg kcal and protein
+  let sumKcal=0,sumProt=0,loggedDays=0;
+  for(let i=6;i>=0;i--){
+    const d=new Date(today); d.setDate(today.getDate()-i);
+    const log=DLOG[d.toDateString()];
+    if(log&&log.tCal>0){sumKcal+=log.tCal;sumProt+=log.tP;loggedDays++;}
+  }
+  const avgKcal=loggedDays>0?Math.round(sumKcal/loggedDays):0;
+  const avgProt=loggedDays>0?Math.round(sumProt/loggedDays):0;
+
+  const trainedThisWeek=weekDays.filter(d=>d.trained&&!d.isFuture).length;
+  const totalPastDays=weekDays.filter(d=>!d.isFuture).length;
+
+  if(subEl){
+    subEl.textContent=ar
+      ?`${trainedThisWeek} تمارين من ${totalPastDays} يوم هذا الأسبوع`
+      :`${trainedThisWeek} of ${totalPastDays} days trained this week`;
+  }
+
+  const dstats=[
+    {icon:'🔥',val:streak+(ar?' يوم':' days'),lbl:ar?'تتالي':'Streak'},
+    {icon:'🏋️',val:sessionsThisMonth,lbl:ar?'جلسة هذا الشهر':'Sessions this month'},
+    {icon:'🎯',val:avgKcal>0?avgKcal+' kcal':(ar?'—':'—'),lbl:ar?'متوسط 7 أيام':'Avg kcal (7d)'},
+    {icon:'💪',val:avgProt>0?avgProt+'g':(ar?'—':'—'),lbl:ar?'متوسط بروتين':'Avg protein (7d)'},
+  ];
+  statsBox.innerHTML=dstats.map(s=>
+    `<div class="dstat"><div style="font-size:18px">${s.icon}</div><div class="dstat-v">${s.val}</div><div class="dstat-l">${s.lbl}</div></div>`
+  ).join('');
 }
 
 // ============================================================
@@ -2066,6 +2889,7 @@ function saveEdit(){
   const a=+document.getElementById('ed-ag').value;
   if(!n){toast(L==='ar'?'أدخل الاسم':'Enter name');return;}
   P.name=n;P.weight=w;P.height=h;P.age=a;
+  P.lastWeighIn=Date.now();
   calcCal(); save(); closeMov('editMov'); rProfile(); rHome();
   toast(t('toast-saved'));
 }

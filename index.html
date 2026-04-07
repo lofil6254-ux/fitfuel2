@@ -275,7 +275,26 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
       <div class="oc oc-h" onclick="pick(this,'act','1.55')"><div class="oi">🏃</div><div><div class="ol" id="ac-3">—</div><div class="os" id="ac-3s">—</div></div></div>
       <div class="oc oc-h" onclick="pick(this,'act','1.725')"><div class="oi">⚡</div><div><div class="ol" id="ac-4">—</div></div></div>
     </div>
-    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx4" onclick="finSetup()">🚀 <span id="nx4t">—</span></button></div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx4" onclick="nx(4)"><span id="nx4t">—</span></button></div>
+  </div>
+  <div class="step" id="s5">
+    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s5t">—</div>
+    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s5s">—</div>
+    <div style="font-size:14px;font-weight:700;color:var(--tx2);margin-bottom:10px" id="s5-dl">—</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,0)"><div class="ol" id="rd-0">—</div></div>
+      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,1)"><div class="ol">1</div></div>
+      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,2)"><div class="ol">2</div></div>
+      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,3)"><div class="ol">3</div></div>
+      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,4)"><div class="ol">4</div></div>
+      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,5)"><div class="ol">5</div></div>
+      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,6)"><div class="ol">6</div></div>
+    </div>
+    <div class="fl" id="run-km-wrap" style="display:none;margin-top:14px">
+      <label class="lb" id="l-rkm">—</label>
+      <input class="fi" id="i-rkm" type="number" min="1" max="60" placeholder="5">
+    </div>
+    <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" onclick="finSetup()">🚀 <span id="nx5t">—</span></button></div>
   </div>
 </div>
 </div>
@@ -477,7 +496,16 @@ const T={
     'ac-1':'خامل جداً','ac-1s':'مكتبي، لا رياضة',
     'ac-2':'خفيف','ac-2s':'رياضة 1-3 أيام/أسبوع',
     'ac-3':'متوسط','ac-3s':'رياضة 3-5 أيام/أسبوع',
-    'ac-4':'نشيط جداً','nx4t':'ابدأ',
+    'ac-4':'نشيط جداً','nx4t':'التالي ←',
+    's5t':'هل تريد إضافة الجري؟','s5s':'الجري يساعد في حرق الدهون وتحسين اللياقة',
+    's5-dl':'كم يوم تريد الجري في الأسبوع؟','rd-0':'بدون جري',
+    'l-rkm':'المسافة لكل جلسة (كم)','nx5t':'ابدأ',
+    'run-card-t':'يوم جري 🏃','run-est':'حرق تقريبي',
+    'run-log':'✅ سجّل جريتي','run-logged':'✅ تم تسجيل الجري',
+    'run-tip1':'ابدأ بخطوة هادئة 5 دقائق إحماء',
+    'run-tip2':'اثبت على وتيرة تسمح لك بالكلام',
+    'run-tip3':'اشرب ماء قبل وبعد الجري',
+    'toast-run':'🏃 تم تسجيل الجري!',
     'nl-home':'الرئيسية','nl-workout':'تمارين','nl-meals':'وجبات','nl-profile':'الملف',
     'hm-gr':'مرحباً،','cs1':'الهدف','cs2':'مستهلك','cs3':'متبقي',
     'lb-pro':'بروتين','lb-car':'كربو','lb-fat':'دهون',
@@ -523,7 +551,16 @@ const T={
     'ac-1':'Sedentary','ac-1s':'Desk job, no sport',
     'ac-2':'Light','ac-2s':'Sport 1-3 days/week',
     'ac-3':'Moderate','ac-3s':'Sport 3-5 days/week',
-    'ac-4':'Very Active','nx4t':'Start',
+    'ac-4':'Very Active','nx4t':'Next →',
+    's5t':'Want to add running?','s5s':'Running helps burn fat and improve fitness',
+    's5-dl':'How many days per week do you want to run?','rd-0':'No Running',
+    'l-rkm':'Distance per session (km)','nx5t':'Start',
+    'run-card-t':'Run Day 🏃','run-est':'Est. burn',
+    'run-log':'✅ Log my run','run-logged':'✅ Run Logged',
+    'run-tip1':'Start with a 5-min easy warm-up walk',
+    'run-tip2':'Keep a pace where you can still talk',
+    'run-tip3':'Hydrate before and after your run',
+    'toast-run':'🏃 Run logged!',
     'nl-home':'Home','nl-workout':'Workout','nl-meals':'Meals','nl-profile':'Profile',
     'hm-gr':'Welcome,','cs1':'Target','cs2':'Consumed','cs3':'Remaining',
     'lb-pro':'Protein','lb-car':'Carbs','lb-fat':'Fat',
@@ -572,6 +609,7 @@ function applyLang(){
     's2t','s2s','g-lose','g-gain','g-main','g-fit','g-recomp','g-recomps','nx2',
     's3t','s3s','lv-b','lv-bs','lv-i','lv-is','lv-a','lv-as','nx3',
     's4t','s4s','ac-1','ac-1s','ac-2','ac-2s','ac-3','ac-3s','ac-4','nx4t',
+    's5t','s5s','s5-dl','rd-0','l-rkm','nx5t',
     'nl-home','nl-workout','nl-meals','nl-profile',
     'hm-gr','cs1','cs2','cs3','lb-pro','lb-car','lb-fat','lbl-qlog','lbl-tw','sa-btn',
     'wk-tag','wk-ti','pg-t','pg1l','pg2l','pg3l','regen-t',
@@ -660,6 +698,7 @@ function showMain(){
   applyLang();
   const today=new Date().toDateString();
   if(P.lastWD!==today){ P.doneToday=false; }
+  if(P.lastRunDate!==today){ P.runDoneToday=false; }
   checkDailyMealRefresh();
   if(!_WP||_WP._date!==today) genWK(false);
   rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
@@ -697,7 +736,7 @@ function checkDailyMealRefresh(){
 // ============================================================
 function rProg(){
   document.getElementById('prog').innerHTML=
-    [1,2,3,4].map(i=>`<div class="prg ${i<CS?'d':i===CS?'c':''}"></div>`).join('');
+    [1,2,3,4,5].map(i=>`<div class="prg ${i<CS?'d':i===CS?'c':''}"></div>`).join('');
 }
 function showStep(n){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
@@ -722,14 +761,18 @@ function nx(n){
   }
   if(n===2&&!SEL.goal){toast(L==='ar'?'اختر هدفك':'Choose goal');return;}
   if(n===3&&!SEL.level){toast(L==='ar'?'اختر مستواك':'Choose level');return;}
+  if(n===4&&!SEL.act){toast(t('toast-act'));return;}
   CS=n+1; showStep(CS);
 }
 function pv(){ CS--; showStep(CS); }
 function finSetup(){
-  if(!SEL.act){toast(t('toast-act'));return;}
   P.goal=SEL.goal; P.level=SEL.level; P.activity=parseFloat(SEL.act);
   P.sessions=0; P.streak=0; P.intensity=1; P.lastWD=null; P.doneToday=false;
   P.lastWeighIn=Date.now();
+  P.runDays=SEL.runDays||0;
+  P.runKm=P.runDays>0?Math.max(1,+document.getElementById('i-rkm').value||5):0;
+  P.runSchedule=buildRunSchedule(P.runDays);
+  P.runDoneToday=false; P.lastRunDate=null;
   calcCal();
   const tc=Math.round(P.targetCal)||2000;
   for(let d=0;d<7;d++){
@@ -740,6 +783,52 @@ function finSetup(){
   MEAL_EATEN={};
   localStorage.setItem('ff9_meal_date',new Date().toDateString());
   genWK(false); save(); showMain();
+}
+
+// ============================================================
+// RUNNING
+// ============================================================
+function buildRunSchedule(days){
+  // WEEK=['upper','lower','rest','full','cardio','rest','upper']
+  // Priority: rest days (2,5) first → cardio (4) → upper (0,6) → full (3) → lower (1)
+  const priority=[2,5,4,0,6,3,1];
+  const schedule=new Array(7).fill(false);
+  for(let i=0;i<Math.min(days,7);i++) schedule[priority[i]]=true;
+  return schedule;
+}
+function pickRunDays(el,days){
+  el.closest('div').querySelectorAll('.oc').forEach(o=>o.classList.remove('on'));
+  el.classList.add('on');
+  SEL.runDays=days;
+  document.getElementById('run-km-wrap').style.display=days>0?'block':'none';
+}
+function logRun(){
+  const today=new Date().toDateString();
+  P.runDoneToday=true; P.lastRunDate=today;
+  save(); rWorkout();
+  toast(t('toast-run'));
+}
+function runCard(ar,km,calBurn){
+  const done=P.runDoneToday&&P.lastRunDate===new Date().toDateString();
+  return`<div class="card" style="border-color:rgba(77,184,255,.4);background:linear-gradient(145deg,rgba(77,184,255,.08),var(--s2));margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div>
+        <div class="tag" style="color:var(--bl)">${t('run-card-t')}</div>
+        <div style="font-size:19px;font-weight:900;margin-top:4px">${km} km</div>
+      </div>
+      <div style="text-align:end">
+        <div style="font-size:12px;color:var(--mt);font-weight:700">${t('run-est')}</div>
+        <div style="font-size:18px;font-weight:900;color:var(--bl)">~${calBurn} kcal</div>
+      </div>
+    </div>
+    <div class="tips" style="border-color:rgba(77,184,255,.2)">
+      <div class="tips-t" style="color:var(--bl)">💡 ${ar?'نصائح الجري':'Running Tips'}</div>
+      <ul><li>${t('run-tip1')}</li><li>${t('run-tip2')}</li><li>${t('run-tip3')}</li></ul>
+    </div>
+    <button class="btn bw${done?' done-btn cmp':' bp'}" style="margin-top:12px" ${done?'disabled':''} onclick="logRun()">
+      ${done?t('run-logged'):t('run-log')}
+    </button>
+  </div>`;
 }
 
 // ============================================================
@@ -2418,10 +2507,8 @@ function rShopList(meals){
     m.ings.forEach(ing=>{
       const key=ing.key;
       const label=ar?ing.ar:ing.en;
-      if(!agg[key]) agg[key]={label,amt:0,unit:ing.unit,key};
-      // Convert pcs to grams
-      const grams=ing.unit==='pcs'?(ing.amt):(ing.amt);
-      agg[key].amt+=grams;
+      if(!agg[key]) agg[key]={label,amt:0,unit:ing.unit,key,gPerPc:ing.gPerPc||null,pcs_ar:ing.pcs_ar||'pcs',pcs_en:ing.pcs_en||'pcs'};
+      agg[key].amt+=ing.amt;
     });
   });
   const items=Object.values(agg).sort((a,b)=>a.label.localeCompare(b.label));
@@ -2429,7 +2516,16 @@ function rShopList(meals){
   document.getElementById('shop-sub').textContent=ar?`${items.length} مكوّن — كمّيات دقيقة لليوم`:`${items.length} ingredients — exact amounts for today`;
   itemsEl.innerHTML=items.map(it=>{
     const icon=ingCategory(it.key);
-    const amtStr=it.unit==='ml'?it.amt+'ml':it.amt+'g';
+    let amtStr;
+    if(it.unit==='pcs'&&it.gPerPc){
+      const pieces=Math.ceil(it.amt/it.gPerPc);
+      const unitLabel=ar?it.pcs_ar:it.pcs_en;
+      amtStr=pieces+' '+unitLabel;
+    } else if(it.unit==='ml'){
+      amtStr=it.amt+'ml';
+    } else {
+      amtStr=it.amt+'g';
+    }
     return`<div class="shop-item">
       <div>
         <div class="shop-nm">${icon} ${it.label}</div>
@@ -2553,7 +2649,9 @@ function rWorkout(){
     const nm=ar?dayN_ar[d]:dayN_en[d];
     const ic={upper:'💪',lower:'🦵',rest:'😴',full:'⚡',cardio:'🏃'}[tp]||'🏋️';
     const isToday=d===today;
-    return`<div class="dpc${isToday?' on':''}">${nm}<br>${ic}</div>`;
+    const hasRun=(P.runSchedule||[])[d];
+    const runBadge=hasRun?`<span style="font-size:9px;line-height:1">🏃</span>`:'';
+    return`<div class="dpc${isToday?' on':''}">${nm}<br>${ic}${runBadge}</div>`;
   }).join('');
   const levels=[{k:'beginner',l:ar?'مبتدئ':'Beginner',d:1},
                 {k:'intermediate',l:ar?'متوسط':'Intermediate',d:2},
@@ -2565,6 +2663,12 @@ function rWorkout(){
   if(!_WP) return;
   const sk=String(Math.min(il,5));
   let h='';
+  const todayDay=new Date().getDay();
+  if((P.runDays||0)>0&&(P.runSchedule||[])[todayDay]){
+    const km=P.runKm||5;
+    const calBurn=Math.round((P.weight||70)*km*1.036);
+    h+=runCard(ar,km,calBurn);
+  }
   h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag">${ar?'الإحماء':'Warm Up'}</div><div class="wsec-l"></div></div>`;
   (_WP.warmup||[]).forEach(e=>{ h+=exCard(e,null,sk,ar); });
   h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--ac)">${t('wtype-'+_WP.type)}</div><div class="wsec-l"></div></div>`;

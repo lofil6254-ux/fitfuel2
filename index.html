@@ -280,16 +280,7 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
   <div class="step" id="s5">
     <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s5t">—</div>
     <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s5s">—</div>
-    <div style="font-size:14px;font-weight:700;color:var(--tx2);margin-bottom:10px" id="s5-dl">—</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
-      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,0)"><div class="ol" id="rd-0">—</div></div>
-      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,1)"><div class="ol">1</div></div>
-      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,2)"><div class="ol">2</div></div>
-      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,3)"><div class="ol">3</div></div>
-      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,4)"><div class="ol">4</div></div>
-      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,5)"><div class="ol">5</div></div>
-      <div class="oc" style="min-width:58px;text-align:center;padding:12px 8px" onclick="pickRunDays(this,6)"><div class="ol">6</div></div>
-    </div>
+    <div style="display:flex;gap:5px;margin-bottom:4px" id="run-day-picker"></div>
     <div class="fl" id="run-km-wrap" style="display:none;margin-top:14px">
       <label class="lb" id="l-rkm">—</label>
       <input class="fi" id="i-rkm" type="number" min="1" max="60" placeholder="5">
@@ -471,7 +462,15 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
     <div class="fl"><label class="lb" id="ed-lht">—</label><input class="fi" id="ed-ht" type="number"></div>
   </div>
   <div class="fl"><label class="lb" id="ed-lag">—</label><input class="fi" id="ed-ag" type="number"></div>
-  <button class="btn bp bw" onclick="saveEdit()" style="margin-top:6px" id="ed-sv">—</button>
+  <div style="border-top:1px solid var(--br);margin:16px 0 12px"></div>
+  <div style="font-size:15px;font-weight:800;margin-bottom:4px" id="ed-run-t">—</div>
+  <div style="font-size:13px;color:var(--mt);margin-bottom:10px" id="ed-run-s">—</div>
+  <div style="display:flex;gap:5px;margin-bottom:4px" id="ed-run-picker"></div>
+  <div class="fl" id="ed-run-km-wrap" style="display:none;margin-top:12px">
+    <label class="lb" id="ed-l-rkm">—</label>
+    <input class="fi" id="ed-rkm" type="number" min="1" max="60" placeholder="5">
+  </div>
+  <button class="btn bp bw" onclick="saveEdit()" style="margin-top:14px" id="ed-sv">—</button>
 </div>
 </div>
 
@@ -523,6 +522,7 @@ const T={
     'mtype-breakfast':'فطور 🌅','mtype-lunch':'غداء ☀️','mtype-snack':'سناك 🍎','mtype-dinner':'عشاء 🌙',
     'edit-btn':'تعديل الملف','lbl-lang':'اللغة',
     'edit-ti':'تعديل بياناتك','ed-lnm':'الاسم','ed-lwt':'الوزن (كغ)','ed-lht':'الطول (سم)','ed-lag':'العمر','ed-sv':'حفظ',
+    'ed-run-t':'🏃 أيام الجري','ed-run-s':'اضغط على اليوم لتفعيل أو إيقاف الجري','ed-l-rkm':'المسافة لكل جلسة (كم)',
     'rst-btn':'🗑️ إعادة ضبط التطبيق',
     'rb-t':'رمضان مبارك ⭐','rb-s':'وضع رمضان مفعّل',
     'rtoggle-on':'إيقاف','rtoggle-off':'تفعيل رمضان',
@@ -578,6 +578,7 @@ const T={
     'mtype-breakfast':'Breakfast 🌅','mtype-lunch':'Lunch ☀️','mtype-snack':'Snack 🍎','mtype-dinner':'Dinner 🌙',
     'edit-btn':'Edit Profile','lbl-lang':'Language',
     'edit-ti':'Edit Your Info','ed-lnm':'Name','ed-lwt':'Weight (kg)','ed-lht':'Height (cm)','ed-lag':'Age','ed-sv':'Save',
+    'ed-run-t':'🏃 Run Days','ed-run-s':'Tap a day to toggle running on/off','ed-l-rkm':'Distance per session (km)',
     'rst-btn':'🗑️ Reset App',
     'rb-t':'Ramadan Mubarak ⭐','rb-s':'Ramadan mode ON',
     'rtoggle-on':'Disable','rtoggle-off':'Enable Ramadan',
@@ -609,7 +610,8 @@ function applyLang(){
     's2t','s2s','g-lose','g-gain','g-main','g-fit','g-recomp','g-recomps','nx2',
     's3t','s3s','lv-b','lv-bs','lv-i','lv-is','lv-a','lv-as','nx3',
     's4t','s4s','ac-1','ac-1s','ac-2','ac-2s','ac-3','ac-3s','ac-4','nx4t',
-    's5t','s5s','s5-dl','rd-0','l-rkm','nx5t',
+    's5t','s5s','l-rkm','nx5t',
+    'ed-run-t','ed-run-s','ed-l-rkm',
     'nl-home','nl-workout','nl-meals','nl-profile',
     'hm-gr','cs1','cs2','cs3','lb-pro','lb-car','lb-fat','lbl-qlog','lbl-tw','sa-btn',
     'wk-tag','wk-ti','pg-t','pg1l','pg2l','pg3l','regen-t',
@@ -741,6 +743,12 @@ function rProg(){
 function showStep(n){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
   document.getElementById('s'+n).classList.add('on'); rProg(); applyLang();
+  if(n===5){
+    _tmpRunSchedule=new Array(7).fill(false);
+    renderRunDayPicker('run-day-picker');
+    const kmw=document.getElementById('run-km-wrap');
+    if(kmw) kmw.style.display='none';
+  }
 }
 function pick(el,k,v){
   el.closest('.g1,.g2')?.querySelectorAll('.oc').forEach(o=>o.classList.remove('on'));
@@ -769,9 +777,9 @@ function finSetup(){
   P.goal=SEL.goal; P.level=SEL.level; P.activity=parseFloat(SEL.act);
   P.sessions=0; P.streak=0; P.intensity=1; P.lastWD=null; P.doneToday=false;
   P.lastWeighIn=Date.now();
-  P.runDays=SEL.runDays||0;
+  P.runSchedule=[..._tmpRunSchedule];
+  P.runDays=_tmpRunSchedule.filter(Boolean).length;
   P.runKm=P.runDays>0?Math.max(1,+document.getElementById('i-rkm').value||5):0;
-  P.runSchedule=buildRunSchedule(P.runDays);
   P.runDoneToday=false; P.lastRunDate=null;
   calcCal();
   const tc=Math.round(P.targetCal)||2000;
@@ -788,19 +796,39 @@ function finSetup(){
 // ============================================================
 // RUNNING
 // ============================================================
-function buildRunSchedule(days){
-  // WEEK=['upper','lower','rest','full','cardio','rest','upper']
-  // Priority: rest days (2,5) first → cardio (4) → upper (0,6) → full (3) → lower (1)
-  const priority=[2,5,4,0,6,3,1];
-  const schedule=new Array(7).fill(false);
-  for(let i=0;i<Math.min(days,7);i++) schedule[priority[i]]=true;
-  return schedule;
+let _tmpRunSchedule=new Array(7).fill(false);
+function renderRunDayPicker(containerId){
+  const ar=L==='ar';
+  const container=document.getElementById(containerId);
+  if(!container) return;
+  const WEEK_T=['upper','lower','rest','full','cardio','rest','upper'];
+  const dayN_ar=['أحد','إثنين','ثلاث','أربع','خميس','جمعة','سبت'];
+  const dayN_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const ic={upper:'💪',lower:'🦵',rest:'😴',full:'⚡',cardio:'🏃'};
+  const lbl_ar={upper:'علوي',lower:'سفلي',rest:'راحة',full:'كامل',cardio:'كارديو'};
+  const lbl_en={upper:'Upper',lower:'Lower',rest:'Rest',full:'Full',cardio:'Cardio'};
+  container.innerHTML=WEEK_T.map((tp,d)=>{
+    const nm=ar?dayN_ar[d]:dayN_en[d];
+    const tpLbl=ar?lbl_ar[tp]:lbl_en[tp];
+    const sel=_tmpRunSchedule[d];
+    const isLower=tp==='lower';
+    const warn=sel&&isLower?`<div style="font-size:9px;color:var(--or);line-height:1.2">${ar?'⚠️أرجل':'⚠️Legs'}</div>`:'';
+    return`<div onclick="toggleRunDay(${d})" style="flex:1;min-width:0;text-align:center;padding:9px 3px;border-radius:12px;border:2px solid ${sel?'var(--bl)':'var(--br)'};background:${sel?'rgba(77,184,255,.13)':'var(--s2)'};cursor:pointer;transition:all .18s;user-select:none">
+      <div style="font-size:17px">${sel?'🏃':ic[tp]}</div>
+      <div style="font-size:11px;font-weight:800;color:${sel?'var(--bl)':'var(--tx)'};margin-top:2px">${nm}</div>
+      <div style="font-size:9px;color:var(--mt);margin-top:1px">${tpLbl}</div>
+      ${warn}
+    </div>`;
+  }).join('');
 }
-function pickRunDays(el,days){
-  el.closest('div').querySelectorAll('.oc').forEach(o=>o.classList.remove('on'));
-  el.classList.add('on');
-  SEL.runDays=days;
-  document.getElementById('run-km-wrap').style.display=days>0?'block':'none';
+function toggleRunDay(d){
+  _tmpRunSchedule[d]=!_tmpRunSchedule[d];
+  const hasAny=_tmpRunSchedule.some(Boolean);
+  ['run-day-picker','ed-run-picker'].forEach(pid=>renderRunDayPicker(pid));
+  ['run-km-wrap','ed-run-km-wrap'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=hasAny?'block':'none';
+  });
 }
 function logRun(){
   const today=new Date().toDateString();
@@ -2980,7 +3008,14 @@ function openEdit(){
   document.getElementById('ed-wt').value=P.weight||'';
   document.getElementById('ed-ht').value=P.height||'';
   document.getElementById('ed-ag').value=P.age||'';
+  const edRkm=document.getElementById('ed-rkm');
+  if(edRkm) edRkm.value=P.runKm||5;
+  _tmpRunSchedule=P.runSchedule?[...P.runSchedule]:new Array(7).fill(false);
   applyLang();
+  renderRunDayPicker('ed-run-picker');
+  const hasAny=_tmpRunSchedule.some(Boolean);
+  const edKmw=document.getElementById('ed-run-km-wrap');
+  if(edKmw) edKmw.style.display=hasAny?'block':'none';
   document.getElementById('editMov').classList.add('on');
 }
 function closeMov(id){document.getElementById(id).classList.remove('on');}
@@ -2997,6 +3032,10 @@ function saveEdit(){
   P.name=n;P.weight=w;P.height=h;P.age=a;
   P.lastWeighIn=Date.now();
   P.bannerDismissed=false;
+  P.runSchedule=[..._tmpRunSchedule];
+  P.runDays=_tmpRunSchedule.filter(Boolean).length;
+  if(P.runDays>0) P.runKm=Math.max(1,+document.getElementById('ed-rkm').value||P.runKm||5);
+  else P.runKm=0;
   calcCal();
   const tc=Math.round(P.targetCal)||2000;
   for(let d=0;d<7;d++){
@@ -3004,7 +3043,7 @@ function saveEdit(){
     MP_NRM[d]=buildDay('normal',tc,d);
   }
   MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
-  save(); closeMov('editMov'); rProfile(); rHome(); rMeals();
+  save(); closeMov('editMov'); rProfile(); rHome(); rMeals(); rWorkout();
   toast(t('toast-saved'));
 }
 function doReset(){

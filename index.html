@@ -2764,6 +2764,10 @@ function setLevel(diff){
   toast(L==='ar'?'تم تغيير المستوى':'Level updated');
 }
 function exCard(e,si,sk,ar){
+  // Always use live EX data so YouTube links and other properties are never stale from localStorage
+  const allEx=[...(EX.warmup||[]),...(EX.cooldown||[]),...(EX.upper||[]),...(EX.lower||[]),...(EX.full||[]),...(EX.cardio||[])];
+  const liveEx=allEx.find(x=>x.id===e.id);
+  if(liveEx) e=liveEx;
   const nm=ar?e.ar:e.en;
   const ms=ar?e.mAr:e.mEn;
   const tips=ar?e.tAr:e.tEn;

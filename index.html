@@ -2784,14 +2784,23 @@ function exCard(e,si,sk,ar){
   let img=`images/${e.id}.${imgExt}`;
 
   let tmr = '';
+  let tmrSec = 0;
   if(isWC && e.dur && e.dur.includes('s')){
-    let sec = parseInt(e.dur);
-    if(!isNaN(sec)) {
-      tmr = `<div class="tmr-ui" style="display:flex;align-items:center;justify-content:space-between;background:var(--s3);padding:14px;border-radius:12px;margin-bottom:12px;border:1px solid var(--br2)">
-        <div style="font-size:26px;font-weight:900;color:var(--ac);font-variant-numeric:tabular-nums;letter-spacing:1px" id="tx-${e.id}">00:${sec<10?'0'+sec:sec}</div>
-        <button class="btn bo" style="padding:10px 20px" id="tb-${e.id}" onclick="startExTmr(event,'${e.id}',${sec})">▶ ${ar?'ابدأ المؤقت':'Start Timer'}</button>
-      </div>`;
-    }
+    tmrSec = parseInt(e.dur);
+  } else if(!isWC && rn){
+    // e.g. rn = "20s" or "3min" or "2min"
+    const secMatch = rn.match(/^(\d+)s$/);
+    const minMatch = rn.match(/^(\d+)min$/);
+    if(secMatch) tmrSec = parseInt(secMatch[1]);
+    else if(minMatch) tmrSec = parseInt(minMatch[1]) * 60;
+  }
+  if(!isNaN(tmrSec) && tmrSec > 0){
+    const mm = Math.floor(tmrSec/60), ss = tmrSec%60;
+    const display = (mm<10?'0'+mm:mm)+':'+(ss<10?'0'+ss:ss);
+    tmr = `<div class="tmr-ui" style="display:flex;align-items:center;justify-content:space-between;background:var(--s3);padding:14px;border-radius:12px;margin-bottom:12px;border:1px solid var(--br2)">
+      <div style="font-size:26px;font-weight:900;color:var(--ac);font-variant-numeric:tabular-nums;letter-spacing:1px" id="tx-${e.id}">${display}</div>
+      <button class="btn bo" style="padding:10px 20px" id="tb-${e.id}" onclick="startExTmr(event,'${e.id}',${tmrSec})">▶ ${ar?'ابدأ المؤقت':'Start Timer'}</button>
+    </div>`;
   }
 
   return`<div class="excard" id="ec-${e.id}">
@@ -2835,8 +2844,9 @@ window.startExTmr = function(ev,id,sec){
   }
   btn.innerHTML='⏸ '+(ar?'إيقاف':'Pause');
   btn.style.borderColor='var(--or)'; btn.style.color='var(--or)';
+  const fmt=n=>{const m=Math.floor(n/60),s=n%60;return(m<10?'0'+m:m)+':'+(s<10?'0'+s:s);};
   let s=sec;
-  txt.textContent='00:'+(s<10?'0'+s:s);
+  txt.textContent=fmt(s);
   const iv=setInterval(()=>{
     s--;
     if(s<0){
@@ -2848,7 +2858,7 @@ window.startExTmr = function(ev,id,sec){
       new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play().catch(()=>{});
       return;
     }
-    txt.textContent='00:'+(s<10?'0'+s:s);
+    txt.textContent=fmt(s);
   },1000);
   ETM[id]={i:iv};
 };

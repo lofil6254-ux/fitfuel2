@@ -317,6 +317,46 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 .vlsw{padding:10px 14px;border-radius:50px;border:2px solid var(--br);background:transparent;color:var(--tx2);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
 .vlsw.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:0 0 10px rgba(124,109,255,.3)}
 
+/* ── Intro cutscene overlay ── */
+#intro-overlay{position:fixed;inset:0;background:#000;z-index:9000;display:none;align-items:center;justify-content:center;flex-direction:column}
+#intro-overlay.on{display:flex}
+#intro-box{position:relative;border:1px solid rgba(124,109,255,.6);border-radius:4px;padding:40px 36px;max-width:320px;width:90%;text-align:center;background:linear-gradient(145deg,rgba(7,7,26,.97),rgba(4,4,18,.99));box-shadow:0 0 60px rgba(124,109,255,.2),inset 0 0 40px rgba(124,109,255,.03)}
+#intro-corner-tl,#intro-corner-tr,#intro-corner-bl,#intro-corner-br{position:absolute;width:14px;height:14px;border-color:var(--ac);border-style:solid}
+#intro-corner-tl{top:-2px;left:-2px;border-width:2px 0 0 2px}
+#intro-corner-tr{top:-2px;right:-2px;border-width:2px 2px 0 0}
+#intro-corner-bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px}
+#intro-corner-br{bottom:-2px;right:-2px;border-width:0 2px 2px 0}
+#intro-system-tag{font-size:10px;font-weight:900;letter-spacing:5px;color:var(--ac);margin-bottom:20px;opacity:0;animation:intro-fade 0.6s 0.4s ease forwards}
+#intro-title-jp{font-size:15px;color:var(--tx2);letter-spacing:2px;margin-bottom:10px;opacity:0;animation:intro-fade 0.7s 0.8s ease forwards}
+#intro-title-en{font-size:22px;font-weight:900;color:var(--tx);letter-spacing:.5px;line-height:1.3;margin-bottom:14px;opacity:0;animation:intro-fade 0.7s 1.2s ease forwards;background:linear-gradient(90deg,var(--tx),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#intro-rank-line{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:4px;margin-bottom:14px;opacity:0;animation:intro-fade 0.6s 1.8s ease forwards}
+#intro-sub{font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:24px;opacity:0;animation:intro-fade 0.6s 2.2s ease forwards}
+#intro-bar-wrap{width:100%;height:3px;background:rgba(124,109,255,.15);border-radius:2px;overflow:hidden;opacity:0;animation:intro-fade 0.4s 2.6s ease forwards}
+#intro-bar{height:100%;background:linear-gradient(90deg,var(--ac),var(--bl));width:0%;animation:intro-progress 3s 2.8s ease forwards}
+@keyframes intro-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes intro-progress{to{width:100%}}
+
+/* ── EXP popup ── */
+#exp-popup{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-30px);z-index:8000;pointer-events:none;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1)}
+#exp-popup.on{opacity:1;transform:translateX(-50%) translateY(0)}
+#exp-popup-inner{background:linear-gradient(135deg,rgba(13,13,38,.97),rgba(7,7,26,.99));border:1px solid rgba(124,109,255,.5);border-radius:12px;padding:14px 28px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 0 30px rgba(124,109,255,.3),0 8px 20px rgba(0,0,0,.5)}
+#exp-icon{font-size:22px;color:var(--gd);filter:drop-shadow(0 0 8px rgba(255,215,0,.6));animation:exp-spin .6s ease}
+#exp-label{font-size:22px;font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,var(--gd),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#exp-sublabel{font-size:11px;font-weight:900;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+@keyframes exp-spin{0%{transform:scale(0) rotate(-180deg)}100%{transform:scale(1) rotate(0deg)}}
+
+/* ── Fix info sizes ── */
+.hero{padding:22px 20px}
+.ringwrap{gap:20px;margin-top:14px}
+.rsvg{width:110px;height:110px}
+.rbg2{stroke-width:8}
+.rfl{stroke-width:8}
+#r-num{font-size:20px}
+.mbars{margin-top:14px;gap:10px}
+.mb{padding:12px 10px}
+.mb-v{font-size:19px}
+.mb-l{font-size:12px}
+
 /* ── Scan lines + vignette ── */
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:0}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(124,109,255,.04) 0%,transparent 60%),radial-gradient(ellipse at 50% 100%,rgba(0,212,255,.03) 0%,transparent 50%);pointer-events:none;z-index:0}
@@ -353,8 +393,30 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
 <canvas id="particles-canvas"></canvas>
 <div class="toast" id="toast"></div>
 <div class="rtbar" id="rtbar" onclick="stopRT()">⏱ <span class="rtn" id="rtn">60</span>s</div>
-<button id="coach-btn" onclick="coachSpeak('greeting')" title="Voice Coach">🎙️</button>
 <div id="subtitle-bar"><div class="subtitle-inner" id="subtitle-text"></div></div>
+
+<!-- INTRO CUTSCENE -->
+<div id="intro-overlay">
+  <div id="intro-box">
+    <div id="intro-corner-tl"></div><div id="intro-corner-tr"></div>
+    <div id="intro-corner-bl"></div><div id="intro-corner-br"></div>
+    <div id="intro-system-tag">[ SYSTEM ]</div>
+    <div id="intro-title-jp">プレイヤーに選ばれました</div>
+    <div id="intro-title-en">You have been selected as a Player.</div>
+    <div id="intro-rank-line">◈ &nbsp; RANK E &nbsp; ◈</div>
+    <div id="intro-sub">The System will now guide your journey.<br>Arise, Hunter.</div>
+    <div id="intro-bar-wrap"><div id="intro-bar"></div></div>
+  </div>
+</div>
+
+<!-- EXP POPUP -->
+<div id="exp-popup">
+  <div id="exp-popup-inner">
+    <div id="exp-icon">⬡</div>
+    <div id="exp-label">+100 EXP</div>
+    <div id="exp-sublabel">Quest Complete</div>
+  </div>
+</div>
 
 <!-- SPLASH -->
 <div class="page" id="pg-splash">
@@ -510,13 +572,29 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
   </div>
   <div class="twc" onclick="showTab('workout')">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div><div class="bdg bb" id="tw-lv">—</div><div style="font-size:17px;font-weight:900;margin-top:4px" id="tw-nm">—</div></div>
-      <div style="font-size:28px">🏋️</div>
+      <div><div class="bdg bb" id="tw-lv">—</div><div style="font-size:17px;font-weight:900;margin-top:4px;letter-spacing:.3px" id="tw-nm">—</div></div>
+      <div style="font-size:32px;filter:drop-shadow(0 0 10px rgba(124,109,255,.6))">💠</div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
-      <span style="font-size:14px;color:var(--mt)">⏱ <span id="tw-d">—</span></span>
-      <span style="font-size:14px;color:var(--mt)">🏋️ <span id="tw-e">—</span></span>
-      <span style="font-size:14px;color:var(--mt)">🔥 <span id="tw-c">—</span></span>
+    <div style="display:flex;gap:12px;margin-top:6px;flex-wrap:wrap">
+      <span style="font-size:13px;color:var(--tx2)">⏱ <span id="tw-d">—</span></span>
+      <span style="font-size:13px;color:var(--tx2)">◈ <span id="tw-e">—</span></span>
+      <span style="font-size:13px;color:var(--tx2)">🔥 <span id="tw-c">—</span></span>
+    </div>
+  </div>
+  <!-- TOMORROW PREVIEW -->
+  <div id="tomorrow-section" style="margin-top:14px;display:none">
+    <div style="font-size:10px;font-weight:900;letter-spacing:3px;color:var(--tx2);text-transform:uppercase;margin-bottom:8px">▸ TOMORROW</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:linear-gradient(145deg,rgba(13,13,38,.98),rgba(7,7,26,.99));border:1px solid rgba(0,212,255,.2);border-radius:var(--r2);padding:14px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,.4),transparent)"></div>
+        <div style="font-size:9px;font-weight:900;letter-spacing:2px;color:var(--bl);text-transform:uppercase;margin-bottom:6px">TRAINING</div>
+        <div style="font-size:16px;font-weight:900" id="tmr-workout">—</div>
+      </div>
+      <div style="background:linear-gradient(145deg,rgba(13,13,38,.98),rgba(7,7,26,.99));border:1px solid rgba(255,153,68,.2);border-radius:var(--r2);padding:14px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,153,68,.4),transparent)"></div>
+        <div style="font-size:9px;font-weight:900;letter-spacing:2px;color:var(--or);text-transform:uppercase;margin-bottom:6px">NUTRITION</div>
+        <div style="font-size:14px;font-weight:800" id="tmr-cal">—</div>
+      </div>
     </div>
   </div>
 </div></div>
@@ -594,20 +672,13 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
     </div>
   </div>
   <div class="card" style="margin-bottom:10px">
-    <h3 style="font-size:15px;margin-bottom:10px" id="lbl-voice">🎙️ Voice Coach</h3>
-    <div style="font-size:13px;color:var(--mt);margin-bottom:8px" id="lbl-voice-lang">Speech language:</div>
-    <div class="vlang-row" id="vlang-speech">
-      <button class="vlsw on" onclick="setVoiceLang('speech','en',this)">🇬🇧 English</button>
-      <button class="vlsw" onclick="setVoiceLang('speech','ar',this)">🇸🇦 Arabic</button>
-      <button class="vlsw" onclick="setVoiceLang('speech','ja',this)">🇯🇵 日本語</button>
-    </div>
-    <div style="font-size:13px;color:var(--mt);margin:10px 0 8px" id="lbl-sub-lang">Subtitle language:</div>
+    <h3 style="font-size:15px;margin-bottom:4px;letter-spacing:1px" id="lbl-voice">SHADOW COACH</h3>
+    <div style="font-size:11px;color:var(--mt);margin-bottom:12px;letter-spacing:2px;text-transform:uppercase">Voice: Japanese &nbsp;|&nbsp; Subtitle Language:</div>
     <div class="vlang-row" id="vlang-sub">
-      <button class="vlsw on" onclick="setVoiceLang('sub','en',this)">🇬🇧 English</button>
-      <button class="vlsw" onclick="setVoiceLang('sub','ar',this)">🇸🇦 عربي</button>
-      <button class="vlsw" onclick="setVoiceLang('sub','ja',this)">🇯🇵 日本語</button>
+      <button class="vlsw on" onclick="setVoiceLang('sub','en',this)">EN</button>
+      <button class="vlsw" onclick="setVoiceLang('sub','ar',this)">عربي</button>
+      <button class="vlsw" onclick="setVoiceLang('sub','ja',this)">日本語</button>
     </div>
-    <button class="btn bo" style="margin-top:12px;width:100%;font-size:14px;padding:10px" onclick="coachSpeak('test')">🎙️ Test Coach Voice</button>
   </div>
   <div class="pstats" id="pstats"></div>
   <div class="card" style="margin-bottom:10px">
@@ -962,7 +1033,7 @@ function finSetup(){
   MP=mealMode==='ramadan'?MP_RAM:MP_NRM;
   MEAL_EATEN={};
   localStorage.setItem('ff9_meal_date',new Date().toDateString());
-  genWK(false); save(); showMain();
+  genWK(false); save(); showIntro();
 }
 
 // ============================================================
@@ -1099,7 +1170,8 @@ function rHome(){
   rWeighInBanner();
   applyLang();
   document.getElementById('hm-gr').textContent=t('hm-gr');
-  document.getElementById('hm-nm').textContent=P.name+' 👋';
+  document.getElementById('hm-nm').textContent=P.name;
+  rTomorrow();
   const key=new Date().toDateString();
   if(!DLOG[key]) DLOG[key]={foods:[],tCal:0,tP:0,tC:0,tF:0};
   const log=DLOG[key];
@@ -1176,7 +1248,8 @@ function eatMeal(mealKey,cal,nm){
   logMeal(cal,nm);
   // Re-render meals to show locked state
   rDayMeals();
-  toast((L==='ar'?'🔒 تم تسجيل ':'🔒 Logged & locked: ')+nm);
+  toast((L==='ar'?'تم تسجيل ':'Logged: ')+nm);
+  gainExp(25, L==='ar'?'تغذية':'Nutrition');
 }
 
 // ============================================================
@@ -2962,7 +3035,109 @@ function getNextRank(sessions){
 // ============================================================
 // VOICE COACH
 // ============================================================
-let voiceSettings={speechLang:'en', subLang:'en'};
+let voiceSettings={speechLang:'ja', subLang:'en'};
+
+// ============================================================
+// INTRO MUSIC (Web Audio — Japanese RPG pentatonic melody)
+// ============================================================
+function playIntroMusic(){
+  try{
+    const A=new(window.AudioContext||window.webkitAudioContext)();
+    const out=A.createGain(); out.gain.value=0.42; out.connect(A.destination);
+    // Delay reverb
+    const dly=A.createDelay(1.2); const dlyG=A.createGain();
+    dly.delayTime.value=0.38; dlyG.gain.value=0.22;
+    dly.connect(dlyG); dlyG.connect(out); dlyG.connect(dly);
+    // Japanese pentatonic D: D3 F#3 A3 B3 D4 F#4 A4 B4
+    const P=[146.83,185.00,220.00,246.94,293.66,369.99,440.00,493.88,587.33];
+    const BPM=76, B=60/BPM;
+    // Melody [noteIdx, beats, vol]
+    const mel=[
+      [4,.5,.4],[5,.5,.35],[6,1,.4],[4,.5,.35],[2,.5,.3],[3,1,.35],[1,.5,.25],[0,1.5,.3],
+      [4,.5,.4],[6,.5,.35],[7,1,.45],[5,.5,.35],[4,.5,.3],[6,1,.4],[4,.5,.3],[2,2,.35],
+      [6,.5,.4],[7,.5,.4],[8,1,.45],[6,.5,.35],[4,.5,.3],[5,1,.35],[3,.5,.25],[4,2,.4],
+    ];
+    // Bass [noteIdx, beats]
+    const bs=[[0,2],[0,2],[2,2],[2,2],[3,2],[3,2],[0,2],[0,2],[4,2],[4,2],[0,2],[0,2]];
+    let t=A.currentTime+0.15;
+    mel.forEach(([ni,d,v])=>{
+      const freq=P[Math.min(ni,P.length-1)], dur=d*B;
+      const o=A.createOscillator(), g=A.createGain();
+      o.type='sine'; o.frequency.value=freq;
+      o.connect(g); g.connect(out); g.connect(dly);
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(v,t+0.04);
+      g.gain.exponentialRampToValueAtTime(0.001,t+dur-0.03);
+      o.start(t); o.stop(t+dur); t+=dur;
+    });
+    let tb=A.currentTime+0.15;
+    bs.forEach(([ni,d])=>{
+      const freq=P[Math.min(ni,P.length-1)]/2, dur=d*B;
+      const o=A.createOscillator(), g=A.createGain();
+      o.type='triangle'; o.frequency.value=freq;
+      o.connect(g); g.connect(out);
+      g.gain.setValueAtTime(0,tb);
+      g.gain.linearRampToValueAtTime(0.1,tb+0.12);
+      g.gain.exponentialRampToValueAtTime(0.001,tb+dur-0.1);
+      o.start(tb); o.stop(tb+dur); tb+=dur;
+    });
+    // Fade out at end
+    const totalDur=mel.reduce((s,[,d])=>s+d*B,0)+0.5;
+    setTimeout(()=>{ out.gain.linearRampToValueAtTime(0,A.currentTime+1.5); },
+      (totalDur-1.5)*1000);
+    return A;
+  }catch(e){return null;}
+}
+
+// ============================================================
+// INTRO CUTSCENE
+// ============================================================
+function showIntro(){
+  const ov=document.getElementById('intro-overlay');
+  if(!ov) return showMain();
+  ov.classList.add('on');
+  playIntroMusic();
+  // Progress bar is 3s animation. Total overlay time ~6s
+  setTimeout(()=>{
+    ov.style.transition='opacity 1s ease';
+    ov.style.opacity='0';
+    setTimeout(()=>{ ov.classList.remove('on'); ov.style.opacity=''; showMain(); }, 1000);
+  }, 6000);
+}
+
+// ============================================================
+// EXP POPUP
+// ============================================================
+let _expTimer=null;
+function gainExp(amount, label){
+  const popup=document.getElementById('exp-popup');
+  const lbl=document.getElementById('exp-label');
+  const sub=document.getElementById('exp-sublabel');
+  if(!popup) return;
+  if(lbl) lbl.textContent='+'+amount+' EXP';
+  if(sub) sub.textContent=label||'Quest Complete';
+  popup.classList.add('on');
+  clearTimeout(_expTimer);
+  _expTimer=setTimeout(()=>popup.classList.remove('on'), 2800);
+}
+
+// ============================================================
+// TOMORROW PREVIEW
+// ============================================================
+function rTomorrow(){
+  const sec=document.getElementById('tomorrow-section');
+  if(!sec||!P.name) return;
+  const ar=L==='ar';
+  const WEEK=getWeek();
+  const tomorrowDay=(new Date().getDay()+1)%7;
+  const tmrType=WEEK[tomorrowDay];
+  const tmrLabel=getTypeLabel(tmrType);
+  const tmrEl=document.getElementById('tmr-workout');
+  const calEl=document.getElementById('tmr-cal');
+  if(tmrEl) tmrEl.textContent=tmrType==='rest'?(ar?'يوم راحة':'Rest Day'):tmrLabel.replace(/[🏋️🦵💪🚣⬆️⬇️⚡😴]/gu,'').trim();
+  if(calEl) calEl.textContent=(P.targetCal||2000)+' kcal';
+  sec.style.display='block';
+}
 
 const COACH_LINES={
   greeting:{
@@ -3000,11 +3175,10 @@ const COACH_LINES={
 let _subtitleTimer=null;
 function coachSpeak(lineKey){
   if(!window.speechSynthesis) return;
-  const sl=voiceSettings.speechLang||'en';
   const subl=voiceSettings.subLang||'en';
   const lines=COACH_LINES[lineKey];
   if(!lines) return;
-  const speechText=lines[sl]||lines.en;
+  const speechText=lines.ja; // always Japanese voice
   const subText=lines[subl]||lines.en;
   // Show subtitle
   const bar=document.getElementById('subtitle-bar');
@@ -3019,7 +3193,7 @@ function coachSpeak(lineKey){
   window.speechSynthesis.cancel();
   const utt=new SpeechSynthesisUtterance(speechText);
   const langMap={en:'en-US',ar:'ar-SA',ja:'ja-JP'};
-  utt.lang=langMap[sl]||'en-US';
+  utt.lang='ja-JP';
   utt.rate=0.9; utt.pitch=0.85; utt.volume=0.9;
   // Try to find a matching voice
   const voices=window.speechSynthesis.getVoices();
@@ -3274,12 +3448,14 @@ function cmpSession(){
   const newRank=getRank(P.sessions);
   const rankUp=newRank.key!==prevRank.key;
   save(); rWorkout(); rProfile();
-  toast(L==='ar'?'🎉 أحسنت! جلسة مكتملة':'🎉 Session complete!');
+  toast(L==='ar'?'جلسة مكتملة':'Session complete!');
   // Flash animation
   const flash=document.createElement('div');
   flash.className='session-flash';
   document.body.appendChild(flash);
   setTimeout(()=>flash.remove(),1600);
+  // EXP popup
+  gainExp(rankUp?200:100, rankUp?(L==='ar'?'ترقية!':'RANK UP!'):(L==='ar'?'مهمة مكتملة':'Quest Complete'));
   // Coach speaks
   setTimeout(()=>coachSpeak(rankUp?'rank_up':'session_complete'), 800);
 }
@@ -3595,7 +3771,6 @@ function showMain(){
   document.getElementById('pg-splash').classList.remove('on');
   document.getElementById('pg-setup').classList.remove('on');
   document.getElementById('pg-main').classList.add('on');
-  document.getElementById('coach-btn').classList.add('on');
   applyLang();
   const today=new Date().toDateString();
   if(P.lastWD!==today){ P.doneToday=false; }
@@ -3603,8 +3778,8 @@ function showMain(){
   checkDailyMealRefresh();
   if(!_WP||_WP._date!==today) genWK(false);
   rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
-  // Greet with coach voice after a short delay
-  setTimeout(()=>coachSpeak('greeting'), 1200);
+  rTomorrow();
+  setTimeout(()=>coachSpeak('greeting'), 1400);
 }
 
 if('serviceWorker' in navigator){

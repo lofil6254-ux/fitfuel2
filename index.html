@@ -7,21 +7,24 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="FitFuel">
+<meta name="apple-mobile-web-app-title" content="ARISE">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.jpg">
-<title>FitFuel 🏋️</title>
+<title>ARISE ⚔️</title>
 <style>
 :root{
-  --bg:#0d0d18;--s1:#13131f;--s2:#1a1a2e;--s3:#22223a;--s4:#2a2a46;
-  --ac:#c8f53a;--acd:rgba(200,245,58,.13);--acg:linear-gradient(135deg,#c8f53a,#8ed010);
-  --bl:#4db8ff;--bld:rgba(77,184,255,.13);
-  --pk:#ff4d8f;--pkd:rgba(255,77,143,.13);
-  --or:#ff9444;--ord:rgba(255,148,68,.13);
-  --gd:#ffd700;--gdd:rgba(255,215,0,.13);
-  --tx:#f0f0fa;--tx2:#a0a0c0;--mt:#525270;--br:#252540;--br2:#1c1c34;
+  --bg:#040412;--s1:#07071a;--s2:#0d0d26;--s3:#13132e;--s4:#1a1a3a;
+  --ac:#7c6dff;--acd:rgba(124,109,255,.15);--acg:linear-gradient(135deg,#7c6dff,#4c3ddf);
+  --bl:#00d4ff;--bld:rgba(0,212,255,.13);
+  --pk:#ff3377;--pkd:rgba(255,51,119,.13);
+  --or:#ff9944;--ord:rgba(255,153,68,.13);
+  --gd:#ffd700;--gdd:rgba(255,215,0,.15);
+  --tx:#d0d0f0;--tx2:#8888bb;--mt:#44446a;--br:#1a1a3c;--br2:#111128;
   --r:16px;--r2:12px;
-  --sh:0 4px 24px rgba(0,0,0,.45);--sh2:0 2px 12px rgba(0,0,0,.3);
+  --sh:0 4px 28px rgba(0,0,0,.8);--sh2:0 2px 14px rgba(0,0,0,.6);
+  --glow-ac:0 0 20px rgba(124,109,255,.5),0 0 40px rgba(124,109,255,.2);
+  --glow-bl:0 0 20px rgba(0,212,255,.5),0 0 40px rgba(0,212,255,.2);
+  --glow-gd:0 0 20px rgba(255,215,0,.5),0 0 40px rgba(255,215,0,.2);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
@@ -202,22 +205,120 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 .shop-nm{font-size:15px;color:var(--tx);font-weight:600}
 .shop-amt{font-size:15px;font-weight:900;color:var(--ac)}
 .shop-cat{font-size:11px;color:var(--mt);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+/* ====== SOLO LEVELING ADDITIONS ====== */
+/* Particle canvas background */
+#particles-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.45}
+.page,.bnav,.rtbar,.toast,.mov{z-index:1;position:relative}
+
+/* Glow cards */
+.card{box-shadow:var(--sh2),inset 0 1px 0 rgba(124,109,255,.08)}
+.hero{box-shadow:var(--sh),0 0 40px rgba(124,109,255,.1),inset 0 1px 0 rgba(255,255,255,.05)}
+
+/* Glowing primary button */
+.bp{box-shadow:0 4px 20px rgba(124,109,255,.4),0 0 0 1px rgba(124,109,255,.3);background:var(--acg)}
+.bp:active{transform:scale(.96);box-shadow:0 2px 10px rgba(124,109,255,.3)}
+
+/* Neon border on active nav */
+.ni.on .ni-ic{filter:drop-shadow(0 0 6px var(--ac))}
+.ni.on .ni-lb{color:var(--ac);text-shadow:0 0 8px rgba(124,109,255,.6)}
+
+/* Rank badge */
+.rank-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase;border:2px solid currentColor;transition:all .3s}
+.rank-e{color:#888;border-color:#888;background:rgba(136,136,136,.1)}
+.rank-d{color:#aaa;border-color:#aaa;background:rgba(170,170,170,.1)}
+.rank-c{color:#44dd88;border-color:#44dd88;background:rgba(68,221,136,.1)}
+.rank-b{color:#44aaff;border-color:#44aaff;background:rgba(68,170,255,.1);box-shadow:0 0 12px rgba(68,170,255,.2)}
+.rank-a{color:#ff9944;border-color:#ff9944;background:rgba(255,153,68,.1);box-shadow:0 0 12px rgba(255,153,68,.2)}
+.rank-s{color:#ff3377;border-color:#ff3377;background:rgba(255,51,119,.1);box-shadow:0 0 16px rgba(255,51,119,.3)}
+.rank-national{color:var(--gd);border-color:var(--gd);background:rgba(255,215,0,.1);box-shadow:var(--glow-gd)}
+.rank-monarch{color:var(--gd);border-color:var(--gd);background:linear-gradient(135deg,rgba(124,109,255,.2),rgba(255,215,0,.15));box-shadow:var(--glow-gd),var(--glow-ac);animation:monarch-pulse 2s ease-in-out infinite}
+@keyframes monarch-pulse{0%,100%{box-shadow:var(--glow-gd),var(--glow-ac)}50%{box-shadow:0 0 30px rgba(255,215,0,.7),0 0 60px rgba(124,109,255,.4)}}
+
+/* XP progress bar */
+.xp-bar-wrap{height:6px;background:var(--br);border-radius:3px;overflow:hidden;margin-top:10px}
+.xp-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--ac),var(--bl));transition:width 1.2s ease;box-shadow:0 0 10px rgba(124,109,255,.6)}
+
+/* Status window (profile info) */
+.status-window{background:linear-gradient(145deg,rgba(13,13,38,.95),rgba(7,7,26,.98));border:1px solid rgba(124,109,255,.3);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--sh),0 0 30px rgba(124,109,255,.1),inset 0 1px 0 rgba(124,109,255,.2)}
+.status-window::before{content:'[ STATUS ]';display:block;font-size:11px;font-weight:900;letter-spacing:3px;color:var(--ac);margin-bottom:12px;opacity:.7}
+
+/* Coach button */
+#coach-btn{position:fixed;bottom:106px;right:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,rgba(124,109,255,.9),rgba(0,212,255,.6));border:2px solid var(--ac);color:#fff;font-size:22px;cursor:pointer;z-index:350;display:none;align-items:center;justify-content:center;box-shadow:var(--glow-ac);transition:transform .2s;animation:coach-float 3s ease-in-out infinite}
+#coach-btn.on{display:flex}
+#coach-btn:active{transform:scale(.9)}
+@keyframes coach-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* Subtitle bar */
+#subtitle-bar{position:fixed;bottom:96px;left:0;right:0;z-index:340;pointer-events:none;display:flex;justify-content:center;padding:0 16px;transform:translateY(20px);opacity:0;transition:all .4s ease}
+#subtitle-bar.on{transform:translateY(0);opacity:1}
+.subtitle-inner{background:rgba(4,4,18,.92);border:1px solid rgba(124,109,255,.3);border-radius:12px;padding:10px 20px;max-width:400px;text-align:center;font-size:14px;font-weight:700;color:var(--tx);line-height:1.5;box-shadow:0 0 20px rgba(0,0,0,.6),0 0 30px rgba(124,109,255,.15)}
+.subtitle-inner span{color:var(--ac)}
+
+/* Gym exercise icon box (no image) */
+.eximg-gym{width:70px;height:70px;border-radius:12px;overflow:hidden;flex-shrink:0;border:2px solid var(--ac);display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(145deg,var(--s3),var(--s4));box-shadow:0 0 12px rgba(124,109,255,.3)}
+
+/* Session complete animation */
+@keyframes session-flash{0%{opacity:0;transform:scale(.8)}20%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(1.1)}}
+.session-flash{position:fixed;inset:0;background:radial-gradient(ellipse at center,rgba(124,109,255,.3),transparent 70%);z-index:600;pointer-events:none;animation:session-flash 1.5s ease forwards}
+
+/* Training type selector (splash) */
+.ttype-row{display:flex;gap:12px;justify-content:center;margin-bottom:20px}
+.ttype-btn{flex:1;max-width:160px;padding:16px 12px;border-radius:var(--r);border:2px solid var(--br);background:var(--s2);color:var(--tx2);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.ttype-btn .ttype-ic{font-size:32px;display:block;margin-bottom:8px}
+.ttype-btn.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:var(--glow-ac)}
+
+/* ARISE logo style */
+.arise-logo{font-size:60px;font-weight:900;letter-spacing:8px;background:linear-gradient(135deg,var(--ac),var(--bl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;text-shadow:none;animation:logo-glow 3s ease-in-out infinite}
+@keyframes logo-glow{0%,100%{filter:drop-shadow(0 0 8px rgba(124,109,255,.6))}50%{filter:drop-shadow(0 0 20px rgba(0,212,255,.8))}}
+
+/* Workout section dividers */
+.wsec-t .tag{color:var(--ac);text-shadow:0 0 8px rgba(124,109,255,.5);letter-spacing:2px}
+
+/* Rest timer glow */
+.rtbar{box-shadow:0 0 20px rgba(0,212,255,.3),var(--sh)}
+
+/* Card hover glow */
+.excard{transition:border-color .2s,box-shadow .2s}
+.excard.exp{border-color:var(--ac)!important;box-shadow:0 4px 20px rgba(124,109,255,.15)!important}
+
+/* Voice settings */
+.vlang-row{display:flex;gap:8px;flex-wrap:wrap}
+.vlsw{padding:10px 14px;border-radius:50px;border:2px solid var(--br);background:transparent;color:var(--tx2);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+.vlsw.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:0 0 10px rgba(124,109,255,.3)}
+
+/* Dim bg scan lines effect */
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:0}
 </style>
 </head>
 <body>
+<canvas id="particles-canvas"></canvas>
 <div class="toast" id="toast"></div>
 <div class="rtbar" id="rtbar" onclick="stopRT()">⏱ <span class="rtn" id="rtn">60</span>s</div>
+<button id="coach-btn" onclick="coachSpeak('greeting')" title="Voice Coach">🎙️</button>
+<div id="subtitle-bar"><div class="subtitle-inner" id="subtitle-text"></div></div>
 
 <!-- SPLASH -->
 <div class="page" id="pg-splash">
-  <div style="font-size:56px;margin-bottom:12px">🏋️</div>
-  <div class="logo">FITFUEL</div>
-  <div style="font-size:14px;color:var(--mt);letter-spacing:2px;margin:6px 0 24px">KETTLEBELL · NUTRITION · RAMADAN</div>
+  <div style="font-size:48px;margin-bottom:8px;filter:drop-shadow(0 0 16px rgba(124,109,255,.8))">⚔️</div>
+  <div class="arise-logo">ARISE</div>
+  <div style="font-size:12px;color:var(--mt);letter-spacing:3px;margin:6px 0 28px;text-transform:uppercase" id="sp-sub">HUNTER FITNESS SYSTEM</div>
+  <div style="font-size:13px;color:var(--tx2);font-weight:700;letter-spacing:1px;margin-bottom:10px" id="sp-ttype-lbl">— SELECT TRAINING MODE —</div>
+  <div class="ttype-row" id="ttype-row">
+    <button class="ttype-btn on" onclick="pickTType('kb',this)">
+      <span class="ttype-ic">⚙️</span>
+      <span id="ttype-kb-lbl">Kettlebell</span>
+    </button>
+    <button class="ttype-btn" onclick="pickTType('gym',this)">
+      <span class="ttype-ic">🏋️</span>
+      <span id="ttype-gym-lbl">Gym / Bodybuilding</span>
+    </button>
+  </div>
   <div class="lrow">
     <button class="lbtn on" onclick="setL('ar',this)">العربية</button>
     <button class="lbtn" onclick="setL('en',this)">English</button>
   </div>
-  <button class="btn bp" style="padding:15px 52px;font-size:17px" onclick="startApp()" id="sp-btn">ابدأ 🚀</button>
+  <button class="btn bp" style="padding:15px 52px;font-size:17px" onclick="startApp()" id="sp-btn">ARISE ⚔️</button>
 </div>
 
 <!-- SETUP -->
@@ -416,11 +517,14 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 <!-- PROFILE TAB -->
 <div id="t-profile" style="display:none">
 <div class="wrap" style="padding-top:16px">
-  <div style="text-align:center;margin-bottom:16px">
+  <div class="status-window" style="text-align:center">
     <div class="profav" id="profav">?</div>
-    <h2 style="font-size:19px" id="prof-nm">—</h2>
-    <div style="font-size:14px;color:var(--mt);margin-top:2px" id="prof-gl">—</div>
-    <button class="btn bo" style="margin-top:8px;font-size:14px;padding:6px 14px" onclick="openEdit()" id="edit-btn">✏️ —</button>
+    <h2 style="font-size:19px;margin-bottom:4px" id="prof-nm">—</h2>
+    <div style="font-size:13px;color:var(--mt);margin-bottom:10px" id="prof-gl">—</div>
+    <div id="rank-badge-wrap" style="margin-bottom:10px"></div>
+    <div class="xp-bar-wrap"><div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div></div>
+    <div style="font-size:12px;color:var(--mt);margin-top:6px" id="xp-label">0 / 7 sessions to D-Rank</div>
+    <button class="btn bo" style="margin-top:12px;font-size:14px;padding:6px 14px" onclick="openEdit()" id="edit-btn">✏️ —</button>
   </div>
   <div class="card" style="margin-bottom:10px">
     <h3 style="font-size:16px;margin-bottom:10px" id="lbl-lang">—</h3>
@@ -428,6 +532,22 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
       <button class="lsw" id="lsw-ar" onclick="switchLang('ar')">🇲🇦 العربية</button>
       <button class="lsw" id="lsw-en" onclick="switchLang('en')">🇬🇧 English</button>
     </div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <h3 style="font-size:15px;margin-bottom:10px" id="lbl-voice">🎙️ Voice Coach</h3>
+    <div style="font-size:13px;color:var(--mt);margin-bottom:8px" id="lbl-voice-lang">Speech language:</div>
+    <div class="vlang-row" id="vlang-speech">
+      <button class="vlsw on" onclick="setVoiceLang('speech','en',this)">🇬🇧 English</button>
+      <button class="vlsw" onclick="setVoiceLang('speech','ar',this)">🇸🇦 Arabic</button>
+      <button class="vlsw" onclick="setVoiceLang('speech','ja',this)">🇯🇵 日本語</button>
+    </div>
+    <div style="font-size:13px;color:var(--mt);margin:10px 0 8px" id="lbl-sub-lang">Subtitle language:</div>
+    <div class="vlang-row" id="vlang-sub">
+      <button class="vlsw on" onclick="setVoiceLang('sub','en',this)">🇬🇧 English</button>
+      <button class="vlsw" onclick="setVoiceLang('sub','ar',this)">🇸🇦 عربي</button>
+      <button class="vlsw" onclick="setVoiceLang('sub','ja',this)">🇯🇵 日本語</button>
+    </div>
+    <button class="btn bo" style="margin-top:12px;width:100%;font-size:14px;padding:10px" onclick="coachSpeak('test')">🎙️ Test Coach Voice</button>
   </div>
   <div class="pstats" id="pstats"></div>
   <div class="card" style="margin-bottom:10px">
@@ -514,6 +634,7 @@ const T={
     'regen-t':'جلسة جديدة',
     'sets-l':'مجموعة','reps-l':'تكرار','rest-l':'راحة','tips-t':'💡 نصائح','rt-btn':'⏱ بدء العداد',
     'wtype-upper':'جسم علوي 💪','wtype-lower':'جسم سفلي 🦵','wtype-full':'جسم كامل ⚡','wtype-cardio':'كارديو 🏃','wtype-rest':'يوم راحة 😴',
+    'wtype-push':'يوم الدفع 💪','wtype-pull':'يوم السحب 🚣','wtype-legs':'يوم الساق 🦵',
     'lv-beginner':'مبتدئ','lv-intermediate':'متوسط','lv-advanced':'متقدم',
     'ml-ti':'وجباتك اليومية','all-t':'تجديد الكل',
     'msw-rm-t':'رمضان','msw-nm-t':'عادي',
@@ -570,6 +691,7 @@ const T={
     'regen-t':'New Session',
     'sets-l':'sets','reps-l':'reps','rest-l':'rest','tips-t':'💡 Tips','rt-btn':'⏱ Start Timer',
     'wtype-upper':'Upper Body 💪','wtype-lower':'Lower Body 🦵','wtype-full':'Full Body ⚡','wtype-cardio':'Cardio 🏃','wtype-rest':'Rest Day 😴',
+    'wtype-push':'Push Day 💪','wtype-pull':'Pull Day 🚣','wtype-legs':'Leg Day 🦵',
     'lv-beginner':'Beginner','lv-intermediate':'Intermediate','lv-advanced':'Advanced',
     'ml-ti':'Your Daily Meals','all-t':'Refresh All',
     'msw-rm-t':'Ramadan','msw-nm-t':'Normal',
@@ -596,7 +718,7 @@ const T={
 // ============================================================
 // STATE
 // ============================================================
-let L='ar', P={}, SEL={}, DLOG={}, WH=[], MP={}, CD=new Date().getDay(), CS=1;
+let L='ar', P={}, SEL={trainingType:'kb'}, DLOG={}, WH=[], MP={}, CD=new Date().getDay(), CS=1;
 let isRamadan=true, mealMode='ramadan', _WP=null;
 let MP_RAM={}, MP_NRM={}, MEAL_EATEN={}; // MEAL_EATEN: {'2025-01-15_iftar': true, ...}
 
@@ -644,7 +766,7 @@ function switchLang(l){
 // ============================================================
 function save(){
   try{
-    localStorage.setItem('ff9',JSON.stringify({L,P,SEL,DLOG,WH,MP,MP_RAM,MP_NRM,MEAL_EATEN,CD,isRamadan,mealMode,WP:_WP}));
+    localStorage.setItem('ff9',JSON.stringify({L,P,SEL,DLOG,WH,MP,MP_RAM,MP_NRM,MEAL_EATEN,CD,isRamadan,mealMode,WP:_WP,voiceSettings}));
   }catch(e){}
 }
 function load(){
@@ -655,6 +777,7 @@ function load(){
     const d=JSON.parse(raw||old||'null');
     if(!d||!d.P||!d.P.name) return false;
     L=d.L||'ar'; P=d.P||{}; SEL=d.SEL||{}; DLOG=d.DLOG||{};
+    if(d.voiceSettings) voiceSettings=d.voiceSettings;
     WH=d.WH||[]; CD=d.CD||0;
     MEAL_EATEN=d.MEAL_EATEN||{};
     isRamadan=d.isRamadan!==undefined?d.isRamadan:true;
@@ -693,18 +816,6 @@ function calcCal(){
 // ============================================================
 // SCREENS
 // ============================================================
-function showMain(){
-  document.getElementById('pg-splash').classList.remove('on');
-  document.getElementById('pg-setup').classList.remove('on');
-  document.getElementById('pg-main').classList.add('on');
-  applyLang();
-  const today=new Date().toDateString();
-  if(P.lastWD!==today){ P.doneToday=false; }
-  if(P.lastRunDate!==today){ P.runDoneToday=false; }
-  checkDailyMealRefresh();
-  if(!_WP||_WP._date!==today) genWK(false);
-  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
-}
 function showTab(tab){
   ['home','workout','meals','profile'].forEach(tb=>{
     document.getElementById('t-'+tb).style.display='none';
@@ -775,6 +886,7 @@ function nx(n){
 function pv(){ CS--; showStep(CS); }
 function finSetup(){
   P.goal=SEL.goal; P.level=SEL.level; P.activity=parseFloat(SEL.act);
+  P.trainingType=SEL.trainingType||'kb';
   P.sessions=0; P.streak=0; P.intensity=1; P.lastWD=null; P.doneToday=false;
   P.lastWeighIn=Date.now();
   P.runSchedule=[..._tmpRunSchedule];
@@ -2657,9 +2769,98 @@ const EX={
   ]
 };
 
-const WEEK=['upper','lower','rest','full','cardio','rest','upper'];
+const KB_WEEK=['upper','lower','rest','full','cardio','rest','upper'];
+
+// ============================================================
+// GYM EXERCISE DATABASE — Professional Bodybuilding
+// ============================================================
+const GYM_EX={
+  warmup:[
+    {id:'gw1',ic:'🔄',ar:'دوران الكتفين',en:'Shoulder Circles',dur:'30s each way',mAr:['الكتفين'],mEn:['Shoulders'],tAr:['في الاتجاهين'],tEn:['Both directions, forward & backward'],wc:1},
+    {id:'gw2',ic:'🦵',ar:'قرفصاء هوائية',en:'Air Squats',dur:'15 reps',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['عمق كامل لتحضير المفاصل'],tEn:['Full depth to prep joints'],wc:1},
+    {id:'gw3',ic:'🏃',ar:'ركض مكاني',en:'High Knees',dur:'30s',mAr:['القلب'],mEn:['Cardio'],tAr:['ارفع الركبة للخصر'],tEn:['Drive knees to hip height'],wc:1},
+    {id:'gw4',ic:'🤸',ar:'قفز النجمة',en:'Jumping Jacks',dur:'30s',mAr:['كل الجسم'],mEn:['Full Body'],tAr:['ذراعان ممدودان تماماً'],tEn:['Full arm extension'],wc:1},
+    {id:'gw5',ic:'🦵',ar:'طعنة متحركة',en:'Walking Lunges',dur:'10 each leg',mAr:['الفخذ','الأرداف'],mEn:['Quads','Glutes'],tAr:['الركبة لا تتجاوز القدم'],tEn:['Knee stays behind toe'],wc:1},
+    {id:'gw6',ic:'🔃',ar:'دوران الجذع',en:'Torso Twists',dur:'30s',mAr:['القلب'],mEn:['Core'],tAr:['يداك ممدودتان أمامك'],tEn:['Arms extended in front'],wc:1},
+  ],
+  cooldown:[
+    {id:'gc1',ic:'🧘',ar:'تمديد الصدر',en:'Chest Stretch',dur:'30s',mAr:['الصدر'],mEn:['Chest'],tAr:['يداك خلف ظهرك واضغط للخلف'],tEn:['Clasp hands behind back, press back'],wc:1},
+    {id:'gc2',ic:'🧘',ar:'تمديد الفخذ الأمامي',en:'Quad Stretch',dur:'30s each',mAr:['الفخذ'],mEn:['Quads'],tAr:['اسحب القدم للأرداف واثبت'],tEn:['Pull foot to glutes and hold'],wc:1},
+    {id:'gc3',ic:'🧘',ar:'وضعية الطفل',en:"Child's Pose",dur:'60s',mAr:['الظهر','الورك'],mEn:['Back','Hips'],tAr:['تنفس بعمق وبطء'],tEn:['Breathe deep and slow'],wc:1},
+    {id:'gc4',ic:'🧘',ar:'تمديد الهامسترينج',en:'Hamstring Stretch',dur:'30s each',mAr:['الهامسترينج'],mEn:['Hamstrings'],tAr:['ظهر مستقيم وانحنِ من الورك'],tEn:['Straight back, hinge from hips'],wc:1},
+  ],
+  push:[
+    {id:'gp1',ic:'🏋️',ar:'ضغط بالباربيل مسطح',en:'Barbell Bench Press',s:{'1':'3×8','2':'3×10','3':'4×8','4':'4×6','5':'5×5'},r:{'1':'180s','2':'180s','3':'150s','4':'180s','5':'240s'},mAr:['الصدر','الكتفين الأمامية','الترايسبس'],mEn:['Chest','Front Delts','Triceps'],tAr:['شفرات الكتف للخلف، العارضة تنزل لأسفل الصدر، المرفق 45-75°'],tEn:['Retract scapula, bar to lower chest, elbows 45-75° from torso'],cal:9,diff:1},
+    {id:'gp2',ic:'💪',ar:'ضغط دمبل مائل للأعلى',en:'Incline Dumbbell Press',s:{'1':'3×10','2':'3×12','3':'4×10','4':'4×10','5':'4×8'},r:{'1':'120s','2':'120s','3':'120s','4':'120s','5':'90s'},mAr:['الصدر العلوي','الكتفين الأمامية'],mEn:['Upper Chest','Front Delts'],tAr:['ميل 30-45°، تحكم في النزول، لا تقفل المرافق'],tEn:['30-45° incline, control descent, do not lock elbows'],cal:7,diff:1},
+    {id:'gp3',ic:'⬆️',ar:'ضغط عسكري (OHP)',en:'Overhead Press (OHP)',s:{'1':'3×8','2':'3×10','3':'4×8','4':'4×6','5':'5×5'},r:{'1':'180s','2':'150s','3':'150s','4':'180s','5':'180s'},mAr:['الكتفين الأمامية','الترايسبس','الصدر العلوي'],mEn:['Front Delts','Triceps','Upper Chest'],tAr:['اضغط الأرداف، ادفع الرأس للأمام في الأعلى، العارضة أمام الرقبة'],tEn:['Squeeze glutes, push head through at top, vertical bar path'],cal:8,diff:1},
+    {id:'gp4',ic:'🔁',ar:'رفع جانبي للكتفين',en:'Lateral Raises',s:{'1':'3×15','2':'3×15','3':'4×15','4':'4×20','5':'4×20'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'45s'},mAr:['الكتفين الجانبية'],mEn:['Side Delts'],tAr:['انحناء طفيف في المرفق، ارفع بالمرافق لا باليدين'],tEn:['Slight elbow bend, lead with elbows not hands, stop at shoulder height'],cal:4,diff:1},
+    {id:'gp5',ic:'⬇️',ar:'ضغط الترايسبس بالكابل',en:'Tricep Pushdown',s:{'1':'3×12','2':'3×15','3':'4×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'45s'},mAr:['الترايسبس'],mEn:['Triceps'],tAr:['المرافق ثابتة جانب الجسم، تمديد كامل، لا تتأرجح'],tEn:['Elbows pinned to sides, full extension at bottom, no body swing'],cal:4,diff:1},
+    {id:'gp6',ic:'⬇️',ar:'ديبس على المقاعد',en:'Chest Dips',s:{'1':'3×8','2':'3×10','3':'4×10','4':'4×12','5':'4×15'},r:{'1':'90s','2':'90s','3':'90s','4':'75s','5':'60s'},mAr:['الصدر السفلي','الترايسبس'],mEn:['Lower Chest','Triceps'],tAr:['أمام للأمام للصدر، انزل تحت 90° في المرفق'],tEn:['Lean forward for chest focus, go below 90° at elbow'],cal:8,diff:2},
+    {id:'gp7',ic:'🎯',ar:'مد الترايسبس فوق الرأس',en:'Overhead Tricep Extension',s:{'1':'3×12','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'45s'},mAr:['الترايسبس الرأس الطويل'],mEn:['Triceps Long Head'],tAr:['المرافق قريبة للأذنين، نزول خلف الرأس، تمديد كامل'],tEn:['Elbows close to head, lower behind head, full extension'],cal:4,diff:1},
+  ],
+  pull:[
+    {id:'gl1',ic:'🔱',ar:'رفع أرضي (ديدليفت)',en:'Conventional Deadlift',s:{'1':'3×5','2':'3×5','3':'4×5','4':'4×5','5':'5×3'},r:{'1':'240s','2':'240s','3':'240s','4':'300s','5':'300s'},mAr:['الظهر كاملاً','الأرداف','الهامسترينج'],mEn:['Full Back','Glutes','Hamstrings'],tAr:['العارضة قريبة من الجسم، الظهر محايد، الورك تدفع للأمام في الأعلى'],tEn:['Bar close to body, neutral spine, drive hips forward at lockout'],cal:14,diff:2},
+    {id:'gl2',ic:'🚣',ar:'تجديف بالباربيل',en:'Barbell Bent-Over Row',s:{'1':'3×8','2':'3×10','3':'4×8','4':'4×6','5':'5×5'},r:{'1':'150s','2':'120s','3':'120s','4':'150s','5':'150s'},mAr:['الظهر العريض','الكتفين الخلفية','البايسبس'],mEn:['Lats','Rear Delts','Biceps'],tAr:['الجذع بزاوية 45°، اسحب للسرة السفلية، اضغط الكتفين'],tEn:['Torso 45°, pull to lower sternum, squeeze shoulder blades'],cal:9,diff:1},
+    {id:'gl3',ic:'📉',ar:'سحب عالٍ (لات بولداون)',en:'Lat Pulldown',s:{'1':'3×10','2':'3×12','3':'4×10','4':'4×8','5':'4×8'},r:{'1':'90s','2':'90s','3':'90s','4':'90s','5':'90s'},mAr:['الظهر العريض','البايسبس'],mEn:['Lats','Biceps'],tAr:['انحنِ قليلاً للخلف، اسحب للصدر العلوي، تمديد كامل في الأعلى'],tEn:['Slight lean back, pull to upper chest, full lat stretch at top'],cal:7,diff:1},
+    {id:'gl4',ic:'🪝',ar:'تجديف بالكابل جالساً',en:'Seated Cable Row',s:{'1':'3×12','2':'3×12','3':'4×12','4':'4×10','5':'4×10'},r:{'1':'90s','2':'90s','3':'90s','4':'90s','5':'75s'},mAr:['الظهر الأوسط','الكتفين الخلفية'],mEn:['Mid Back','Rear Delts'],tAr:['صدر مرتفع، اسحب المرافق للخلف، لا تنحنِ للأمام'],tEn:['Chest up, drive elbows back, do not round forward'],cal:6,diff:1},
+    {id:'gl5',ic:'🎯',ar:'فيس بول',en:'Face Pull',s:{'1':'3×15','2':'3×15','3':'4×15','4':'4×20','5':'4×20'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'45s'},mAr:['الكتفين الخلفية','الدوران الخارجي'],mEn:['Rear Delts','External Rotators'],tAr:['اسحب للوجه، اليدان فوق المرافق، دوران خارجي في النهاية'],tEn:['Pull to face, hands above elbows, externally rotate at end'],cal:4,diff:1},
+    {id:'gl6',ic:'💪',ar:'تجعيل بالباربيل',en:'Barbell Bicep Curl',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×10','5':'4×12'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'60s'},mAr:['البايسبس'],mEn:['Biceps'],tAr:['لا تتأرجح، نطاق حركة كامل، اضغط البايسبس في الأعلى'],tEn:['No swinging, full range of motion, squeeze at top'],cal:4,diff:1},
+    {id:'gl7',ic:'🔨',ar:'تجعيل هامر',en:'Hammer Curl',s:{'1':'3×12','2':'3×12','3':'4×12','4':'4×10','5':'4×12'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'60s'},mAr:['البايسبس','البراكياليس','الساعد'],mEn:['Biceps','Brachialis','Forearms'],tAr:['قبضة محايدة، تحكم في النزول، ارفع للكتف'],tEn:['Neutral grip, control the negative, curl to shoulder'],cal:4,diff:1},
+    {id:'gl8',ic:'⬆️',ar:'سحب للأعلى (بول أب)',en:'Pull-Ups / Chin-Ups',s:{'1':'3×5','2':'3×8','3':'4×8','4':'4×10','5':'5×10'},r:{'1':'90s','2':'90s','3':'90s','4':'90s','5':'75s'},mAr:['الظهر العريض','البايسبس'],mEn:['Lats','Biceps'],tAr:['قبضة واسعة، اسحب الصدر للعارضة، تمديد كامل في الأسفل'],tEn:['Wide grip, pull chest to bar, full dead hang at bottom'],cal:8,diff:2},
+  ],
+  legs:[
+    {id:'gg1',ic:'🏆',ar:'قرفصاء بالباربيل',en:'Barbell Back Squat',s:{'1':'3×8','2':'3×10','3':'4×8','4':'4×6','5':'5×5'},r:{'1':'180s','2':'150s','3':'180s','4':'180s','5':'240s'},mAr:['الفخذ الأمامي','الأرداف','القلب'],mEn:['Quads','Glutes','Core'],tAr:['العارضة على الجزء العلوي من الظهر، انزل تحت مستوى الفخذ، الركبتان تتبعان القدم'],tEn:['High bar on upper back, squat below parallel, knees track over toes'],cal:12,diff:1},
+    {id:'gg2',ic:'🦵',ar:'ضغط الساق (ليج بريس)',en:'Leg Press Machine',s:{'1':'3×12','2':'4×12','3':'4×10','4':'4×10','5':'4×8'},r:{'1':'120s','2':'120s','3':'120s','4':'120s','5':'120s'},mAr:['الفخذ الأمامي','الأرداف'],mEn:['Quads','Glutes'],tAr:['قدماك بعرض الكتفين، انزل حتى 90°، لا تقفل الركبة في الأعلى'],tEn:['Feet shoulder-width, lower to 90°, do not lock knees at top'],cal:9,diff:1},
+    {id:'gg3',ic:'🏋️',ar:'رفع روماني (RDL)',en:'Romanian Deadlift (RDL)',s:{'1':'3×10','2':'3×12','3':'4×10','4':'4×8','5':'4×8'},r:{'1':'120s','2':'90s','3':'90s','4':'90s','5':'90s'},mAr:['الهامسترينج','الأرداف','أسفل الظهر'],mEn:['Hamstrings','Glutes','Lower Back'],tAr:['الورك للخلف، الركبة مرنة بسيطة، ظهر مستقيم، أحس بالشد في الهامسترينج'],tEn:['Hips back, soft knees, straight back, feel hamstring stretch'],cal:8,diff:1},
+    {id:'gg4',ic:'🔄',ar:'تجعيل الساق للهامسترينج',en:'Lying Leg Curl',s:{'1':'3×12','2':'3×12','3':'4×12','4':'4×15','5':'4×15'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'45s'},mAr:['الهامسترينج'],mEn:['Hamstrings'],tAr:['نطاق كامل، تحكم في النزول، اضغط في الأعلى'],tEn:['Full range, control the eccentric, squeeze peak contraction'],cal:4,diff:1},
+    {id:'gg5',ic:'⬆️',ar:'مد الساق للفخذ الأمامي',en:'Leg Extension Machine',s:{'1':'3×12','2':'3×15','3':'4×15','4':'4×15','5':'4×20'},r:{'1':'60s','2':'60s','3':'60s','4':'60s','5':'45s'},mAr:['الفخذ الأمامي'],mEn:['Quads'],tAr:['تمديد كامل، توقف لثانية في الأعلى، نزول بطيء'],tEn:['Full extension, pause 1s at top, slow controlled lowering'],cal:4,diff:1},
+    {id:'gg6',ic:'🦶',ar:'رفع الكعبين (كالف ريز)',en:'Standing Calf Raise',s:{'1':'4×15','2':'4×20','3':'4×20','4':'5×20','5':'5×25'},r:{'1':'45s','2':'45s','3':'45s','4':'45s','5':'30s'},mAr:['الساق الخلفية','الساق السفلية'],mEn:['Gastrocnemius','Soleus'],tAr:['ارتفاع كامل على رؤوس الأصابع، توقف للضغط، انزل ببطء أسفل المستوى'],tEn:['Full rise on toes, pause at peak, lower below platform level'],cal:3,diff:1},
+    {id:'gg7',ic:'🚶',ar:'طعنة بالدمبل',en:'Dumbbell Walking Lunge',s:{'1':'3×10','2':'3×12','3':'4×12','4':'4×10','5':'4×12'},r:{'1':'90s','2':'75s','3':'75s','4':'75s','5':'60s'},mAr:['الفخذ الأمامي','الأرداف'],mEn:['Quads','Glutes'],tAr:['خطوة طويلة، الركبة الأمامية لا تتجاوز القدم، الجذع مستقيم'],tEn:['Long step, front knee behind toe, torso upright throughout'],cal:6,diff:1},
+  ],
+  upper:[],  // built dynamically
+  lower:[],
+  full:[],
+};
+
+function getGymWeek(){
+  const il=P.intensity||1;
+  if(il<=2) return ['full','rest','full','rest','full','rest','rest'];
+  if(il<=3) return ['upper','rest','lower','rest','upper','lower','rest'];
+  return ['push','pull','legs','rest','push','pull','legs'];
+}
+
+function getWeek(){
+  return (P.trainingType==='gym') ? getGymWeek() : KB_WEEK;
+}
+
+function getGymPool(type){
+  const il=P.intensity||1;
+  const maxDiff=il<=2?1:il===3?2:3;
+  if(type==='push') return shuf([...GYM_EX.push.filter(e=>e.diff<=maxDiff)]).slice(0,4);
+  if(type==='pull') return shuf([...GYM_EX.pull.filter(e=>e.diff<=maxDiff)]).slice(0,4);
+  if(type==='legs') return shuf([...GYM_EX.legs.filter(e=>e.diff<=maxDiff)]).slice(0,4);
+  if(type==='upper'){
+    const push=shuf([...GYM_EX.push.filter(e=>e.diff<=maxDiff)]).slice(0,3);
+    const pull=shuf([...GYM_EX.pull.filter(e=>e.diff<=maxDiff)]).slice(0,3);
+    return shuf([...push,...pull]);
+  }
+  if(type==='lower') return shuf([...GYM_EX.legs.filter(e=>e.diff<=maxDiff)]).slice(0,5);
+  if(type==='full'){
+    // Full body beginner: squat + bench + row + OHP + RDL
+    const picks=['gg1','gp1','gl2','gp3','gg3'];
+    return picks.map(id=>[...GYM_EX.push,...GYM_EX.pull,...GYM_EX.legs].find(e=>e.id===id)).filter(Boolean);
+  }
+  return [];
+}
 
 function getPool(type){
+  if(type==='rest') return [];
+  if(P.trainingType==='gym') return getGymPool(type);
+  const il=P.intensity||1;
+  const maxDiff=il<=2?1:il===3?2:3;
+  const pool=(EX[type]||[]).filter(e=>e.diff<=maxDiff);
+  return shuf([...pool]).slice(0,4);
+}
   if(type==='rest') return [];
   const il=P.intensity||1;
   const maxDiff=il<=2?1:il===3?2:3;
@@ -2669,22 +2870,146 @@ function getPool(type){
 
 function genWK(regen){
   const today=new Date().toDateString();
+  const WEEK=getWeek();
   const type=WEEK[new Date().getDay()], il=Math.min(P.intensity||1,5);
-  _WP = type==='rest' ? {type:'rest',_date:today} :
-    {type,_date:today,main:getPool(type),warmup:shuf([...EX.warmup]).slice(0,3),cooldown:[...EX.cooldown],intensity:il};
+  const isGym=P.trainingType==='gym';
+  const wu=isGym?shuf([...GYM_EX.warmup]).slice(0,3):shuf([...EX.warmup]).slice(0,3);
+  const cd=isGym?[...GYM_EX.cooldown]:[...EX.cooldown];
+  _WP = type==='rest' ? {type:'rest',_date:today,isGym} :
+    {type,_date:today,main:getPool(type),warmup:wu,cooldown:cd,intensity:il,isGym};
   if(regen){save();toast(t('toast-newses'));}
   rWorkout(); rTWCard();
 }
 
 // ============================================================
+// RANK SYSTEM
+// ============================================================
+const RANKS=[
+  {key:'e',     minS:0,   maxS:6,   color:'#888888', label_en:'E-Rank',        label_ar:'رتبة E'},
+  {key:'d',     minS:7,   maxS:20,  color:'#aaaaaa', label_en:'D-Rank',        label_ar:'رتبة D'},
+  {key:'c',     minS:21,  maxS:40,  color:'#44dd88', label_en:'C-Rank',        label_ar:'رتبة C'},
+  {key:'b',     minS:41,  maxS:70,  color:'#44aaff', label_en:'B-Rank',        label_ar:'رتبة B'},
+  {key:'a',     minS:71,  maxS:120, color:'#ff9944', label_en:'A-Rank',        label_ar:'رتبة A'},
+  {key:'s',     minS:121, maxS:200, color:'#ff3377', label_en:'S-Rank',        label_ar:'رتبة S'},
+  {key:'national',minS:201,maxS:300,color:'#ffd700', label_en:'National Hunter',label_ar:'صائد وطني'},
+  {key:'monarch', minS:301,maxS:Infinity,color:'#ffd700',label_en:'Shadow Monarch',label_ar:'الملك الظلام'},
+];
+function getRank(sessions){
+  const s=sessions||0;
+  return RANKS.find(r=>s>=r.minS&&s<=r.maxS)||RANKS[0];
+}
+function getNextRank(sessions){
+  const s=sessions||0;
+  const cur=getRank(s);
+  const idx=RANKS.indexOf(cur);
+  return idx<RANKS.length-1?RANKS[idx+1]:null;
+}
+
+// ============================================================
+// VOICE COACH
+// ============================================================
+let voiceSettings={speechLang:'en', subLang:'en'};
+
+const COACH_LINES={
+  greeting:{
+    en:"Arise, Hunter. The system is watching your progress. Train hard, grow stronger.",
+    ar:"قم يا صائد. النظام يراقب تقدمك. تدرب بجد وازدد قوة.",
+    ja:"目覚めよ、ハンターよ。システムは汝の進歩を見ている。強くなれ。"
+  },
+  workout_start:{
+    en:"The gates have opened. Begin your training, Hunter. No excuses.",
+    ar:"فتحت البوابات. ابدأ تدريبك يا صائد. لا أعذار.",
+    ja:"ゲートが開いた。訓練を始めろ、ハンターよ。言い訳無用。"
+  },
+  session_complete:{
+    en:"Quest complete. You've grown stronger today. The weak remain weak — you chose otherwise.",
+    ar:"اكتملت المهمة. ازددت قوة اليوم. الضعفاء يبقون ضعفاء — لكنك اخترت مساراً آخر.",
+    ja:"クエスト完了。今日、お前は強くなった。弱者は弱いまま——お前は違う道を選んだ。"
+  },
+  rest_done:{
+    en:"Rest is over. Rise again, Hunter.",
+    ar:"انتهت الراحة. قم مجدداً يا صائد.",
+    ja:"休息は終わった。再び立て、ハンターよ。"
+  },
+  rank_up:{
+    en:"Rank up! The system acknowledges your power. You are evolving.",
+    ar:"ترقية! النظام يعترف بقوتك. أنت تتطور.",
+    ja:"ランクアップ！システムは汝の力を認めた。お前は進化している。"
+  },
+  test:{
+    en:"I am your shadow coach. Follow the system and arise.",
+    ar:"أنا مدربك الخفي. اتبع النظام وانهض.",
+    ja:"私は汝の影のコーチだ。システムに従い、覚醒せよ。"
+  }
+};
+
+let _subtitleTimer=null;
+function coachSpeak(lineKey){
+  if(!window.speechSynthesis) return;
+  const sl=voiceSettings.speechLang||'en';
+  const subl=voiceSettings.subLang||'en';
+  const lines=COACH_LINES[lineKey];
+  if(!lines) return;
+  const speechText=lines[sl]||lines.en;
+  const subText=lines[subl]||lines.en;
+  // Show subtitle
+  const bar=document.getElementById('subtitle-bar');
+  const txt=document.getElementById('subtitle-text');
+  if(bar&&txt){
+    txt.textContent=subText;
+    bar.classList.add('on');
+    clearTimeout(_subtitleTimer);
+    _subtitleTimer=setTimeout(()=>bar.classList.remove('on'),7000);
+  }
+  // Speak
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(speechText);
+  const langMap={en:'en-US',ar:'ar-SA',ja:'ja-JP'};
+  utt.lang=langMap[sl]||'en-US';
+  utt.rate=0.9; utt.pitch=0.85; utt.volume=0.9;
+  // Try to find a matching voice
+  const voices=window.speechSynthesis.getVoices();
+  const match=voices.find(v=>v.lang.startsWith(utt.lang.substring(0,2)))||voices[0];
+  if(match) utt.voice=match;
+  window.speechSynthesis.speak(utt);
+}
+function setVoiceLang(type,lang,btn){
+  if(type==='speech') voiceSettings.speechLang=lang;
+  else voiceSettings.subLang=lang;
+  const row=document.getElementById('vlang-'+type);
+  if(row) row.querySelectorAll('.vlsw').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  save();
+}
+function pickTType(tt, btn){
+  document.querySelectorAll('.ttype-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  SEL.trainingType=tt;
+}
+
+// ============================================================
 // WORKOUT RENDER
 // ============================================================
+const GYM_TYPE_LABELS={
+  push:{en:'Push Day 💪',ar:'يوم الدفع 💪'},
+  pull:{en:'Pull Day 🚣',ar:'يوم السحب 🚣'},
+  legs:{en:'Leg Day 🦵',ar:'يوم الساق 🦵'},
+  upper:{en:'Upper Body ⬆️',ar:'الجسم العلوي ⬆️'},
+  lower:{en:'Lower Body ⬇️',ar:'الجسم السفلي ⬇️'},
+  full:{en:'Full Body ⚡',ar:'الجسم الكامل ⚡'},
+  rest:{en:'Rest Day 😴',ar:'يوم راحة 😴'},
+};
+function getTypeLabel(type){
+  const ar=L==='ar';
+  if(P.trainingType==='gym'&&GYM_TYPE_LABELS[type]) return ar?GYM_TYPE_LABELS[type].ar:GYM_TYPE_LABELS[type].en;
+  return t('wtype-'+type)||type;
+}
 function rTWCard(){
   if(!_WP) return;
   const il=P.intensity||1;
   const lvMap={1:t('lv-beginner'),2:t('lv-beginner'),3:t('lv-intermediate'),4:t('lv-advanced'),5:t('lv-advanced')};
   document.getElementById('tw-lv').textContent=lvMap[il]||t('lv-beginner');
-  document.getElementById('tw-nm').textContent=t('wtype-'+_WP.type)||_WP.type;
+  document.getElementById('tw-nm').textContent=getTypeLabel(_WP.type);
   if(_WP.type==='rest'){
     document.getElementById('tw-d').textContent=L==='ar'?'راحة':'Rest';
     document.getElementById('tw-e').textContent='—';
@@ -2714,9 +3039,10 @@ function rWorkout(){
   const today=new Date().getDay();
   const dayN_ar=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
   const dayN_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const WEEK=getWeek();
   document.getElementById('dayplan').innerHTML=WEEK.map((tp,d)=>{
     const nm=ar?dayN_ar[d]:dayN_en[d];
-    const ic={upper:'💪',lower:'🦵',rest:'😴',full:'⚡',cardio:'🏃'}[tp]||'🏋️';
+    const ic={upper:'💪',lower:'🦵',rest:'😴',full:'⚡',cardio:'🏃',push:'🏋️',pull:'🚣',legs:'🦵'}[tp]||'🏋️';
     const isToday=d===today;
     const hasRun=(P.runSchedule||[])[d];
     const runBadge=hasRun?`<span style="font-size:9px;line-height:1">🏃</span>`:'';
@@ -2744,9 +3070,12 @@ function rWorkout(){
   }
   h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag">${ar?'الإحماء':'Warm Up'}</div><div class="wsec-l"></div></div>`;
   (_WP.warmup||[]).forEach(e=>{ h+=exCard(e,null,sk,ar); });
-  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--ac)">${t('wtype-'+_WP.type)}</div><div class="wsec-l"></div></div>`;
+  h+=`<div class="wsec-t"><div class="wsec-l"></div><div class="tag" style="color:var(--ac)">${getTypeLabel(_WP.type)}</div><div class="wsec-l"></div></div>`;
   if(_WP.type==='rest'){
-    h+=`<div class="card" style="text-align:center;padding:32px"><div style="font-size:48px">😴</div><div style="font-size:18px;font-weight:800;margin-top:12px">${ar?'يوم راحة — الجسم يحتاج للتعافي':'Rest Day — Your body needs recovery'}</div></div>`;
+    const restTips=P.trainingType==='gym'
+      ?(ar?'اليوم راحة — تمشية خفيفة أو تمديد. الجسم يبني العضلات في الراحة.':'Rest day — light walk or stretch. Muscles grow during recovery, not during training.')
+      :(ar?'يوم راحة — الجسم يحتاج للتعافي':'Rest Day — Your body needs recovery');
+    h+=`<div class="card" style="text-align:center;padding:32px;border-color:rgba(124,109,255,.2)"><div style="font-size:48px;filter:drop-shadow(0 0 12px rgba(124,109,255,.5))">😴</div><div style="font-size:18px;font-weight:800;margin-top:12px">${restTips}</div></div>`;
   } else {
     (_WP.main||[]).forEach(e=>{ h+=exCard(e,e.s?e.s[sk]:null,sk,ar); });
   }
@@ -2778,7 +3107,8 @@ function exCard(e,si,sk,ar){
   const ytUrl=e.yt&&e.yt.startsWith('http')?e.yt:`https://www.youtube.com/results?search_query=${encodeURIComponent((e.en||nm)+' tutorial')}`;
   const ytLabel=ar?'📺 شرح على يوتيوب':'📺 Watch on YouTube';
   
-  // Map exercise IDs to their actual file extensions
+  // Gym exercises use icon box, KB use image files
+  const isGymEx=e.id&&e.id.startsWith('g');
   const IMG_EXT={w5:'jpeg',w6:'jpeg',ai1:'png',c1:'png',c2:'png',c3:'png',cb3:'png',fa1:'png',lb2:'png',lb3:'png',ua2:'png',ub3:'png',ub4:'png'};
   const imgExt=IMG_EXT[e.id]||'jpg';
   let img=`images/${e.id}.${imgExt}`;
@@ -2803,9 +3133,13 @@ function exCard(e,si,sk,ar){
     </div>`;
   }
 
+  const thumbHtml=isGymEx
+    ?`<div class="eximg-gym">${e.ic||'🏋️'}</div>`
+    :`<div class="eximg" style="background-image:url('${img}')"></div>`;
+
   return`<div class="excard" id="ec-${e.id}">
     <div class="exhdr" onclick="togEx('${e.id}')">
-      <div class="eximg" style="background-image:url('${img}')"></div>
+      ${thumbHtml}
       <div style="flex:1">
         <div class="exnm">${nm}</div>
         <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:3px">${(ms||[]).slice(0,2).map(m=>`<span class="mtag">${m}</span>`).join('')}</div>
@@ -2869,7 +3203,9 @@ function togEx(id){document.getElementById('ec-'+id)?.classList.toggle('exp');}
 // ============================================================
 function cmpSession(){
   if(P.doneToday) return;
-  P.sessions=(P.sessions||0)+1;
+  const prevSessions=P.sessions||0;
+  const prevRank=getRank(prevSessions);
+  P.sessions=prevSessions+1;
   const today=new Date().toDateString();
   const lastD=P.lastWD?Math.floor((new Date()-new Date(P.lastWD))/86400000):99;
   P.streak=lastD<=1?(P.streak||0)+1:1;
@@ -2880,7 +3216,18 @@ function cmpSession(){
   }
   WH.unshift({date:today,type:_WP&&_WP.type,intensity:P.intensity||1,exs:(_WP&&_WP.main||[]).length});
   if(WH.length>90) WH=WH.slice(0,90);
-  save(); rWorkout(); rProfile(); toast(L==='ar'?'🎉 أحسنت! جلسة مكتملة':'🎉 Session complete!');
+  // Check rank up
+  const newRank=getRank(P.sessions);
+  const rankUp=newRank.key!==prevRank.key;
+  save(); rWorkout(); rProfile();
+  toast(L==='ar'?'🎉 أحسنت! جلسة مكتملة':'🎉 Session complete!');
+  // Flash animation
+  const flash=document.createElement('div');
+  flash.className='session-flash';
+  document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(),1600);
+  // Coach speaks
+  setTimeout(()=>coachSpeak(rankUp?'rank_up':'session_complete'), 800);
 }
 
 // ============================================================
@@ -2891,11 +3238,27 @@ function rProfile(){
   const ar=L==='ar';
   document.getElementById('profav').textContent=P.name[0]?.toUpperCase()||'?';
   document.getElementById('prof-nm').textContent=P.name;
-  const gMap={lose:ar?'خسارة وزن':'Weight Loss',gain:ar?'بناء عضلات':'Muscle Gain',maintain:ar?'الحفاظ على الوزن':'Maintain Weight',fit:ar?'لياقة عامة':'General Fitness',recomp:ar?'حرق دهون + بناء عضلات 🔥💪':'Burn Fat + Build Muscle 🔥💪'};
-  document.getElementById('prof-gl').textContent=gMap[P.goal]||P.goal||'';
+  const gMap={lose:ar?'خسارة وزن':'Weight Loss',gain:ar?'بناء عضلات':'Muscle Gain',maintain:ar?'الحفاظ على الوزن':'Maintain Weight',fit:ar?'لياقة عامة':'General Fitness',recomp:ar?'حرق دهون + بناء عضلات':'Burn Fat + Build Muscle'};
+  const ttype=P.trainingType==='gym'?(ar?'جيم 🏋️':'Gym 🏋️'):(ar?'كيتل بيل ⚙️':'Kettlebell ⚙️');
+  document.getElementById('prof-gl').textContent=(gMap[P.goal]||P.goal||'')+' · '+ttype;
   document.getElementById('edit-btn').textContent='✏️ '+t('edit-btn');
   document.getElementById('lbl-lang').textContent=t('lbl-lang');
   document.getElementById('rst-btn').textContent=t('rst-btn');
+  // Rank
+  const rank=getRank(P.sessions||0);
+  const nextRank=getNextRank(P.sessions||0);
+  const rankWrap=document.getElementById('rank-badge-wrap');
+  if(rankWrap) rankWrap.innerHTML=`<span class="rank-badge rank-${rank.key}" style="color:${rank.color};border-color:${rank.color}">${ar?rank.label_ar:rank.label_en}</span>`;
+  const xpFill=document.getElementById('xp-bar-fill');
+  const xpLabel=document.getElementById('xp-label');
+  if(xpFill&&nextRank){
+    const prog=Math.round(((P.sessions||0)-rank.minS)/(nextRank.minS-rank.minS)*100);
+    xpFill.style.width=Math.min(prog,100)+'%';
+    if(xpLabel) xpLabel.textContent=`${(P.sessions||0)} / ${nextRank.minS} sessions → ${ar?nextRank.label_ar:nextRank.label_en}`;
+  } else if(xpFill){
+    xpFill.style.width='100%';
+    if(xpLabel) xpLabel.textContent=ar?'أنت الملك الظلام 👑':'You are the Shadow Monarch 👑';
+  }
   const il=P.intensity||1;
   const lvLabel=il<=2?(ar?'مبتدئ':'Beginner'):il===3?(ar?'متوسط':'Intermediate'):(ar?'متقدم':'Advanced');
   const stats=[
@@ -3121,9 +3484,49 @@ function startApp(){
   CS=1; showStep(1);
 }
 
+// ============================================================
+// PARTICLE BACKGROUND
+// ============================================================
+function initParticles(){
+  const canvas=document.getElementById('particles-canvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  let W=canvas.width=window.innerWidth, H=canvas.height=window.innerHeight;
+  window.addEventListener('resize',()=>{W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;});
+  const particles=Array.from({length:60},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.4, vy:-(Math.random()*.5+.1),
+    r:Math.random()*1.5+.5,
+    life:Math.random(),
+    color:Math.random()>.5?'rgba(124,109,255,':'rgba(0,212,255,'
+  }));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.life-=.003;
+      if(p.life<=0||p.y<-10){p.x=Math.random()*W;p.y=H+10;p.life=Math.random()*.5+.5;p.vx=(Math.random()-.5)*.4;p.vy=-(Math.random()*.5+.1);}
+      const alpha=Math.min(p.life*2,.7);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color+alpha+')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
 window.addEventListener('DOMContentLoaded', ()=>{
   const has=load();
   applyLang();
+  initParticles();
+  // Restore voice setting buttons
+  if(voiceSettings.speechLang){
+    document.querySelectorAll('#vlang-speech .vlsw').forEach(b=>{
+      const l=b.onclick?.toString().match(/'([a-z]+)'/g)?.[0]?.replace(/'/g,'');
+      b.classList.toggle('on',l===voiceSettings.speechLang);
+    });
+  }
   if(has){
     showMain();
   } else {
@@ -3133,6 +3536,22 @@ window.addEventListener('DOMContentLoaded', ()=>{
     if(document.getElementById('pg-main').classList.contains('on')) save();
   },30000);
 });
+
+function showMain(){
+  document.getElementById('pg-splash').classList.remove('on');
+  document.getElementById('pg-setup').classList.remove('on');
+  document.getElementById('pg-main').classList.add('on');
+  document.getElementById('coach-btn').classList.add('on');
+  applyLang();
+  const today=new Date().toDateString();
+  if(P.lastWD!==today){ P.doneToday=false; }
+  if(P.lastRunDate!==today){ P.runDoneToday=false; }
+  checkDailyMealRefresh();
+  if(!_WP||_WP._date!==today) genWK(false);
+  rRamadanUI(); rHome(); rWorkout(); rMeals(); rProfile();
+  // Greet with coach voice after a short delay
+  setTimeout(()=>coachSpeak('greeting'), 1200);
+}
 
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./sw.js').then(reg=>reg.update()).catch(()=>{});

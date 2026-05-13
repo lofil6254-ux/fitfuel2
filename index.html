@@ -55,9 +55,10 @@ input,select,button{font-family:inherit;font-size:inherit}
 .lrow{display:flex;gap:10px;justify-content:center;margin-bottom:28px}
 .lbtn{padding:13px 28px;border-radius:50px;border:2px solid var(--br);background:var(--s2);color:var(--tx2);font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
 .lbtn.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:0 0 20px rgba(124,109,255,.15)}
-#pg-setup{padding:28px 0 100px}
+#pg-setup{padding:0 0 100px}
+#pg-setup .wrap{padding-top:20px}
 .prog{display:flex;gap:6px;justify-content:center;margin-bottom:28px}
-.prg{height:5px;width:48px;border-radius:3px;background:var(--br);transition:all .3s}
+.prg{height:4px;width:40px;border-radius:2px;background:rgba(124,109,255,.15);transition:all .3s}
 .prg.d{background:var(--ac)}.prg.c{background:var(--ac);box-shadow:0 0 10px var(--ac)}
 .step{display:none}.step.on{display:block}
 .fl{margin-bottom:14px}
@@ -66,12 +67,16 @@ input,select,button{font-family:inherit;font-size:inherit}
 .fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.1)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .g1{display:flex;flex-direction:column;gap:9px}
-.oc{padding:14px 12px;border-radius:var(--r2);border:2px solid var(--br);background:var(--s2);cursor:pointer;text-align:center;transition:all .18s}
+.oc{padding:18px 16px;border-radius:var(--r2);border:2px solid rgba(124,109,255,.2);background:linear-gradient(145deg,rgba(13,13,38,.98),rgba(7,7,26,.99));cursor:pointer;text-align:center;transition:all .2s;position:relative;overflow:hidden}
+.oc::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--ac);opacity:0;transition:opacity .2s}
 .oc:active{transform:scale(.97)}
-.oc.on{border-color:var(--ac);background:var(--acd);box-shadow:0 0 16px rgba(124,109,255,.1)}
-.oc-h{display:flex;align-items:center;gap:12px;text-align:start}
-.oi{font-size:26px;flex-shrink:0}
-.ol{font-size:16px;font-weight:700;color:var(--tx)}.os{font-size:13px;color:var(--mt);margin-top:2px}
+.oc.on{border-color:var(--ac);background:linear-gradient(135deg,rgba(124,109,255,.2),rgba(124,109,255,.06));box-shadow:0 0 24px rgba(124,109,255,.3),inset 0 1px 0 rgba(124,109,255,.3)}
+.oc.on::before{opacity:1}
+.oc.on .oi{filter:drop-shadow(0 0 8px rgba(124,109,255,.8))}
+.oc.on .ol{color:var(--ac)}
+.oc-h{display:flex;align-items:center;gap:14px;text-align:start}
+.oi{font-size:30px;flex-shrink:0}
+.ol{font-size:17px;font-weight:800;color:var(--tx)}.os{font-size:13px;color:var(--mt);margin-top:3px;line-height:1.4}
 .nb{display:flex;gap:10px;margin-top:22px}
 .ig2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--s1);border-top:1px solid var(--br2);display:flex;z-index:300;padding:10px 0 14px;box-shadow:0 -4px 24px rgba(0,0,0,.45)}
@@ -228,7 +233,7 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
   box-shadow:var(--sh),0 0 40px rgba(124,109,255,.12),inset 0 1px 0 rgba(124,109,255,.2);
   position:relative;
 }
-.hero::before{content:'[ DAILY STATUS ]';position:absolute;top:-10px;left:16px;font-size:10px;font-weight:900;letter-spacing:3px;color:var(--ac);background:var(--bg);padding:0 8px;opacity:.9}
+.hero::before{display:none}
 .hero::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ac),var(--bl),transparent);border-radius:var(--r) var(--r) 0 0}
 
 /* ── Primary button ── */
@@ -320,22 +325,29 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 .vlsw.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:0 0 10px rgba(124,109,255,.3)}
 
 /* ── Intro cutscene overlay ── */
-#intro-overlay{position:fixed;inset:0;background:#000;z-index:9000;display:none;align-items:center;justify-content:center;flex-direction:column}
+#intro-overlay{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(20,10,50,.98),#000 80%);z-index:9000;display:none;align-items:center;justify-content:center;flex-direction:column;padding:0}
 #intro-overlay.on{display:flex}
-#intro-box{position:relative;border:1px solid rgba(124,109,255,.6);border-radius:4px;padding:40px 36px;max-width:320px;width:90%;text-align:center;background:linear-gradient(145deg,rgba(7,7,26,.97),rgba(4,4,18,.99));box-shadow:0 0 60px rgba(124,109,255,.2),inset 0 0 40px rgba(124,109,255,.03)}
-#intro-corner-tl,#intro-corner-tr,#intro-corner-bl,#intro-corner-br{position:absolute;width:14px;height:14px;border-color:var(--ac);border-style:solid}
-#intro-corner-tl{top:-2px;left:-2px;border-width:2px 0 0 2px}
-#intro-corner-tr{top:-2px;right:-2px;border-width:2px 2px 0 0}
-#intro-corner-bl{bottom:-2px;left:-2px;border-width:0 0 2px 2px}
-#intro-corner-br{bottom:-2px;right:-2px;border-width:0 2px 2px 0}
-#intro-system-tag{font-size:10px;font-weight:900;letter-spacing:5px;color:var(--ac);margin-bottom:20px;opacity:0;animation:intro-fade 0.6s 0.4s ease forwards}
-#intro-title-jp{font-size:15px;color:var(--tx2);letter-spacing:2px;margin-bottom:10px;opacity:0;animation:intro-fade 0.7s 0.8s ease forwards}
-#intro-title-en{font-size:22px;font-weight:900;color:var(--tx);letter-spacing:.5px;line-height:1.3;margin-bottom:14px;opacity:0;animation:intro-fade 0.7s 1.2s ease forwards;background:linear-gradient(90deg,var(--tx),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-#intro-rank-line{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:4px;margin-bottom:14px;opacity:0;animation:intro-fade 0.6s 1.8s ease forwards}
-#intro-sub{font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:24px;opacity:0;animation:intro-fade 0.6s 2.2s ease forwards}
-#intro-bar-wrap{width:100%;height:3px;background:rgba(124,109,255,.15);border-radius:2px;overflow:hidden;opacity:0;animation:intro-fade 0.4s 2.6s ease forwards}
-#intro-bar{height:100%;background:linear-gradient(90deg,var(--ac),var(--bl));width:0%;animation:intro-progress 3s 2.8s ease forwards}
-@keyframes intro-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+#intro-box{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 32px;text-align:center}
+/* Scan lines on intro */
+#intro-box::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(124,109,255,.025) 3px,rgba(124,109,255,.025) 4px);pointer-events:none}
+/* Corner brackets */
+#intro-corner-tl,#intro-corner-tr,#intro-corner-bl,#intro-corner-br{position:fixed;width:28px;height:28px;border-color:var(--ac);border-style:solid;opacity:0;animation:intro-fade 0.5s 0.2s ease forwards}
+#intro-corner-tl{top:20px;left:20px;border-width:2px 0 0 2px}
+#intro-corner-tr{top:20px;right:20px;border-width:2px 2px 0 0}
+#intro-corner-bl{bottom:20px;left:20px;border-width:0 0 2px 2px}
+#intro-corner-br{bottom:20px;right:20px;border-width:0 2px 2px 0}
+#intro-system-tag{font-size:11px;font-weight:900;letter-spacing:8px;color:var(--ac);margin-bottom:14px;opacity:0;animation:intro-fade 0.6s 0.3s ease forwards;text-shadow:0 0 20px rgba(124,109,255,.8)}
+#intro-scan{font-size:10px;font-weight:700;letter-spacing:4px;color:rgba(124,109,255,.5);margin-bottom:8px;opacity:0;animation:intro-fade 0.5s 0.7s ease forwards}
+#intro-divider{font-size:12px;color:rgba(124,109,255,.3);letter-spacing:2px;margin-bottom:18px;opacity:0;animation:intro-fade 0.4s 1.0s ease forwards}
+#intro-title-jp{font-size:15px;color:rgba(200,200,255,.55);letter-spacing:4px;margin-bottom:14px;opacity:0;animation:intro-fade 0.7s 1.2s ease forwards}
+#intro-title-en{font-size:28px;font-weight:900;letter-spacing:1px;line-height:1.35;margin-bottom:20px;opacity:0;animation:intro-fade 0.8s 1.7s ease forwards;background:linear-gradient(135deg,#fff,var(--ac),var(--bl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#intro-rank-line{font-size:13px;font-weight:900;color:var(--ac);letter-spacing:6px;margin-bottom:14px;opacity:0;animation:intro-fade 0.6s 2.3s ease forwards;text-shadow:0 0 16px rgba(124,109,255,.9)}
+#intro-hunter-id{font-size:10px;font-weight:700;letter-spacing:3px;color:rgba(150,140,255,.5);margin-bottom:18px;opacity:0;animation:intro-fade 0.5s 2.7s ease forwards}
+#intro-sub{font-size:14px;color:rgba(200,200,255,.65);line-height:1.9;margin-bottom:12px;opacity:0;animation:intro-fade 0.6s 3.1s ease forwards;letter-spacing:.5px}
+#intro-notice{font-size:9px;font-weight:900;letter-spacing:5px;color:rgba(124,109,255,.35);margin-bottom:36px;opacity:0;animation:intro-fade 0.5s 3.6s ease forwards}
+#intro-bar-wrap{width:60%;max-width:240px;height:2px;background:rgba(124,109,255,.15);border-radius:2px;overflow:hidden;opacity:0;animation:intro-fade 0.4s 3.9s ease forwards}
+#intro-bar{height:100%;background:linear-gradient(90deg,var(--ac),var(--bl));width:0%;animation:intro-progress 3.0s 4.0s ease forwards}
+@keyframes intro-fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes intro-progress{to{width:100%}}
 
 /* ── EXP popup ── */
@@ -389,6 +401,16 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
 .modal{background:linear-gradient(180deg,rgba(10,10,28,.99),rgba(4,4,18,.99));border:1px solid rgba(124,109,255,.3)}
 /* Ramadan banner */
 .rbanner{border:1px solid rgba(255,215,0,.3);box-shadow:0 0 20px rgba(255,215,0,.06)}
+
+/* ── Weight Tracker ── */
+.wt-track{background:rgba(124,109,255,.06);border:1px solid rgba(124,109,255,.2);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wt-label{font-size:11px;font-weight:900;letter-spacing:2px;color:var(--ac);text-transform:uppercase;flex:0 0 auto}
+.wt-ctrl{display:flex;align-items:center;gap:8px;flex:1}
+.wt-btn{width:32px;height:32px;border-radius:8px;border:1px solid rgba(124,109,255,.3);background:rgba(124,109,255,.1);color:var(--ac);font-size:18px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.wt-btn:active{transform:scale(.9);background:rgba(124,109,255,.3)}
+.wt-val{font-size:18px;font-weight:900;color:var(--tx);min-width:60px;text-align:center}
+.wt-suggest{font-size:11px;font-weight:800;color:var(--gd);letter-spacing:1px;margin-top:4px;width:100%;text-align:center;display:none}
+.wt-suggest.on{display:block}
 </style>
 </head>
 <body>
@@ -402,11 +424,15 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
   <div id="intro-box">
     <div id="intro-corner-tl"></div><div id="intro-corner-tr"></div>
     <div id="intro-corner-bl"></div><div id="intro-corner-br"></div>
-    <div id="intro-system-tag">[ SYSTEM ]</div>
+    <div id="intro-system-tag">[ SYSTEM MESSAGE ]</div>
+    <div id="intro-scan">ANOMALY DETECTED — AWAKENING CONFIRMED</div>
+    <div id="intro-divider">◆ ─────────────────── ◆</div>
     <div id="intro-title-jp">プレイヤーに選ばれました</div>
-    <div id="intro-title-en">You have been selected as a Player.</div>
-    <div id="intro-rank-line">◈ &nbsp; RANK E &nbsp; ◈</div>
-    <div id="intro-sub">The System will now guide your journey.<br>Arise, Hunter.</div>
+    <div id="intro-title-en">You have been selected<br>as a Player.</div>
+    <div id="intro-rank-line">◈ &nbsp; STARTING RANK : E &nbsp; ◈</div>
+    <div id="intro-hunter-id">HUNTER ID : #FF-00001 &nbsp;|&nbsp; STATUS : AWAKENED</div>
+    <div id="intro-sub">The System has chosen you.<br>Your journey begins now, Hunter.</div>
+    <div id="intro-notice">[ DO NOT RESIST THE SYSTEM ]</div>
     <div id="intro-bar-wrap"><div id="intro-bar"></div></div>
   </div>
 </div>
@@ -449,8 +475,8 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
 <div class="wrap" style="padding-top:28px">
   <div class="prog" id="prog"></div>
   <div class="step" id="s1">
-    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s1t">—</div>
-    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s1s">—</div>
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;letter-spacing:.3px" id="s1t">—</div>
+    <div style="font-size:14px;color:var(--tx2);margin-bottom:18px;letter-spacing:.5px" id="s1s">—</div>
     <div class="fl"><label class="lb" id="l-nm">—</label><input class="fi" id="i-nm" type="text"></div>
     <div class="ig2">
       <div class="fl"><label class="lb" id="l-ag">—</label><input class="fi" id="i-ag" type="number" min="10" max="80" placeholder="25"></div>
@@ -465,45 +491,41 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
     <div class="nb"><button class="btn bp bw" id="nx1" onclick="nx(1)">—</button></div>
   </div>
   <div class="step" id="s2">
-    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s2t">—</div>
-    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s2s">—</div>
-    <div class="g2">
-      <div class="oc" onclick="pick(this,'goal','lose')"><div class="oi">🔥</div><div class="ol" id="g-lose">—</div></div>
-      <div class="oc" onclick="pick(this,'goal','gain')"><div class="oi">💪</div><div class="ol" id="g-gain">—</div></div>
-      <div class="oc" onclick="pick(this,'goal','maintain')"><div class="oi">⚖️</div><div class="ol" id="g-main">—</div></div>
-      <div class="oc" onclick="pick(this,'goal','fit')"><div class="oi">🏃</div><div class="ol" id="g-fit">—</div></div></div>
-    <div class="g1" style="margin-top:10px">
-      <div class="oc oc-h" onclick="pick(this,'goal','recomp')" style="border-color:rgba(124,109,255,.3);background:linear-gradient(135deg,rgba(124,109,255,.05),rgba(77,184,255,.05))">
-        <div class="oi">🔥💪</div>
-        <div><div class="ol" id="g-recomp">—</div><div class="os" id="g-recomps">—</div></div>
-      </div>
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;letter-spacing:.3px" id="s2t">—</div>
+    <div style="font-size:14px;color:var(--tx2);margin-bottom:16px;letter-spacing:.5px" id="s2s">—</div>
+    <div class="g1">
+      <div class="oc oc-h" onclick="pick(this,'goal','lose')"><div class="oi">▲</div><div><div class="ol" id="g-lose">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'goal','gain')"><div class="oi">◆</div><div><div class="ol" id="g-gain">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'goal','maintain')"><div class="oi">◈</div><div><div class="ol" id="g-main">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'goal','fit')"><div class="oi">▸</div><div><div class="ol" id="g-fit">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'goal','recomp')"><div class="oi">⬡</div><div><div class="ol" id="g-recomp">—</div><div class="os" id="g-recomps">—</div></div></div>
     </div>
     <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx2" onclick="nx(2)">—</button></div>
   </div>
   <div class="step" id="s3">
-    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s3t">—</div>
-    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s3s">—</div>
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;letter-spacing:.3px" id="s3t">—</div>
+    <div style="font-size:14px;color:var(--tx2);margin-bottom:16px;letter-spacing:.5px" id="s3s">—</div>
     <div class="g1">
-      <div class="oc oc-h" onclick="pick(this,'level','beginner')"><div class="oi">🌱</div><div><div class="ol" id="lv-b">—</div><div class="os" id="lv-bs">—</div></div></div>
-      <div class="oc oc-h" onclick="pick(this,'level','intermediate')"><div class="oi">⚡</div><div><div class="ol" id="lv-i">—</div><div class="os" id="lv-is">—</div></div></div>
-      <div class="oc oc-h" onclick="pick(this,'level','advanced')"><div class="oi">🔥</div><div><div class="ol" id="lv-a">—</div><div class="os" id="lv-as">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'level','beginner')"><div class="oi">▷</div><div><div class="ol" id="lv-b">—</div><div class="os" id="lv-bs">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'level','intermediate')"><div class="oi">▶</div><div><div class="ol" id="lv-i">—</div><div class="os" id="lv-is">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'level','advanced')"><div class="oi">◉</div><div><div class="ol" id="lv-a">—</div><div class="os" id="lv-as">—</div></div></div>
     </div>
     <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx3" onclick="nx(3)">—</button></div>
   </div>
   <div class="step" id="s4">
-    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s4t">—</div>
-    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s4s">—</div>
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;letter-spacing:.3px" id="s4t">—</div>
+    <div style="font-size:14px;color:var(--tx2);margin-bottom:16px;letter-spacing:.5px" id="s4s">—</div>
     <div class="g1">
-      <div class="oc oc-h" onclick="pick(this,'act','1.2')"><div class="oi">🪑</div><div><div class="ol" id="ac-1">—</div><div class="os" id="ac-1s">—</div></div></div>
-      <div class="oc oc-h" onclick="pick(this,'act','1.375')"><div class="oi">🚶</div><div><div class="ol" id="ac-2">—</div><div class="os" id="ac-2s">—</div></div></div>
-      <div class="oc oc-h" onclick="pick(this,'act','1.55')"><div class="oi">🏃</div><div><div class="ol" id="ac-3">—</div><div class="os" id="ac-3s">—</div></div></div>
-      <div class="oc oc-h" onclick="pick(this,'act','1.725')"><div class="oi">⚡</div><div><div class="ol" id="ac-4">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.2')"><div class="oi">▫</div><div><div class="ol" id="ac-1">—</div><div class="os" id="ac-1s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.375')"><div class="oi">◽</div><div><div class="ol" id="ac-2">—</div><div class="os" id="ac-2s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.55')"><div class="oi">◼</div><div><div class="ol" id="ac-3">—</div><div class="os" id="ac-3s">—</div></div></div>
+      <div class="oc oc-h" onclick="pick(this,'act','1.725')"><div class="oi">⬛</div><div><div class="ol" id="ac-4">—</div></div></div>
     </div>
     <div class="nb"><button class="btn bo" onclick="pv()">←</button><button class="btn bp bw" id="nx4" onclick="nx(4)"><span id="nx4t">—</span></button></div>
   </div>
   <div class="step" id="s5">
-    <div style="font-size:20px;font-weight:900;margin-bottom:3px" id="s5t">—</div>
-    <div style="font-size:15px;color:var(--mt);margin-bottom:14px" id="s5s">—</div>
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;letter-spacing:.3px" id="s5t">—</div>
+    <div style="font-size:14px;color:var(--tx2);margin-bottom:16px;letter-spacing:.5px" id="s5s">—</div>
     <div style="display:flex;gap:5px;margin-bottom:4px" id="run-day-picker"></div>
     <div class="fl" id="run-km-wrap" style="display:none;margin-top:14px">
       <label class="lb" id="l-rkm">—</label>
@@ -559,15 +581,6 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
       <div class="mb"><div class="mb-l" id="lb-fat">—</div><div class="mb-v" id="mb3v" style="color:var(--pk)">0g</div><div class="mbar"><div class="mbf" id="mb3f" style="background:var(--pk);width:0%"></div></div></div>
     </div>
   </div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <h3 style="font-size:16px" id="lbl-qlog">—</h3>
-  </div>
-  <div class="logrow" style="gap:6px">
-    <input class="fi" id="log-nm" type="text" style="border-radius:10px;padding:9px 11px">
-    <input class="fi" id="log-cl" type="number" placeholder="kcal" style="width:72px;flex:none;border-radius:10px;padding:9px">
-    <button class="btn bp" onclick="logFood()" style="border-radius:10px;padding:9px 13px">+</button>
-  </div>
-  <div class="litems" id="litems"></div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px">
     <h3 style="font-size:16px" id="lbl-tw">—</h3>
     <button class="btn bo" style="padding:5px 10px;font-size:13px" id="sa-btn" onclick="showTab('workout')">—</button>
@@ -853,7 +866,9 @@ const T={
 // ============================================================
 let L='ar', P={}, SEL={trainingType:'kb'}, DLOG={}, WH=[], MP={}, CD=new Date().getDay(), CS=1;
 let isRamadan=true, mealMode='ramadan', _WP=null;
-let MP_RAM={}, MP_NRM={}, MEAL_EATEN={}; // MEAL_EATEN: {'2025-01-15_iftar': true, ...}
+let MP_RAM={}, MP_NRM={}, MEAL_EATEN={};
+// Weight tracking per exercise: {exerciseId: {kg, sessions, lastDate}}
+let EXWEIGHTS={}; // MEAL_EATEN: {'2025-01-15_iftar': true, ...}
 
 function t(k){ return (T[L]&&T[L][k])||(T.ar&&T.ar[k])||k; }
 
@@ -899,7 +914,7 @@ function switchLang(l){
 // ============================================================
 function save(){
   try{
-    localStorage.setItem('ff9',JSON.stringify({L,P,SEL,DLOG,WH,MP,MP_RAM,MP_NRM,MEAL_EATEN,CD,isRamadan,mealMode,WP:_WP,voiceSettings}));
+    localStorage.setItem('ff9',JSON.stringify({L,P,SEL,DLOG,WH,MP,MP_RAM,MP_NRM,MEAL_EATEN,CD,isRamadan,mealMode,WP:_WP,voiceSettings,EXWEIGHTS}));
   }catch(e){}
 }
 function load(){
@@ -911,6 +926,7 @@ function load(){
     if(!d||!d.P||!d.P.name) return false;
     L=d.L||'ar'; P=d.P||{}; SEL=d.SEL||{}; DLOG=d.DLOG||{};
     if(d.voiceSettings) voiceSettings=d.voiceSettings;
+    if(d.EXWEIGHTS) EXWEIGHTS=d.EXWEIGHTS;
     WH=d.WH||[]; CD=d.CD||0;
     MEAL_EATEN=d.MEAL_EATEN||{};
     isRamadan=d.isRamadan!==undefined?d.isRamadan:true;
@@ -3046,50 +3062,24 @@ let voiceSettings={speechLang:'ja', subLang:'en'};
 // ============================================================
 function playIntroMusic(){
   try{
-    const A=new(window.AudioContext||window.webkitAudioContext)();
-    const out=A.createGain(); out.gain.value=0.42; out.connect(A.destination);
-    // Delay reverb
-    const dly=A.createDelay(1.2); const dlyG=A.createGain();
-    dly.delayTime.value=0.38; dlyG.gain.value=0.22;
-    dly.connect(dlyG); dlyG.connect(out); dlyG.connect(dly);
-    // Japanese pentatonic D: D3 F#3 A3 B3 D4 F#4 A4 B4
-    const P=[146.83,185.00,220.00,246.94,293.66,369.99,440.00,493.88,587.33];
-    const BPM=76, B=60/BPM;
-    // Melody [noteIdx, beats, vol]
-    const mel=[
-      [4,.5,.4],[5,.5,.35],[6,1,.4],[4,.5,.35],[2,.5,.3],[3,1,.35],[1,.5,.25],[0,1.5,.3],
-      [4,.5,.4],[6,.5,.35],[7,1,.45],[5,.5,.35],[4,.5,.3],[6,1,.4],[4,.5,.3],[2,2,.35],
-      [6,.5,.4],[7,.5,.4],[8,1,.45],[6,.5,.35],[4,.5,.3],[5,1,.35],[3,.5,.25],[4,2,.4],
-    ];
-    // Bass [noteIdx, beats]
-    const bs=[[0,2],[0,2],[2,2],[2,2],[3,2],[3,2],[0,2],[0,2],[4,2],[4,2],[0,2],[0,2]];
-    let t=A.currentTime+0.15;
-    mel.forEach(([ni,d,v])=>{
-      const freq=P[Math.min(ni,P.length-1)], dur=d*B;
-      const o=A.createOscillator(), g=A.createGain();
-      o.type='sine'; o.frequency.value=freq;
-      o.connect(g); g.connect(out); g.connect(dly);
-      g.gain.setValueAtTime(0,t);
-      g.gain.linearRampToValueAtTime(v,t+0.04);
-      g.gain.exponentialRampToValueAtTime(0.001,t+dur-0.03);
-      o.start(t); o.stop(t+dur); t+=dur;
-    });
-    let tb=A.currentTime+0.15;
-    bs.forEach(([ni,d])=>{
-      const freq=P[Math.min(ni,P.length-1)]/2, dur=d*B;
-      const o=A.createOscillator(), g=A.createGain();
-      o.type='triangle'; o.frequency.value=freq;
-      o.connect(g); g.connect(out);
-      g.gain.setValueAtTime(0,tb);
-      g.gain.linearRampToValueAtTime(0.1,tb+0.12);
-      g.gain.exponentialRampToValueAtTime(0.001,tb+dur-0.1);
-      o.start(tb); o.stop(tb+dur); tb+=dur;
-    });
-    // Fade out at end
-    const totalDur=mel.reduce((s,[,d])=>s+d*B,0)+0.5;
-    setTimeout(()=>{ out.gain.linearRampToValueAtTime(0,A.currentTime+1.5); },
-      (totalDur-1.5)*1000);
-    return A;
+    const audio=new Audio('./intro.mp3');
+    audio.volume=0.0;
+    audio.play().catch(()=>{});
+    // Fade in over 0.5s
+    let vol=0;
+    const fi=setInterval(()=>{
+      vol=Math.min(vol+0.07,0.75);
+      audio.volume=vol;
+      if(vol>=0.75) clearInterval(fi);
+    },50);
+    // Fade out starting at 6s, stop at 7s
+    setTimeout(()=>{
+      const fo=setInterval(()=>{
+        audio.volume=Math.max(audio.volume-0.08,0);
+        if(audio.volume<=0){ audio.pause(); clearInterval(fo); }
+      },60);
+    },5500);
+    return audio;
   }catch(e){return null;}
 }
 
@@ -3101,12 +3091,12 @@ function showIntro(){
   if(!ov) return showMain();
   ov.classList.add('on');
   playIntroMusic();
-  // Progress bar is 3s animation. Total overlay time ~6s
+  // Total overlay time 7s then fade 1s
   setTimeout(()=>{
     ov.style.transition='opacity 1s ease';
     ov.style.opacity='0';
     setTimeout(()=>{ ov.classList.remove('on'); ov.style.opacity=''; showMain(); }, 1000);
-  }, 6000);
+  }, 7000);
 }
 
 // ============================================================
@@ -3329,6 +3319,48 @@ function setLevel(diff){
   genWK(false); save(); rWorkout();
   toast(L==='ar'?'تم تغيير المستوى':'Level updated');
 }
+function renderWeightTrack(id, ar){
+  const ew=EXWEIGHTS[id]||{kg:0,sessions:0};
+  const kg=ew.kg||0;
+  const sessions=ew.sessions||0;
+  const readyToUpgrade=sessions>=4&&kg>0;
+  const suggestKg=kg+(kg<20?2.5:5);
+  const lbl=ar?'الوزن':'WEIGHT';
+  const kgLabel=kg===0?(ar?'بدون وزن':'Bodyweight'):`${kg} kg`;
+  return `<div class="wt-label">${lbl}</div>
+    <div class="wt-ctrl">
+      <button class="wt-btn" onclick="adjWeight(event,'${id}',-2.5)">−</button>
+      <div class="wt-val" id="wtv-${id}">${kgLabel}</div>
+      <button class="wt-btn" onclick="adjWeight(event,'${id}',2.5)">+</button>
+    </div>
+    <div class="wt-suggest${readyToUpgrade?' on':''}" id="wts-${id}">
+      ${ar?'جاهز للترقية':'READY TO UPGRADE'} → ${suggestKg} kg
+    </div>`;
+}
+function adjWeight(ev, id, delta){
+  ev.stopPropagation();
+  if(!EXWEIGHTS[id]) EXWEIGHTS[id]={kg:0,sessions:0};
+  const ew=EXWEIGHTS[id];
+  ew.kg=Math.max(0, Math.round((ew.kg+delta)*10)/10);
+  const ar=L==='ar';
+  const valEl=document.getElementById('wtv-'+id);
+  if(valEl) valEl.textContent=ew.kg===0?(ar?'بدون وزن':'Bodyweight'):`${ew.kg} kg`;
+  const sugEl=document.getElementById('wts-'+id);
+  if(sugEl){
+    const readyToUpgrade=ew.sessions>=4&&ew.kg>0;
+    const suggestKg=ew.kg+(ew.kg<20?2.5:5);
+    sugEl.textContent=readyToUpgrade?`${ar?'جاهز للترقية':'READY TO UPGRADE'} → ${suggestKg} kg`:'';
+    sugEl.classList.toggle('on', readyToUpgrade);
+  }
+  save();
+}
+function trackWeightSessions(){
+  // Called on session complete — increment session count for each main exercise
+  (_WP&&_WP.main||[]).forEach(e=>{
+    if(!EXWEIGHTS[e.id]) EXWEIGHTS[e.id]={kg:0,sessions:0};
+    EXWEIGHTS[e.id].sessions=(EXWEIGHTS[e.id].sessions||0)+1;
+  });
+}
 function exCard(e,si,sk,ar){
   // Always use live EX data so YouTube links and other properties are never stale from localStorage
   const allEx=[...(EX.warmup||[]),...(EX.cooldown||[]),...(EX.upper||[]),...(EX.lower||[]),...(EX.full||[]),...(EX.cardio||[])];
@@ -3381,9 +3413,9 @@ function exCard(e,si,sk,ar){
         <div class="exnm">${nm}</div>
         <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:3px">${(ms||[]).slice(0,2).map(m=>`<span class="mtag">${m}</span>`).join('')}</div>
         <div>${isWC?`<span style="font-size:13px;color:var(--mt)">⏱ ${e.dur||''}</span>`
-          :`<span style="font-size:13px;color:var(--mt)">📦 ${sn} ${t('sets-l')}</span>
-            <span style="font-size:13px;color:var(--mt);margin-inline-start:6px">🔁 ${rn}</span>
-            ${rv?`<span style="font-size:13px;color:var(--mt);margin-inline-start:6px">⏸ ${rv}</span>`:''}`}</div>
+          :`<span style="font-size:13px;color:var(--tx2)">◈ ${sn} ${t('sets-l')}</span>
+            <span style="font-size:13px;color:var(--tx2);margin-inline-start:6px">× ${rn}</span>
+            ${rv?`<span style="font-size:13px;color:var(--or);margin-inline-start:6px">⏸ ${rv}</span>`:''}`}</div>
       </div>
       <div class="exchv">▼</div>
     </div>
@@ -3393,9 +3425,12 @@ function exCard(e,si,sk,ar){
         <div class="exd"><div class="exd-v">${rn}</div><div class="exd-l">${t('reps-l')}</div></div>
         ${rv?`<div class="exd"><div class="exd-v" style="color:var(--or)">${rv}</div><div class="exd-l">${t('rest-l')}</div></div>`:''}
       </div>`:''}
+      ${!isWC?`<div class="wt-track" id="wtt-${e.id}">
+        ${renderWeightTrack(e.id, ar)}
+      </div>`:''}
       ${tmr}
       <div class="tips"><div class="tips-t">${t('tips-t')}</div><ul>${(tips||[]).map(tp=>`<li>${tp}</li>`).join('')}</ul></div>
-      <a href="${ytUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;padding:10px;border-radius:10px;background:#ff000018;border:1.5px solid #ff0000cc;color:#ff4444;font-size:15px;font-weight:800;text-decoration:none" onclick="event.stopPropagation()">${ytLabel}</a>
+      <a href="${ytUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;padding:10px;border-radius:10px;background:rgba(255,0,0,.08);border:1.5px solid rgba(255,0,0,.5);color:#ff5555;font-size:15px;font-weight:800;text-decoration:none" onclick="event.stopPropagation()">${ytLabel}</a>
       ${!isWC&&rv?`<button class="btn bo" style="margin-top:7px;width:100%;font-size:14px" onclick="startRT(event,'${rv}')">${t('rt-btn')}</button>`:''}
     </div>
   </div>`;
@@ -3456,6 +3491,7 @@ function cmpSession(){
   // Check rank up
   const newRank=getRank(P.sessions);
   const rankUp=newRank.key!==prevRank.key;
+  trackWeightSessions();
   save(); rWorkout(); rProfile();
   toast(L==='ar'?'جلسة مكتملة':'Session complete!');
   // Flash animation

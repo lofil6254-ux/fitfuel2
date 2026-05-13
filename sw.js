@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ARISE_Hunter_v8';
+const CACHE_VERSION = 'ARISE_Hunter_v9';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.jpg'];
 
 self.addEventListener('install', e => {

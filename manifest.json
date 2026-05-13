@@ -1,11 +1,11 @@
 {
-  "name": "FitFuel",
-  "short_name": "FitFuel",
-  "description": "Kettlebell training and nutrition tracker",
+  "name": "ARISE — Hunter Fitness",
+  "short_name": "ARISE",
+  "description": "Solo Leveling-style fitness tracker — Kettlebell & Gym, nutrition, voice AI coach",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0d0d18",
-  "theme_color": "#0a0a14",
+  "background_color": "#040412",
+  "theme_color": "#07071a",
   "orientation": "portrait",
   "icons": [
     {

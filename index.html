@@ -868,7 +868,8 @@ let L='ar', P={}, SEL={trainingType:'kb'}, DLOG={}, WH=[], MP={}, CD=new Date().
 let isRamadan=true, mealMode='ramadan', _WP=null;
 let MP_RAM={}, MP_NRM={}, MEAL_EATEN={};
 // Weight tracking per exercise: {exerciseId: {kg, sessions, lastDate}}
-let EXWEIGHTS={}; // MEAL_EATEN: {'2025-01-15_iftar': true, ...}
+let EXWEIGHTS={};
+let _introAudio=null;
 
 function t(k){ return (T[L]&&T[L][k])||(T.ar&&T.ar[k])||k; }
 
@@ -1258,15 +1259,26 @@ function logMeal(cal,nm){
   save(); rHome(); toast(nm+' — '+cal+' kcal');
 }
 function eatMeal(mealKey,cal,nm){
-  // Lock the meal type for today
   const todayKey=new Date().toDateString();
   const lockKey=todayKey+'_'+mealKey;
-  if(MEAL_EATEN[lockKey]) return; // already eaten
+  if(MEAL_EATEN[lockKey]) return;
   MEAL_EATEN[lockKey]=true;
-  // Log to calorie tracker
   logMeal(cal,nm);
-  // Re-render meals to show locked state
-  rDayMeals();
+  // Update card in-place — no full re-render so the card stays open
+  const card=document.getElementById('mc-'+mealKey);
+  if(card){
+    card.classList.add('locked');
+    const actionsEl=card.querySelector('.mactions');
+    if(actionsEl) actionsEl.innerHTML=`<button class="btn done-btn cmp" disabled>◈ ${L==='ar'?'تم تناولها':'Eaten'}</button>`;
+    const hdr=card.querySelector('.mc-hdr');
+    if(hdr){
+      const badge=document.createElement('div');
+      badge.className='meal-done-badge';
+      badge.textContent='◈ '+(L==='ar'?'تم تناولها':'Eaten');
+      hdr.querySelector('[style*="flex:1"]')?.appendChild(badge);
+    }
+  }
+  save();
   toast((L==='ar'?'تم تسجيل ':'Logged: ')+nm);
   gainExp(25, L==='ar'?'تغذية':'Nutrition');
 }
@@ -3062,24 +3074,25 @@ let voiceSettings={speechLang:'ja', subLang:'en'};
 // ============================================================
 function playIntroMusic(){
   try{
-    const audio=new Audio('./intro.mp3');
-    audio.volume=0.0;
-    audio.play().catch(()=>{});
+    _introAudio=new Audio('./intro.mp3');
+    _introAudio.volume=0.0;
+    _introAudio.play().catch(()=>{});
     // Fade in over 0.5s
     let vol=0;
     const fi=setInterval(()=>{
       vol=Math.min(vol+0.07,0.75);
-      audio.volume=vol;
+      if(_introAudio) _introAudio.volume=vol;
       if(vol>=0.75) clearInterval(fi);
     },50);
-    // Fade out starting at 6s, stop at 7s
+    // Fade out at 5.5s
     setTimeout(()=>{
       const fo=setInterval(()=>{
-        audio.volume=Math.max(audio.volume-0.08,0);
-        if(audio.volume<=0){ audio.pause(); clearInterval(fo); }
+        if(!_introAudio){ clearInterval(fo); return; }
+        _introAudio.volume=Math.max(_introAudio.volume-0.08,0);
+        if(_introAudio.volume<=0){ _introAudio.pause(); _introAudio=null; clearInterval(fo); }
       },60);
     },5500);
-    return audio;
+    return _introAudio;
   }catch(e){return null;}
 }
 
@@ -3095,6 +3108,7 @@ function showIntro(){
   setTimeout(()=>{
     ov.style.transition='opacity 1s ease';
     ov.style.opacity='0';
+    if(_introAudio){ _introAudio.pause(); _introAudio=null; }
     setTimeout(()=>{ ov.classList.remove('on'); ov.style.opacity=''; showMain(); }, 1000);
   }, 7000);
 }

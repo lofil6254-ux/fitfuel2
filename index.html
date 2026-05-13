@@ -2738,13 +2738,14 @@ function rMeals(){
   const days_ar=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   const days_en=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const todayIdx=new Date().getDay();
-  CD=todayIdx;
+  // Only reset CD to today if it hasn't been intentionally set
+  if(CD===undefined||CD===null) CD=todayIdx;
   const daysel=document.getElementById('daysel');
   daysel.innerHTML=[0,1,2,3,4,5,6].map(d=>{
     const nm=ar?days_ar[d]:days_en[d];
     const isToday=d===todayIdx;
     const isSel=d===CD;
-    return`<div class="dpill${isToday?' today':isSel?' sel':''}" onclick="selectMealDay(${d})" style="cursor:pointer;pointer-events:auto;opacity:1">${isToday?'◈ '+nm:nm}</div>`;
+    return`<div class="dpill${isToday?' today':''} ${isSel&&!isToday?' sel':''}" onclick="selectMealDay(${d})">${isToday?'◈ '+nm:nm}</div>`;
   }).join('');
   if(!MP[CD]) MP[CD]=buildDay(mealMode,Math.round(P.targetCal)||2000,CD);
   const day=MP[CD];
@@ -3680,7 +3681,13 @@ function setMode(m){
   rRamadanUI(); rMeals(); save();
 }
 function selectMealDay(d){
-  CD=d; rMeals();
+  CD=d;
+  rMeals();
+  // Scroll selected pill into view
+  setTimeout(()=>{
+    const pills=document.querySelectorAll('#daysel .dpill');
+    if(pills[d]) pills[d].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  },50);
 }
 function previewDay(dayIdx){
   const ar=L==='ar';

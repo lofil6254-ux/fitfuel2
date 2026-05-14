@@ -108,6 +108,7 @@ input,select,button{font-family:inherit;font-size:inherit}
 .dayplan::-webkit-scrollbar{display:none}
 .dpc{padding:10px 12px;border-radius:var(--r2);border:2px solid var(--br);background:var(--s2);color:var(--mt);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .18s;text-align:center;min-width:68px}
 .dpc.on{border-color:var(--ac);color:var(--ac);background:var(--acd);box-shadow:0 0 12px rgba(124,109,255,.15)}
+.dpc.sel{border-color:var(--bl);color:var(--bl);background:var(--bld);box-shadow:0 0 12px rgba(0,212,255,.12)}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
 .pgst{text-align:center;background:var(--s3);border-radius:var(--r2);padding:14px 8px;border:1px solid var(--br2)}
 .pgst-v{font-size:24px;font-weight:900;color:var(--ac)}
@@ -351,12 +352,14 @@ input:checked+.tsl:before{transform:translateX(20px);background:#0a0a10}
 @keyframes intro-progress{to{width:100%}}
 
 /* ── EXP popup ── */
-#exp-popup{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-30px);z-index:8000;pointer-events:none;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1)}
-#exp-popup.on{opacity:1;transform:translateX(-50%) translateY(0)}
-#exp-popup-inner{background:linear-gradient(135deg,rgba(13,13,38,.97),rgba(7,7,26,.99));border:1px solid rgba(124,109,255,.5);border-radius:12px;padding:14px 28px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 0 30px rgba(124,109,255,.3),0 8px 20px rgba(0,0,0,.5)}
-#exp-icon{font-size:22px;color:var(--gd);filter:drop-shadow(0 0 8px rgba(255,215,0,.6));animation:exp-spin .6s ease}
-#exp-label{font-size:22px;font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,var(--gd),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-#exp-sublabel{font-size:11px;font-weight:900;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+#exp-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.85);z-index:8000;pointer-events:none;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);width:90%;max-width:380px}
+#exp-popup.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#exp-popup-inner{background:linear-gradient(135deg,rgba(13,13,38,.97),rgba(7,7,26,.99));border:1px solid rgba(124,109,255,.5);border-radius:20px;padding:28px 24px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 0 50px rgba(124,109,255,.4),0 12px 40px rgba(0,0,0,.7)}
+#exp-icon{font-size:28px;color:var(--gd);filter:drop-shadow(0 0 10px rgba(255,215,0,.7));animation:exp-spin .6s ease}
+#exp-label{font-size:28px;font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,var(--gd),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#exp-sublabel{font-size:12px;font-weight:900;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+#exp-coach-text{display:none;font-size:18px;font-weight:700;color:var(--tx);text-align:center;line-height:1.65;margin-top:14px;padding-top:14px;border-top:1px solid rgba(124,109,255,.25);width:100%}
+#exp-coach-text.on{display:block}
 @keyframes exp-spin{0%{transform:scale(0) rotate(-180deg)}100%{transform:scale(1) rotate(0deg)}}
 
 /* ── Fix info sizes ── */
@@ -443,6 +446,7 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
     <div id="exp-icon">⬡</div>
     <div id="exp-label">+100 EXP</div>
     <div id="exp-sublabel">Quest Complete</div>
+    <div id="exp-coach-text"></div>
   </div>
 </div>
 
@@ -452,15 +456,15 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
   <div class="arise-logo">ARISE</div>
   <div style="font-size:11px;color:var(--ac);letter-spacing:5px;margin:8px 0 4px;text-transform:uppercase;opacity:.8">HUNTER FITNESS SYSTEM</div>
   <div style="font-size:10px;color:var(--mt);letter-spacing:2px;margin-bottom:28px;text-transform:uppercase">▸ SYSTEM INITIALIZING ▸</div>
-  <div style="font-size:11px;color:var(--tx2);font-weight:900;letter-spacing:3px;margin-bottom:14px;text-transform:uppercase" id="sp-ttype-lbl">— SELECT TRAINING MODE —</div>
+  <div style="font-size:11px;color:var(--tx2);font-weight:900;letter-spacing:3px;margin-bottom:14px;text-transform:uppercase" id="sp-ttype-lbl"></div>
   <div class="ttype-row" id="ttype-row">
     <button class="ttype-btn on" onclick="pickTType('kb',this)">
       <span class="ttype-ic">⚙️</span>
-      <span id="ttype-kb-lbl">Kettlebell</span>
+      <span id="ttype-kb-lbl"></span>
     </button>
     <button class="ttype-btn" onclick="pickTType('gym',this)">
       <span class="ttype-ic">🏋️</span>
-      <span id="ttype-gym-lbl">Gym / Bodybuilding</span>
+      <span id="ttype-gym-lbl"></span>
     </button>
   </div>
   <div class="lrow">
@@ -651,7 +655,7 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
     <button class="msw" id="msw-rm" onclick="setMode('ramadan')">◑ <span id="msw-rm-t">—</span></button>
     <button class="msw" id="msw-nm" onclick="setMode('normal')">◎ <span id="msw-nm-t">—</span></button>
   </div>
-  <div class="daysel" id="daysel"></div>
+  <div class="dayplan" id="daysel"></div>
   <div class="dtbar">
     <div><div class="tag" id="dt-lb">—</div><div style="font-size:19px;font-weight:900" id="dt-cl">—</div></div>
     <div style="text-align:center"><div style="font-size:11px;color:var(--bl);font-weight:800;text-transform:uppercase;letter-spacing:.5px" id="dt-plb">—</div><div style="font-size:16px;font-weight:900;color:var(--bl)" id="dt-pv">—</div></div>
@@ -684,15 +688,6 @@ input.fi:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,109,255,.15)
     <div class="lang-sw">
       <button class="lsw" id="lsw-ar" onclick="switchLang('ar')">🇲🇦 العربية</button>
       <button class="lsw" id="lsw-en" onclick="switchLang('en')">🇬🇧 English</button>
-    </div>
-  </div>
-  <div class="card" style="margin-bottom:10px">
-    <h3 style="font-size:15px;margin-bottom:4px;letter-spacing:1px" id="lbl-voice">SHADOW COACH</h3>
-    <div style="font-size:11px;color:var(--mt);margin-bottom:12px;letter-spacing:2px;text-transform:uppercase">Voice: Japanese &nbsp;|&nbsp; Subtitle Language:</div>
-    <div class="vlang-row" id="vlang-sub">
-      <button class="vlsw on" onclick="setVoiceLang('sub','en',this)">EN</button>
-      <button class="vlsw" onclick="setVoiceLang('sub','ar',this)">عربي</button>
-      <button class="vlsw" onclick="setVoiceLang('sub','ja',this)">日本語</button>
     </div>
   </div>
   <div class="pstats" id="pstats"></div>
@@ -801,6 +796,9 @@ const T={
     'confirm-reset':'هل تريد حذف كل البيانات؟',
     'dc-t':'📊 أسبوعك الحالي','dc-sub':'كل يوم: تمرين + سعرات + بروتين',
     'dc-leg1':'تمرين ✅','dc-leg2':'سعرات هدف','dc-leg3':'بروتين هدف',
+    'sp-ttype-lbl':'— اختر وضع التدريب —',
+    'ttype-kb-lbl':'كيتل بيل','ttype-gym-lbl':'جيم / بناء جسم',
+    'lbl-runs':'جلسات',
   },
   en:{
     'sp-btn':'Start 🚀','s1t':'Your Info','s1s':'We calculate your calories precisely',
@@ -811,13 +809,13 @@ const T={
     'g-recomp':'Burn Fat + Build Muscle 🔥💪','g-recomps':'Body Recomposition — hardest, best results',
     'nx2':'Next →',
     's3t':'Training Level','s3s':'Choose your current level',
-    'lv-b':'Beginner','lv-bs':'Less than 6 months',
-    'lv-i':'Intermediate','lv-is':'6-24 months training',
-    'lv-a':'Advanced','lv-as':'More than 2 years','nx3':'Next →',
+    'lv-b':'Beginner','lv-bs':'Under 6 months of training',
+    'lv-i':'Intermediate','lv-is':'6–24 months of training',
+    'lv-a':'Advanced','lv-as':'Over 2 years of training','nx3':'Next →',
     's4t':'Activity Level','s4s':'How much do you move daily',
     'ac-1':'Sedentary','ac-1s':'Desk job, no sport',
-    'ac-2':'Light','ac-2s':'Sport 1-3 days/week',
-    'ac-3':'Moderate','ac-3s':'Sport 3-5 days/week',
+    'ac-2':'Light','ac-2s':'Exercise 1–3 days/week',
+    'ac-3':'Moderate','ac-3s':'Exercise 3–5 days/week',
     'ac-4':'Very Active','nx4t':'Next →',
     's5t':'Want to add running?','s5s':'Running helps burn fat and improve fitness',
     's5-dl':'How many days per week do you want to run?','rd-0':'No Running',
@@ -858,6 +856,9 @@ const T={
     'confirm-reset':'Delete all data?',
     'dc-t':'📊 This Week','dc-sub':'Each day: workout + calories + protein',
     'dc-leg1':'Workout ✅','dc-leg2':'Calories on target','dc-leg3':'Protein on target',
+    'sp-ttype-lbl':'— SELECT TRAINING MODE —',
+    'ttype-kb-lbl':'Kettlebell','ttype-gym-lbl':'Gym / Bodybuilding',
+    'lbl-runs':'sessions',
   }
 };
 
@@ -870,6 +871,7 @@ let MP_RAM={}, MP_NRM={}, MEAL_EATEN={};
 // Weight tracking per exercise: {exerciseId: {kg, sessions, lastDate}}
 let EXWEIGHTS={};
 let _introAudio=null;
+let _mealDaySet=false;
 
 function t(k){ return (T[L]&&T[L][k])||(T.ar&&T.ar[k])||k; }
 
@@ -887,7 +889,8 @@ function applyLang(){
     'hm-gr','cs1','cs2','cs3','lb-pro','lb-car','lb-fat','lbl-qlog','lbl-tw','sa-btn',
     'wk-tag','wk-ti','pg-t','pg1l','pg2l','pg3l','regen-t',
     'ml-ti','msw-rm-t','msw-nm-t','dt-lb','dt-lbt',
-    'edit-btn','lbl-lang','edit-ti','ed-lnm','ed-lwt','ed-lht','ed-lag','ed-sv','rst-btn'];
+    'edit-btn','lbl-lang','edit-ti','ed-lnm','ed-lwt','ed-lht','ed-lag','ed-sv','rst-btn',
+    'sp-ttype-lbl','ttype-kb-lbl','ttype-gym-lbl'];
   ids.forEach(id=>{const el=document.getElementById(id);if(el&&t(id)!==id)el.textContent=t(id);});
   const logNm=document.getElementById('log-nm');
   if(logNm) logNm.placeholder=t('log-nm-ph');
@@ -2735,17 +2738,19 @@ function rMeals(){
   const msRm=document.getElementById('msw-rm'), msNm=document.getElementById('msw-nm');
   msRm.className='msw'+(mealMode==='ramadan'?' rm':'');
   msNm.className='msw'+(mealMode==='normal'?' nm':'');
-  const days_ar=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-  const days_en=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const days_ar=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+  const days_en=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const mealIcons=['🌙','☀','🔥','⚡','💪','🌿','🍖'];
   const todayIdx=new Date().getDay();
-  // Only reset CD to today if it hasn't been intentionally set
-  if(CD===undefined||CD===null) CD=todayIdx;
+  if(!_mealDaySet) CD=todayIdx;
+  _mealDaySet=false;
   const daysel=document.getElementById('daysel');
   daysel.innerHTML=[0,1,2,3,4,5,6].map(d=>{
     const nm=ar?days_ar[d]:days_en[d];
     const isToday=d===todayIdx;
     const isSel=d===CD;
-    return`<div class="dpill${isToday?' today':''} ${isSel&&!isToday?' sel':''}" onclick="selectMealDay(${d})">${isToday?'◈ '+nm:nm}</div>`;
+    const cls='dpc'+(isToday?' on':isSel?' sel':'');
+    return`<div class="${cls}" onclick="selectMealDay(${d})">${nm}<br><span style="font-size:14px;opacity:.8">${mealIcons[d]}</span></div>`;
   }).join('');
   if(!MP[CD]) MP[CD]=buildDay(mealMode,Math.round(P.targetCal)||2000,CD);
   const day=MP[CD];
@@ -2788,7 +2793,7 @@ function rDayMeals(){
         <div style="flex:1">
           <div class="tag">${t('mtype-'+k)}</div>
           <div class="mc-nm">${nm}</div>
-          <div style="font-size:13px;color:var(--mt);margin-top:3px">${time} · ${m.cal} kcal · <span style="color:var(--bl)">${m.p}g protein</span></div>
+          <div style="font-size:13px;color:var(--mt);margin-top:3px">${time} · ${m.cal} kcal · <span style="color:var(--bl)">${m.p}g ${ar?'بروتين':'protein'}</span></div>
           ${fridgeNote?`<div style="font-size:12px;color:var(--ac);font-weight:700;margin-top:3px">${fridgeNote}</div>`:''}
           ${eaten?`<div class="meal-done-badge">◈ ${ar?'تم تناولها':'Eaten'}</div>`:''}
         </div>
@@ -2798,9 +2803,9 @@ function rDayMeals(){
       </div>
       <div class="mc-body">
         <div class="mmac">
-          <span class="mpill" style="background:var(--bld);color:var(--bl)">${m.p}g P</span>
-          <span class="mpill" style="background:var(--ord);color:var(--or)">${m.c}g C</span>
-          <span class="mpill" style="background:var(--pkd);color:var(--pk)">${m.f}g F</span>
+          <span class="mpill" style="background:var(--bld);color:var(--bl)">${m.p}g ${ar?'بروتين':'Protein'}</span>
+          <span class="mpill" style="background:var(--ord);color:var(--or)">${m.c}g ${ar?'كربو':'Carbs'}</span>
+          <span class="mpill" style="background:var(--pkd);color:var(--pk)">${m.f}g ${ar?'دهون':'Fat'}</span>
         </div>
         <div>${ings.map(ig=>`<div class="ing-i">${ig}</div>`).join('')}</div>
         <div class="minstr">${instr}</div>
@@ -3075,8 +3080,9 @@ let voiceSettings={speechLang:'ja', subLang:'en'};
 // ============================================================
 function playIntroMusic(){
   try{
-    _introAudio=new Audio('./intro.mp3');
-    _introAudio.volume=0.0;
+    if(!_introAudio) _introAudio=new Audio('./intro.mp3');
+    _introAudio.currentTime=0;
+    _introAudio.volume=0.01;
     _introAudio.play().catch(()=>{});
     // Fade in over 0.5s
     let vol=0;
@@ -3085,14 +3091,14 @@ function playIntroMusic(){
       if(_introAudio) _introAudio.volume=vol;
       if(vol>=0.75) clearInterval(fi);
     },50);
-    // Fade out at 5.5s
+    // Fade out at 6.5s (overlay disappears at 7s)
     setTimeout(()=>{
       const fo=setInterval(()=>{
         if(!_introAudio){ clearInterval(fo); return; }
         _introAudio.volume=Math.max(_introAudio.volume-0.08,0);
         if(_introAudio.volume<=0){ _introAudio.pause(); _introAudio=null; clearInterval(fo); }
       },60);
-    },5500);
+    },6500);
     return _introAudio;
   }catch(e){return null;}
 }
@@ -3122,12 +3128,14 @@ function gainExp(amount, label){
   const popup=document.getElementById('exp-popup');
   const lbl=document.getElementById('exp-label');
   const sub=document.getElementById('exp-sublabel');
+  const coach=document.getElementById('exp-coach-text');
   if(!popup) return;
   if(lbl) lbl.textContent='+'+amount+' EXP';
   if(sub) sub.textContent=label||'Quest Complete';
+  if(coach){ coach.textContent=''; coach.classList.remove('on'); }
   popup.classList.add('on');
   clearTimeout(_expTimer);
-  _expTimer=setTimeout(()=>popup.classList.remove('on'), 2800);
+  _expTimer=setTimeout(()=>popup.classList.remove('on'), 3500);
 }
 
 // ============================================================
@@ -3186,33 +3194,33 @@ const COACH_LINES={
   }
 };
 
-let _subtitleTimer=null;
 function coachSpeak(lineKey){
   if(!window.speechSynthesis) return;
-  const subl=voiceSettings.subLang||'en';
   const lines=COACH_LINES[lineKey];
   if(!lines) return;
-  const speechText=lines.ja; // always Japanese voice
-  const subText=lines[subl]||lines.en;
-  // Show subtitle
-  const bar=document.getElementById('subtitle-bar');
-  const txt=document.getElementById('subtitle-text');
-  if(bar&&txt){
-    txt.textContent=subText;
-    bar.classList.add('on');
-    clearTimeout(_subtitleTimer);
-    _subtitleTimer=setTimeout(()=>bar.classList.remove('on'),7000);
-  }
-  // Speak
+  const speechText=lines.ja;
+  const subText=lines[L]||lines.en;
+  // Show text inside XP popup
+  const popup=document.getElementById('exp-popup');
+  const coach=document.getElementById('exp-coach-text');
+  if(coach){ coach.textContent=subText; coach.classList.add('on'); }
+  if(popup){ popup.classList.add('on'); clearTimeout(_expTimer); }
+  // Speak simultaneously
   window.speechSynthesis.cancel();
   const utt=new SpeechSynthesisUtterance(speechText);
-  const langMap={en:'en-US',ar:'ar-SA',ja:'ja-JP'};
-  utt.lang='ja-JP';
-  utt.rate=0.9; utt.pitch=0.85; utt.volume=0.9;
-  // Try to find a matching voice
+  utt.lang='ja-JP'; utt.rate=1.3; utt.pitch=0.85; utt.volume=0.9;
   const voices=window.speechSynthesis.getVoices();
-  const match=voices.find(v=>v.lang.startsWith(utt.lang.substring(0,2)))||voices[0];
+  const match=voices.find(v=>v.lang.startsWith('ja'))||voices[0];
   if(match) utt.voice=match;
+  // Hide popup after speech ends
+  utt.onend=()=>{
+    _expTimer=setTimeout(()=>{
+      if(popup) popup.classList.remove('on');
+      if(coach) coach.classList.remove('on');
+    },900);
+  };
+  // Fallback in case onend doesn't fire
+  _expTimer=setTimeout(()=>{ if(popup) popup.classList.remove('on'); },10000);
   window.speechSynthesis.speak(utt);
 }
 function setVoiceLang(type,lang,btn){
@@ -3516,9 +3524,9 @@ function cmpSession(){
   setTimeout(()=>flash.remove(),1600);
   // EXP popup
   gainExp(rankUp?200:100, rankUp?(L==='ar'?'ترقية!':'RANK UP!'):(L==='ar'?'مهمة مكتملة':'Quest Complete'));
-  // Coach speaks — progressive overload every 5 sessions
+  // Coach speaks at same time as XP popup
   const lineKey=rankUp?'rank_up':(P.sessions>0&&P.sessions%5===0)?'progress':'session_complete';
-  setTimeout(()=>coachSpeak(lineKey), 800);
+  coachSpeak(lineKey);
 }
 
 // ============================================================
@@ -3545,7 +3553,7 @@ function rProfile(){
   if(xpFill&&nextRank){
     const prog=Math.round(((P.sessions||0)-rank.minS)/(nextRank.minS-rank.minS)*100);
     xpFill.style.width=Math.min(prog,100)+'%';
-    if(xpLabel) xpLabel.textContent=`${(P.sessions||0)} / ${nextRank.minS} sessions → ${ar?nextRank.label_ar:nextRank.label_en}`;
+    if(xpLabel) xpLabel.textContent=`${(P.sessions||0)} / ${nextRank.minS} ${ar?'جلسات':'sessions'} → ${ar?nextRank.label_ar:nextRank.label_en}`;
   } else if(xpFill){
     xpFill.style.width='100%';
     if(xpLabel) xpLabel.textContent=ar?'أنت الملك الظلام 👑':'You are the Shadow Monarch 👑';
@@ -3682,10 +3690,10 @@ function setMode(m){
 }
 function selectMealDay(d){
   CD=d;
+  _mealDaySet=true;
   rMeals();
-  // Scroll selected pill into view
   setTimeout(()=>{
-    const pills=document.querySelectorAll('#daysel .dpill');
+    const pills=document.querySelectorAll('#daysel .dpc');
     if(pills[d]) pills[d].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
   },50);
 }
@@ -3821,6 +3829,13 @@ function doReset(){
 // INIT
 // ============================================================
 function startApp(){
+  // Pre-unlock audio on first user tap — required for iOS/Android autoplay policy
+  try {
+    _introAudio = new Audio('./intro.mp3');
+    _introAudio.volume = 0;
+    const p = _introAudio.play();
+    if(p) p.then(()=>{ _introAudio.pause(); _introAudio.currentTime=0; }).catch(()=>{});
+  } catch(e){ _introAudio=null; }
   document.getElementById('pg-splash').classList.remove('on');
   document.getElementById('pg-setup').classList.add('on');
   CS=1; showStep(1);
@@ -3868,13 +3883,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
   const has=load();
   applyLang();
   initParticles();
-  // Restore voice setting buttons
-  if(voiceSettings.speechLang){
-    document.querySelectorAll('#vlang-speech .vlsw').forEach(b=>{
-      const l=b.onclick?.toString().match(/'([a-z]+)'/g)?.[0]?.replace(/'/g,'');
-      b.classList.toggle('on',l===voiceSettings.speechLang);
-    });
-  }
   if(has){
     showMain();
   } else {
